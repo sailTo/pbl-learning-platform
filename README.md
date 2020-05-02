@@ -23,27 +23,45 @@ A course project for Advanced Web Technologies at FDU.
   >
   > 需要加入学号、头像
   >
+  > 学号是s_id，头像可以有(李)
+  >
   > 可以有个人简介什么的，看起来更加有人情味一点
+  >
+  > 赞同添加(李)
 
 - teacher (<u>t_id</u>, t_name, gender, password)
 
   > 需要加入工号、头像
   >
+  > 工号就是t_id，头像可以有(李)
+  >
   > 可以有个人简介什么的，看起来更加有人情味一点
+  >
+  > 赞同添加(李)
 
 - admin (<u>admin_id</u>, a_name, password)  
 
   > 是否考虑字段和student以及teacher对齐？然后是否考虑三表合并？毕竟用户信息上没有本质区别，可以加一个身份字段用以区分
+  >
+  > 管理员比较特别吧，他只要能管理就行了，也许不需要那么多信息？(李) 
+  >
+  > 三表合并的话，一些关系表(如teach、take)可能比较特别？
 
 - course (<u>c_id</u>, c_name, point, class_time)  
 
   > 需要加一个状态，未发布，已发布，已删除
   >
+  > 可以加，但我觉得可能要先确认一下课程是不是有这些状态，因为文档中没有明确说明(李)
+  >
   > 不如再加个简介？展示的时候有些内容，比较好看
+  >
+  > 赞同添加(李)
 
 - project (<u>p_id</u>, p_name)  
 
   > 这个也搞个简介？
+  >
+  > 赞同添加(李)
 
 - assignment (<u>a_id</u>, a_name, a_description, importance, a_start_date, a_end_date, a_point, a_status)  
 
@@ -54,26 +72,44 @@ A course project for Advanced Web Technologies at FDU.
   > 如果可以假定一门课只能一个老师上，这样的话t_id可以合并进course表，此表可以省略
   >
   > 不过如果多个老师合作上的话，此表必须独立
+  >
+  > 个人想法是这个可以比较灵活？甚至能算我们的进阶功能：多教师合作开课？(李)
 
 - take (<u>s_id</u>, <u>c_id</u>)  
 
 - course_project (c_id, p_id)  
 
   > 这个我觉得可以省掉，project一定只属于一个course，可以合并进project表
+  >
+  > 赞同(李)
 
 - student_project (<u>s_id</u>, <u>p_id</u>, group_id, group_leader)  
 
   > 这个可以改为s_id, p_id, is_group_leader，因为默认选择同一个项目的就是一个组，这样比较简单hhh，然后is_group_leader表示是否为leader，还是只是组员
+  >
+  > 赞同(李)
 
 - project_assignement (p_id, a_id)  
 
   > 这个我觉得可以省掉，因为assignment一定只属于一个project
+  >
+  > 要不把p_id合并到assignment表里面吧(李)
   
 - 讨论版数据（每个project有一个讨论版，讨论版可以有好多帖子，每个帖子包含发帖人、主题、内容、时间戳；每个帖子有好多回复，每个回复有回复人、时间戳）
 
+  > 按照老师的截图，是不是没有主题？我们能不能把回复和发帖合并在一个表(例如增加一个bool属性为reply，以及reply_d_id)？老师和学生的id是否合并在一起会对这个表格产生影响，或者我们将id设计为S/T/A+学号/工号/管理员编号，这样就能直接分辨是谁发的帖子(李)
+
 - 文件空间数据（每个project有一个文件空间，文件有发布者，内容名，文件URL）
 
+  > 添加一个file表格，file(c_id,p_id,f_id,u_id,description,file_URL)   (李)
+
 - 评分规则数据（每个project有一个评分规则数据，包括每个模块占比）
+
+  > 添加一个评分制度表格，管理谁能评谁，score_system(c_id,p_id,system_id,description,percentage)
+  >
+  > 添加一个评分细则表格，管理评分表格中的细则，score_rule(c_id,p_id,r_id,description,point)
+  >
+  > 添加一个评分表格，score(rater_id,rated_id,c_id,p_id,r_id,point)
 
 ## 按页面分类的功能、UI设计
 
