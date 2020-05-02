@@ -134,14 +134,14 @@ A course project for Advanced Web Technologies at FDU.
     - 任务名称
     - 开始日期、截至日期
     - 重要程度
-    - 负责人（点击应当能跳转到个人信息展示页面）
-    - 完成情况（可以用badge表示），负责人可以选择已经完成任务
-    - 分配任务下拉搜索框、添加任务、删除任务按键、督促完成任务按键（老师、组长有）
+    - 完成情况（可以用badge表示，分为已完成、未完成），同学可以点击按钮表示已经完成任务，点击后badge变色，按钮disable
+    - 组长、老师增加显示全项目完成情况（xx/XX人已完成）
+    - 添加任务、删除任务按键、督促完成任务按键（老师、组长有，点击后所有未完成的同学下次进入任务页面时收到提示）
     - 所有内容老师、组长可修改
 
 2. 任务页面可以点击某个开关转换为甘特图形式展示
 
-    - 每一行为一个任务，左侧展示任务名和负责人，右侧表示项目时间跨度
+    - 每一行为一个任务，左侧展示任务名和完成情况（组长、老师增加显示全项目完成情况），右侧表示项目时间跨度
     - 老师、组长可修改任务内容，可添加、删除任务、督促任务
     - 甘特图中任务颜色可以按照重要程度变化
 
@@ -176,7 +176,7 @@ A course project for Advanced Web Technologies at FDU.
    
    - 展示一个表格，每一行为一个学生，每一列为参与评分的模块，包括：
      - 任务完成数
-     - 任务完成得分，按比例，分数=100*（学生完成数 / 最高单人完成数）
+     - 任务完成得分，按比例，分数=100*（学生完成数 / 任务总数）
      - 讨论版发言数
      - 讨论版得分，按比例，分数=100*（学生发言数 / 最高单人发言数）
      - 自评分
@@ -192,7 +192,7 @@ A course project for Advanced Web Technologies at FDU.
    - 该项目中每个模块的分数占比，可以在表头中、该模块名边上括号标注（占XX%）
    - 自己在该项目中的得分，包括：
      - 任务完成数
-     - 任务完成得分，按比例，分数=100*（学生完成数 / 最高单人完成数）
+     - 任务完成得分，按比例，分数=100*（学生完成数 / 任务总数）
      - 讨论版发言数
      - 讨论版得分，按比例，分数=100*（学生发言数 / 最高单人发言数）
      - 自评分
@@ -234,30 +234,35 @@ A course project for Advanced Web Technologies at FDU.
 
   - status: 未发布，已发布，已删除
   - t_id是课程教师，reference u_id@user, type=teacher
-- project (<u>p_id</u>, c_id, p_name, description, grading_status, task_grade_ratio, discussion_grade_ratio, self_grade_ratio, mutual_grade_ratio)  
+- project (<u>p_id</u>, c_id, p_name, description, grading_status, assignment_grade_ratio, discussion_grade_ratio, self_grade_ratio, mutual_grade_ratio)  
 
   - grading_status: 未评分，已评分
   - c_id是所属的课程，reference c_id@course
-  - task_grade_ratio, discussion_grade_ratio 各为前端教师评分占比的一半
+  - assignment_grade_ratio, discussion_grade_ratio 各为前端教师评分占比的一半
   - self_grade_ratio, mutual_grade_ratio 可以为null，表示不开启自评、互评，不为null则表示评分占比
-- assignment (<u>a_id</u>, p_id, s_id, a_name, a_description, importance, a_start_date, a_end_date, a_point, a_status, urge)  
+- assignment (<u>a_id</u>, <u>p_id</u>, ~~s_id,~~ a_name, a_description, importance, a_start_date, a_end_date, ~~a_status, urge~~)  
 
-  - s_id是被分配的同学，reference u_id@user, type=student
-  - p_id是所属于的项目，reference p_id@project
+- student_assignment (<u>a_id</u>, <u>p_id</u>, <u>s_id</u>, status, urge)
+  - a_id是任务，p_id是所属于的项目，reference (a_id, p_id)@assignment
+  - s_id是同学，reference (s_id, p_id)@student_project
+  - status是任务完成情况，默认false
   - urge是布尔值，表示目前该任务有没有被催促，默认false，学生进入项目详情页面时会根据该值弹出提示的催促尽快完成信息
+  - 每个同学加入一个项目时，后端需要检索该项目所有任务，每个任务都添加一行到该表中
+  - 每当组长、老师增加新任务时，所有在项目中的同学都要增加一行到该表中，删除时也要全部删除
+  - 组长、老师督促某个任务时，所有相关任务未完成的同学的urge被改为true，阅读一次后改回false
 - student_course (<u>s_id</u>, <u>c_id</u>)  
 
   - s_id是被分配的同学，reference u_id@user, type=student
-- student_project (<u>s_id</u>, <u>p_id</u>, is_group_leader, task_grade, discussion_grade, self_grade, mutual_grade, teacher_grade)  
+- student_project (<u>s_id</u>, <u>p_id</u>, is_group_leader, assignment_grade, discussion_grade, self_grade, mutual_grade, teacher_grade)  
 
   - is_group_leader表示是否为leader，还是只是组员
   - s_id是同学，reference u_id@user, type=student
   - p_id是项目，reference p_id@project
-  - task_grade, discussion_grade, self_grade, mutual_grade, teacher_grade
+  - assignment_grade, discussion_grade, self_grade, mutual_grade, teacher_grade
     - 默认为0，取数据时要考虑project表中是否评分状态为已评分，如果未评分需要自行计算数据，如果已评分则写入该表，通过该表查询
     - 总分需要去project表中查询占比，然后与这里的分数做加权平均得到
 - discussion (<u>d_id</u>, p_id, u_id, content, time)
-- p_id是所属于的项目，reference p_id@project
+  - p_id是所属于的项目，reference p_id@project
   - u_id是老师或者学生，reference u_id@user, type=student || teacher
 - reply (<u>r_id</u>, d_id, u_id, content, time)
   - 讨论版数据（每个project有一个讨论版，讨论版可以有好多帖子，每个帖子包含发帖人、主题、内容、时间戳；每个帖子有好多回复，每个回复有回复人、时间戳）
