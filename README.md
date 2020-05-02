@@ -63,8 +63,8 @@ A course project for Advanced Web Technologies at FDU.
 
 3. 对个人信息的删除
 
-    > 需要沟通：实现了修改也就实现了删除。
-    
+   - 实现了修改也就实现了删除。
+   
 4. 上传头像功能（是否压缩，作为附加功能）
 
     - 头像可以有单独的上传新头像按键，也可以有恢复默认头像按键
@@ -86,10 +86,6 @@ A course project for Advanced Web Technologies at FDU.
         - 未发布课程不可见
 
     - 学生看到的分为`我修的课`、`其它课程`
-      - 我修的课显示退出按键，退课要有确认提示
-
-        >  需要沟通：是否能够退课，退课后是否能够重新加入
-
       - 其它课程显示加入按键，不能进入其它课程的项目管理页面
 
       - 未发布课程不可见
@@ -107,14 +103,12 @@ A course project for Advanced Web Technologies at FDU.
 
     - 项目以卡片形式展示，不同用户有不同按钮，不展示已删除状态的项目
 
-      - 学生：未加入的项目有加入按钮，已经加入的项目可以查看详情，查看讨论版，查看文件管理空间
-
-        > 需要沟通：是否可以退出项目，退出后所有项目中的相关信息怎么处理
+      - 学生：未加入的项目有加入按钮，已经加入的项目可以查看详情，查看讨论版，查看文件管理空间，不可以退出项目
 
       - 老师：所有项目均有查看详情、查看讨论版、查看文件管理空间、删除按钮，（删除之后修改项目状态为已删除，不可恢复）
 
         - 还有一个添加项目的按钮（可以作为一个大的加号card的形式），点击以后弹出创建项目的对话框，包含
-          - 项目名称
+    - 项目名称
           - 所属课程（仅展示，不可修改）
           - 项目简介
           - 评分规则
@@ -126,17 +120,40 @@ A course project for Advanced Web Technologies at FDU.
 
 #### 项目详情页面
 
-1. 进入项目详情后展示所有任务（老师、组长可以添加任务、分配任务、查看任务完成情况，督促学生尽快完成`是否需要站内信功能？`，`组长可以删除任务`；学生可以被高亮自己被分配的任务、标记完成任务）、项目包含成员、讨论版、文件管理空间（上传、下载、删除）
+可以分为四个标签页
 
-    - 成员列表标签页包含评分列，评分列根据项目是否允许自评、互评而解锁修改
-    
-    > 项目详情页主体我觉得可以做成switch的形式，在header上保留一个开关，让用户选择以卡片形式查看还是以甘特图形式查看所有任务，但是不论以哪种形式，需要展示的基本内容是相同的（开始日期、截至日期、重要程度、负责人等，以及被分配的学生可以勾选表示完成了），只是甘特图比较炫，开始日期、截至日期、重要程度这些都直接可视化了。
-    >
-    > 详情页的header需要包含去往讨论版的链接，去往文件管理空间的链接，点击一下可以显示项目所有成员信息和组长的按钮（`显示形式还没想好`），以及上段所述的switch开关。
-    >
-    > 督促人实现？
+- 任务页面
+- 成员页面
+- 讨论版页面
+- 文件管理空间页面
 
-#### 项目讨论版页面
+##### 任务页面
+
+1. 默认以Card形式展示所有任务，内容包括：
+
+    - 任务名称
+    - 开始日期、截至日期
+    - 重要程度
+    - 负责人（点击应当能跳转到个人信息展示页面）
+    - 完成情况（可以用badge表示），负责人可以选择已经完成任务
+    - 分配任务下拉搜索框、添加任务、删除任务按键、督促完成任务按键（老师、组长有）
+    - 所有内容老师、组长可修改
+
+2. 任务页面可以点击某个开关转换为甘特图形式展示
+
+    - 每一行为一个任务，左侧展示任务名和负责人，右侧表示项目时间跨度
+    - 老师、组长可修改任务内容，可添加、删除任务、督促任务
+    - 甘特图中任务颜色可以按照重要程度变化
+
+##### 成员页面
+
+1. 包含：
+
+    - 成员学号
+    - 姓名（点击应当能跳转到个人信息展示页面）
+    - 评分（默认锁定，根据项目的自评、互评是否在数据库中占比不为null来解锁，可以一次性填完后提交）
+
+##### 讨论版页面
 
 1. 按最近回复时间从近到远显示每个帖子，每个帖子可以展示最新的两条回复（简单起见，也可以不展示）
    - 帖子包含主题、发起人、内容、时间
@@ -147,7 +164,7 @@ A course project for Advanced Web Technologies at FDU.
    - 回复要能被回复，简单起见，可以点击回复以后直接在弹出的文本框里添加“回复某某：”为开头
    - 回复人能删除自己的回复
 
-#### 项目文件管理空间页面
+##### 文件管理空间页面
 
 1. 有上传按键，点击应当弹出对话框，填充文件名、上传文件
 2. 文件一行行展示，有文件名、上传人、下载按钮
@@ -213,28 +230,24 @@ A course project for Advanced Web Technologies at FDU.
 - user (<u>u_id</u>, type, u_name, gender, password, description, image)  
 
   - image为布尔值，true表示已经上传头像，名称为u_id.jpg；false表示使用默认头像
-  
 - course (<u>c_id</u>, t_id, c_name, point, class_time, description, status)  
 
   - status: 未发布，已发布，已删除
   - t_id是课程教师，reference u_id@user, type=teacher
-  
 - project (<u>p_id</u>, c_id, p_name, description, grading_status, task_grade_ratio, discussion_grade_ratio, self_grade_ratio, mutual_grade_ratio)  
 
   - grading_status: 未评分，已评分
   - c_id是所属的课程，reference c_id@course
   - task_grade_ratio, discussion_grade_ratio 各为前端教师评分占比的一半
   - self_grade_ratio, mutual_grade_ratio 可以为null，表示不开启自评、互评，不为null则表示评分占比
-
-- assignment (<u>a_id</u>, p_id, s_id, a_name, a_description, importance, a_start_date, a_end_date, a_point, a_status)  
+- assignment (<u>a_id</u>, p_id, s_id, a_name, a_description, importance, a_start_date, a_end_date, a_point, a_status, urge)  
 
   - s_id是被分配的同学，reference u_id@user, type=student
   - p_id是所属于的项目，reference p_id@project
-
-- take (<u>s_id</u>, <u>c_id</u>)  
+  - urge是布尔值，表示目前该任务有没有被催促，默认false，学生进入项目详情页面时会根据该值弹出提示的催促尽快完成信息
+- student_course (<u>s_id</u>, <u>c_id</u>)  
 
   - s_id是被分配的同学，reference u_id@user, type=student
-
 - student_project (<u>s_id</u>, <u>p_id</u>, is_group_leader, task_grade, discussion_grade, self_grade, mutual_grade, teacher_grade)  
 
   - is_group_leader表示是否为leader，还是只是组员
@@ -243,28 +256,27 @@ A course project for Advanced Web Technologies at FDU.
   - task_grade, discussion_grade, self_grade, mutual_grade, teacher_grade
     - 默认为0，取数据时要考虑project表中是否评分状态为已评分，如果未评分需要自行计算数据，如果已评分则写入该表，通过该表查询
     - 总分需要去project表中查询占比，然后与这里的分数做加权平均得到
-
-- 讨论版数据（每个project有一个讨论版，讨论版可以有好多帖子，每个帖子包含发帖人、主题、内容、时间戳；每个帖子有好多回复，每个回复有回复人、时间戳）
-
-  > 按照老师的截图，是不是没有主题？我们能不能把回复和发帖合并在一个表(例如增加一个bool属性为reply，以及reply_d_id)？老师和学生的id是否合并在一起会对这个表格产生影响，或者我们将id设计为S/T/A+学号/工号/管理员编号，这样就能直接分辨是谁发的帖子(李)
-
+- discussion (<u>d_id</u>, p_id, u_id, content, time)
+- p_id是所属于的项目，reference p_id@project
+  - u_id是老师或者学生，reference u_id@user, type=student || teacher
+- reply (<u>r_id</u>, d_id, u_id, content, time)
+  - 讨论版数据（每个project有一个讨论版，讨论版可以有好多帖子，每个帖子包含发帖人、主题、内容、时间戳；每个帖子有好多回复，每个回复有回复人、时间戳）
+  - u_id是老师或者学生，reference u_id@user, type=student || teacher
+  - d_id是某个帖子的id，reference d_id@discussion
 - file (<u>f_id</u>, <u>p_id</u>, u_id, f_name, description, file_URL)
 
   - f_name保留原有上传时的文件名
   - fileURL根据f_id和p_id生成
   - p_id是项目，reference p_id@project
   - u_id是老师或者学生，reference u_id@user, type=student || teacher
-
 - evaluation (<u>p_id</u>, <u>active\_s_id</u>, <u>passive\_s_id</u>, grade)
 
   - p_id是项目，reference p_id@project
   - 两个s_id是同学，reference u_id@user, type=student
   - 如果两个s_id相同，表明是自评，不同则是互评
   - 如果来查询自评、互评成绩时还没有评分过，后端应该手动返回未评分而非null
+  - 可以通过后端返回count和sum的形式完成要求，count是0前端就明白还没有人评分
   
-- 
-
-  - 督促信息数据（课程，项目，任务，发信人，收信人，是否已查看）
 
 
 
