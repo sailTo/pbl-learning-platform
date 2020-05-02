@@ -283,7 +283,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ## 按页面分类的接口设计（请求URL、输入、输出）
 
-> 待完善
+> 待完善，或许URL前面能写/api/url，例如/api/login，这样可以避免跟真实页面的请求路径冲突
 
 ### 登录页面
 
