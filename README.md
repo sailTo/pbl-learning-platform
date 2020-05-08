@@ -231,10 +231,11 @@ A course project for Advanced Web Technologies at FDU.
 
   - image为布尔值，true表示已经上传头像，名称为u_id.jpg；false表示使用默认头像
   
-- course (<u>c_id</u>, t_id, c_name, point, ~~class_time~~, description, status)  
+- course (<u>c_id</u>, t_id, c_name, point, ~~class_time~~, description, status,image_URL)  
 
   - status: 未发布，已发布，已删除
   - t_id是课程教师，reference u_id@user, type=teacher
+  - image_URL为课程封面URL
   
 - project (<u>p_id</u>, c_id, p_name, description, grading_status,teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio)  
 
@@ -334,9 +335,9 @@ A course project for Advanced Web Technologies at FDU.
 | 字段名  | 说明                                                       |  类型  |                             备注                             |
 | :-----: | :--------------------------------------------------------- | :----: | :----------------------------------------------------------: |
 |  code   | 200：登录成功<br>208：用户id不存在<br>209：密码错误        |  int   |                              -                               |
-| message | 200时：携带token<br>208时：用户id不存在<br>209时：密码错误 | String | 在请求/api/login，/api/register和/api/searchId以外的api时需要以pbl_token的名字携带于header中以做身份校验，用户登录超过2个小时则状态失效<br>token设计：u_id+毫秒数+密码md5码后5位 |
-| content | json序列化的User对象                                       |  User  |    User对象的属性有u_id,type, u_name, gender,description     |
-|  image  | 200时：携带图像url<br>208/209时：空字符串                  | String |                              -                               |
+| message | 200时：携带token<br>208时：用户id不存在<br>209时：密码错误 | String | 在请求/api/login，/api/register和/api/searchId以外的api时需要以pbl_token的名字携带于header中以做身份校验，用户登录超过2个小时则状态失效<br>token设计：u_id+毫秒数+密码md5码后5位<br>例子：12345_5000_AB2DC |
+|  user   | json序列化的User对象                                       | String |    User对象的属性有u_id,type, u_name, gender,description     |
+|  image  | 200时：携带图像url<br>其它时：null                         | String |                              -                               |
 
 
 
@@ -379,14 +380,14 @@ A course project for Advanced Web Technologies at FDU.
 
 | 字段名  | 说明                                     |  类型  |                             备注                             |
 | :-----: | :--------------------------------------- | :----: | :----------------------------------------------------------: |
-|  code   | 200：注册成功<br>其它：用户名不存在      |  int   |                              -                               |
+|  code   | 200：注册成功<br>其它：用户名已存在      |  int   |                              -                               |
 | message | 200时：携带token<br>其它时：返回错误信息 | String | 在请求/api/login，/api/register和/api/searchId以外的api时需要以pbl_token的名字携带于header中以做身份校验 |
-| content | json序列化的User对象                     |  User  |     User对象属性有u_id,type, u_name, gender,description      |
-|  image  | 0时：携带图像url<br>-1/-2时：空字符串    | String |                              -                               |
+|  user   | json序列化的User对象                     | String |     User对象属性有u_id,type, u_name, gender,description      |
+|  image  | 0时：携带图像url<br>其它时：null         | String |                              -                               |
 
 ### 个人信息管理、展示页面
 
-接口URL：/api/searchCourse
+接口URL：/api/searchMyCourses
 
 请求方法：GET
 
@@ -398,15 +399,15 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                 |   类型   |                             备注                             |
-| :-----: | :----------------------------------- | :------: | :----------------------------------------------------------: |
-|  code   | 200：查询成功<br>208：登录超时       |   int    |                              -                               |
-| message | 200：无<br>208：登录超时，请重新登录 |  String  |                              -                               |
-| courses | json序列化course数组                 | Course[] | course对象包含属性c_id,t_id,c_name,point, description, status |
+| 字段名  | 说明                                 |  类型  |                             备注                             |
+| :-----: | :----------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
+| message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
+| courses | json序列化course数组                 | String | course对象包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了老师教的课程/学生选的课程 |
 
 
 
-接口URL：/api/searchInformation
+接口URL：/api/searchMyInformation
 
 请求方法：GET
 
@@ -418,16 +419,16 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                      |  类型  |                    备注                     |
-| :-----: | :---------------------------------------- | :----: | :-----------------------------------------: |
-|  code   | 200：查询成功<br>208：登录超时            |  int   |                      -                      |
-| message | 200：无<br>208：登录超时，请重新登录      | String |                      -                      |
-| content | json序列化的User信息                      | String | 属性有u_id,type, u_name, gender,description |
-|  image  | 200时：携带图像url<br>208/209时：空字符串 | String |                      -                      |
+| 字段名  | 说明                                  |  类型  |                    备注                     |
+| :-----: | :------------------------------------ | :----: | :-----------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时        |  int   |                      -                      |
+| message | 200：无<br>208：登录超时，请重新登录  | String |                      -                      |
+| content | json序列化的User信息                  | String | 属性有u_id,type, u_name, gender,description |
+|  image  | 200：携带图像url<br>208/209：空字符串 | String |                      -                      |
 
 
 
-接口URL：/api/changeImage
+接口URL：/api/changeMyImage
 
 请求方法：POST
 
@@ -444,10 +445,11 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :----------------------------------- | :----: | :--: |
 |  code   | 200：修改成功<br>208：登录超时       |  int   |  -   |
 | message | 200：无<br>208：登录超时，请重新登录 | String |  -   |
+|  image  | 200：image_URL<br>208：无            | String |  -   |
 
 
 
-接口URL：/api/changeInformation
+接口URL：/api/changeMyInformation
 
 请求方法：POST
 
@@ -470,9 +472,11 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 课程管理页面
 
-可复用个人信息管理、展示页面的接口：
+可复用个人信息管理、展示页面的接口/api/searchMyCourses，来搜索老师教的课程或学生选择的课程
 
-接口URL：/api/searchCourse
+
+
+接口URL：/api/searchOtherCourses
 
 请求方法：GET
 
@@ -484,13 +488,116 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                 |  类型  |                        备注                         |
-| :-----: | :----------------------------------- | :----: | :-------------------------------------------------: |
-|  code   | 200：查询成功<br>208：登录超时       |  int   |                          -                          |
-| message | 200：无<br>208：登录超时，请重新登录 | String |                          -                          |
-| courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status |
+| 字段名  | 说明                                 |  类型  |                             备注                             |
+| :-----: | :----------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
+| message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
+| courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
 
 
+
+接口URL：/api/searchAllCourses
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
+| :-------: | :--: | :----: | :------: | :----------: |
+| pbl_token |  -   | String |    是    | 用于验证身份 |
+
+返回参数：
+
+| 字段名  | 说明                                 |  类型  |                             备注                             |
+| :-----: | :----------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
+| message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
+| courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了所有课程信息，供管理员查询 |
+
+
+
+接口URL：/api/changeCourseStatus
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |      说明      |  类型  | 是否必填 |     备注     |
+| :-------: | :------------: | :----: | :------: | :----------: |
+| pbl_token |       -        | String |    是    | 用于验证身份 |
+|   c_id    |     课程id     |  int   |    是    |      -       |
+|  status   | 课程修改后状态 | String |    是    | 已发布/删除  |
+
+返回参数：
+
+| 字段名  | 说明                                       |  类型  | 备注 |
+| :-----: | :----------------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br>208：登录超时             |  int   |  -   |
+| message | 200：修改成功<br>208：登录超时，请重新登录 | String |  -   |
+
+
+
+接口URL：/api/changeCourse
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |        说明        |  类型  | 是否必填 |                             备注                             |
+| :-------: | :----------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |         -          | String |    是    |                         用于验证身份                         |
+|  course   | json序列化课程对象 | String |    是    | 课程对象可用属性c_id,t_id,c_name,point, description<br/>这里包含了课程修改后相关信息 |
+
+返回参数：
+
+| 字段名  | 说明                                       |  类型  | 备注 |
+| :-----: | :----------------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br>208：登录超时             |  int   |  -   |
+| message | 200：修改成功<br>208：登录超时，请重新登录 | String |  -   |
+
+
+
+接口URL：/api/addCourse
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |        说明        |     类型      | 是否必填 |                             备注                             |
+| :-------: | :----------------: | :-----------: | :------: | :----------------------------------------------------------: |
+| pbl_token |         -          |    String     |    是    |                         用于验证身份                         |
+|  course   | json序列化课程对象 |    String     |    是    | 课程对象可用属性t_id,c_name,point, description<br/>这里包含了课程创建时收集的相关信息 |
+|   image   |    课程封面图像    | MultipartFile |    是    |                              -                               |
+
+返回参数：
+
+|  字段名   | 说明                                           |  类型  | 备注 |
+| :-------: | :--------------------------------------------- | :----: | :--: |
+|   code    | 200：课程创建成功<br>208：登录超时             |  int   |  -   |
+|  message  | 200：课程创建成功<br>208：登录超时，请重新登录 | String |  -   |
+|   c_id    | 新建课程id                                     |  int   |  -   |
+| image_URL | 新建课程封面图像地址                           | String |  -   |
+
+
+
+接口URL：/api/joinCourse
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |  说明  |     类型      | 是否必填 |     备注     |
+| :-------: | :----: | :-----------: | :------: | :----------: |
+| pbl_token |   -    |    String     |    是    | 用于验证身份 |
+|  course   | 学生id |    String     |    是    |      -       |
+|   image   | 课程id | MultipartFile |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                           |  类型  | 备注 |
+| :-----: | :--------------------------------------------- | :----: | :--: |
+|  code   | 200：成功加入课程<br>208：登录超时             |  int   |  -   |
+| message | 200：成功加入课程<br>208：登录超时，请重新登录 | String |  -   |
 
 ### 项目管理页面
 
@@ -509,13 +616,14 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-|    字段名    | 说明                                            |  类型  |                             备注                             |
-| :----------: | :---------------------------------------------- | :----: | :----------------------------------------------------------: |
-|     code     | 200：查询成功<br>208：登录超时                  |  int   |                              -                               |
-|   message    | 200：无<br>208：登录超时，请重新登录            | String |                              -                               |
-|     type     | 200：用户类型                                   | String |                            S/T/A                             |
-| project_take | 学生已加入项目：p_id<br>学生未加入项目/其它：-1 |  int   |                              -                               |
-|   projects   | json序列化Project数组                           | String | Project对象包含属性p_id,p_name,description, grading_status, assignment_grade_ratio, discussion_grade_ratio, self_grade_ratio, mutual_grade_ratio |
+|    字段名    | 说明                                                   |  类型  |                             备注                             |
+| :----------: | :----------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|     code     | 200：查询成功<br>208：登录超时                         |  int   |                              -                               |
+|   message    | 200：无<br>208：登录超时，请重新登录                   | String |                              -                               |
+|     type     | 200：用户类型                                          | String |                            S/T/A                             |
+| project_take | 学生已加入项目：p_id<br>学生未加入项目/其它：-1        |  int   |                              -                               |
+|   projects   | json序列化Project数组                                  | String | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio,self_grade_ratio, mutual_grade_ratio |
+
 
 
 
@@ -525,10 +633,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |         说明          |  类型  | 是否必填 |                             备注                             |
-| :-------: | :-------------------: | :----: | :------: | :----------------------------------------------------------: |
-| pbl_token |           -           | String |    是    |                         用于验证身份                         |
-|  project  | json序列化Project对象 | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, assignment_grade_ratio, discussion_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
+|  字段名   |                          说明                           |  类型  | 是否必填 |                             备注                             |
+| :-------: | :-----------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |                            -                            | String |    是    |                         用于验证身份                         |
+|  project  |                  json序列化Project对象                  | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
+|  grades   | 200：教师评分细则，json序列化grade对象数组<br/>其它：无 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br/>这里i_grade(学生得分)可不填 |
 
 返回参数：
 
@@ -558,6 +667,29 @@ A course project for Advanced Web Technologies at FDU.
 |  code   | 200：删除成功<br/>208：登录超时<br/>209：删除失败     |  int   |  -   |
 | message | 200：无<br>208：登录超时，请重新登录<br>209：删除失败 | String |  -   |
 
+
+
+接口URL：/api/searchProjectGradeSystem
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                   |  类型  |                             备注                             |
+| :-----: | :----------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时                         |  int   |                              -                               |
+| message | 200：无<br>208：登录超时，请重新登录                   | String |                              -                               |
+| grades  | 200：教师评分细则，json序列化grade对象数组<br/>208：无 | String | grade对象的可用属性为：item_id,description,i_grade,max_grade<br/>这里i_grade(学生得分)可不填 |
+
+
+
 #### 项目详情页面
 
 ##### 任务页面
@@ -570,18 +702,41 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |      说明      |  类型  | 是否必填 |     备注     |
-| :-------: | :------------: | :----: | :------: | :----------: |
-| pbl_token |       -        | String |    是    | 用于验证身份 |
-|   p_id    | 要删除的课程id |  int   |    是    |      -       |
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
 
 返回参数：
 
-|   字段名    | 说明                                                |  类型  |                             备注                             |
-| :---------: | :-------------------------------------------------- | :----: | :----------------------------------------------------------: |
-|    code     | 200：查询<br/>208：登录超时<br/>209：查询失败       |  int   |                              -                               |
-|   message   | 200：无<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
-| assignments | 200：json序列化Assignment数组<br>其它：无           | String | assignment类型包含属性：a_id,a_name,a_description,<br>importance,a_start_date,a_end_date |
+|   字段名    | 说明                                                      |  类型  |                             备注                             |
+| :---------: | :-------------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|    code     | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                              -                               |
+|   message   | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
+| assignments | 200：json序列化Assignment数组<br>其它：无                 | String | assignment类型包含属性：a_id,a_name,a_description,<br>importance,a_start_date,a_end_date |
+
+
+
+接口URL：/api/searchAssignmentDone
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+|   a_id    | 任务id |  int   |    是    |      -       |
+
+返回参数：
+
+|   字段名    | 说明                                                        |  类型  | 备注 |
+| :---------: | :---------------------------------------------------------- | :----: | :--: |
+|    code     | 200：查询成功<br/>208：登录超时<br/>209：查询失败           |  int   |  -   |
+|   message   | 200：查询成功<br>208：登录超时，请重新登录<br>209：查询失败 | String |  -   |
+| assignments | 200：完成该任务的总人数<br>其它：无                         |  int   |  -   |
+|  totalNum   | 200：项目总人数<br>其它：无                                 |  int   |  -   |
 
 
 
@@ -693,7 +848,7 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
-接口URL：/api/searchGrouper
+接口URL：/api/searchGroupers
 
 请求方法：GET
 
@@ -710,11 +865,11 @@ A course project for Advanced Web Technologies at FDU.
 | :------: | :------------------------------------ | :----: | :-----------------------------------: |
 |   code   | 200：搜索成功<br/>208：登录超时       |  int   |                   -                   |
 | message  | 200：无<br/>208：登录超时，请重新登录 | String |                   -                   |
-| done_num | 200：json序列化User对象               |  int   | User对象中可用属性为：<br>u_id,u_name |
+| groupers | 200：json序列化User对象数组           | String | User对象中可用属性为：<br>u_id,u_name |
 
 
 
-这里可以复用上面/api/searchProject，获得该项目的评分方式，再展示相应的接口
+这里可以复用上面/api/searchProjectGradeSystem，获得该项目的评分方式，再展示相应的接口
 
 
 
@@ -735,7 +890,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :----------------------------------------------------- | :----: | :--: |
 |  code   | 200：无<br/>208：登录超时<br>209：暂未评分             |  int   |  -   |
 | message | 200：无<br/>208：登录超时，请重新登录<br>209：暂未评分 | String |  -   |
-|  grade  | 200：自评评分<br>其它：-1                              |  int   |  -   |
+|  grade  | 200：自评评分<br>其它：-1                              | double |  -   |
 
 
 
@@ -818,11 +973,11 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                                     |  类型  |                      备注                      |
-| :-----: | :------------------------------------------------------- | :----: | :--------------------------------------------: |
-|  code   | 200：无<br/>208：登录超时<br>209：教师未评分             |  int   |                       -                        |
-| message | 200：无<br/>208：登录超时，请重新登录<br>209：教师未评分 | String |                       -                        |
-| grades  | 200：教师评分细则，json序列化grade对象数组<br>其它：无   | String | grade对象的属性为：item_id,description,i_grade |
+| 字段名  | 说明                                                     |  类型  |                           备注                           |
+| :-----: | :------------------------------------------------------- | :----: | :------------------------------------------------------: |
+|  code   | 200：无<br/>208：登录超时<br>209：教师未评分             |  int   |                            -                             |
+| message | 200：无<br/>208：登录超时，请重新登录<br>209：教师未评分 | String |                            -                             |
+| grades  | 200：教师评分细则，json序列化grade对象数组<br>其它：无   | String | grade对象的属性为：item_id,description,i_grade,max_grade |
 
 
 
@@ -849,7 +1004,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ##### 讨论版页面
 
-接口URL：/api/searchDiscussion
+接口URL：/api/searchDiscussions
 
 请求方法：GET
 
@@ -887,7 +1042,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :------------------------------------------ | :----: | :--: |
 |  code   | 200：发布成功<br/>208：登录超时             |  int   |  -   |
 | message | 200：发布成功<br/>208：登录超时，请重新登录 | String |  -   |
-|  d_id   | 200：新创建的discussion id<br>208：-1       | String |  -   |
+|  d_id   | 200：新创建的discussion id<br>208：-1       |  int   |  -   |
 
 
 
@@ -949,7 +1104,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :------------------------------------------ | :----: | :--: |
 |  code   | 200：发布成功<br/>208：登录超时             |  int   |  -   |
 | message | 200：发布成功<br/>208：登录超时，请重新登录 | String |  -   |
-|  r_id   | 200：新创建的reply id<br>208：-1            |   -    |  -   |
+|  r_id   | 200：新创建的reply id<br>208：-1            |  int   |  -   |
 
 
 
@@ -959,10 +1114,10 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
-| :-------: | :--: | :----: | :------: | :----------: |
-| pbl_token |  -   | String |    是    | 用于验证身份 |
-|   r_id    |  -   | String |    是    |      -       |
+|  字段名   |   说明   |  类型  | 是否必填 |     备注     |
+| :-------: | :------: | :----: | :------: | :----------: |
+| pbl_token |    -     | String |    是    | 用于验证身份 |
+|   r_id    | 回复帖id |  int   |    是    |      -       |
 
 返回参数：
 
@@ -975,11 +1130,247 @@ A course project for Advanced Web Technologies at FDU.
 
 ##### 文件管理空间页面
 
+接口URL：/api/searchAllFiles
 
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  |                             备注                             |
+| :-----: | :----------------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：上传成功<br/>208：登录超时<br>209：上传失败             |  int   |                              -                               |
+| message | 200：上传成功<br/>208：登录超时，请重新登录<br>209：文件上传失败 | String |                              -                               |
+|  files  | 200：json序列化file对象数组<br>208：null<br>209：null        | String | file对象属性包含：<br>f_id,p_id,u_id,f_name,description,file_URL |
+
+
+
+接口URL：/api/uploadFile
+
+请求方法：POST
+
+请求参数：
+
+|   字段名    |     说明     |     类型      | 是否必填 |     备注     |
+| :---------: | :----------: | :-----------: | :------: | :----------: |
+|  pbl_token  |      -       |    String     |    是    | 用于验证身份 |
+|   f_name    |    文件名    |    String     |    是    |      -       |
+|    p_id     |    项目id    |      int      |    是    |      -       |
+|    file     | 要上传的文件 | MultipartFile |    是    |      -       |
+| description |   文件描述   |    String     |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  |                             备注                             |
+| :-----: | :----------------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：上传成功<br/>208：登录超时<br>209：上传失败             |  int   |                              -                               |
+| message | 200：上传成功<br/>208：登录超时，请重新登录<br>209：文件上传失败 | String |                              -                               |
+|  file   | 200：json序列化file对象<br>208：null<br>209：null            | String | file对象属性包含：<br>f_id,p_id,u_id,f_name,description,file_URL |
+
+
+
+接口URL：/api/deleteFile
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   f_id    | 文件id |  int   |    是    |      -       |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  | 备注 |
+| :-----: | :----------------------------------------------------------- | :----: | :--: |
+|  code   | 200：删除成功<br/>208：登录超时<br>209：删除失败             |  int   |  -   |
+| message | 200：删除成功<br/>208：登录超时，请重新登录<br>209：删除失败 | String |  -   |
 
 ### 评分页面
 
+这里可以复用项目展示页面的接口：/api/searchProject，获得本课程下所有的项目
 
+
+
+接口URL：/api/countAssignmentDone
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+|       字段名       | 说明                                                      |  类型  |                        备注                        |
+| :----------------: | :-------------------------------------------------------- | :----: | :------------------------------------------------: |
+|        code        | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                         -                          |
+|      message       | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                         -                          |
+| totalAssignmentNum | 200：项目总任务数<br>其它：-1                             |  int   |                         -                          |
+|  doneInformations  | 200：json序列化的学生完成情况数组<br>其它：无             | String | doneInformation对象包含属性<br>s_id,s_name,doneNum |
+
+
+
+接口URL：/api/countDiscussion
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+|       字段名        | 说明                                                      |  类型  |                           备注                           |
+| :-----------------: | :-------------------------------------------------------- | :----: | :------------------------------------------------------: |
+|        code         | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                            -                             |
+|       message       | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                            -                             |
+|    maxDiscussNum    | 200：最大讨论数<br>其它：-1                               |  int   |                            -                             |
+| discussInformations | 200：json序列化的学生讨论情况数组<br>其它：无             | String | discussInformation对象包含属性<br>s_id,s_name,discussNum |
+
+
+
+接口URL：/api/getGradeItems
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id |  int   |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                      |  类型  |                             备注                             |
+| :-----: | :-------------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                              -                               |
+| message | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
+| grades  | 200：json序列化grade对象<br>其它：null                    | String | grade对象的属性为：item_id,description,i_grade,max_grade<br/>这里的i_grade可以不填 |
+
+
+
+接口URL：/api/evaluateByTeacher
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |        说明         |  类型  | 是否必填 |                             备注                             |
+| :-------: | :-----------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |          -          | String |    是    |                         用于验证身份                         |
+|   p_id    |       项目id        |  int   |    是    |                              -                               |
+|   s_id    |       学生id        |  int   |    是    |                              -                               |
+|   grade   | json序列化grade对象 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br>这里的description,max_grade可以不填 |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  | 备注 |
+| :-----: | :----------------------------------------------------------- | :----: | :--: |
+|  code   | 200：评分成功<br/>208：登录超时<br>209：评分失败             |  int   |  -   |
+| message | 200：评分成功<br/>208：登录超时，请重新登录<br>209：评分失败 | String |  -   |
 
 ### 用户管理页面
 
+接口URL：/api/searchAllUsers
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
+| :-------: | :--: | :----: | :------: | :----------: |
+| pbl_token |  -   | String |    是    | 用于验证身份 |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  |                      备注                       |
+| :-----: | :----------------------------------------------------------- | :----: | :---------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时                               |  int   |                        -                        |
+| message | 200：查询成功<br>208：登录超时，请重新登录                   | String |                        -                        |
+|  users  | json序列化的User对象数组                                     | String | User属性有u_id,type, u_name, gender,description |
+| images  | 200时：json序列化图像url数组，顺序与用户数组一致<br>208时：空字符串 | String |                        -                        |
+
+
+
+接口URL：/api/changeImage
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |  说明  |     类型      | 是否必填 |        备注        |
+| :-------: | :----: | :-----------: | :------: | :----------------: |
+| pbl_token |   -    |    String     |    是    |    用于验证身份    |
+|   u_id    | 学工号 |      id       |    是    |         -          |
+|   image   |  头像  | MultipartFile |    否    | 无则修改为默认头像 |
+
+返回参数：
+
+| 字段名  | 说明                                 |  类型  | 备注 |
+| :-----: | :----------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br>208：登录超时       |  int   |  -   |
+| message | 200：无<br>208：登录超时，请重新登录 | String |  -   |
+|  image  | 200：image_URL<br>208：无            | String |  -   |
+
+
+
+接口URL：/api/changeInformation
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |         说明         |  类型  | 是否必填 |                    备注                     |
+| :-------: | :------------------: | :----: | :------: | :-----------------------------------------: |
+| pbl_token |          -           | String |    是    |                用于验证身份                 |
+|  content  | json序列化的User对象 | String |    是    | 属性有u_id,type, u_name, gender,description |
+
+返回参数：
+
+| 字段名  | 说明                                       |  类型  | 备注 |
+| :-----: | :----------------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br>208：登录超时             |  int   |  -   |
+| message | 200：修改成功<br>208：登录超时，请重新登录 | String |  -   |
+
+
+
+接口URL：/api/addUser
+
+请求方法：POST
+
+请求参数：
+
+|   字段名    |   说明   |     类型      | 是否必填 |        备注        |
+| :---------: | :------: | :-----------: | :------: | :----------------: |
+|    u_id     |  学工号  |      int      |    是    |         -          |
+|    type     | 用户身份 |    String     |    是    |       S/T/A        |
+|   u_name    |   姓名   |    String     |    是    |         -          |
+|   gender    |   性别   |    String     |    是    |       M/F/N        |
+|  password   |   密码   |    String     |    是    |     md5码加密      |
+|    image    |   头像   | MultipartFile |    否    | 没有则生成默认头像 |
+| description |   描述   |    String     |    否    |         -          |
+
+返回参数：
+
+| 字段名  | 说明                                     |  类型  |                             备注                             |
+| :-----: | :--------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：注册成功<br>其它：用户名不存在      |  int   |                              -                               |
+| message | 200时：携带token<br>其它时：返回错误信息 | String | 在请求/api/login，/api/register和/api/searchId以外的api时需要以pbl_token的名字携带于header中以做身份校验 |
+| content | json序列化的User对象                     |  User  |     User对象属性有u_id,type, u_name, gender,description      |
+|  image  | 0时：携带图像url<br>-1/-2时：空字符串    | String |                              -                               |
