@@ -19,7 +19,7 @@ import { NgZorroAntdModule} from 'ng-zorro-antd'
 import { LoginComponent } from './pages/login/login.component';
 import { RadioComponent } from './pages/radio/radio.component';
 import { SignupComponent } from './pages/signup/signup.component';
-import { HomeComponent } from './pages/home/home/home.component';
+import { DescriptionBorderComponent } from './pages/home/description-border/description-border.component';
 
 
 registerLocaleData(zh);
@@ -30,7 +30,7 @@ registerLocaleData(zh);
     LoginComponent,
     RadioComponent,
     SignupComponent,
-    HomeComponent
+    DescriptionBorderComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,8 +44,8 @@ registerLocaleData(zh);
     ReactiveFormsModule,
     NgZorroAntdModule,
     RouterModule.forRoot([
-      {path:'login' , component : LoginComponent},
-      {path:'signup' , component : SignupComponent}
+      // {path:'login' , component : LoginComponent},
+      // {path:'signup' , component : SignupComponent}
     ]),
   ],
   
