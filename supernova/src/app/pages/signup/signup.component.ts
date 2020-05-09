@@ -15,9 +15,8 @@ export class SignupComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    //向数据库请求判断用户名工号是否合法 若合法则进入首页 否则报出错误信息
-    
-    alert(this.validateForm.controls["gender"].value);
+    // 向数据库请求判断用户名工号是否合法 若合法则进入首页 否则报出错误信息
+    alert(this.validateForm.controls.gender.value);
   }
 
   updateConfirmValidator(): void {
@@ -32,7 +31,7 @@ export class SignupComponent implements OnInit {
       return { confirm: true, error: true };
     }
     return {};
-  };
+  }
 
   getCaptcha(e: MouseEvent): void {
     e.preventDefault();
@@ -42,14 +41,14 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      id: [null, [Validators.pattern("[0-9]*") , Validators.required]],
+      id: [null, [Validators.pattern('[0-9]*') , Validators.required]],
       name: [null, [
         Validators.maxLength(6),
-        Validators.pattern("[^0-9]+"),
+        Validators.pattern('[^0-9]+'),
         Validators.required]],
-      gender:[null,[Validators.required]],
+      gender: [null, [Validators.required]],
       password: [null, [
-        Validators.pattern("[0-9]+[a-zA-Z]+"),
+        Validators.pattern('[0-9]+[a-zA-Z]+'),
         Validators.minLength(8),
         Validators.minLength(16),
         Validators.required
