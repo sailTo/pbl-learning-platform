@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IconsProviderModule } from './icons-provider.module';
@@ -13,12 +14,23 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import {ReactiveFormsModule} from '@angular/forms';
+import { NgZorroAntdModule} from 'ng-zorro-antd'
+import { LoginComponent } from './pages/login/login.component';
+import { RadioComponent } from './pages/radio/radio.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { HomeComponent } from './pages/home/home/home.component';
+
 
 registerLocaleData(zh);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RadioComponent,
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +40,16 @@ registerLocaleData(zh);
     NzMenuModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    NgZorroAntdModule,
+    RouterModule.forRoot([
+      {path:'login' , component : LoginComponent},
+      {path:'signup' , component : SignupComponent}
+    ]),
   ],
+  
+
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })
