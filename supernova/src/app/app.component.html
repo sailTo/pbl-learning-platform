@@ -8,7 +8,8 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
+        <!-- /assets/supernova-logo.png -->
+        <h1>Supernova PBL System</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -18,6 +19,12 @@
             <a routerLink="/welcome">Welcome</a>
           </li>
           <li nz-menu-item nzMatchRouter>
+            <a routerLink="/login">Login</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/signup">Signup</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
             <a>Monitor</a>
           </li>
           <li nz-menu-item nzMatchRouter>
@@ -25,13 +32,23 @@
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="学习管理" nzIcon="folder">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
+            <a routerLink="/courses">课程列表</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>项目列表</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>评分查询</a>
           </li>
         </ul>
       </li>
+      <!-- <li nz-menu-item nz-tooltip nzTooltipPlacement="right" nzMatchRouter>
+        <i nz-icon nzType="home"></i>
+        <span><a>课程管理</a></span>
+      </li> -->
     </ul>
   </nz-sider>
   <nz-layout>
