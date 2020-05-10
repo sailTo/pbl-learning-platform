@@ -430,7 +430,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeMyImage
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -451,7 +451,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeMyInformation
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -518,7 +518,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeCourseStatus
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -539,7 +539,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeCourse
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -651,7 +651,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/deleteProject
 
-请求方法：POST
+请求方法：DELETE
 
 请求参数：
 
@@ -762,7 +762,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeAssignment
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -782,7 +782,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/deleteAssignment
 
-请求方法：POST
+请求方法：DELETE
 
 请求参数：
 
@@ -803,7 +803,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/urgeAssignment
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -1048,7 +1048,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/deleteDiscussion
 
-请求方法：POST
+请求方法：DELETE
 
 请求参数：
 
@@ -1110,7 +1110,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/deleteReply
 
-请求方法：POST
+请求方法：DELETE
 
 请求参数：
 
@@ -1177,7 +1177,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/deleteFile
 
-请求方法：POST
+请求方法：DELETE
 
 请求参数：
 
@@ -1310,7 +1310,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeImage
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
@@ -1332,7 +1332,7 @@ A course project for Advanced Web Technologies at FDU.
 
 接口URL：/api/changeInformation
 
-请求方法：POST
+请求方法：PUT
 
 请求参数：
 
