@@ -1,51 +1,79 @@
 package com.SuperNova.model;
 
-import java.util.Date;
 import javax.persistence.*;
 
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "u_id")
+    private String uId;
 
-    private String username;
+    private String type;
+
+    @Column(name = "u_name")
+    private String uName;
+
+    private String gender;
 
     private String password;
 
-    @Column(name = "nick_name")
-    private String nickName;
+    private Boolean image;
 
-    private Integer sex;
-
-    @Column(name = "register_date")
-    private Date registerDate;
+    private String description;
 
     /**
-     * @return id
+     * @return u_id
      */
-    public Integer getId() {
-        return id;
+    public String getuId() {
+        return uId;
     }
 
     /**
-     * @param id
+     * @param uId
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 
     /**
-     * @return username
+     * @return type
      */
-    public String getUsername() {
-        return username;
+    public String getType() {
+        return type;
     }
 
     /**
-     * @param username
+     * @param type
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return u_name
+     */
+    public String getuName() {
+        return uName;
+    }
+
+    /**
+     * @param uName
+     */
+    public void setuName(String uName) {
+        this.uName = uName;
+    }
+
+    /**
+     * @return gender
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * @param gender
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     /**
@@ -63,44 +91,30 @@ public class User {
     }
 
     /**
-     * @return nick_name
+     * @return image
      */
-    public String getNickName() {
-        return nickName;
+    public Boolean getImage() {
+        return image;
     }
 
     /**
-     * @param nickName
+     * @param image
      */
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setImage(Boolean image) {
+        this.image = image;
     }
 
     /**
-     * @return sex
+     * @return description
      */
-    public Integer getSex() {
-        return sex;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param sex
+     * @param description
      */
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    /**
-     * @return register_date
-     */
-    public Date getRegisterDate() {
-        return registerDate;
-    }
-
-    /**
-     * @param registerDate
-     */
-    public void setRegisterDate(Date registerDate) {
-        this.registerDate = registerDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

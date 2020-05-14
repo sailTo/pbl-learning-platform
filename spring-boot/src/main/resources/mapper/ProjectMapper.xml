@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SuperNova.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.SuperNova.model.Project">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="p_name" jdbcType="CHAR" property="pName" />
+    <result column="grading_status" jdbcType="BIT" property="gradingStatus" />
+    <result column="teacher_grade_ratio" jdbcType="INTEGER" property="teacherGradeRatio" />
+    <result column="self_grade_ratio" jdbcType="INTEGER" property="selfGradeRatio" />
+    <result column="mutual_grade_ratio" jdbcType="INTEGER" property="mutualGradeRatio" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+</mapper>

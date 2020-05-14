@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SuperNova.dao.ReplyMapper">
+  <resultMap id="BaseResultMap" type="com.SuperNova.model.Reply">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <result column="u_id" jdbcType="CHAR" property="uId" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+</mapper>

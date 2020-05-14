@@ -5,11 +5,12 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <id column="u_id" jdbcType="CHAR" property="uId" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="u_name" jdbcType="CHAR" property="uName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="image" jdbcType="BIT" property="image" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
 </mapper>
