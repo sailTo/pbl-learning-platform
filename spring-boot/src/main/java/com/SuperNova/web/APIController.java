@@ -1,8 +1,6 @@
 package com.SuperNova.web;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.SuperNova.core.Result;
 import com.SuperNova.core.ResultGenerator;
 
@@ -14,4 +12,6 @@ public class APIController {
     public Result hello() {
         return ResultGenerator.genSuccessResult();
     }
+
+
 }

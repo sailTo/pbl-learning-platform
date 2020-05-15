@@ -586,11 +586,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |  说明  |     类型      | 是否必填 |     备注     |
-| :-------: | :----: | :-----------: | :------: | :----------: |
-| pbl_token |   -    |    String     |    是    | 用于验证身份 |
-|  course   | 学生id |    String     |    是    |      -       |
-|   image   | 课程id | MultipartFile |    是    |      -       |
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   s_id    | 学生id | String |    是    |      -       |
+|   c_id    | 课程id |  int   |    是    |      -       |
 
 返回参数：
 
@@ -1052,10 +1052,10 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|   字段名   | 说明 |  类型  | 是否必填 |     备注     |
-| :--------: | :--: | :----: | :------: | :----------: |
-| pbl_token  |  -   | String |    是    | 用于验证身份 |
-| discussion |  -   | String |    是    |      -       |
+|   字段名   |            说明            |  类型  | 是否必填 |                        备注                         |
+| :--------: | :------------------------: | :----: | :------: | :-------------------------------------------------: |
+| pbl_token  |             -              | String |    是    |                    用于验证身份                     |
+| discussion | json序列化的discussion对象 | String |    是    | discussion对象包含属性：d_id,p_id,u_id,content,time |
 
 返回参数：
 
@@ -1275,7 +1275,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-------: | :-----------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token |          -          | String |    是    |                         用于验证身份                         |
 |   p_id    |       项目id        |  int   |    是    |                              -                               |
-|   s_id    |       学生id        |  int   |    是    |                              -                               |
+|   s_id    |       学生id        | String |    是    |                              -                               |
 |   grade   | json序列化grade对象 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br>这里的description,max_grade可以不填 |
 
 返回参数：
@@ -1317,7 +1317,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |  说明  |     类型      | 是否必填 |        备注        |
 | :-------: | :----: | :-----------: | :------: | :----------------: |
 | pbl_token |   -    |    String     |    是    |    用于验证身份    |
-|   u_id    | 学工号 |      id       |    是    |         -          |
+|   u_id    | 学工号 |    String     |    是    |         -          |
 |   image   |  头像  | MultipartFile |    否    | 无则修改为默认头像 |
 
 返回参数：
@@ -1356,15 +1356,12 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|   字段名    |   说明   |     类型      | 是否必填 |        备注        |
-| :---------: | :------: | :-----------: | :------: | :----------------: |
-|    u_id     |  学工号  |      int      |    是    |         -          |
-|    type     | 用户身份 |    String     |    是    |       S/T/A        |
-|   u_name    |   姓名   |    String     |    是    |         -          |
-|   gender    |   性别   |    String     |    是    |       M/F/N        |
-|  password   |   密码   |    String     |    是    |     md5码加密      |
-|    image    |   头像   | MultipartFile |    否    | 没有则生成默认头像 |
-| description |   描述   |    String     |    否    |         -          |
+|  字段名   |       说明       |     类型      | 是否必填 |                      备注                       |
+| :-------: | :--------------: | :-----------: | :------: | :---------------------------------------------: |
+| pbl_token |        -         |    String     |    是    |                  用于验证身份                   |
+|   user    | json序列化的User |    String     |    是    | User属性有u_id,type, u_name, gender,description |
+| password  |       密码       |    String     |    是    |                    md5码加密                    |
+|   image   |       头像       | MultipartFile |    否    |               没有则生成默认头像                |
 
 返回参数：
 
