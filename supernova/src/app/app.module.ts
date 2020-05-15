@@ -14,12 +14,8 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-// import { LoginComponent } from './pages/login/login.component';
-// import { RadioComponent } from './pages/radio/radio.component';
-// import { SignupComponent } from './pages/signup/signup.component';
-// import { DescriptionBorderComponent } from './pages/home/description-border/description-border.component';
+
+
 
 
 registerLocaleData(zh);
@@ -27,10 +23,6 @@ registerLocaleData(zh);
 @NgModule({
   declarations: [
     AppComponent,
-    // LoginComponent,
-    // RadioComponent,
-    // SignupComponent,
-    // DescriptionBorderComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,13 +33,13 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    NgZorroAntdModule,
     RouterModule.forRoot([
       // {path:'login' , component : LoginComponent},
       // {path:'signup' , component : SignupComponent}
     ]),
   ],
+  
+
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })

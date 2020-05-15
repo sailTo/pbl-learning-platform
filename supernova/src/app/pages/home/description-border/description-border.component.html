@@ -1,32 +1,99 @@
 
-    <nz-descriptions nzTitle="User Info" nzBordered>
-      <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Order Time">
-        2018-04-24 18:00:00
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Usage Time" [nzSpan]="2">
-        2018-04-24 18:00:00 To 2019-04-24 18:00:00
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Status" [nzSpan]="3">
-        <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
-      </nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Negotiated Amount">$80.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Official Receipts">$60.00</nz-descriptions-item>
-      <nz-descriptions-item nzTitle="Config Info">
-        Data disk type: MongoDB
-        <br />
-        Database version: 3.4
-        <br />
-        Package: dds.mongo.mid
-        <br />
-        Storage space: 10 GB
-        <br />
-        Replication_factor:3
-        <br />
-        Region: East China 1<br />
-      </nz-descriptions-item>
-    </nz-descriptions>
+
+    
+
+ <div style="text-align: center;" #default>
+  <div>
+    <nz-avatar nzIcon="user" [nzSize]="172"></nz-avatar>
+  </div>
+  <br>
+  <br>
+  <br>
+  <!-- nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" -->
+ <div *ngIf="canEdit">
+  <nz-upload
+  class="avatar-uploader"
+  nzAction="G:\大三\大三下\高级web\lab\pj\pbl-learning-platform-master\pbl-learning-platform\supernova\upload"
+  nzName="avatar"
+  [nzShowUploadList]="false"
+  [nzBeforeUpload]="beforeUpload"
+  (nzChange)="handleChange($event)"
+>
+<button nz-button><i nz-icon nzType="upload"></i>上传你的头像</button>
+</nz-upload>
+<button nz-button (click)="resetAvatar()">恢复默认头像</button>
+</div>
+
+
+</div>
+    <div *ngIf="!canEdit;else editTemplate">
+      <!-- <div style="text-align: center;" #default>
+        <div>
+          <nz-avatar nzIcon="user" [nzSize]="172"></nz-avatar>
+        </div>
+        <br>
+        <br>
+        <br>  
+    </div> -->
+      <span style="float: right;">
+        <button nz-button  nzType="default" (click)="startEdit()">
+          编辑
+      </button>
+      </span>
+      <nz-descriptions nzTitle="个人信息" nzBordered>
+        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">{{datas.name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">{{datas.id}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="性别" [nzSpan]="2">{{datas.gender}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="个人简介" >
+          {{datas.description}}
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
+      <ng-template #editTemplate>
+        
+      <nz-descriptions nzTitle="个人信息" nzBordered >
+        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
+          <input type="text" nz-input [(ngModel)]="datas.name" />
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">
+          {{datas.id}}
+          <!-- <input type="text" nz-input [(ngModel)]="datas.id" /> -->
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="性别" [nzSpan]="2">
+          <!-- <input type="text" nz-input [(ngModel)]="datas.gender" /> -->
+          <nz-radio-group [(ngModel)]="datas.gender" >
+          
+            <label nz-radio nzValue="男">男</label>
+            <label nz-radio nzValue="女">女</label>
+            <label nz-radio nzValue="未知">未知</label>
+        </nz-radio-group>
+          <!-- 改成单选框，选择性别 -->
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="个人简介" >
+          <input type="text" nz-input [(ngModel)]="datas.description" />
+        </nz-descriptions-item>
+      </nz-descriptions>
+      
+      <div nz-row [nzGutter]="16">
+      <span nz-col [nzSpan]="8" >
+        <button nz-button  nzType="primary" (click)="saveEdit()">
+          保存
+      </button>
+      </span>
+      <span nz-col [nzSpan]="8" >
+        <button nz-button  nzType="primary" (click)="changePassword()">
+          修改密码
+      </button>
+      </span>
+      <span nz-col [nzSpan]="8">
+      <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()">
+          撤销
+    </button>
+      </span>
+      </div>
+      <!-- <a (click)="saveEdit()">保存</a>
+        <a nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()">Cancel</a> -->
+      </ng-template>
+    
+   
   

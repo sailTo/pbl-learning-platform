@@ -1,65 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable, Observer } from 'rxjs';
 import { UploadFile } from 'ng-zorro-antd/upload';
-interface data{
-  id: string;
-  name: string;
-  gender: string;
-  description: string;
-  courses :courseItems[];
-}
-
-interface courseItems{
-  name: string;
-  path: string;
-  description:string;
-}
-
+import { Observable, Observer } from 'rxjs';
 @Component({
-  selector: 'app-description-border',
-  templateUrl: './description-border.component.html'
+  selector: 'app-avatar',
+  templateUrl: './avatar.component.html',
+  styleUrls: ['./avatar.component.css']
 })
-export class DescriptionBorderComponent implements OnInit {
-  canEdit : boolean;
-  datas: data;
-  copydata:data;
-
+export class AvatarComponent implements OnInit {
+  modify:{canEdit :boolean}={canEdit:false};
   loading = false;
   avatarUrl: string;
+
   constructor(
     private msg: NzMessageService,
-  ){}
-  ngOnInit(){
-    this.datas = {
-      id : "1",
-      name : "wqd",
-      gender : "男",
-      description: "不知道该写点啥",
-      courses : []
-    }
-    this.copydata = JSON.parse(JSON.stringify(this.datas));
-   
-  }
-  startEdit(){
-    this.canEdit = true;
-  }
-
-  cancelEdit(){
-    this.datas = JSON.parse(JSON.stringify(this.copydata));
-    // Object.assign( this.copydata,this.datas);
+    ) {}
   
-    // this.datas = this.copydata;
-    this.canEdit = false;
-  }
-
-  saveEdit(){
-    //向数据库发送数据
-    alert("保存成功!");
-    this.copydata = JSON.parse(JSON.stringify(this.datas));
-    this.canEdit=false;
+  setCanEdit(edit : boolean){
     
-  }
+    alert("edit:"+edit);
+    this.modify.canEdit = edit;
+    // $scope.apply();
+   
+  } 
+  
+
+  ngOnInit(){
+  //  this.modify.canEdit = false;
+  }  
   beforeUpload = (file: File) => {
     return new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -103,15 +71,4 @@ export class DescriptionBorderComponent implements OnInit {
         break;
     }
   }
-
-  resetAvatar(){
-    //将头像恢复为默认的头像
-
-  }
-
-  changePassword(){
-    //添加弹窗，弹窗中是表单
-  }
-
-
 }

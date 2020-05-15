@@ -1,59 +1,59 @@
 
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+<p>快来注册属于自己的账号吧！</p>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">工号</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="工号输入有误!工号只能为数字！">
-          <input nz-input formControlName="id" id="id" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"> 姓名 </nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名输入有误!长度不能超过六位,且不能包含数字">
-          <input nz-input formControlName="name" id="name" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gender"> 性别 </nz-form-label>
-         <nz-radio-group  formControlName="gender" id="gender">
-        <nz-form-control nzErrorTip="请填入你的性别">
-          <label nz-radio nzValue="male">男</label>
-          <label nz-radio nzValue="female">女</label>
-          <label nz-radio nzValue="unknown">未知</label>
-        </nz-form-control>
-      </nz-radio-group>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
-          <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
-          <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
-          <ng-template #errorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              请输入确认密码！
-            </ng-container>
-            <ng-container *ngIf="control.hasError('confirm')">
-              两次输入的密码应当相同！
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row class="register-area">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-          <label nz-checkbox formControlName="agree">
-            <span>我已经阅读并同意了 <a>超新星协议</a></span>
-          </label>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item nz-row class="register-area">
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-          <button nz-button nzType="primary">注册</button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">工号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="工号输入有误!工号只能为数字！">
+        <input nz-input formControlName="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"> 姓名 </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名输入有误!长度不能超过六位,且不能包含数字">
+        <input nz-input formControlName="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gender"> 性别 </nz-form-label>
+       <nz-radio-group  formControlName="gender" id="gender">
+      <nz-form-control nzErrorTip="请填入你的性别">
+        <label nz-radio nzValue="male">男</label>
+        <label nz-radio nzValue="female">女</label>
+        <label nz-radio nzValue="unknown">未知</label>
+      </nz-form-control>
+    </nz-radio-group>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+        <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+        <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+        <ng-template #errorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            请输入确认密码！
+          </ng-container>
+          <ng-container *ngIf="control.hasError('confirm')">
+            两次输入的密码应当相同！
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <label nz-checkbox formControlName="agree">
+          <span>我已经阅读并同意了 <a>超新星协议</a></span>
+        </label>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary">注册</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>

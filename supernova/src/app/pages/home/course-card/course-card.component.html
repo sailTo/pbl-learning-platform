@@ -1,0 +1,48 @@
+  <nz-divider nzOrientation="left" nzText="我学的课"></nz-divider>
+  <div style="background: #ECECEC;padding:30px;">
+    <div *ngFor=" let course of courseDatas; let i = index">
+      <div  [ngStyle]="gridStyle">
+        <nz-card nzTitle="{{course.name}}" [nzExtra]="extraTemplate">
+        <p>{{course.description}}</p>
+      </nz-card>
+      <ng-template #extraTemplate>
+        <a>进入课程 +{{i}}</a>
+        
+      </ng-template>
+      </div>
+      
+      <!-- <div nz-row [nzGutter]="8" *ngFor="let course of courseDatas.slice(i*3,(i+1)*3);let j =index" >
+          <div nz-col [nzSpan]="8">
+            <nz-card nzTitle="{{course.name}}" [nzExtra]="extraTemplate">
+              <p>{{course.description}}</p>
+            </nz-card>
+          </div>
+          <ng-template #extraTemplate>
+            <a>进入课程 +{{i*3+j}}</a>
+            
+          </ng-template>
+      </div> -->
+      
+     
+      </div>
+    </div>
+ 
+ 
+    <!-- <div style="background: #ECECEC;padding:30px;">
+      <nz-card nz-col [nzSpan]="8" [nzBordered]="false" nzTitle="1" [nzExtra]="extraTemplate">
+        <p>Card content</p>
+        <p>Card content</p>
+        <p>Card content</p>
+      </nz-card>
+      <nz-card nz-col [nzSpan]="8" [nzBordered]="false" nzTitle="1" [nzExtra]="extraTemplate">
+        <p>Card content</p>
+        <p>Card content</p>
+        <p>Card content</p>
+      </nz-card>
+    </div>
+    <ng-template #extraTemplate>
+      <a >进入课程</a>
+      
+    </ng-template> -->
+   
+  

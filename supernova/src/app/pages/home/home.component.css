@@ -1,0 +1,14 @@
+.upper-content {
+    padding: 24px;
+    background: #fff;
+    margin-bottom: 12px;
+
+    /* height: 100%; */
+  }
+  .lower-content {
+    padding: 24px;
+    background: #fff;
+    margin-top: 12px;
+
+    /* height: 100%; */
+  }
