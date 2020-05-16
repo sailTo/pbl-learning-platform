@@ -5,124 +5,124 @@ import javax.persistence.*;
 public class Project {
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Column(name = "c_id")
-    private Integer cId;
+    private Integer c_id;
 
     @Column(name = "p_name")
-    private String pName;
+    private String p_name;
 
     @Column(name = "grading_status")
-    private Boolean gradingStatus;
+    private Boolean grading_status;
 
     @Column(name = "teacher_grade_ratio")
-    private Integer teacherGradeRatio;
+    private Integer teacher_grade_ratio;
 
     @Column(name = "self_grade_ratio")
-    private Integer selfGradeRatio;
+    private Integer self_grade_ratio;
 
     @Column(name = "mutual_grade_ratio")
-    private Integer mutualGradeRatio;
+    private Integer mutual_grade_ratio;
 
     private String description;
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return c_id
      */
-    public Integer getcId() {
-        return cId;
+    public Integer getc_id() {
+        return c_id;
     }
 
     /**
-     * @param cId
+     * @param c_id
      */
-    public void setcId(Integer cId) {
-        this.cId = cId;
+    public void setc_id(Integer c_id) {
+        this.c_id = c_id;
     }
 
     /**
      * @return p_name
      */
-    public String getpName() {
-        return pName;
+    public String getp_name() {
+        return p_name;
     }
 
     /**
-     * @param pName
+     * @param p_name
      */
-    public void setpName(String pName) {
-        this.pName = pName;
+    public void setp_name(String p_name) {
+        this.p_name = p_name;
     }
 
     /**
      * @return grading_status
      */
-    public Boolean getGradingStatus() {
-        return gradingStatus;
+    public Boolean getgrading_status() {
+        return grading_status;
     }
 
     /**
-     * @param gradingStatus
+     * @param grading_status
      */
-    public void setGradingStatus(Boolean gradingStatus) {
-        this.gradingStatus = gradingStatus;
+    public void setgrading_status(Boolean grading_status) {
+        this.grading_status = grading_status;
     }
 
     /**
      * @return teacher_grade_ratio
      */
-    public Integer getTeacherGradeRatio() {
-        return teacherGradeRatio;
+    public Integer getteacher_grade_ratio() {
+        return teacher_grade_ratio;
     }
 
     /**
-     * @param teacherGradeRatio
+     * @param teacher_grade_ratio
      */
-    public void setTeacherGradeRatio(Integer teacherGradeRatio) {
-        this.teacherGradeRatio = teacherGradeRatio;
+    public void setteacher_grade_ratio(Integer teacher_grade_ratio) {
+        this.teacher_grade_ratio = teacher_grade_ratio;
     }
 
     /**
      * @return self_grade_ratio
      */
-    public Integer getSelfGradeRatio() {
-        return selfGradeRatio;
+    public Integer getself_grade_ratio() {
+        return self_grade_ratio;
     }
 
     /**
-     * @param selfGradeRatio
+     * @param self_grade_ratio
      */
-    public void setSelfGradeRatio(Integer selfGradeRatio) {
-        this.selfGradeRatio = selfGradeRatio;
+    public void setself_grade_ratio(Integer self_grade_ratio) {
+        this.self_grade_ratio = self_grade_ratio;
     }
 
     /**
      * @return mutual_grade_ratio
      */
-    public Integer getMutualGradeRatio() {
-        return mutualGradeRatio;
+    public Integer getmutual_grade_ratio() {
+        return mutual_grade_ratio;
     }
 
     /**
-     * @param mutualGradeRatio
+     * @param mutual_grade_ratio
      */
-    public void setMutualGradeRatio(Integer mutualGradeRatio) {
-        this.mutualGradeRatio = mutualGradeRatio;
+    public void setmutual_grade_ratio(Integer mutual_grade_ratio) {
+        this.mutual_grade_ratio = mutual_grade_ratio;
     }
 
     /**

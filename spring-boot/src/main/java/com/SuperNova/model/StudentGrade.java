@@ -6,58 +6,58 @@ import javax.persistence.*;
 public class StudentGrade {
     @Id
     @Column(name = "item_id")
-    private Integer itemId;
+    private Integer item_id;
 
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Id
     @Column(name = "s_id")
-    private String sId;
+    private String s_id;
 
     private Integer grade;
 
     /**
      * @return item_id
      */
-    public Integer getItemId() {
-        return itemId;
+    public Integer getitem_id() {
+        return item_id;
     }
 
     /**
-     * @param itemId
+     * @param item_id
      */
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setitem_id(Integer item_id) {
+        this.item_id = item_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return s_id
      */
-    public String getsId() {
-        return sId;
+    public String gets_id() {
+        return s_id;
     }
 
     /**
-     * @param sId
+     * @param s_id
      */
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void sets_id(String s_id) {
+        this.s_id = s_id;
     }
 
     /**

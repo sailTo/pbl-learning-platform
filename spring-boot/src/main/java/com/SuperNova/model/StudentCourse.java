@@ -6,37 +6,37 @@ import javax.persistence.*;
 public class StudentCourse {
     @Id
     @Column(name = "s_id")
-    private String sId;
+    private String s_id;
 
     @Id
     @Column(name = "c_id")
-    private Integer cId;
+    private Integer c_id;
 
     /**
      * @return s_id
      */
-    public String getsId() {
-        return sId;
+    public String gets_id() {
+        return s_id;
     }
 
     /**
-     * @param sId
+     * @param s_id
      */
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void sets_id(String s_id) {
+        this.s_id = s_id;
     }
 
     /**
      * @return c_id
      */
-    public Integer getcId() {
-        return cId;
+    public Integer getc_id() {
+        return c_id;
     }
 
     /**
-     * @param cId
+     * @param c_id
      */
-    public void setcId(Integer cId) {
-        this.cId = cId;
+    public void setc_id(Integer c_id) {
+        this.c_id = c_id;
     }
 }

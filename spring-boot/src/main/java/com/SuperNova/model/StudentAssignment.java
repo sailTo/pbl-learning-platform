@@ -6,15 +6,15 @@ import javax.persistence.*;
 public class StudentAssignment {
     @Id
     @Column(name = "a_id")
-    private Integer aId;
+    private Integer a_id;
 
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Id
     @Column(name = "s_id")
-    private String sId;
+    private String s_id;
 
     private Boolean status;
 
@@ -23,43 +23,43 @@ public class StudentAssignment {
     /**
      * @return a_id
      */
-    public Integer getaId() {
-        return aId;
+    public Integer geta_id() {
+        return a_id;
     }
 
     /**
-     * @param aId
+     * @param a_id
      */
-    public void setaId(Integer aId) {
-        this.aId = aId;
+    public void seta_id(Integer a_id) {
+        this.a_id = a_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return s_id
      */
-    public String getsId() {
-        return sId;
+    public String gets_id() {
+        return s_id;
     }
 
     /**
-     * @param sId
+     * @param s_id
      */
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void sets_id(String s_id) {
+        this.s_id = s_id;
     }
 
     /**

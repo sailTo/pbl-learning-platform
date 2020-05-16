@@ -6,57 +6,57 @@ import javax.persistence.*;
 public class GradeSystem {
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Id
     @Column(name = "item_id")
-    private Integer itemId;
+    private Integer item_id;
 
     @Column(name = "max_grade")
-    private Integer maxGrade;
+    private Integer max_grade;
 
     private String description;
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return item_id
      */
-    public Integer getItemId() {
-        return itemId;
+    public Integer getitem_id() {
+        return item_id;
     }
 
     /**
-     * @param itemId
+     * @param item_id
      */
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
+    public void setitem_id(Integer item_id) {
+        this.item_id = item_id;
     }
 
     /**
      * @return max_grade
      */
-    public Integer getMaxGrade() {
-        return maxGrade;
+    public Integer getmax_grade() {
+        return max_grade;
     }
 
     /**
-     * @param maxGrade
+     * @param max_grade
      */
-    public void setMaxGrade(Integer maxGrade) {
-        this.maxGrade = maxGrade;
+    public void setmax_grade(Integer max_grade) {
+        this.max_grade = max_grade;
     }
 
     /**

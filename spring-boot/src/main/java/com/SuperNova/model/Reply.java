@@ -6,13 +6,13 @@ import javax.persistence.*;
 public class Reply {
     @Id
     @Column(name = "r_id")
-    private Integer rId;
+    private Integer r_id;
 
     @Column(name = "d_id")
-    private Integer dId;
+    private Integer d_id;
 
     @Column(name = "u_id")
-    private String uId;
+    private String u_id;
 
     private Date time;
 
@@ -21,43 +21,43 @@ public class Reply {
     /**
      * @return r_id
      */
-    public Integer getrId() {
-        return rId;
+    public Integer getr_id() {
+        return r_id;
     }
 
     /**
-     * @param rId
+     * @param r_id
      */
-    public void setrId(Integer rId) {
-        this.rId = rId;
+    public void setr_id(Integer r_id) {
+        this.r_id = r_id;
     }
 
     /**
      * @return d_id
      */
-    public Integer getdId() {
-        return dId;
+    public Integer getd_id() {
+        return d_id;
     }
 
     /**
-     * @param dId
+     * @param d_id
      */
-    public void setdId(Integer dId) {
-        this.dId = dId;
+    public void setd_id(Integer d_id) {
+        this.d_id = d_id;
     }
 
     /**
      * @return u_id
      */
-    public String getuId() {
-        return uId;
+    public String getu_id() {
+        return u_id;
     }
 
     /**
-     * @param uId
+     * @param u_id
      */
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setu_id(String u_id) {
+        this.u_id = u_id;
     }
 
     /**

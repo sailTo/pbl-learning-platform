@@ -6,66 +6,66 @@ import javax.persistence.*;
 public class Assignment {
     @Id
     @Column(name = "a_id")
-    private Integer aId;
+    private Integer a_id;
 
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Column(name = "a_name")
-    private String aName;
+    private String a_name;
 
     private Integer importance;
 
     @Column(name = "a_start_date")
-    private Date aStartDate;
+    private Date a_start_date;
 
     @Column(name = "a_end_date")
-    private Date aEndDate;
+    private Date a_end_date;
 
     @Column(name = "a_description")
-    private String aDescription;
+    private String a_description;
 
     /**
      * @return a_id
      */
-    public Integer getaId() {
-        return aId;
+    public Integer geta_id() {
+        return a_id;
     }
 
     /**
-     * @param aId
+     * @param a_id
      */
-    public void setaId(Integer aId) {
-        this.aId = aId;
+    public void seta_id(Integer a_id) {
+        this.a_id = a_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return a_name
      */
-    public String getaName() {
-        return aName;
+    public String geta_name() {
+        return a_name;
     }
 
     /**
-     * @param aName
+     * @param a_name
      */
-    public void setaName(String aName) {
-        this.aName = aName;
+    public void seta_name(String a_name) {
+        this.a_name = a_name;
     }
 
     /**
@@ -85,42 +85,42 @@ public class Assignment {
     /**
      * @return a_start_date
      */
-    public Date getaStartDate() {
-        return aStartDate;
+    public Date geta_start_date() {
+        return a_start_date;
     }
 
     /**
-     * @param aStartDate
+     * @param a_start_date
      */
-    public void setaStartDate(Date aStartDate) {
-        this.aStartDate = aStartDate;
+    public void seta_start_date(Date a_start_date) {
+        this.a_start_date = a_start_date;
     }
 
     /**
      * @return a_end_date
      */
-    public Date getaEndDate() {
-        return aEndDate;
+    public Date geta_end_date() {
+        return a_end_date;
     }
 
     /**
-     * @param aEndDate
+     * @param a_end_date
      */
-    public void setaEndDate(Date aEndDate) {
-        this.aEndDate = aEndDate;
+    public void seta_end_date(Date a_end_date) {
+        this.a_end_date = a_end_date;
     }
 
     /**
      * @return a_description
      */
-    public String getaDescription() {
-        return aDescription;
+    public String geta_description() {
+        return a_description;
     }
 
     /**
-     * @param aDescription
+     * @param a_description
      */
-    public void setaDescription(String aDescription) {
-        this.aDescription = aDescription;
+    public void seta_description(String a_description) {
+        this.a_description = a_description;
     }
 }

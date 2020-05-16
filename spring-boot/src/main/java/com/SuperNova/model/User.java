@@ -5,12 +5,12 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(name = "u_id")
-    private String uId;
+    private String u_id;
 
     private String type;
 
     @Column(name = "u_name")
-    private String uName;
+    private String u_name;
 
     private String gender;
 
@@ -23,15 +23,15 @@ public class User {
     /**
      * @return u_id
      */
-    public String getuId() {
-        return uId;
+    public String getu_id() {
+        return u_id;
     }
 
     /**
-     * @param uId
+     * @param u_id
      */
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setu_id(String u_id) {
+        this.u_id = u_id;
     }
 
     /**
@@ -51,15 +51,15 @@ public class User {
     /**
      * @return u_name
      */
-    public String getuName() {
-        return uName;
+    public String getu_name() {
+        return u_name;
     }
 
     /**
-     * @param uName
+     * @param u_name
      */
-    public void setuName(String uName) {
-        this.uName = uName;
+    public void setu_name(String u_name) {
+        this.u_name = u_name;
     }
 
     /**

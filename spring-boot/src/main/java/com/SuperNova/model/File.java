@@ -5,91 +5,91 @@ import javax.persistence.*;
 public class File {
     @Id
     @Column(name = "f_id")
-    private Integer fId;
+    private Integer f_id;
 
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Column(name = "u_id")
-    private String uId;
+    private String u_id;
 
     @Column(name = "f_name")
-    private String fName;
+    private String f_name;
 
     @Column(name = "file_URL")
-    private String fileUrl;
+    private String file_URL;
 
     private String description;
 
     /**
      * @return f_id
      */
-    public Integer getfId() {
-        return fId;
+    public Integer getf_id() {
+        return f_id;
     }
 
     /**
-     * @param fId
+     * @param f_id
      */
-    public void setfId(Integer fId) {
-        this.fId = fId;
+    public void setf_id(Integer f_id) {
+        this.f_id = f_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return u_id
      */
-    public String getuId() {
-        return uId;
+    public String getu_id() {
+        return u_id;
     }
 
     /**
-     * @param uId
+     * @param u_id
      */
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setu_id(String u_id) {
+        this.u_id = u_id;
     }
 
     /**
      * @return f_name
      */
-    public String getfName() {
-        return fName;
+    public String getf_name() {
+        return f_name;
     }
 
     /**
-     * @param fName
+     * @param f_name
      */
-    public void setfName(String fName) {
-        this.fName = fName;
+    public void setf_name(String f_name) {
+        this.f_name = f_name;
     }
 
     /**
      * @return file_URL
      */
-    public String getFileUrl() {
-        return fileUrl;
+    public String getfile_URL() {
+        return file_URL;
     }
 
     /**
-     * @param fileUrl
+     * @param file_URL
      */
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setfile_URL(String file_URL) {
+        this.file_URL = file_URL;
     }
 
     /**

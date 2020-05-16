@@ -6,105 +6,105 @@ import javax.persistence.*;
 public class StudentProject {
     @Id
     @Column(name = "s_id")
-    private String sId;
+    private String s_id;
 
     @Id
     @Column(name = "p_id")
-    private Integer pId;
+    private Integer p_id;
 
     @Column(name = "is_group_leader")
-    private Boolean isGroupLeader;
+    private Boolean is_group_leader;
 
     @Column(name = "self_grade")
-    private Integer selfGrade;
+    private Integer self_grade;
 
     @Column(name = "mutual_grade")
-    private Integer mutualGrade;
+    private Integer mutual_grade;
 
     @Column(name = "teacher_grade")
-    private Integer teacherGrade;
+    private Integer teacher_grade;
 
     /**
      * @return s_id
      */
-    public String getsId() {
-        return sId;
+    public String gets_id() {
+        return s_id;
     }
 
     /**
-     * @param sId
+     * @param s_id
      */
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void sets_id(String s_id) {
+        this.s_id = s_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getpId() {
-        return pId;
+    public Integer getp_id() {
+        return p_id;
     }
 
     /**
-     * @param pId
+     * @param p_id
      */
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setp_id(Integer p_id) {
+        this.p_id = p_id;
     }
 
     /**
      * @return is_group_leader
      */
-    public Boolean getIsGroupLeader() {
-        return isGroupLeader;
+    public Boolean getis_group_leader() {
+        return is_group_leader;
     }
 
     /**
-     * @param isGroupLeader
+     * @param is_group_leader
      */
-    public void setIsGroupLeader(Boolean isGroupLeader) {
-        this.isGroupLeader = isGroupLeader;
+    public void setis_group_leader(Boolean is_group_leader) {
+        this.is_group_leader = is_group_leader;
     }
 
     /**
      * @return self_grade
      */
-    public Integer getSelfGrade() {
-        return selfGrade;
+    public Integer getself_grade() {
+        return self_grade;
     }
 
     /**
-     * @param selfGrade
+     * @param self_grade
      */
-    public void setSelfGrade(Integer selfGrade) {
-        this.selfGrade = selfGrade;
+    public void setself_grade(Integer self_grade) {
+        this.self_grade = self_grade;
     }
 
     /**
      * @return mutual_grade
      */
-    public Integer getMutualGrade() {
-        return mutualGrade;
+    public Integer getmutual_grade() {
+        return mutual_grade;
     }
 
     /**
-     * @param mutualGrade
+     * @param mutual_grade
      */
-    public void setMutualGrade(Integer mutualGrade) {
-        this.mutualGrade = mutualGrade;
+    public void setmutual_grade(Integer mutual_grade) {
+        this.mutual_grade = mutual_grade;
     }
 
     /**
      * @return teacher_grade
      */
-    public Integer getTeacherGrade() {
-        return teacherGrade;
+    public Integer getteacher_grade() {
+        return teacher_grade;
     }
 
     /**
-     * @param teacherGrade
+     * @param teacher_grade
      */
-    public void setTeacherGrade(Integer teacherGrade) {
-        this.teacherGrade = teacherGrade;
+    public void setteacher_grade(Integer teacher_grade) {
+        this.teacher_grade = teacher_grade;
     }
 }

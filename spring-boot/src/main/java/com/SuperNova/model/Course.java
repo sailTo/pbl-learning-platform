@@ -5,20 +5,20 @@ import javax.persistence.*;
 public class Course {
     @Id
     @Column(name = "c_id")
-    private Integer cId;
+    private Integer c_id;
 
     @Column(name = "t_id")
-    private String tId;
+    private String t_id;
 
     @Column(name = "c_name")
-    private String cName;
+    private String c_name;
 
     private Integer point;
 
     private Integer status;
 
     @Column(name = "image_URL")
-    private String imageUrl;
+    private String image_URL;
 
     private String description;
 
@@ -26,42 +26,42 @@ public class Course {
      * @return c_id
      */
     public Integer getcId() {
-        return cId;
+        return c_id;
     }
 
     /**
-     * @param cId
+     * @param c_id
      */
-    public void setcId(Integer cId) {
-        this.cId = cId;
+    public void setcId(Integer c_id) {
+        this.c_id = c_id;
     }
 
     /**
      * @return t_id
      */
-    public String gettId() {
-        return tId;
+    public String gett_id() {
+        return t_id;
     }
 
     /**
-     * @param tId
+     * @param t_id
      */
-    public void settId(String tId) {
-        this.tId = tId;
+    public void sett_id(String t_id) {
+        this.t_id = t_id;
     }
 
     /**
      * @return c_name
      */
-    public String getcName() {
-        return cName;
+    public String getc_name() {
+        return c_name;
     }
 
     /**
-     * @param cName
+     * @param c_name
      */
-    public void setcName(String cName) {
-        this.cName = cName;
+    public void setc_name(String c_name) {
+        this.c_name = c_name;
     }
 
     /**
@@ -95,15 +95,15 @@ public class Course {
     /**
      * @return image_URL
      */
-    public String getImageUrl() {
-        return imageUrl;
+    public String getimage_URL() {
+        return image_URL;
     }
 
     /**
-     * @param imageUrl
+     * @param image_URL
      */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setimage_URL(String image_URL) {
+        this.image_URL = image_URL;
     }
 
     /**

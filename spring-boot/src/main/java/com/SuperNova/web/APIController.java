@@ -44,7 +44,7 @@ public class APIController {
     }
 
     @PostMapping("/register")
-    public Result register(@RequestParam Integer u_id,
+    public Result register(@RequestParam String u_id,
                            @RequestParam String u_name,
                            @RequestParam String gender,
                            @RequestParam String password,
