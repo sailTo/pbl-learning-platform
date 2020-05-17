@@ -74,7 +74,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 课程管理页面
 
-1. 课程为一个个card排列，展示内容为课程名称、课程简介、教师、学分、学时、以某种形式展示课程是否已经发布（例如有一个蓝色的badge的是已发布，灰色的是未发布，红色的是已删除）
+1. 课程为一个个card排列，展示内容为课程名称、课程简介、教师、学分、~~学时~~、以某种形式展示课程是否已经发布（例如有一个蓝色的badge的是已发布，灰色的是未发布，红色的是已删除）
 
     - 教师看到的分为`我教的课`、`其它课程`
       - 我教的课分为未发布和已发布和已删除，各自有两个按键
@@ -494,7 +494,29 @@ A course project for Advanced Web Technologies at FDU.
 | message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
 | courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
 
-
+> 感觉课程这里的设计有点问题哦，前端需要t_id和教师表join一下，返回值要包含t_name，就是教师名称；同时t_id最好也要，我可以做一个跳转到教师个人页面的链接？（这样的话甚至可以把教师头像的url也给我，我在course card里显示）——黄
+>
+> course: {
+>
+> ​    c_id: number,
+>
+> ​    t_id: number, 
+>
+> ​    c_name: string, 
+>
+> ​    t_name: string, 
+>
+> ​    point: number, 
+>
+> ​    description: string, 
+>
+> ​    status: boolean, // 未发布false, 已发布true
+>
+> ​    c_image_URL: string, // course封面图，没有的话应该返回默认图URL
+>
+> ​    t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
+>
+>   }
 
 接口URL：/api/searchAllCourses
 
