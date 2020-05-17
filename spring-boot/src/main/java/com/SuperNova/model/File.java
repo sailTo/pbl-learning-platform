@@ -4,10 +4,13 @@ import javax.persistence.*;
 
 public class File {
     @Id
+    private String ids;
+
+//    @Id
     @Column(name = "f_id")
     private Integer f_id;
 
-    @Id
+//    @Id
     @Column(name = "p_id")
     private Integer p_id;
 

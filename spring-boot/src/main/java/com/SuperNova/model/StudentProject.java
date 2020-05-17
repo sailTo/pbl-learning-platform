@@ -5,10 +5,13 @@ import javax.persistence.*;
 @Table(name = "student_project")
 public class StudentProject {
     @Id
+    private String ids;
+
+//    @Id
     @Column(name = "s_id")
     private String s_id;
 
-    @Id
+//    @Id
     @Column(name = "p_id")
     private Integer p_id;
 
