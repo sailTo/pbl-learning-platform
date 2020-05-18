@@ -656,12 +656,12 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |                          说明                           |  类型  | 是否必填 |                             备注                             |
-| :-------: | :-----------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
-| pbl_token |                            -                            | String |    是    |                         用于验证身份                         |
-|   c_id    |                         课程id                          |  int   |    是    |                              -                               |
-|  project  |                  json序列化Project对象                  | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
-|  grades   | 200：教师评分细则，json序列化grade对象数组<br/>其它：无 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br/>这里i_grade(学生得分)可不填 |
+|  字段名   |                             说明                             |  类型  | 是否必填 |                             备注                             |
+| :-------: | :----------------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |                              -                               | String |    是    |                         用于验证身份                         |
+|   c_id    |                            课程id                            |  int   |    是    |                              -                               |
+|  project  |                    json序列化Project对象                     | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
+|  grades   | 200：教师评分细则，json序列化GradeSystem对象数组<br/>其它：无 | String |    是    |    GradeSystem对象的属性为：item_id,description,max_grade    |
 
 返回参数：
 
@@ -1245,7 +1245,7 @@ A course project for Advanced Web Technologies at FDU.
 |        code        | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                         -                          |
 |      message       | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                         -                          |
 | totalAssignmentNum | 200：项目总任务数<br>其它：-1                             |  int   |                         -                          |
-|  doneInformations  | 200：json序列化的学生完成情况数组<br>其它：无             | String | doneInformation对象包含属性<br>s_id,s_name,doneNum |
+|  doneInformations  | 200：json序列化的学生完成情况数组<br>其它：无             | String | DoneInformation对象包含属性<br>s_id,s_name,doneNum |
 
 
 
@@ -1267,7 +1267,7 @@ A course project for Advanced Web Technologies at FDU.
 |        code         | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                            -                             |
 |       message       | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                            -                             |
 |    maxDiscussNum    | 200：最大讨论数<br>其它：-1                               |  int   |                            -                             |
-| discussInformations | 200：json序列化的学生讨论情况数组<br>其它：无             | String | discussInformation对象包含属性<br>s_id,s_name,discussNum |
+| discussInformations | 200：json序列化的学生讨论情况数组<br>其它：无             | String | DiscussInformation对象包含属性<br>s_id,s_name,discussNum |
 
 
 
@@ -1284,11 +1284,11 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                                      |  类型  |                             备注                             |
-| :-----: | :-------------------------------------------------------- | :----: | :----------------------------------------------------------: |
-|  code   | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                              -                               |
-| message | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
-| grades  | 200：json序列化grade对象<br>其它：null                    | String | grade对象的属性为：item_id,description,i_grade,max_grade<br/>这里的i_grade可以不填 |
+| 字段名  | 说明                                                      |  类型  |                          备注                          |
+| :-----: | :-------------------------------------------------------- | :----: | :----------------------------------------------------: |
+|  code   | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                           -                            |
+| message | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                           -                            |
+| grades  | 200：json序列化GradeSystem对象<br>其它：null              | String | GradeSystem对象的属性为：item_id,description,max_grade |
 
 
 
@@ -1298,12 +1298,12 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |        说明         |  类型  | 是否必填 |                             备注                             |
-| :-------: | :-----------------: | :----: | :------: | :----------------------------------------------------------: |
-| pbl_token |          -          | String |    是    |                         用于验证身份                         |
-|   p_id    |       项目id        |  int   |    是    |                              -                               |
-|   s_id    |       学生id        | String |    是    |                              -                               |
-|   grade   | json序列化grade对象 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br>这里的description,max_grade可以不填 |
+|  字段名   |              说明              |  类型  | 是否必填 |                             备注                             |
+| :-------: | :----------------------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |               -                | String |    是    |                         用于验证身份                         |
+|   p_id    |             项目id             |  int   |    是    |                              -                               |
+|   s_id    |             学生id             | String |    是    |                              -                               |
+|  grades   | json序列化StudentGrade对象数组 | String |    是    | StudentGrade对象的属性为：item_id,p_id,s_id,description,grade<br>这里的description可以不填 |
 
 返回参数：
 
