@@ -233,7 +233,7 @@ A course project for Advanced Web Technologies at FDU.
   
 - course (<u>c_id</u>, t_id, c_name, point, ~~class_time~~, description, status,image_URL)  
 
-  - status: 未发布，已发布，已删除
+  - status: 未发布(0)，已发布(1)，已删除(-1)
   - t_id是课程教师，reference u_id@user, type=teacher
   - image_URL为课程封面URL
   
@@ -488,11 +488,12 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                 |  类型  |                             备注                             |
-| :-----: | :----------------------------------- | :----: | :----------------------------------------------------------: |
-|  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
-| message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
-| courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
+|  字段名  | 说明                                 |  类型  |                             备注                             |
+| :------: | :----------------------------------- | :----: | :----------------------------------------------------------: |
+|   code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
+| message  | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
+| courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
+| teachers | json序列化user数组                   | String |                       包含u_id,u_name                        |
 
 > 感觉课程这里的设计有点问题哦，前端需要t_id和教师表join一下，返回值要包含t_name，就是教师名称；同时t_id最好也要，我可以做一个跳转到教师个人页面的链接？（这样的话甚至可以把教师头像的url也给我，我在course card里显示）——黄
 >
@@ -544,11 +545,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |      说明      |  类型  | 是否必填 |     备注     |
-| :-------: | :------------: | :----: | :------: | :----------: |
-| pbl_token |       -        | String |    是    | 用于验证身份 |
-|   c_id    |     课程id     |  int   |    是    |      -       |
-|  status   | 课程修改后状态 | String |    是    | 已发布/删除  |
+|  字段名   |      说明      |  类型  | 是否必填 |        备注        |
+| :-------: | :------------: | :----: | :------: | :----------------: |
+| pbl_token |       -        | String |    是    |    用于验证身份    |
+|   c_id    |     课程id     |  int   |    是    |         -          |
+|  status   | 课程修改后状态 |  int   |    是    | 已发布(1)/删除(-1) |
 
 返回参数：
 
@@ -658,6 +659,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |                          说明                           |  类型  | 是否必填 |                             备注                             |
 | :-------: | :-----------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token |                            -                            | String |    是    |                         用于验证身份                         |
+|   c_id    |                         课程id                          |  int   |    是    |                              -                               |
 |  project  |                  json序列化Project对象                  | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
 |  grades   | 200：教师评分细则，json序列化grade对象数组<br/>其它：无 | String |    是    | grade对象的属性为：item_id,description,i_grade,max_grade<br/>这里i_grade(学生得分)可不填 |
 
@@ -680,7 +682,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |      说明      |  类型  | 是否必填 |     备注     |
 | :-------: | :------------: | :----: | :------: | :----------: |
 | pbl_token |       -        | String |    是    | 用于验证身份 |
-|   p_id    | 要删除的课程id |  int   |    是    |      -       |
+|   p_id    | 要删除的项目id |  int   |    是    |      -       |
 
 返回参数：
 
@@ -731,11 +733,12 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-|   字段名    | 说明                                                      |  类型  |                             备注                             |
-| :---------: | :-------------------------------------------------------- | :----: | :----------------------------------------------------------: |
-|    code     | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                              -                               |
-|   message   | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
-| assignments | 200：json序列化Assignment数组<br>其它：无                 | String | assignment类型包含属性：a_id,a_name,a_description,<br>importance,a_start_date,a_end_date |
+|    字段名     | 说明                                                      |  类型  |                             备注                             |
+| :-----------: | :-------------------------------------------------------- | :----: | :----------------------------------------------------------: |
+|     code      | 200：查询成功<br/>208：登录超时<br/>209：查询失败         |  int   |                              -                               |
+|    message    | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
+|  assignments  | 200：json序列化Assignment数组(按照a_id排序)<br>其它：无   | String | assignment类型包含属性：a_id,a_name,a_description,<br>importance,a_start_date,a_end_date |
+| studentStatus | 200：json序列化boolean数组(按照a_id排序)<br>其它：无      | String |      对应上面学生的完成状态：完成-true<br>未完成-false       |
 
 
 
@@ -779,6 +782,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :----------------------------------------------------------- | :----: | :--: |
 |  code   | 200：创建任务成功<br/>208：登录超时<br/>209：创建任务失败    |  int   |  -   |
 | message | 200：创建任务成功<br>208：登录超时，请重新登录<br>209：修改任务失败 | String |  -   |
+|  a_id   | 200：新建任务id<br/>208：无<br/>209：无                      |  int   |  -   |
 
 
 
@@ -1074,10 +1078,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|   字段名   |            说明            |  类型  | 是否必填 |                        备注                         |
-| :--------: | :------------------------: | :----: | :------: | :-------------------------------------------------: |
-| pbl_token  |             -              | String |    是    |                    用于验证身份                     |
-| discussion | json序列化的discussion对象 | String |    是    | discussion对象包含属性：d_id,p_id,u_id,content,time |
+|   字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :--------: | :----: | :----: | :------: | :----------: |
+| pbl_token  |   -    | String |    是    | 用于验证身份 |
+| discussion | 讨论id | String |    是    |      -       |
+|    p_id    | 项目id |  int   |    是    |      -       |
 
 返回参数：
 
@@ -1101,11 +1106,11 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-|   字段名    | 说明                                                    |  类型  |                      备注                      |
-| :---------: | :------------------------------------------------------ | :----: | :--------------------------------------------: |
-|    code     | 200：无<br/>208：登录超时                               |  int   |                       -                        |
-|   message   | 200：无<br/>208：登录超时，请重新登录                   | String |                       -                        |
-| discussions | 200：json序列化reply对象数组(由时间远近排列)<br>208：无 | String | reply对象包含属性：r_id,d_id,u_id,content,time |
+| 字段名  | 说明                                                    |  类型  |                      备注                      |
+| :-----: | :------------------------------------------------------ | :----: | :--------------------------------------------: |
+|  code   | 200：无<br/>208：登录超时                               |  int   |                       -                        |
+| message | 200：无<br/>208：登录超时，请重新登录                   | String |                       -                        |
+| replies | 200：json序列化reply对象数组(由时间远近排列)<br>208：无 | String | reply对象包含属性：r_id,d_id,u_id,content,time |
 
 
 

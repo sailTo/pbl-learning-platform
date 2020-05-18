@@ -2,11 +2,35 @@ package com.SuperNova.service;
 import com.SuperNova.model.User;
 import com.SuperNova.core.Service;
 
+import java.util.List;
+
 
 /**
  * Created by CodeGenerator on 2020/05/14.
  */
 public interface UserService extends Service<User> {
+
+    /**
+     * 通过uId获得token
+     * @param uId
+     * @return
+     */
+    String getToken(String uId);
+
+    /**
+     * 检查token是否正确
+     * @param token
+     * @return
+     */
+    boolean checkToken(String token);
+
+    /**
+     * 通过token获得u_id
+     * @param token
+     * @return
+     */
+    String getUIdByToken(String token);
+
     /**
      * 登录，如果成功则返回token，否则返回-1
      * @param uId
@@ -26,7 +50,7 @@ public interface UserService extends Service<User> {
      * 向表中添加新用户
      * @param user 保存新用户相关信息
      */
-    void addUser(User user);
+    void register(User user);
 
     /**
      * 修改用户的相关信息
@@ -37,8 +61,16 @@ public interface UserService extends Service<User> {
     /**
      * 设置用户的头像
      * @param uId
+     * @param defaultOrNot
      */
-    void setImage(String uId);
+    void setImage(String uId,boolean defaultOrNot);
+
+    /**
+     * 获得头像的地址
+     * @param uId
+     * @return
+     */
+    String getImageURL(String uId);
 
     /**
      * 查询用户相关信息
@@ -47,6 +79,10 @@ public interface UserService extends Service<User> {
      */
     User searchUser(String uId);
 
-
-
+    /**
+     * 获得所有用户信息(管理员)
+     * User:u_id，type，u_name，gender，description
+     * @return
+     */
+    String getAllUser();
 }
