@@ -639,13 +639,13 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-|    字段名    | 说明                                                   |  类型  |                             备注                             |
-| :----------: | :----------------------------------------------------- | :----: | :----------------------------------------------------------: |
-|     code     | 200：查询成功<br>208：登录超时                         |  int   |                              -                               |
-|   message    | 200：无<br>208：登录超时，请重新登录                   | String |                              -                               |
-|     type     | 200：用户类型                                          | String |                            S/T/A                             |
-| project_take | 学生已加入项目：p_id<br>学生未加入项目/其它：-1        |  int   |                              -                               |
-|   projects   | json序列化Project数组                                  | String | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio,self_grade_ratio, mutual_grade_ratio |
+|    字段名    | 说明                                            |  类型  |                             备注                             |
+| :----------: | :---------------------------------------------- | :----: | :----------------------------------------------------------: |
+|     code     | 200：查询成功<br>208：登录超时                  |  int   |                              -                               |
+|   message    | 200：无<br>208：登录超时，请重新登录            | String |                              -                               |
+|     type     | 200：用户类型                                   | String |                            S/T/A                             |
+| project_take | 学生已加入项目：p_id<br>学生未加入项目/其它：-1 |  int   |                              -                               |
+|   projects   | json序列化Project数组                           | String | Project对象包含属性p_id,c_id,p_name,description, grading_status, teacher_grade_ratio,self_grade_ratio, mutual_grade_ratio |
 
 
 
@@ -659,8 +659,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |                             说明                             |  类型  | 是否必填 |                             备注                             |
 | :-------: | :----------------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token |                              -                               | String |    是    |                         用于验证身份                         |
-|   c_id    |                            课程id                            |  int   |    是    |                              -                               |
-|  project  |                    json序列化Project对象                     | String |    是    | Project对象包含属性p_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
+|  project  |                    json序列化Project对象                     | String |    是    | Project对象包含属性p_id,c_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio<br>p_id为-1 |
 |  grades   | 200：教师评分细则，json序列化GradeSystem对象数组<br/>其它：无 | String |    是    |    GradeSystem对象的属性为：item_id,description,max_grade    |
 
 返回参数：
