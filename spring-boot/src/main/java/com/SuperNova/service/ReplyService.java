@@ -4,7 +4,7 @@ import com.SuperNova.core.Service;
 
 
 /**
- * Created by CodeGenerator on 2020/05/14.
+ * Created by Chongli on 2020/05/14.
  */
 public interface ReplyService extends Service<Reply> {
     /**

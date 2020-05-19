@@ -21,6 +21,13 @@ public interface AssignmentMapper extends Mapper<Assignment> {
     void setAssignment(Assignment assignment);
 
     /**
+     * 删除任务
+     * @param p_id
+     * @param a_id
+     */
+    void deleteAssignment(int p_id,int a_id);
+
+    /**
      * 搜索项目中所有的任务(按a_id排序)
      * @param p_id
      * @return

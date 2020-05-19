@@ -23,9 +23,9 @@ public interface FileMapper extends Mapper<File> {
     /**
      * 新建文件
      * @param file
-     * @return f
+     * @return f_id
      */
-    void createFile(File file);
+    int createFile(File file);
 
     /**
      * 删除文件

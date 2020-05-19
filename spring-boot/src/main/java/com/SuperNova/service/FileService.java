@@ -4,7 +4,7 @@ import com.SuperNova.core.Service;
 
 
 /**
- * Created by CodeGenerator on 2020/05/14.
+ * Created by Chongli on 2020/05/14.
  */
 public interface FileService extends Service<File> {
     /**
@@ -15,14 +15,14 @@ public interface FileService extends Service<File> {
     String searchFiles(int p_id);
 
     /**
-     * 新建文件
+     * 从数据库中新建文件相关信息
      * @param file
-     * @return
+     * @return json序列化的file对象
      */
-    void createFile(File file);
+    String addFile(File file);
 
     /**
-     * 删除文件
+     * 从数据库中删除文件
      * @param p_id
      * @param f_id
      */

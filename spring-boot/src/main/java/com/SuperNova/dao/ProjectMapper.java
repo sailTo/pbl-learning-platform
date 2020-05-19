@@ -17,26 +17,24 @@ public interface ProjectMapper extends Mapper<Project> {
     List<Project> searchProject(int c_id);
 
     /**
-     * 新建项目
-     * @param c_id
-     * @param project
-     * @param grades
+     * 搜索项目信息
+     * @param p_id
      * @return
      */
-    int addProject(int c_id, Project project, List<GradeSystem> grades);
+    Project searchProjectById(int p_id);
+
+    /**
+     * 新建项目
+     * @param project
+     * @return 新建项目的p_id
+     */
+    int addProject(Project project);
 
     /**
      * 删除指定项目
      * @param p_id
      */
     void deletProject(int p_id);
-
-    /**
-     * 获取项目评分细则
-     * @param p_id
-     * @return
-     */
-    List<GradeSystem> searchGradeSystem(int p_id);
 
     /**
      * 获得选择该项目的用户数

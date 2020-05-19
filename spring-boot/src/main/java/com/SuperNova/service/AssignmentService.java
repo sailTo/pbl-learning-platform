@@ -4,7 +4,7 @@ import com.SuperNova.core.Service;
 
 
 /**
- * Created by CodeGenerator on 2020/05/14.
+ * Created by Chongli on 2020/05/14.
  */
 public interface AssignmentService extends Service<Assignment> {
 
@@ -49,7 +49,7 @@ public interface AssignmentService extends Service<Assignment> {
     String countAssignmentDone(int p_id);
 
     /**
-     * 搜索学生完成所有项目的状态(按a_id排序)
+     * 搜索学生完成所有任务的状态(按a_id排序)
      * @param p_id
      * @param s_id
      * @return
@@ -57,7 +57,7 @@ public interface AssignmentService extends Service<Assignment> {
     String searchDoneStatus(int p_id,String s_id);
 
     /**
-     * 搜索学生完成该项目的状态
+     * 搜索学生完成该任务的状态
      * @param p_id
      * @param s_id
      * @return
@@ -65,7 +65,7 @@ public interface AssignmentService extends Service<Assignment> {
     boolean searchStudentDone(int p_id,String s_id,int a_id);
 
     /**
-     * 修改学生完成该项目的状态
+     * 修改学生完成该任务的状态
      * @param p_id
      * @param s_id
      * @return

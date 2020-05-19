@@ -15,10 +15,16 @@ public interface GradeSystemMapper extends Mapper<GradeSystem> {
     void addGradeSystems(List<GradeSystem> gradeSystems);
 
     /**
+     * 删除项目相关评分细则
+     * @param p_id
+     */
+    void deleteGradeSystems(int p_id);
+
+    /**
      * 获取项目评分细则
      * @param p_id
      * @return
      */
-    List<GradeSystem> searchEvaluateByTeacher(int p_id);
+    List<GradeSystem> searchGradeSystem(int p_id);
 
 }

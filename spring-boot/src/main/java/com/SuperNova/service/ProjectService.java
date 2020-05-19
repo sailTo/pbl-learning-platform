@@ -3,9 +3,11 @@ import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.core.Service;
 
+import java.util.List;
+
 
 /**
- * Created by CodeGenerator on 2020/05/14.
+ * Created by Chongli on 2020/05/14.
  */
 public interface ProjectService extends Service<Project> {
 
@@ -24,12 +26,11 @@ public interface ProjectService extends Service<Project> {
 
     /**
      * 新建项目
-     * @param c_id
      * @param project
      * @param grades
      * @return
      */
-    int addProject(int c_id, Project project, GradeSystem[] grades);
+    int addProject(Project project, List<GradeSystem> grades);
 
     /**
      * 获取项目评分细则
@@ -58,6 +59,5 @@ public interface ProjectService extends Service<Project> {
      * @return
      */
     String searchGroupers(int p_id);
-
 
 }

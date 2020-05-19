@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * Created by CodeGenerator on 2020/05/14.
+ * Created by Chongli on 2020/05/14.
  */
 public interface CourseService extends Service<Course> {
 
@@ -45,7 +45,7 @@ public interface CourseService extends Service<Course> {
     String searchOtherCourses(String u_id);
 
     /**
-     * 修改课程状态
+     * 修改课程状态(删除：-1,未发布：0,已发布：1)
      * @param c_id
      * @param status
      */
