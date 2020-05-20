@@ -5,9 +5,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.app-layout {
+/* .app-layout {
   height: 100vh;
-}
+} */
 
 .menu-sidebar {
   position: relative;
