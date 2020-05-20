@@ -11,16 +11,22 @@ export class CourseService {
   ) { }
 
   getMyCourses() {
-    return this.http.get<{
-      c_id: number,
-      t_id: number, 
-      c_name: string, 
-      t_name: string, 
-      point: number, 
-      description: string, 
-      status: boolean, // 未发布false, 已发布true
-      c_image_URL: string, // course封面图，没有的话应该返回默认图URL
-      t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
-    }[]>('/api/searchMyCourses');
+    return this.http.get<Course[]>('/api/searchMyCourses');
   }
+
+  getOtherCourses() {
+    return this.http.get<Course[]>('/api/searchOtherCourses');
+  }
+}
+
+export interface Course {
+  c_id: number,
+  t_id: number, 
+  c_name: string, 
+  t_name: string, 
+  point: number, 
+  description: string, 
+  status: boolean, // 未发布false, 已发布true
+  c_image_URL: string, // course封面图，没有的话应该返回默认图URL
+  t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
 }

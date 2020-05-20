@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CourseService } from "../../services/course.service";
+import { CourseService, Course } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-courses',
@@ -20,32 +20,28 @@ export class CoursesComponent implements OnInit {
     t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
   };
 
-  courses: {
-    c_id: number,
-    t_id: number, 
-    c_name: string, 
-    t_name: string, 
-    point: number, 
-    description: string, 
-    status: boolean, // 未发布false, 已发布true
-    c_image_URL: string, // course封面图，没有的话应该返回默认图URL
-    t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
-  }[];
+  courses: Course[];
 
-  contentTabIndex: number;
-
-  myCourseTabTitle: string;
-  otherCourseTabTitle: string;
+  myCourseTabTitle: string = '我学的课';
+  otherCourseTabTitle: string = '其它课程';
 
   constructor(
     private courseService: CourseService, 
   ) { }
 
   ngOnInit(): void {
-    this.myCourseTabTitle = '我学的课';
-    this.otherCourseTabTitle = '其它课程';
-    // this.courseService.getMyCourses().subscribe((data) => this.courses = data);
+    this.courseService.getMyCourses().subscribe((data) => this.courses = data);
     this.courses = [this.course, this.course, this.course, this.course];
+  }
+
+  changeTab(selectedTitle: string): void {
+    if (selectedTitle === this.myCourseTabTitle) {
+      // this.courseService.getMyCourses().subscribe((data) => {this.courses = data;});
+      this.courses = [this.course, this.course, this.course, this.course];
+    } else {
+      // this.courseService.getOtherCourses().subscribe((data) => {this.courses = data;});
+      this.courses = [this.course, this.course, ];
+    }
   }
 
 }

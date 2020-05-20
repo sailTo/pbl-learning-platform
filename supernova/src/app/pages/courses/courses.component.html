@@ -1,11 +1,10 @@
 <nz-card style="width: 100%;">
     <nz-card-tab>
-      <nz-tabset nzSize="large" [(nzSelectedIndex)]="contentTabIndex">
+      <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)">
         <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
         <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
       </nz-tabset>
     </nz-card-tab>
     <app-courses-list [courses]=courses></app-courses-list>
 </nz-card>
-
 
