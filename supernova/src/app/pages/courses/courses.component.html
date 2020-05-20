@@ -1,2 +1,11 @@
-<p>courses works!</p>
-<app-course-card [course]=course></app-course-card>
+<nz-card style="width: 100%;">
+    <nz-card-tab>
+      <nz-tabset nzSize="large" [(nzSelectedIndex)]="contentTabIndex">
+        <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
+        <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+    <app-courses-list [courses]=courses></app-courses-list>
+</nz-card>
+
+
