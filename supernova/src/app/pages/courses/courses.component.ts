@@ -31,7 +31,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.courseService.getMyCourses().subscribe((data) => this.courses = data);
-    this.courses = [this.course, this.course, this.course, this.course];
+    this.courses = [this.course, this.course, this.course, this.course, this.course, this.course];
   }
 
   changeTab(selectedTitle: string): void {
@@ -42,6 +42,11 @@ export class CoursesComponent implements OnInit {
       // this.courseService.getOtherCourses().subscribe((data) => {this.courses = data;});
       this.courses = [this.course, this.course, ];
     }
+  }
+
+  onPageIndexChange(pageIndex: number) {
+    // TODO: request implementation
+    console.log(pageIndex);
   }
 
 }

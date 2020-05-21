@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from 'src/app/services/course.service';
 
 @Component({
@@ -8,6 +8,8 @@ import { Course } from 'src/app/services/course.service';
 })
 export class CoursesListComponent implements OnInit {
   @Input() courses: Course[];
+
+  @Output() pageIndexChange = new EventEmitter();
 
   constructor() { }
 

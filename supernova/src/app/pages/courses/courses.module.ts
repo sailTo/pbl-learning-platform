@@ -11,14 +11,15 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { CourseCardComponent } from '../../components/course-card/course-card.component';
-import { CoursesListComponent } from '../../components/courses-list/courses-list.component'; 
+import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component'; 
 
 
 @NgModule({
   declarations: [
     CoursesComponent, 
     CourseCardComponent, 
-    CoursesListComponent, 
+    CoursesListComponent, PaginationComponent, 
   ],
   imports: [
     CommonModule,

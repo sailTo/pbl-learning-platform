@@ -5,6 +5,6 @@
         <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
       </nz-tabset>
     </nz-card-tab>
-    <app-courses-list [courses]=courses></app-courses-list>
+    <app-courses-list [courses]=courses (pageIndexChange)="onPageIndexChange($event)"></app-courses-list>
 </nz-card>
 
