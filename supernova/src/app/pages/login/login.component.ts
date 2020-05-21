@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import {SessionService} from '../../services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -20,18 +20,21 @@ export class LoginComponent implements OnInit {
     }
     //将数据与服务器中进行比对，如果通过则进行跳转
     if(this.success){
-      
+      this.session.setCookie("user",this.validateForm.controls["id"]);
     }
+    alert(this.session.getCookie("user"));
     this.validateForm.reset();
   }
 
-  constructor(private fb: FormBuilder) {
-    this.success = false;
+  constructor(
+    private fb: FormBuilder,
+    private session: SessionService) {
+    this.success = true;
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [
+      id: [null, [
         Validators.maxLength(10),
         Validators.minLength(3),
         Validators.pattern('^[0-9]'),

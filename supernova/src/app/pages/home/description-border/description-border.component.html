@@ -81,9 +81,10 @@
       </button>
       </span>
       <span nz-col [nzSpan]="8" >
-        <button nz-button  nzType="primary" (click)="changePassword()">
+        <!-- <button nz-button  nzType="primary" (click)="changePassword()">
           修改密码
-      </button>
+      </button> -->
+      <app-changepassword></app-changepassword>
       </span>
       <span nz-col [nzSpan]="8">
       <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()">

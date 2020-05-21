@@ -7,10 +7,11 @@ import{DescriptionBorderComponent} from './description-border/description-border
 import { NgZorroAntdModule} from 'ng-zorro-antd';
 import {AvatarComponent} from './avatar/avatar.component';
 import {FormsModule} from '@angular/forms';
-import { CourseCardComponent } from './course-card/course-card.component'
+import { CourseCardComponent } from './course-card/course-card.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component'
 
 @NgModule({
-  declarations: [HomeComponent,DescriptionBorderComponent,AvatarComponent, CourseCardComponent],
+  declarations: [HomeComponent,DescriptionBorderComponent,AvatarComponent, CourseCardComponent, ChangepasswordComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

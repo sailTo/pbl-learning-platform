@@ -1,9 +1,9 @@
 
     <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-control nzErrorTip="your username is invalid!">
+          <nz-form-control nzErrorTip="your id is invalid!">
             <nz-input-group nzPrefixIcon="user">
-              <input type="text" nz-input formControlName="userName" placeholder="Username" />
+              <input type="text" nz-input formControlName="id" placeholder="ID" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
