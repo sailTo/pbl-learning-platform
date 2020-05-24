@@ -10,63 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class APIController {
 
-    @PostMapping("/hello")
-    public Result hello() {
-        return ResultGenerator.genSuccessResult();
-    }
-
-    @PostMapping("/login")
-    public Result login(@RequestParam String u_id,
-                        @RequestParam String password){
-
-        //检查是否正确
-
-        //正确则生成token，user对象，与imageURL
-        String data = "tokenxxxx";
-
-        Result result = ResultGenerator.genSuccessResult(data);
-
-        result.setMessage("12345_5000_AB2DC");
-
-        return result;
-    }
-
-    @GetMapping("/searchId")
-    public Result searchId(@RequestParam String u_id){
-        Result result = ResultGenerator.genSuccessResult();
-
-        //search Id
-
-        //如果学号已存在，则设置code为208
-        result.setCode(ResultCode.FAIL);
-
-        return result;
-    }
-
-    @PostMapping("/register")
-    public Result register(@RequestParam String u_id,
-                           @RequestParam String u_name,
-                           @RequestParam String gender,
-                           @RequestParam String password,
-                           @RequestParam(required = false) String description,
-                           @RequestParam(required = false) MultipartFile image){
-        Result result = ResultGenerator.genSuccessResult();
-
-        //检查用户名是否存在
-
-        //如果不存在则新建用户，否则设置错误码并报错
-
-        //新建成功后记得检查是否上传头像，是否设置描述
-        if(image==null){
-
-        }else{
-
-        }
-
-
-        return result;
-    }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
     public Result searchMyCourses(@RequestParam String pbl_token) {
 
@@ -74,6 +18,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchMyInformation")
     public Result searchMyInformation(@RequestParam String pbl_token) {
 
@@ -81,6 +26,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeMyImage")
     public Result changeMyImage(@RequestParam String pbl_token,
                                 @RequestParam(required = false) MultipartFile image) {
@@ -89,6 +35,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeMyInformation")
     public Result changeMyInformation(@RequestParam String pbl_token,
                                       @RequestParam String content,
@@ -98,6 +45,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchOtherCourses")
     public Result searchOtherCourses(@RequestParam String pbl_token) {
 
@@ -105,6 +53,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAllCourses")
     public Result searchAllCourses(@RequestParam String pbl_token) {
 
@@ -112,6 +61,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeCourseStatus")
     public Result changeCourseStatus(@RequestParam String pbl_token,
                                      @RequestParam Integer c_id,
@@ -120,6 +70,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeCourse")
     public Result changeCourseStatus(@RequestParam String pbl_token,
                                      @RequestParam String course) {
@@ -128,6 +79,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/addCourse")
     public Result addCourse(@RequestParam String pbl_token,
                             @RequestParam String course,
@@ -137,6 +89,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/joinCourse")
     public Result joinCourse(@RequestParam String pbl_token,
                              @RequestParam String s_id,
@@ -146,6 +99,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchProject")
     public Result searchProject(@RequestParam String pbl_token,
                                 @RequestParam Integer c_id) {
@@ -155,6 +109,7 @@ public class APIController {
     }
 
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/createProject")
     public Result createProject(@RequestParam String pbl_token,
                                 @RequestParam String project,
@@ -164,6 +119,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteProject")
     public Result deleteProject(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id) {
@@ -172,6 +128,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchProjectGradeSystem")
     public Result searchProjectGradeSystem(@RequestParam String pbl_token,
                                            @RequestParam Integer p_id) {
@@ -180,6 +137,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAssignment")
     public Result searchAssignment(@RequestParam String pbl_token,
                                    @RequestParam Integer p_id) {
@@ -188,6 +146,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAssignmentDone")
     public Result searchAssignmentDone(@RequestParam String pbl_token,
                                        @RequestParam Integer p_id,
@@ -197,6 +156,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/createAssignment")
     public Result createAssignment(@RequestParam String pbl_token,
                                    @RequestParam String assignment) {
@@ -205,6 +165,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeAssignment")
     public Result changeAssignment(@RequestParam String pbl_token,
                                    @RequestParam String assignment) {
@@ -213,6 +174,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteAssignment")
     public Result deleteAssignment(@RequestParam String pbl_token,
                                    @RequestParam Integer a_id,
@@ -222,6 +184,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/urgeAssignment")
     public Result urgeAssignment(@RequestParam String pbl_token,
                                  @RequestParam Integer a_id,
@@ -231,6 +194,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/countDone")
     public Result countDone(@RequestParam String pbl_token,
                             @RequestParam Integer p_id) {
@@ -238,6 +202,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchGroupers")
     public Result searchGroupers(@RequestParam String pbl_token,
                                  @RequestParam Integer p_id) {
@@ -246,6 +211,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateBySelf")
     public Result searchEvaluateBySelf(@RequestParam String pbl_token, @RequestParam Integer p_id) {
 
@@ -253,6 +219,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/evaluateSelf")
     public Result evaluateSelf(@RequestParam String pbl_token,
                                @RequestParam Integer p_id,
@@ -262,6 +229,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateByOther")
     public Result searchEvaluateByOther(@RequestParam String pbl_token,
                                         @RequestParam Integer p_id) {
@@ -270,6 +238,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/evaluateOther")
     public Result evaluateOther(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id,
@@ -280,6 +249,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateByTeacher")
     public Result searchEvaluateByTeacher(@RequestParam String pbl_token,
                                           @RequestParam Integer p_id) {
@@ -288,6 +258,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchGrade")
     public Result searchGrade(@RequestParam String pbl_token,
                               @RequestParam Integer p_id) {
@@ -296,6 +267,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchDiscussions")
     public Result searchDiscussions(@RequestParam String pbl_token,
                                     @RequestParam Integer p_id) {
@@ -304,6 +276,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/createDiscussion")
     public Result createDiscussion(@RequestParam String pbl_token,
                                    @RequestParam String discussion) {
@@ -312,6 +285,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteDiscussion")
     public Result deleteDiscussion(@RequestParam String pbl_token, @RequestParam String discussion) {
 
@@ -319,6 +293,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchReply")
     public Result searchReply(@RequestParam String pbl_token,
                               @RequestParam Integer p_id) {
@@ -327,6 +302,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/createReply")
     public Result createReply(@RequestParam String pbl_token,
                               @RequestParam String reply) {
@@ -335,6 +311,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteReply")
     public Result deleteReply(@RequestParam String pbl_token,
                               @RequestParam Integer r_id) {
@@ -343,6 +320,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAllFiles")
     public Result searchAllFiles(@RequestParam String pbl_token,
                                  @RequestParam Integer p_id) {
@@ -351,6 +329,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/uploadFile")
     public Result uploadFile(@RequestParam String pbl_token,
                              @RequestParam String f_name,
@@ -361,6 +340,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteFile")
     public Result deleteFile(@RequestParam String pbl_token,
                              @RequestParam Integer f_id,
@@ -370,6 +350,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/countAssignmentDone")
     public Result countAssignmentDone(@RequestParam String pbl_token,
                                       @RequestParam Integer p_id) {
@@ -378,6 +359,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/countDiscussion")
     public Result countDiscussion(@RequestParam String pbl_token,
                                   @RequestParam Integer p_id) {
@@ -386,6 +368,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/getGradeItems")
     public Result getGradeItems(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id) {
@@ -394,6 +377,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/evaluateByTeacher")
     public Result evaluateByTeacher(@RequestParam String pbl_token,
                                     @RequestParam Integer p_id,
@@ -403,6 +387,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAllUsers")
     public Result searchAllUsers(@RequestParam String pbl_token) {
 
@@ -410,6 +395,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeImage")
     public Result changeImage(@RequestParam String pbl_token,
                               @RequestParam String u_id,
@@ -418,6 +404,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeInformation")
     public Result changeInformation(@RequestParam String pbl_token,
                                     @RequestParam String user){
@@ -425,6 +412,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/addUser")
     public Result addUser(@RequestParam String pbl_token,
                           @RequestParam String user,
