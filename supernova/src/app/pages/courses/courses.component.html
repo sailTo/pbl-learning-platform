@@ -6,11 +6,10 @@
       </nz-tabset>
     </nz-card-tab>
     <app-courses-list [courses]=courses></app-courses-list>
-    <!-- TODO: parameterization -->
     <app-pagination style="padding-top: 24px; float: right;" 
-      pageIndex="2" 
-      pageSize="6" 
-      total="8" 
+      [pageIndex]="pageIndex" 
+      [pageSize]="pageSize" 
+      [total]="total" 
       (pageIndexChange)="onPageIndexChange($event)"
       >
     </app-pagination>

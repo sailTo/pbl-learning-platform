@@ -1,5 +1,6 @@
 <nz-row [nzGutter]="[24, 24]">
-    <nz-col [nzSpan]="8" *ngFor="let course of courses">
+    <!-- TODO: use a variable to control how many elements a row -->
+    <nz-col [nzSpan]="6" *ngFor="let course of courses">
         <app-course-card [course]=course></app-course-card>
     </nz-col>
 </nz-row>

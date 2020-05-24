@@ -22,31 +22,47 @@ export class CoursesComponent implements OnInit {
 
   courses: Course[];
 
+  type: string = 'my';
   myCourseTabTitle: string = '我学的课';
   otherCourseTabTitle: string = '其它课程';
+
+  pageIndex: number = 1;
+  pageSize: number = 8;
+  total: number;
 
   constructor(
     private courseService: CourseService, 
   ) { }
 
   ngOnInit(): void {
-    this.courseService.getMyCourses().subscribe((data) => this.courses = data);
+    // this.getCourses();
+    this.total = 10;
     this.courses = [this.course, this.course, this.course, this.course, this.course, this.course];
   }
 
+  getCourses(): void {
+    this.courseService.getCourses(this.type, this.pageIndex, this.pageSize).subscribe((data) => {
+      this.courses = data.courses;
+      this.total = data.total;
+    });
+  }
+
   changeTab(selectedTitle: string): void {
+    this.pageIndex = 1;
     if (selectedTitle === this.myCourseTabTitle) {
-      // this.courseService.getMyCourses().subscribe((data) => {this.courses = data;});
-      this.courses = [this.course, this.course, this.course, this.course];
+      this.type = 'my';
+      // this.getCourses();
+      this.courses = [this.course, this.course, this.course, this.course, this.course, this.course];
     } else {
-      // this.courseService.getOtherCourses().subscribe((data) => {this.courses = data;});
+      this.type = 'other';
+      // this.getCourses();
       this.courses = [this.course, this.course, ];
     }
   }
 
   onPageIndexChange(pageIndex: number) {
-    // TODO: request implementation
-    console.log(pageIndex);
+    this.pageIndex = pageIndex;
+    // this.getCourses();
   }
 
 }
