@@ -15,7 +15,31 @@ export class CoursesComponent implements OnInit {
     t_name: "teacher name", 
     point: 2.0, 
     description: "course description", 
-    status: true, // 未发布false, 已发布true
+    status: "published", // 未发布unpublished, 已发布published, 已删除deleted
+    c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
+    t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
+  };
+
+  dcourse = {
+    c_id: 4,
+    t_id: 4, 
+    c_name: "course name", 
+    t_name: "teacher name", 
+    point: 2.0, 
+    description: "course description", 
+    status: "deleted", // 未发布unpublished, 已发布published, 已删除deleted
+    c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
+    t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
+  };
+
+  ucourse = {
+    c_id: 4,
+    t_id: 4, 
+    c_name: "course name", 
+    t_name: "teacher name", 
+    point: 2.0, 
+    description: "course description", 
+    status: "unpublished", // 未发布unpublished, 已发布published, 已删除deleted
     c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
     t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
   };
@@ -37,7 +61,7 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
     // this.getCourses();
     this.total = 10;
-    this.courses = [this.course, this.course, this.course, this.course, this.course, this.course];
+    this.courses = [this.course, this.dcourse, this.ucourse, this.course, this.course, this.course];
   }
 
   getCourses(): void {

@@ -494,7 +494,7 @@ A course project for Advanced Web Technologies at FDU.
 | :------: | :----------------------------------- | :----: | :----------------------------------------------------------: |
 |   code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
 | message  | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
-| courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
+| courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看<br>需要对课程按照用户是否可见进行过滤 |
 | teachers | json序列化user数组                   | String |                       包含u_id,u_name                        |
 |  total   | 课程对象总数量                       |  int   |                        用于计算总页码                        |
 
@@ -509,13 +509,13 @@ A course project for Advanced Web Technologies at FDU.
 > ​		 u_id: number,
 >
 >  		type: string, 
->
+>	
 >  		u_name: string, 
->
+>	
 >  		gender: string,
->
+>	
 >  		description: string,
->
+>	
 >  		image: string, 
 >
 > ​	}, 
