@@ -9,7 +9,7 @@ import java.util.List;
 public interface AssignmentMapper extends Mapper<Assignment> {
 
     /**
-     * 创建一个项目
+     * 创建一个任务
      * @param assignment
      */
     int addAssignment(Assignment assignment);

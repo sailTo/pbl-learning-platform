@@ -319,7 +319,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 登录页面
 
-接口URL：/api/login
+接口URL：/account/login
 
 请求方法：POST
 
@@ -343,7 +343,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 注册页面
 
-接口URL：/api/searchId
+接口URL：/account/searchId
 
 请求方法：GET
 
@@ -361,7 +361,7 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
-接口URL：/api/register
+接口URL：/account/register
 
 请求方法：POST
 
