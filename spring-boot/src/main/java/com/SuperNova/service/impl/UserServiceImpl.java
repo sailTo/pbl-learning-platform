@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.OrderBy;
 import java.util.List;
 
 
@@ -30,8 +31,9 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
      * @param uId
      * @return
      */
+    @Override
     public String getToken(String uId){
-        User user = userMapper.getUser(uId);
+        User user = userMapper.selectByPrimaryKey(uId);
         String password = user.getPassword();
         String token = uId+"_"+System.currentTimeMillis()+"_"+password.substring(password.length()-5);
         String ret;
@@ -78,7 +80,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         if(!userMapper.idExist(uId)){
             return false;
         }else{
-            User user = userMapper.getUser(uId);
+            User user = userMapper.selectByPrimaryKey(uId);
             String password = user.getPassword();
             password = password.substring(password.length()-5);
             if(!password.equals(p5)){
@@ -138,7 +140,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             return "-1";
         }
 
-        User user = userMapper.getUser(uId);
+        User user = userMapper.selectByPrimaryKey(uId);
 
         if(user.getPassword().equals(Password)){
             return getToken(uId);
@@ -154,24 +156,24 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public void register(User user) {
-        userMapper.addUser(user);
+        userMapper.insertSelective(user);
     }
 
     @Override
     public void setUser(User user) {
-        userMapper.setUser(user);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
     public void setImage(String uId, boolean defaultOrNot) {
-        User user = userMapper.getUser(uId);
+        User user = userMapper.selectByPrimaryKey(uId);
         user.setImage(defaultOrNot);
-        userMapper.setUser(user);
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
     public String getImageURL(String uId) {
-        User user = userMapper.getUser(uId);
+        User user = userMapper.selectByPrimaryKey(uId);
         if(!user.getImage()){
             return ProjectConstant.DEAFULT_IMAGE;
         }
@@ -180,12 +182,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public User searchUser(String uId) {
-        return userMapper.getUser(uId);
+        return userMapper.selectByPrimaryKey(uId);
     }
 
     @Override
     public String getAllUser() {
-        List<User> users = userMapper.getAllUser();
+        List<User> users = userMapper.selectAll();
         return JSON.toJSONString(users);
     }
 }

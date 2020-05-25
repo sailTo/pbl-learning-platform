@@ -14,7 +14,7 @@ public interface EvaluationService extends Service<Evaluation> {
      * @param s_id
      * @return
      */
-    String searchEvaluateByOther(int p_id,int s_id);
+    String searchEvaluateByOther(int p_id,String s_id);
 
     /**
      * 学生评分，s_id为评价方，u_id为被评价方，若相等则为自评
@@ -23,5 +23,5 @@ public interface EvaluationService extends Service<Evaluation> {
      * @param u_id
      * @param grade
      */
-    void evaluate(int p_id,int s_id,int u_id,double grade);
+    void evaluate(int p_id,String s_id,String u_id,int grade);
 }

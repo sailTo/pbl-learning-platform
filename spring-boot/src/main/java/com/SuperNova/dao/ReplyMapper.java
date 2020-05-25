@@ -2,6 +2,7 @@ package com.SuperNova.dao;
 
 import com.SuperNova.core.Mapper;
 import com.SuperNova.model.Reply;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -20,12 +21,12 @@ public interface ReplyMapper extends Mapper<Reply> {
      */
     List<Reply> searchReply(int p_id, int r_id);
 
-    /**
-     * 新建回复
-     * @param reply
-     * @return reply id
-     */
-    int createReply(Reply reply);
+//    /**
+//     * 新建回复
+//     * @param reply
+//     * @return reply id
+//     */
+//    int createReply(Reply reply);
 
     /**
      * 删除回复

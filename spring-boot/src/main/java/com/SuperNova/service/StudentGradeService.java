@@ -15,7 +15,7 @@ public interface StudentGradeService extends Service<StudentGrade> {
      * @param s_id
      * @return
      */
-    String searchEvaluateByTeacher(int p_id, int s_id);
+    String searchEvaluateByTeacher(int p_id, String s_id);
 
     /**
      * 获取学生总分(未评分则为null)
@@ -23,6 +23,6 @@ public interface StudentGradeService extends Service<StudentGrade> {
      * @param s_id
      * @return
      */
-    String searchGrade(int p_id, int s_id);
+    String searchGrade(int p_id, String s_id);
 
 }

@@ -12,6 +12,5 @@ public interface Mapper<T>
         extends
         BaseMapper<T>,
         ConditionMapper<T>,
-        IdsMapper<T>,
         InsertListMapper<T> {
 }

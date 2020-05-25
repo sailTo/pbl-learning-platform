@@ -3,6 +3,7 @@ package com.SuperNova.service.impl;
 import com.SuperNova.dao.AssignmentMapper;
 import com.SuperNova.dao.StudentAssignmentMapper;
 import com.SuperNova.model.Assignment;
+import com.SuperNova.model.StudentAssignment;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.persistence.OrderBy;
 
 
 /**
@@ -26,27 +28,38 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Override
     public int createAssignment(Assignment assignment) {
-        return assignmentMapper.addAssignment(assignment);
+        assignmentMapper.insertSelective(assignment);
+        return assignment.geta_id();
     }
 
     @Override
     public void changeAssignment(Assignment assignment) {
-        assignmentMapper.setAssignment(assignment);
+        assignmentMapper.updateByPrimaryKeySelective(assignment);
     }
 
     @Override
     public void deleteAssignment(int p_id, int a_id) {
-        assignmentMapper.deleteAssignment(p_id,a_id);
+        Assignment tmp = new Assignment();
+        tmp.setp_id(p_id);
+        tmp.seta_id(a_id);
+        assignmentMapper.delete(tmp);
     }
 
     @Override
     public void urgeAssignment(int p_id, int a_id) {
-        studentAssignmentMapper.urgeAssignment(p_id,a_id);
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setp_id(p_id);
+        tmp.seta_id(a_id);
+        tmp.setUrge(true);
+        studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
     }
+
 
     @Override
     public String searchAssignment(int p_id) {
-        return JSON.toJSONString(assignmentMapper.searchAssignment(p_id));
+        Assignment tmp = new Assignment();
+        tmp.setp_id(p_id);
+        return JSON.toJSONString(assignmentMapper.select(tmp));
     }
 
     @Override
@@ -56,21 +69,39 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Override
     public String searchDoneStatus(int p_id, String s_id) {
-        return JSON.toJSONString(studentAssignmentMapper.searchDoneStatus(p_id,s_id));
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setp_id(p_id);
+        tmp.sets_id(s_id);
+        tmp.setStatus(true);//表示已完成
+        return JSON.toJSONString(studentAssignmentMapper.select(tmp));
     }
 
     @Override
     public boolean searchStudentDone(int p_id, String s_id, int a_id) {
-        return studentAssignmentMapper.searchStudentDone(p_id,s_id,a_id);
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setp_id(p_id);
+        tmp.sets_id(s_id);
+        tmp.seta_id(a_id);
+        studentAssignmentMapper.select(tmp);
+        return tmp.getStatus();
     }
 
     @Override
     public void updateStudentDone(int p_id, String s_id, int a_id, boolean doneOrNot) {
-        studentAssignmentMapper.updateStudentDone(p_id,s_id,a_id,doneOrNot);
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setp_id(p_id);
+        tmp.sets_id(s_id);
+        tmp.seta_id(a_id);
+        tmp.setStatus(doneOrNot);
+        studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
     }
 
     @Override
     public int searchAssignmentDoneNum(int p_id, int a_id) {
-        return assignmentMapper.searchAssignmentDoneNum(p_id,a_id);
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setp_id(p_id);
+        tmp.seta_id(a_id);
+        tmp.setStatus(true);
+        return studentAssignmentMapper.selectCount(tmp);
     }
 }

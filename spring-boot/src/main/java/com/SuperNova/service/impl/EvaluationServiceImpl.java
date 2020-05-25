@@ -3,6 +3,7 @@ package com.SuperNova.service.impl;
 import com.SuperNova.dao.EvaluationMapper;
 import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.model.Evaluation;
+import com.SuperNova.model.Project;
 import com.SuperNova.service.EvaluationService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -25,11 +26,18 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     private ProjectMapper projectMapper;
 
     @Override
-    public String searchEvaluateByOther(int p_id, int s_id) {
+    public String searchEvaluateByOther(int p_id, String s_id) {
 
         JSONObject data = new JSONObject();
-        data.put("totalNum",projectMapper.searchTotalNum(p_id));
-        int num = evaluationMapper.haveEvaluatedNum(p_id,s_id);
+
+        Project project = new Project();
+        project.setp_id(p_id);
+        data.put("totalNum",projectMapper.selectCount(project));
+
+        Evaluation evaluation = new Evaluation();
+        evaluation.setp_id(p_id);
+        evaluation.setpassive_s_id(s_id);
+        int num = evaluationMapper.selectCount(evaluation);
         if(num==0){
             return data.toJSONString();
         }
@@ -40,7 +48,12 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     }
 
     @Override
-    public void evaluate(int p_id, int s_id, int u_id, double grade) {
-        evaluationMapper.evaluate(p_id, s_id, u_id, grade);
+    public void evaluate(int p_id, String s_id, String u_id, int grade) {
+        Evaluation tmp = new Evaluation();
+        tmp.setp_id(p_id);
+        tmp.setactive_s_id(s_id);
+        tmp.setpassive_s_id(u_id);
+        tmp.setGrade(grade);
+        evaluationMapper.insertSelective(tmp);
     }
 }

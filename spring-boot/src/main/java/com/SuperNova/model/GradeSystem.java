@@ -4,14 +4,12 @@ import javax.persistence.*;
 
 @Table(name = "grade_system")
 public class GradeSystem {
-    @Id
-    private String ids;
 
-//    @Id
+    @Id
     @Column(name = "p_id")
     private Integer p_id;
 
-//    @Id
+    @Id
     @Column(name = "item_id")
     private Integer item_id;
 

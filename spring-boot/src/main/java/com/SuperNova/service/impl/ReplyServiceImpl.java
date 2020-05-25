@@ -32,7 +32,8 @@ public class ReplyServiceImpl extends AbstractService<Reply> implements ReplySer
 
     @Override
     public int createReply(Reply reply) {
-        return replyMapper.createReply(reply);
+        replyMapper.insertSelective(reply);
+        return reply.getr_id();
     }
 
     @Override

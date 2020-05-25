@@ -4,18 +4,16 @@ import javax.persistence.*;
 
 @Table(name = "student_assignment")
 public class StudentAssignment {
-    @Id
-    private String ids;
 
-//    @Id
+    @Id
     @Column(name = "a_id")
     private Integer a_id;
 
-//    @Id
+    @Id
     @Column(name = "p_id")
     private Integer p_id;
 
-//    @Id
+    @Id
     @Column(name = "s_id")
     private String s_id;
 

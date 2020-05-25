@@ -22,22 +22,31 @@ public class DiscussionServiceImpl extends AbstractService<Discussion> implement
 
     @Override
     public String searchDiscussions(int p_id) {
-        return JSON.toJSONString(discussionMapper.searchDiscussions(p_id));
+        Discussion tmp = new Discussion();
+        tmp.setp_id(p_id);
+        return JSON.toJSONString(discussionMapper.select(tmp));
     }
 
     @Override
     public String searchDiscussion(int p_id, int d_id) {
-        return JSON.toJSONString(discussionMapper.searchDiscussion(p_id,d_id));
+        Discussion tmp = new Discussion();
+        tmp.setp_id(p_id);
+        tmp.setd_id(d_id);
+        return JSON.toJSONString(discussionMapper.select(tmp));
     }
 
     @Override
     public int createDiscussion(Discussion discussion) {
-        return discussionMapper.addDiscussion(discussion);
+        discussionMapper.insertSelective(discussion);
+        return discussion.getd_id();
     }
 
     @Override
     public void deleteDiscussion(int p_id, int d_id) {
-        discussionMapper.deleteDiscussion(p_id,d_id);
+        Discussion tmp = new Discussion();
+        tmp.setp_id(p_id);
+        tmp.setd_id(d_id);
+        discussionMapper.delete(tmp);
     }
 
     @Override
