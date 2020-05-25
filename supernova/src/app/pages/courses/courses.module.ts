@@ -8,7 +8,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
-// import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
@@ -33,7 +35,9 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     NzTabsModule,
     NzPaginationModule, 
     NzBadgeModule, 
-    // NzButtonModule, 
+    NzButtonModule, 
+    NzTagModule, 
+    NzStatisticModule, 
   ], 
 })
 export class CoursesModule { }

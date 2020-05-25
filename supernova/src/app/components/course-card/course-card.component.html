@@ -1,6 +1,6 @@
 <nz-card 
   [nzCover]="coverTemplate" 
-  [nzActions]="[actionJoin, actionEdit, actionDelete]" 
+  [nzActions]=actions
   nzHoverable
   >
   <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
@@ -9,7 +9,8 @@
 
 <ng-template #titleTemplate>
   <span>{{course.c_name}}</span>&nbsp;
-  <nz-badge [nzStatus]="badgeStatus[course.status]"></nz-badge>
+  <nz-tag>{{(course.point | number: '1.1-1')!}}</nz-tag>
+  <nz-badge [nzStatus]="BADGE_STATUS[course.status]"></nz-badge>
 </ng-template>
 
 <ng-template #avatarTemplate>
@@ -33,6 +34,10 @@
 
 <ng-template #actionEdit>
   <a nz-icon nzType="edit"></a>
+</ng-template>
+
+<ng-template #actionPublish>
+  <a nz-icon nzType="check"></a>
 </ng-template>
 
 <ng-template #actionDelete>
