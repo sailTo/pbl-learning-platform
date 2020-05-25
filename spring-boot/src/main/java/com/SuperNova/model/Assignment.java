@@ -5,13 +5,11 @@ import javax.persistence.*;
 
 public class Assignment {
     @Id
-    private String ids;
-
-//    @Id
+    @OrderBy
     @Column(name = "a_id")
     private Integer a_id;
 
-//    @Id
+    @Id
     @Column(name = "p_id")
     private Integer p_id;
 

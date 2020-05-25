@@ -27,33 +27,46 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public String searchProject(int c_id) {
-        return JSON.toJSONString(projectMapper.searchProject(c_id));
+        Project tmp = new Project();
+        tmp.setc_id(c_id);
+        return JSON.toJSONString(projectMapper.select(tmp));
     }
 
     @Override
     public void deletProject(int p_id) {
-        projectMapper.deletProject(p_id);
-        gradeSystemMapper.deleteGradeSystems(p_id);
+        projectMapper.deleteByPrimaryKey(p_id);
+
+        GradeSystem tmp = new GradeSystem();
+        tmp.setp_id(p_id);
+        gradeSystemMapper.delete(tmp);
     }
 
     @Override
     public int addProject(Project project, List<GradeSystem> grades) {
-        int p_id = projectMapper.addProject(project);
+        projectMapper.insertSelective(project);
+        int p_id = project.getp_id();
+        int item_id = gradeSystemMapper.getMaxItemId(p_id);
         for (GradeSystem grade:grades) {
             grade.setp_id(p_id);
+            //这里需要修改成设置itemid，因为它不是自增的
+            grade.setitem_id(++item_id);
         }
-        gradeSystemMapper.addGradeSystems(grades);
+        gradeSystemMapper.insertList(grades);
         return p_id;
     }
 
     @Override
     public String searchGradeSystem(int p_id) {
-        return JSON.toJSONString(gradeSystemMapper.searchGradeSystem(p_id));
+        GradeSystem tmp = new GradeSystem();
+        tmp.setp_id(p_id);
+        return JSON.toJSONString(gradeSystemMapper.select(tmp));
     }
 
     @Override
     public int searchTotalNum(int p_id) {
-        return projectMapper.searchTotalNum(p_id);
+        Project tmp = new Project();
+        tmp.setp_id(p_id);
+        return projectMapper.selectCount(tmp);
     }
 
     @Override

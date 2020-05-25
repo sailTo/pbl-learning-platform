@@ -8,23 +8,29 @@ import java.util.List;
 
 public interface GradeSystemMapper extends Mapper<GradeSystem> {
 
-    /**
-     * 添加项目评分细则
-     * @param gradeSystems
-     */
-    void addGradeSystems(List<GradeSystem> gradeSystems);
+//    /**
+//     * 添加项目评分细则
+//     * @param gradeSystems
+//     */
+//    void addGradeSystems(List<GradeSystem> gradeSystems);
+
+//    /**
+//     * 删除项目相关评分细则
+//     * @param p_id
+//     */
+//    void deleteGradeSystems(int p_id);
+
+//    /**
+//     * 获取项目评分细则
+//     * @param p_id
+//     * @return
+//     */
+//    List<GradeSystem> searchGradeSystem(int p_id);
 
     /**
-     * 删除项目相关评分细则
-     * @param p_id
-     */
-    void deleteGradeSystems(int p_id);
-
-    /**
-     * 获取项目评分细则
+     * 获取当前项目最大的item_id
      * @param p_id
      * @return
      */
-    List<GradeSystem> searchGradeSystem(int p_id);
-
+    int getMaxItemId(int p_id);
 }

@@ -3,6 +3,7 @@ package com.SuperNova.service.impl;
 import com.SuperNova.dao.EvaluationMapper;
 import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.dao.StudentGradeMapper;
+import com.SuperNova.model.Evaluation;
 import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.model.StudentGrade;
@@ -30,8 +31,11 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     private ProjectMapper projectMapper;
 
     @Override
-    public String searchEvaluateByTeacher(int p_id, int s_id) {
-        List<StudentGrade> grades = studentGradeMapper.searchEvaluateByTeacher(p_id,s_id);
+    public String searchEvaluateByTeacher(int p_id, String s_id) {
+        StudentGrade tmp = new StudentGrade();
+        tmp.setp_id(p_id);
+        tmp.sets_id(s_id);
+        List<StudentGrade> grades = studentGradeMapper.select(tmp);
         if(grades.size()==0){
             return null;
         }
@@ -39,21 +43,36 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     }
 
     @Override
-    public String searchGrade(int p_id, int s_id) {
-        List<StudentGrade> grades = studentGradeMapper.searchEvaluateByTeacher(p_id,s_id);
-        Project project = projectMapper.searchProjectById(p_id);
+    public String searchGrade(int p_id, String s_id) {
+        StudentGrade studentGrade = new StudentGrade();
+        studentGrade.setp_id(p_id);
+        studentGrade.sets_id(s_id);
+        List<StudentGrade> grades = studentGradeMapper.select(studentGrade);
+        Project project = projectMapper.selectByPrimaryKey(p_id);
 
         if(project.getteacher_grade_ratio()>0&&grades.size()==0){
             return null;
         }
 
-        if(project.getmutual_grade_ratio()>0&&evaluationMapper.haveEvaluatedNum(p_id,s_id)<projectMapper.searchTotalNum(p_id)-1){
+        Evaluation evaluation = new Evaluation();
+        evaluation.setpassive_s_id(s_id);
+        evaluation.setp_id(p_id);
+        Project tmp = new Project();
+        tmp.setp_id(p_id);
+
+        //这里选出来评分人包括了自己,可能会有bug
+        if(project.getmutual_grade_ratio() > 0 && evaluationMapper.selectCount(evaluation) < projectMapper.selectCount(tmp)-1){
             return null;
         }
 
-        double gradeBySelf = evaluationMapper.searchEvaluateBySelf(p_id, s_id);
+        evaluation = new Evaluation();
+        evaluation.setp_id(p_id);
+        evaluation.setpassive_s_id(s_id);
+        evaluation.setactive_s_id(s_id);
 
-        if(project.getself_grade_ratio()>0&&gradeBySelf<0){
+        double gradeBySelf = evaluationMapper.select(evaluation)==null ? -1 : evaluation.getGrade();
+
+        if(project.getself_grade_ratio()>0 && gradeBySelf < 0){
             return null;
         }
 
@@ -68,4 +87,6 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
 
         return ""+totalGrade;
     }
+
+
 }

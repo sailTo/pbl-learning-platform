@@ -3,18 +3,16 @@ package com.SuperNova.model;
 import javax.persistence.*;
 
 public class Evaluation {
-    @Id
-    private String ids;
 
-//    @Id
+    @Id
     @Column(name = "p_id")
     private Integer p_id;
 
-//    @Id
+    @Id
     @Column(name = "active_s_id")
     private String active_s_id;
 
-//    @Id
+    @Id
     @Column(name = "passive_s_id")
     private String passive_s_id;
 

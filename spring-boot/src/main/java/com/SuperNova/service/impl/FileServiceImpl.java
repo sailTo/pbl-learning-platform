@@ -26,19 +26,24 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
 
     @Override
     public String searchFiles(int p_id) {
-        return JSON.toJSONString(fileMapper.searchFiles(p_id));
+        File tmp = new File();
+        tmp.setp_id(p_id);
+        return JSON.toJSONString(fileMapper.select(tmp));
     }
 
     @Override
     public String addFile(File file) {
-        int f_id = fileMapper.createFile(file);
+        int f_id = fileMapper.insertSelective(file);
         file.setf_id(f_id);
         return JSON.toJSONString(file);
     }
 
     @Override
     public void deleteFile(int p_id, int f_id) {
-        fileMapper.deleteFile(p_id,f_id);
+        File tmp = new File();
+        tmp.setp_id(p_id);
+        tmp.setf_id(f_id);
+        fileMapper.delete(tmp);
     }
 
     @Override

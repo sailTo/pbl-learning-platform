@@ -13,4 +13,5 @@
     <result column="a_end_date" jdbcType="TIMESTAMP" property="aEndDate" />
     <result column="a_description" jdbcType="LONGVARCHAR" property="aDescription" />
   </resultMap>
+
 </mapper>
