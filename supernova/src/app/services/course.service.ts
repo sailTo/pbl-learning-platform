@@ -11,6 +11,7 @@ export class CourseService {
     'my': '/api/searchMyCourses', 
     'other': '/api/searchOtherCourses', 
     'all': '/api/searchAllCourses', 
+    'all_my': '/api/searchAllMyCourses', 
   };
 
   constructor(
@@ -23,6 +24,10 @@ export class CourseService {
       pageSize: String(pageSize)
     }});
     return this.http.get<{courses: Course[], total: number}>(this.requestURL[type], {params});
+  }
+
+  getMyCourseNames() {
+    return this.http.get<{c_id: number, c_name: string}[]>(this.requestURL['all_my'], );
   }
 }
 

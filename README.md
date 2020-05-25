@@ -643,6 +643,27 @@ A course project for Advanced Web Technologies at FDU.
 
 #### 项目展示页面
 
+接口URL：/api/searchAllMyCourses
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
+| :-------: | :--: | :----: | :------: | :----------: |
+| pbl_token |  -   | String |    是    | 用于验证身份 |
+
+返回参数：
+
+| 字段名  | 说明                                         |  类型  |                             备注                             |
+| :-----: | :------------------------------------------- | :----: | :----------------------------------------------------------: |
+|  code   | 200：查询成功<br>208：登录超时               |  int   |                              -                               |
+| message | 200：无<br>208：登录超时，请重新登录         | String |                              -                               |
+|  type   | 200：用户类型                                | String |                            S/T/A                             |
+| courses | json序列化Course数组，但是只需要c_id和c_name | String | [{c_id: number, c_name: string}, {c_id: number, c_name: string}, ...]<br>学生和教师用户需要返回该用户相关的课程，管理员用户需要返回**所有**课程 |
+
+
+
 接口URL：/api/searchProject
 
 请求方法：GET
