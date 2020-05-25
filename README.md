@@ -319,7 +319,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 登录页面
 
-接口URL：/api/login
+接口URL：/account/login
 
 请求方法：POST
 
@@ -343,7 +343,7 @@ A course project for Advanced Web Technologies at FDU.
 
 ### 注册页面
 
-接口URL：/api/searchId
+接口URL：/account/searchId
 
 请求方法：GET
 
@@ -361,7 +361,7 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
-接口URL：/api/register
+接口URL：/account/register
 
 请求方法：POST
 
@@ -482,9 +482,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
-| :-------: | :--: | :----: | :------: | :----------: |
-| pbl_token |  -   | String |    是    | 用于验证身份 |
+|  字段名   |     说明     |  类型  | 是否必填 |         备注         |
+| :-------: | :----------: | :----: | :------: | :------------------: |
+| pbl_token |      -       | String |    是    |     用于验证身份     |
+| pageIndex | 当前请求页码 |  int   |    是    |          -           |
+| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -492,16 +494,31 @@ A course project for Advanced Web Technologies at FDU.
 | :------: | :----------------------------------- | :----: | :----------------------------------------------------------: |
 |   code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
 | message  | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
-| courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看 |
+| courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看<br>需要对课程按照用户是否可见进行过滤 |
 | teachers | json序列化user数组                   | String |                       包含u_id,u_name                        |
+|  total   | 课程对象总数量                       |  int   |                        用于计算总页码                        |
 
-> 感觉课程这里的设计有点问题哦，前端需要t_id和教师表join一下，返回值要包含t_name，就是教师名称；同时t_id最好也要，我可以做一个跳转到教师个人页面的链接？（这样的话甚至可以把教师头像的url也给我，我在course card里显示）——黄
+> 期望的结构能做到如下这样，如果不行，把course和teacher并列放也可以。——黄
 >
 > course: {
 >
 > ​    c_id: number,
 >
-> ​    t_id: number, 
+> ​    teacher: {
+>
+> ​		 u_id: number,
+>
+>  		type: string, 
+>	
+>  		u_name: string, 
+>	
+>  		gender: string,
+>	
+>  		description: string,
+>	
+>  		image: string, 
+>
+> ​	}, 
 >
 > ​    c_name: string, 
 >
@@ -515,9 +532,9 @@ A course project for Advanced Web Technologies at FDU.
 >
 > ​    c_image_URL: string, // course封面图，没有的话应该返回默认图URL
 >
-> ​    t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
+> ​    //t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
 >
->   }
+> }
 
 接口URL：/api/searchAllCourses
 

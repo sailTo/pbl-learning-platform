@@ -9,4 +9,11 @@ import { Course } from 'src/app/services/course.service';
 })
 export class CourseCardComponent {
     @Input() course: Course;
+    @Input() type: string;
+
+    badgeStatus = {
+        'unpublished': 'default', 
+        'published': 'success', 
+        'deleted': 'error', 
+    }
 }

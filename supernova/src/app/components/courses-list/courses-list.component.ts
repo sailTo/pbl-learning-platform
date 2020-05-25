@@ -8,6 +8,7 @@ import { Course } from 'src/app/services/course.service';
 })
 export class CoursesListComponent implements OnInit {
   @Input() courses: Course[];
+  @Input() type: string; // 展示的课程类型
 
   constructor() { }
 

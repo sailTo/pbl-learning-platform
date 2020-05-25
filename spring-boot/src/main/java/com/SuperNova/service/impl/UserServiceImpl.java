@@ -7,6 +7,7 @@ import com.SuperNova.service.EncryptService;
 import com.SuperNova.service.UserService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,7 +144,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         User user = userMapper.selectByPrimaryKey(uId);
 
         if(user.getPassword().equals(Password)){
-            return getToken(uId);
+            JSONObject data = new JSONObject();
+            data.put("user",user);
+            data.put("image",getImageURL(uId));
+            return data.toJSONString();
         }
 
         return "-1";
