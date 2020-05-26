@@ -13,9 +13,9 @@
     <result column="image" jdbcType="BIT" property="image" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
-  <!--<select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">-->
-    <!--select * from user where u_id = ${id}-->
-  <!--</select>-->
+  <select id="idExist" parameterType="String" resultType="boolean">
+    select count(u_id) from user where u_id = #{u_id}
+  </select>
   <!--<select id="selectByPrimaryKey" result Type=”SysD ict” >-->
   <!--select id, code , name ， 、v alue 、from sys dict where id= #{id}-->
 <!--</se lect>-->

@@ -14,4 +14,18 @@
     <result column="a_description" jdbcType="LONGVARCHAR" property="aDescription" />
   </resultMap>
 
+  <insert id="addAssignment">
+    <selectKey keyProperty="a_id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into assignment(p_id, a_name, a_description, importance,a_end_date)
+    VALUE (#{p_id}, #{a_name}, #{a_description}, #{importance},#{a_end_date})
+  </insert>
+  <select id="countAssignmentDone" parameterType="int" resultType="DoneInformation">
+    select u_id,u_name,count(a_id)
+    from user natural join student_assignment
+    where p_id = #{p_id} and status = true
+    group by u_id
+    order by u_id
+  </select>
 </mapper>

@@ -37,7 +37,8 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
 
     @Override
     public int addCourse(Course course) {
-        return courseMapper.insertSelective(course);
+        courseMapper.addCourse(course);
+        return course.getcId();
     }
 
     @Override

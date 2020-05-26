@@ -43,12 +43,12 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public int addProject(Project project, List<GradeSystem> grades) {
-        projectMapper.insertSelective(project);
+        projectMapper.addProject(project);
         int p_id = project.getp_id();
         int item_id = gradeSystemMapper.getMaxItemId(p_id);
         for (GradeSystem grade:grades) {
             grade.setp_id(p_id);
-            //这里需要修改成设置itemid，因为它不是自增的
+            //这里需要修改成设置item_id，因为它不是自增的
             grade.setitem_id(++item_id);
         }
         gradeSystemMapper.insertList(grades);

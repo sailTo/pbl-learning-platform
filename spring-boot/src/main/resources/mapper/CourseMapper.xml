@@ -13,4 +13,26 @@
     <result column="image_URL" jdbcType="CHAR" property="imageUrl" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
+  <select id="getMyCourses" resultType="Course" parameterType="String">
+    select * from course
+    where c_id in (select c_id from student_course where u_id = #{u_id})
+  </select>
+
+  <select id="searchOtherCourses" resultType="Course" parameterType="String">
+    select * from course where status = 1
+    <if test="_parameter.indexOf('t') == 0">
+      and t_id != #{u_id}
+    </if>
+    <if test="_parameter.indexOf('s') == 0">
+      and c_id not in (select c_id from student_course where u_id = #{u_id})
+    </if>
+  </select>
+
+  <insert id="addCourse">
+    <selectKey keyProperty="c_id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into course(t_id, c_name, point, description,status,image_URL)
+    VALUE (#{t_id}, #{c_name}, #{point}, #{description}, #{status},#{image_URL})
+  </insert>
 </mapper>

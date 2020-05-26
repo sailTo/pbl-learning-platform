@@ -11,4 +11,19 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  <select id="searchReplise" resultType="Reply">
+    select * from reply where d_id in (
+      select discussion.d_id from discussion where p_id = #{p_id})
+  </select>
+  <select id="searchReply" resultType="Reply">
+    select * from reply where r_id = #{r_id}
+  </select>
+
+  <insert id="createReply">
+    <selectKey keyProperty="r_id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into reply(d_id, u_id, content)
+    VALUE (#{d_id}, #{u_id}, #{content})
+  </insert>
 </mapper>

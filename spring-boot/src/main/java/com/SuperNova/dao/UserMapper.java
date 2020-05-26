@@ -2,6 +2,7 @@ package com.SuperNova.dao;
 
 import com.SuperNova.core.Mapper;
 import com.SuperNova.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

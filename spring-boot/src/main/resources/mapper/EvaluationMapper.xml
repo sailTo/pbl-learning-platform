@@ -10,4 +10,8 @@
     <id column="passive_s_id" jdbcType="CHAR" property="passiveSId" />
     <result column="grade" jdbcType="INTEGER" property="grade" />
   </resultMap>
+  <select id="searchEvaluateByOther" resultType="double">
+    select avg(grade) from evaluation
+    where p_id = #{p_id} and passive_s_id = #{s_id} and active_s_id != #{s_id}
+  </select>
 </mapper>

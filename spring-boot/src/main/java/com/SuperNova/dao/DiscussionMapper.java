@@ -22,12 +22,13 @@ public interface DiscussionMapper extends Mapper<Discussion> {
 //     */
 //    Discussion searchDiscussion(int p_id,int d_id);
 
-//    /**
-//     * 新建讨论
-//     * @param discussion
-//     * @return
-//     */
-//    int addDiscussion(Discussion discussion);
+    /**
+     * 新建讨论
+     * @param discussion
+     * discussion对象里不要带time，数据库里自动生成
+     * @return
+     */
+    void addDiscussion(Discussion discussion);
 
 //    /**
 //     * 删除项目讨论

@@ -20,12 +20,12 @@ public interface FileMapper extends Mapper<File> {
      */
     int searchMaxId(int p_id);
 
-//    /**
-//     * 新建文件
-//     * @param file
-//     * @return f_id
-//     */
-//    int createFile(File file);
+    /**
+     * 新建文件
+     * @param file
+     * @return f_id
+     */
+    void createFile(File file);
 
 //    /**
 //     * 删除文件

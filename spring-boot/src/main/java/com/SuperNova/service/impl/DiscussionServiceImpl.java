@@ -37,7 +37,7 @@ public class DiscussionServiceImpl extends AbstractService<Discussion> implement
 
     @Override
     public int createDiscussion(Discussion discussion) {
-        discussionMapper.insertSelective(discussion);
+        discussionMapper.addDiscussion(discussion);
         return discussion.getd_id();
     }
 
