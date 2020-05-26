@@ -1,6 +1,6 @@
 <nz-card 
   [nzCover]="coverTemplate" 
-  [nzActions]="[actionJoin]"
+  [nzActions]=actions
   nzHoverable
   >
   <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
@@ -16,10 +16,10 @@
 </ng-template>
 
 <ng-template #actionJoin>
-  <a nz-icon nzType="plus"></a>
+  <a nz-icon nzType="plus" (click)="onJoin()"></a>
 </ng-template>
 
-<!-- 进入项目详情页 -->
+<!-- 进入详情页 -->
 <ng-template #actionInfo>
   <a nz-icon nzType="info"></a>
 </ng-template>
@@ -28,14 +28,14 @@
   <a nz-icon nzType="edit"></a>
 </ng-template>
 
-<ng-template #actionPublish>
-  <a nz-icon nzType="check"></a>
+<ng-template #actionDiscussion>
+  <a nz-icon nzType="comment"></a>
 </ng-template>
 
 <ng-template #actionDelete>
   <a nz-icon nzType="delete"></a>
 </ng-template>
 
-<ng-template #actionResume>
-  <a nz-icon nzType="redo"></a>
+<ng-template #actionFileMgmt>
+  <a nz-icon nzType="download"></a>
 </ng-template>

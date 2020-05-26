@@ -9,7 +9,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
-
+import { NzMessageModule } from "ng-zorro-antd/message";
 
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
@@ -32,6 +32,7 @@ import { ProjectCardComponent } from './components/project-card/project-card.com
     NzIconModule, 
     NzTabsModule, 
     NzEmptyModule, 
+    NzMessageModule, 
   ], 
 })
 export class ProjectsModule { }

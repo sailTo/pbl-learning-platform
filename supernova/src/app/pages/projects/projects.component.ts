@@ -30,7 +30,7 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private courseService: CourseService, 
-    private projectService: ProjectService
+    private projectService: ProjectService, 
   ) { }
 
   ngOnInit(): void {
@@ -60,11 +60,21 @@ export class ProjectsComponent implements OnInit {
   compareFn = (o1: any, o2: any) => (o1 && o2 ? o1.value === o2.value : o1 === o2);
 
   onChange(value: {label: string, value: number}): void {
+    if (value === null) {
+      this.projects = [];
+      return;
+    }
+
     // this.projectService.findProjectsByCourseId(value.value).subscribe((data) => {
     //   this.projectTaking = data.project_take;
     //   this.projects = data.projects;
     // })
-    this.projects = [this.project, ];
+    this.projectTaking = 4;
+    for (let i = 0; i < 10; i++) {
+      const project = {...this.project};
+      project.p_id = i;
+      this.projects.push(project);
+    }
   }
 
 }
