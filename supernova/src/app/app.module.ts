@@ -34,10 +34,6 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([
-      // {path:'login' , component : LoginComponent},
-      // {path:'signup' , component : SignupComponent}
-    ]),
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

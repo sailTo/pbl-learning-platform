@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 import { CourseService } from "../../services/course.service";
 import { ProjectService, Project } from "../../services/project.service";
@@ -29,6 +31,8 @@ export class ProjectsComponent implements OnInit {
   numOfCardsARow: number = 4;
 
   constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
     private courseService: CourseService, 
     private projectService: ProjectService, 
   ) { }
@@ -36,6 +40,17 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.getOptionList();
     this.projects = [];
+
+    // get param c_id
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => 
+        this.selectedValue = this.optionList.find(element => element.value == Number(params.get('c_id')))[0]
+    ));
+    console.log(this.selectedValue);
+    // update if there is c_id 
+    if (this.selectedValue != null) {
+      this.onChange(this.selectedValue);
+    }
   }
 
   getOptionList(): void {
@@ -60,8 +75,9 @@ export class ProjectsComponent implements OnInit {
   compareFn = (o1: any, o2: any) => (o1 && o2 ? o1.value === o2.value : o1 === o2);
 
   onChange(value: {label: string, value: number}): void {
+    this.projects = [];
+
     if (value === null) {
-      this.projects = [];
       return;
     }
 
