@@ -1,4 +1,4 @@
-<nz-card style="width: 100%;">
+<nz-card>
   <nz-card-tab>
     <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)">
       <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
@@ -10,7 +10,7 @@
       <app-course-card [course]=course [type]=type></app-course-card>
     </nz-col>
   </nz-row>
-  <app-pagination style="padding-top: 24px; float: right;" 
+  <app-pagination
     [pageIndex]="pageIndex" 
     [pageSize]="pageSize" 
     [total]="total" 

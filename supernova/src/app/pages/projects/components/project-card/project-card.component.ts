@@ -8,6 +8,7 @@ import { Project } from 'src/app/services/project.service';
 })
 export class ProjectCardComponent implements OnInit {
   @Input() project: Project;
+  @Input() taken: boolean;
 
   constructor() { }
 

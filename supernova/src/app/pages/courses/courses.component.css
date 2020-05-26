@@ -1,0 +1,8 @@
+nz-card {
+    height: 100%; 
+}
+
+app-pagination {
+    padding-top: 24px; 
+    float: right;
+}

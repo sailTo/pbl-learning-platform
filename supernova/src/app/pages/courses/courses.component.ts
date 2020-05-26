@@ -63,7 +63,7 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
     // this.getCourses();
     this.total = 10;
-    this.courses = [this.course, this.dcourse, this.ucourse, this.course, this.course, this.course];
+    this.courses = [this.course, this.dcourse, this.ucourse, this.course, this.course, this.course, this.course, this.course];
   }
 
   getCourses(): void {

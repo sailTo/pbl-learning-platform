@@ -1,16 +1,30 @@
-<nz-select 
-    [(ngModel)]="selectedValue" 
-    [compareWith]="compareFn" 
-    (ngModelChange)="onChange($event)" 
-    nzShowSearch 
-    nzAllowClear 
-    nzPlaceHolder="请选择课程"
-    >
-    <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
-</nz-select>
+<nz-card [nzExtra]="extraTemplate">
+    <nz-card-tab>
+        <nz-tabset nzSize="large">
+            <nz-tab [nzTitle]="selectedValue ? selectedValue.label + '的项目' : '请先选择课程'"></nz-tab>
+        </nz-tabset>
+    </nz-card-tab>
+    <nz-row [nzGutter]="[24, 24]">
+        <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let project of projects">
+            <app-project-card [project]=project [taken]="projectTaking === project.p_id"></app-project-card>
+        </nz-col>
+    </nz-row>
+    <nz-empty *ngIf="projects.length === 0"></nz-empty>
+</nz-card>
 
-<nz-row [nzGutter]="[24, 24]">
-    <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let project of projects">
-        <app-project-card [project]=project></app-project-card>
-    </nz-col>
-</nz-row>
+<ng-template #extraTemplate>
+    请选择课程：
+    <nz-select 
+        [(ngModel)]="selectedValue" 
+        [compareWith]="compareFn" 
+        (ngModelChange)="onChange($event)" 
+        nzShowSearch
+        nzAllowClear 
+        >
+        <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
+    </nz-select>
+</ng-template>
+
+
+
+

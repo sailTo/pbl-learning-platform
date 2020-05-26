@@ -50,7 +50,7 @@ export class ProjectsComponent implements OnInit {
     // });
     this.optionList = [
       {label: '测试课程1', value: 1}, 
-      {label: '测试课程2', value: 2}, 
+      {label: '测试课程2测试课程2测试课程2测试课程2', value: 2}, 
       {label: '测试课程3', value: 3}, 
       {label: '测试课程4', value: 4},
     ]
@@ -64,7 +64,7 @@ export class ProjectsComponent implements OnInit {
     //   this.projectTaking = data.project_take;
     //   this.projects = data.projects;
     // })
-    this.projects = [this.project];
+    this.projects = [this.project, ];
   }
 
 }

@@ -1,0 +1,11 @@
+nz-card {
+    height: 100%; 
+}
+
+nz-select {
+    width: 200px;
+}
+
+nz-empty {
+    padding-top: 12%;
+}
