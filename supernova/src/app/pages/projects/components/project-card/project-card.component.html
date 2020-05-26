@@ -1,0 +1,41 @@
+<nz-card 
+  [nzCover]="coverTemplate" 
+  [nzActions]="[actionJoin]"
+  nzHoverable
+  >
+  <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
+  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=project.description></nz-card-meta>
+</nz-card>
+
+<ng-template #titleTemplate>
+  <span>{{project.p_name}}</span>
+</ng-template>
+
+<ng-template #coverTemplate>
+  
+</ng-template>
+
+<ng-template #actionJoin>
+  <a nz-icon nzType="plus"></a>
+</ng-template>
+
+<!-- 进入项目详情页 -->
+<ng-template #actionInfo>
+  <a nz-icon nzType="info"></a>
+</ng-template>
+
+<ng-template #actionEdit>
+  <a nz-icon nzType="edit"></a>
+</ng-template>
+
+<ng-template #actionPublish>
+  <a nz-icon nzType="check"></a>
+</ng-template>
+
+<ng-template #actionDelete>
+  <a nz-icon nzType="delete"></a>
+</ng-template>
+
+<ng-template #actionResume>
+  <a nz-icon nzType="redo"></a>
+</ng-template>

@@ -54,6 +54,8 @@ export class CoursesComponent implements OnInit {
   pageSize: number = 8;
   total: number;
 
+  numOfCardsARow: number = 4;
+
   constructor(
     private courseService: CourseService, 
   ) { }

@@ -1,22 +1,21 @@
 <nz-card style="width: 100%;">
-    <nz-card-tab>
-      <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)">
-        <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
-        <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
-      </nz-tabset>
-    </nz-card-tab>
-    <nz-row [nzGutter]="[24, 24]">
-      <!-- TODO: use a variable to control how many elements a row -->
-      <nz-col [nzSpan]="6" *ngFor="let course of courses">
-          <app-course-card [course]=course [type]=type></app-course-card>
-      </nz-col>
-    </nz-row>
-    <app-pagination style="padding-top: 24px; float: right;" 
-      [pageIndex]="pageIndex" 
-      [pageSize]="pageSize" 
-      [total]="total" 
-      (pageIndexChange)="onPageIndexChange($event)"
-      >
-    </app-pagination>
+  <nz-card-tab>
+    <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)">
+      <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
+      <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+  <nz-row [nzGutter]="[24, 24]">
+    <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let course of courses">
+      <app-course-card [course]=course [type]=type></app-course-card>
+    </nz-col>
+  </nz-row>
+  <app-pagination style="padding-top: 24px; float: right;" 
+    [pageIndex]="pageIndex" 
+    [pageSize]="pageSize" 
+    [total]="total" 
+    (pageIndexChange)="onPageIndexChange($event)"
+    >
+  </app-pagination>
 </nz-card>
 

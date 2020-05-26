@@ -685,6 +685,26 @@ A course project for Advanced Web Technologies at FDU.
 | project_take | 学生已加入项目：p_id<br>学生未加入项目/其它：-1 |  int   |                              -                               |
 |   projects   | json序列化Project数组                           | String | Project对象包含属性p_id,c_id,p_name,description, grading_status, teacher_grade_ratio,self_grade_ratio, mutual_grade_ratio |
 
+> Project {
+>
+>  p_id: number, 
+>
+>  c_id: number, 
+>
+>  p_name: string, 
+>
+>  description: string, 
+>
+>  grading_status: boolean, // true 表示已评分，false 未评分
+>
+>  teacher_grade_ratio: number, 
+>
+>  self_grade_ratio: number, 
+>
+>  mutual_grade_ratio: number, 
+>
+> }
+
 
 
 

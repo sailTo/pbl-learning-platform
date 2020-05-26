@@ -1,22 +1,36 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from "@angular/forms";
 
 // import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzGridModule } from "ng-zorro-antd/grid";
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
-import { ProjectCascadeSelectComponent } from '../../components/project-cascade-select/project-cascade-select.component';
+import { ProjectCardComponent } from './components/project-card/project-card.component';
+// import { ProjectCascadeSelectComponent } from '../../components/project-cascade-select/project-cascade-select.component';
 
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectCascadeSelectComponent],
+  declarations: [
+    ProjectsComponent,
+    ProjectCardComponent, 
+    // ProjectCascadeSelectComponent
+  ],
   imports: [
     CommonModule,
     ProjectsRoutingModule, 
+    FormsModule, 
     // NzCascaderModule, 
     NzSelectModule, 
+    NzGridModule, 
+    NzAvatarModule, 
+    NzCardModule, 
+    NzIconModule, 
   ], 
-  // schemas: [NO_ERRORS_SCHEMA]
 })
 export class ProjectsModule { }

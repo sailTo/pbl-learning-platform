@@ -1,9 +1,16 @@
-<p>projects works!</p>
-<!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue" (ngModelChange)="onChange($event)">
-    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
-</nz-select> -->
-<nz-select [(ngModel)]="selectedValue" [compareWith]="compareFn" (ngModelChange)="log($event)" nzAllowClear nzPlaceHolder="Choose">
+<nz-select 
+    [(ngModel)]="selectedValue" 
+    [compareWith]="compareFn" 
+    (ngModelChange)="onChange($event)" 
+    nzShowSearch 
+    nzAllowClear 
+    nzPlaceHolder="请选择课程"
+    >
     <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
 </nz-select>
+
+<nz-row [nzGutter]="[24, 24]">
+    <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let project of projects">
+        <app-project-card [project]=project></app-project-card>
+    </nz-col>
+</nz-row>
