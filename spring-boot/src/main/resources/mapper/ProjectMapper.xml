@@ -14,4 +14,24 @@
     <result column="mutual_grade_ratio" jdbcType="INTEGER" property="mutualGradeRatio" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
+  <select id="countDone" resultType="int">
+    select count(distinct u_id) from student_assignment where p_id = #{p_id} and u_id not in (
+      select u_id from student_assignment where p_id = #{p_id} and status = false
+      )
+  </select>
+  <select id="searchGroupers" resultType="User">
+    select * from user
+    where u_id in (
+      select u_id from student_project
+      where p_id = #{p_id}
+      )
+  </select>
+
+  <insert id="addProject">
+    <selectKey keyProperty="p_id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into project(c_id, p_name, description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio)
+    VALUE (#{c_id}, #{p_name}, #{description}, #{grading_status}, #{teacher_grade_ratio}, #{self_grade_ratio}, #{mutual_grade_ratio})
+  </insert>
 </mapper>

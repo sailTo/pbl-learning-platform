@@ -10,4 +10,7 @@
     <result column="max_grade" jdbcType="INTEGER" property="maxGrade" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
+  <select id="getMaxItemId" resultType="int">
+    select max(item_id) from grade_system where p_id = #{p_id}
+  </select>
 </mapper>

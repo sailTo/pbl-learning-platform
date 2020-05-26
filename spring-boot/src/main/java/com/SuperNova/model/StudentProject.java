@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Table(name = "student_project")
 public class StudentProject {
     @Id
-    @Column(name = "s_id")
-    private String s_id;
+    @Column(name = "u_id")
+    private String u_id;
 
     @Id
     @Column(name = "p_id")
@@ -25,17 +25,17 @@ public class StudentProject {
     private Integer teacher_grade;
 
     /**
-     * @return s_id
+     * @return u_id
      */
     public String gets_id() {
-        return s_id;
+        return u_id;
     }
 
     /**
      * @param s_id
      */
     public void sets_id(String s_id) {
-        this.s_id = s_id;
+        this.u_id = s_id;
     }
 
     /**

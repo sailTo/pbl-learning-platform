@@ -1,5 +1,6 @@
-package com.SuperNova;
+package com.SuperNova.mapperTest;
 
+import com.SuperNova.Tester;
 import com.SuperNova.dao.UserMapper;
 import com.SuperNova.model.Course;
 import com.SuperNova.model.User;
@@ -12,7 +13,7 @@ import org.junit.Test;
 import javax.annotation.Resource;
 import java.util.List;
 
-public class UserTest extends Tester{
+public class UserTest extends Tester {
     @Resource
     private UserMapper userMapper;
     @Resource
@@ -29,8 +30,7 @@ public class UserTest extends Tester{
 
     @Test
     public void test2(){
-        List<User> users = userMapper.selectAll();
-        Assert.assertEquals(users.size(),3);
+        Assert.assertFalse(userMapper.idExist("s003"));
     }
 
     @Test

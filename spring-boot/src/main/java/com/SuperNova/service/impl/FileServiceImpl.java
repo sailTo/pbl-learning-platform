@@ -33,8 +33,7 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
 
     @Override
     public String addFile(File file) {
-        int f_id = fileMapper.insertSelective(file);
-        file.setf_id(f_id);
+        fileMapper.createFile(file);
         return JSON.toJSONString(file);
     }
 

@@ -11,4 +11,25 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  <select id="countDiscussion" parameterType="int" resultType="DiscussInformation">
+    select tmp.u_id,tmp.u_name,count(tmp.u_id)
+    from (
+           select u_id,u_name
+           from discussion natural join user
+           where p_id = #{p_id}
+           union all
+           select u_id,u_name
+           from reply natural join user natural join (select d_id,p_id from discussion) as dis2pj
+           where p_id = #{p_id}
+      )as tmp
+    group by tmp.u_id
+  </select>
+    <insert id="addDiscussion">
+        <selectKey keyProperty="d_id" resultType="java.lang.Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into discussion(p_id, u_id, content)
+        VALUE (#{p_id}, #{u_id}, #{content})
+    </insert>
+
 </mapper>

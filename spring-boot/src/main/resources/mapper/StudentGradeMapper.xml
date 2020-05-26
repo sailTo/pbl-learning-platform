@@ -7,7 +7,7 @@
     -->
     <id column="item_id" jdbcType="INTEGER" property="itemId" />
     <id column="p_id" jdbcType="INTEGER" property="pId" />
-    <id column="s_id" jdbcType="CHAR" property="sId" />
+    <id column="u_id" jdbcType="CHAR" property="uId" />
     <result column="grade" jdbcType="INTEGER" property="grade" />
   </resultMap>
 </mapper>

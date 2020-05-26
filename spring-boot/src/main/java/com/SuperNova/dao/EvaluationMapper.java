@@ -2,16 +2,18 @@ package com.SuperNova.dao;
 
 import com.SuperNova.core.Mapper;
 import com.SuperNova.model.Evaluation;
+import org.apache.ibatis.annotations.Param;
 
 public interface EvaluationMapper extends Mapper<Evaluation> {
 
     /**
-     * 获取学生互评分平均分(未全评分则-1)
+     * 获取学生互评分平均分
+     * 此处删除(未全评分则-1)的要求，每次获取都取已经评分的平均分
      * @param p_id
      * @param s_id
      * @return
      */
-    double searchEvaluateByOther(int p_id,String s_id);
+    double searchEvaluateByOther(@Param("p_id")int p_id, @Param("s_id")String s_id);
 
 //    /**
 //     * 获取已经对s_id的学生评分的学生人数

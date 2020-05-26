@@ -28,7 +28,7 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Override
     public int createAssignment(Assignment assignment) {
-        assignmentMapper.insertSelective(assignment);
+        assignmentMapper.addAssignment(assignment);
         return assignment.geta_id();
     }
 

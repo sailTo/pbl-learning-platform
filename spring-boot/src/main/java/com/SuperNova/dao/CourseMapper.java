@@ -26,12 +26,12 @@ public interface CourseMapper extends Mapper<Course> {
 //     */
 //    void joinCourse(int c_id,String u_id);
 
-//    /**
-//     * 添加课程
-//     * @param course
-//     * @return 返回课程id
-//     */
-//    int addCourse(Course course);
+    /**
+     * 添加课程
+     * @param course
+     * @return 返回课程id
+     */
+    void addCourse(Course course);
 
     /**
      * 获取自己的其它未选的课程/未教的课程(已发布)

@@ -5,10 +5,10 @@ public class DiscussInformation {
     private String s_name;
     private int dicussNum;
 
-    public DiscussInformation(String s_id,String s_name,int dicussNum){
+    public DiscussInformation(String s_id,String s_name,long dicussNum){
         this.s_id = s_id;
         this.s_name = s_name;
-        this.dicussNum = dicussNum;
+        this.dicussNum = (int) dicussNum;
     }
 
     public String getS_id() {

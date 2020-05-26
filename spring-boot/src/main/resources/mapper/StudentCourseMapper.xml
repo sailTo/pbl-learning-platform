@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="s_id" jdbcType="CHAR" property="sId" />
+    <id column="u_id" jdbcType="CHAR" property="uId" />
     <id column="c_id" jdbcType="INTEGER" property="cId" />
   </resultMap>
 </mapper>

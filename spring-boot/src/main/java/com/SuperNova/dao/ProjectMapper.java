@@ -23,12 +23,12 @@ public interface ProjectMapper extends Mapper<Project> {
 //     */
 //    Project searchProjectById(int p_id);
 
-//    /**
-//     * 新建项目
-//     * @param project
-//     * @return 新建项目的p_id
-//     */
-//    int addProject(Project project);
+    /**
+     * 新建项目
+     * @param project
+     * @return 新建项目的p_id
+     */
+    void addProject(Project project);
 
 //    /**
 //     * 删除指定项目

@@ -5,10 +5,10 @@ public class DoneInformation {
     private String s_name;
     private int doneNum;
 
-    public DoneInformation(String s_id,String s_name,int doneNum){
+    public DoneInformation(String s_id,String s_name,long doneNum){
         this.s_id = s_id;
         this.s_name = s_name;
-        this.doneNum = doneNum;
+        this.doneNum = (int) doneNum;
     }
 
     public String getS_id() {
