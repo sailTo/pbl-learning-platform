@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CourseService } from "../../services/course.service";
 import { ProjectService, Project } from "../../services/project.service";
@@ -41,16 +40,18 @@ export class ProjectsComponent implements OnInit {
     this.getOptionList();
     this.projects = [];
 
-    // get param c_id
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => 
-        this.selectedValue = this.optionList.find(element => element.value == Number(params.get('c_id')))[0]
-    ));
-    console.log(this.selectedValue);
-    // update if there is c_id 
-    if (this.selectedValue != null) {
-      this.onChange(this.selectedValue);
-    }
+    // get param c_id if there is
+    this.route.params.subscribe(
+      (params: {c_id: string}) => {
+        if (params.c_id) {
+          this.selectedValue = this.optionList.find(element => element.value === Number(params.c_id));
+          // update project list if found select course
+          if (this.selectedValue !== undefined) {
+            this.onChange(this.selectedValue);
+          }
+        }
+      }
+    );
   }
 
   getOptionList(): void {
