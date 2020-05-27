@@ -1,7 +1,7 @@
-<nz-card [nzExtra]="extraTemplate">
+<nz-card>
     <nz-card-tab>
-        <nz-tabset nzSize="large">
-            <nz-tab [nzTitle]="selectedValue ? selectedValue.label + '的项目' : '请先选择课程'"></nz-tab>
+        <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
+            <nz-tab [nzTitle]="selectedValue ? selectedValue.label : '请先选择课程'"></nz-tab>
         </nz-tabset>
     </nz-card-tab>
     <nz-row [nzGutter]="[24, 24]">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { CourseService } from "../../services/course.service";
 import { ProjectService, Project } from "../../services/project.service";
@@ -31,7 +31,6 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private router: Router, 
     private courseService: CourseService, 
     private projectService: ProjectService, 
   ) { }
