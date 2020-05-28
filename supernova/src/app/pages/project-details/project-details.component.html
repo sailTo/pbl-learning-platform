@@ -1,23 +1,23 @@
-<nz-card [nzTitle]="'项目名称'">
+<nz-card>
     <nz-card-tab>
-        <nz-tabset nzLinkRouter nzSize="large">
+        <nz-tabset nzLinkRouter nzSize="large" [nzTabBarExtraContent]="extraTemplate">
             <nz-tab>
-                <a nz-tab-link [routerLink]="['tasks']">
+                <a nz-tab-link [routerLink]="['tasks']" [queryParams]="{ p_id: p_id, p_name: p_name }">
                     <i nz-icon nzType="unordered-list"></i>任务列表
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['members']">
+                <a nz-tab-link [routerLink]="['members']" [queryParams]="{ p_id: p_id, p_name: p_name }">
                     <i nz-icon nzType="user"></i>成员列表
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['discussions']">
+                <a nz-tab-link [routerLink]="['discussions']" [queryParams]="{ p_id: p_id, p_name: p_name }">
                     <i nz-icon nzType="comment"></i>讨论空间
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['files']">
+                <a nz-tab-link [routerLink]="['files']" [queryParams]="{ p_id: p_id, p_name: p_name }">
                     <i nz-icon nzType="download"></i>文件管理
                 </a>
             </nz-tab>
@@ -25,3 +25,7 @@
     </nz-card-tab>
     <router-outlet></router-outlet>
 </nz-card>
+
+<ng-template #extraTemplate>
+    <h3><strong>{{ p_name }}</strong></h3>
+</ng-template>

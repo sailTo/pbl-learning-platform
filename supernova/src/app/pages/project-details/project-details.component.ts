@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Project, ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-project-details',
@@ -9,18 +8,19 @@ import { Project, ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./project-details.component.css']
 })
 export class ProjectDetailsComponent implements OnInit {
-  project: Project;
+  p_id: string;
+  p_name: string;
 
   constructor(    
     private route: ActivatedRoute, 
-    private projectService: ProjectService, 
   ) { }
 
   ngOnInit(): void {
-    // get param p_id
-    this.route.params.subscribe(
-      (params: {p_id: string}) => {
-        console.log(params.p_id);
+    // get params
+    this.route.queryParams.subscribe(
+      (params: {p_id: string, p_name: string}) => {
+        this.p_id = params.p_id;
+        this.p_name = params.p_name;
       }
     );
   }

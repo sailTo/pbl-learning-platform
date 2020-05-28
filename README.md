@@ -1233,7 +1233,21 @@ A course project for Advanced Web Technologies at FDU.
 | message | 200：上传成功<br/>208：登录超时，请重新登录<br>209：文件上传失败 | String |                              -                               |
 |  files  | 200：json序列化file对象数组<br>208：null<br>209：null        | String | file对象属性包含：<br>f_id,p_id,u_id,f_name,description,file_URL |
 
-
+> File {
+>
+>  f_id: number, 
+>
+>  p_id: number, 
+>
+>  u_id: number, 
+>
+>  f_name: string, 
+>
+>  description: string, 
+>
+>  file_URL: string, 
+>
+> }
 
 接口URL：/api/uploadFile
 

@@ -24,7 +24,8 @@
   <a 
     nz-icon 
     nzType="unordered-list" 
-    [routerLink]="['/project', project.p_id, 'tasks']" 
+    [routerLink]="['/project/tasks']" 
+    [queryParams]="{p_id: project.p_id, p_name: project.p_name}"
   ></a>
 </ng-template>
 
@@ -32,8 +33,22 @@
   <a nz-icon nzType="edit"></a>
 </ng-template>
 
+<ng-template #actionMember>
+  <a 
+    nz-icon 
+    nzType="user" 
+    [routerLink]="['/project/members']" 
+    [queryParams]="{p_id: project.p_id, p_name: project.p_name}"
+  ></a>
+</ng-template>
+
 <ng-template #actionDiscussion>
-  <a nz-icon nzType="comment"></a>
+  <a 
+    nz-icon 
+    nzType="comment" 
+    [routerLink]="['/project/discussions']" 
+    [queryParams]="{p_id: project.p_id, p_name: project.p_name}"
+  ></a>
 </ng-template>
 
 <ng-template #actionDelete>
@@ -41,5 +56,10 @@
 </ng-template>
 
 <ng-template #actionFileMgmt>
-  <a nz-icon nzType="download"></a>
+  <a 
+    nz-icon 
+    nzType="download" 
+    [routerLink]="['/project/files']" 
+    [queryParams]="{p_id: project.p_id, p_name: project.p_name}"
+  ></a>
 </ng-template>

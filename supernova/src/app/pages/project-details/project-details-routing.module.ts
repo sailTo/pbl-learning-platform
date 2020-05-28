@@ -9,7 +9,7 @@ import { FilesComponent } from './components/files/files.component';
 
 const routes: Routes = [
   { 
-    path: ':p_id', 
+    path: '', 
     component: ProjectDetailsComponent, 
     children: [
       { path: 'tasks', component: TasksComponent }, 

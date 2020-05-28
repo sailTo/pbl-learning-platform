@@ -2,7 +2,7 @@ import { Component, Input, TemplateRef, ViewChild, AfterViewInit } from '@angula
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { Project } from 'src/app/services/project.service';
+import { Project } from 'src/app/model/project';
 
 @Component({
   selector: 'app-project-card',
@@ -17,6 +17,7 @@ export class ProjectCardComponent implements AfterViewInit {
   @ViewChild('actionJoin') join: TemplateRef<void>;
   @ViewChild('actionInfo') info: TemplateRef<void>;
   @ViewChild('actionEdit') edit: TemplateRef<void>;
+  @ViewChild('actionMember') member: TemplateRef<void>;
   @ViewChild('actionDiscussion') discussion: TemplateRef<void>;
   @ViewChild('actionDelete') delete: TemplateRef<void>;
   @ViewChild('actionFileMgmt') fileMgmt: TemplateRef<void>;
@@ -47,9 +48,9 @@ export class ProjectCardComponent implements AfterViewInit {
 
   initControlPanel(): void {
     this.STUDENT_PANEL = [this.join];
-    this.MY_PANEL = [this.info, this.discussion, this.fileMgmt];
-    this.TEACHER_PANEL = [this.info, this.discussion, this.fileMgmt, this.delete];
-    this.ADMIN_PANEL = [this.info, this.discussion, this.fileMgmt, this.edit, this.delete];
+    this.MY_PANEL = [this.info, this.member, this.discussion, this.fileMgmt];
+    this.TEACHER_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.delete];
+    this.ADMIN_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.edit, this.delete];
 
     let PANEL_TYPE_USER = {
       'student': this.taken ? this.MY_PANEL : this.STUDENT_PANEL, 

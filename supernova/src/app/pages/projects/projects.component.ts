@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { CourseService } from "../../services/course.service";
-import { ProjectService, Project } from "../../services/project.service";
+import { ProjectService } from "../../services/project.service";
+import { Project } from 'src/app/model/project';
 
 @Component({
   selector: 'app-projects',
