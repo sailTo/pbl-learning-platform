@@ -2,7 +2,7 @@ import { Component, Input, TemplateRef, ViewChild, AfterViewInit } from '@angula
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { Project } from 'src/app/model/project';
+import { Project } from 'src/app/models/project';
 
 @Component({
   selector: 'app-project-card',

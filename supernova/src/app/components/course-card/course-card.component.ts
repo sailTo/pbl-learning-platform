@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 
-import { Course } from 'src/app/model/course';
+import { Course } from 'src/app/models/course';
 
 
 @Component({

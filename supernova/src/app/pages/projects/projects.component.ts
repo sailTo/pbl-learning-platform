@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CourseService } from "../../services/course.service";
 import { ProjectService } from "../../services/project.service";
-import { Project } from 'src/app/model/project';
+import { Project } from 'src/app/models/project';
 
 @Component({
   selector: 'app-projects',
