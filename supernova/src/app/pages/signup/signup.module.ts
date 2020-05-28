@@ -5,7 +5,7 @@ import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { NgZorroAntdModule} from 'ng-zorro-antd';
-
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [SignupComponent],
   imports: [
@@ -13,6 +13,7 @@ import { NgZorroAntdModule} from 'ng-zorro-antd';
     SignupRoutingModule,
     ReactiveFormsModule,
     NgZorroAntdModule
-  ]
+  ],
+  providers:[CookieService]
 })
 export class SignupModule { }

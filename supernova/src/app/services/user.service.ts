@@ -15,4 +15,6 @@ export interface User {
   gender: string,
   description: string,
   image: string, 
+  token?: string;
+  password?: string; 
 }
