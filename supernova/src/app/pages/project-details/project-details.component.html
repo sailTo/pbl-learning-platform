@@ -1,13 +1,27 @@
-<nz-card>
+<nz-card [nzTitle]="'项目名称'">
     <nz-card-tab>
-        <nz-tabset nzSize="large">
-            <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
-                <ng-template #titleTemplate>
-                    <i nz-icon [nzType]="tab.icon"></i>{{ tab.name }}
-                </ng-template>
-                <!-- {{ tab.name }} -->
-                <router-outlet></router-outlet>
+        <nz-tabset nzLinkRouter nzSize="large">
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['tasks']">
+                    <i nz-icon nzType="unordered-list"></i>任务列表
+                </a>
+            </nz-tab>
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['members']">
+                    <i nz-icon nzType="user"></i>成员列表
+                </a>
+            </nz-tab>
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['discussions']">
+                    <i nz-icon nzType="comment"></i>讨论空间
+                </a>
+            </nz-tab>
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['files']">
+                    <i nz-icon nzType="download"></i>文件管理
+                </a>
             </nz-tab>
         </nz-tabset>
     </nz-card-tab>
+    <router-outlet></router-outlet>
 </nz-card>

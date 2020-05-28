@@ -11,13 +11,6 @@ import { Project, ProjectService } from 'src/app/services/project.service';
 export class ProjectDetailsComponent implements OnInit {
   project: Project;
 
-  tabs = [
-    {active: false, name: '任务列表', icon: 'unordered-list'}, 
-    {active: false, name: '成员列表', icon: 'user'}, 
-    {active: false, name: '讨论空间', icon: 'comment'}, 
-    {active: false, name: '文件管理', icon: 'download'}, 
-  ]
-
   constructor(    
     private route: ActivatedRoute, 
     private projectService: ProjectService, 

@@ -21,7 +21,11 @@
 
 <!-- 进入详情页 -->
 <ng-template #actionInfo>
-  <a nz-icon nzType="unordered-list" [routerLink]="['/project', project.p_id]"></a>
+  <a 
+    nz-icon 
+    nzType="unordered-list" 
+    [routerLink]="['/project', project.p_id, 'tasks']" 
+  ></a>
 </ng-template>
 
 <ng-template #actionEdit>
