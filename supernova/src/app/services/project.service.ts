@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { Project } from '../model/project';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,14 +22,11 @@ export class ProjectService {
     }});
     return this.http.get<{project_take: number, projects: Project[]}>('/api/searchProject', { params });
   }
-}
-export interface Project {
-  p_id: number, 
-  c_id: number, 
-  p_name: string, 
-  description: string, 
-  grading_status: boolean, // true 表示已评分，false 未评分
-  teacher_grade_ratio: number, 
-  self_grade_ratio: number, 
-  mutual_grade_ratio: number, 
+
+  // getProjectById(projectId: number) {
+  //   const params = new HttpParams({ fromObject: {
+  //     projectId: String(projectId), 
+  //   }});
+  //   return this.http.get<{project: Project}>('/api/')
+  // }
 }
