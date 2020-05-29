@@ -1,0 +1,37 @@
+
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="您的账号不合法!应为3-10位的数字！">
+            <nz-input-group nzPrefixIcon="user">
+              <input type="text" nz-input formControlName="id" placeholder="ID" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="请输入你的密码！">
+            <nz-input-group nzPrefixIcon="lock">
+              <input type="password" nz-input formControlName="password" placeholder="Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <!-- <div nz-row class="login-form-margin">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="remember">
+              <span>记住密码</span>
+            </label>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <a class="login-form-forgot">忘记密码</a>
+          </div>
+        </div> -->
+        <div style="text-align: center;">
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+             登录</button>
+            或者 <a routerLink="/signup"> 现在就去注册！ </a>
+        </div>
+        <div *ngIf="error" class="">{{error}}</div>
+        
+      </form>
+      
+    

@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ScoreRoutingModule } from './score-routing.module';
+import { ScoreComponent } from './score.component';
+import { SearchListComponent } from './search-list/search-list.component';
+ import {FormsModule} from '@angular/forms';
+import {NzSelectModule } from "ng-zorro-antd/select";
+import { ScoreTableComponent } from './score-table/score-table.component';
+import {NzTableModule} from 'ng-zorro-antd/table';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {NzIconModule} from 'ng-zorro-antd/icon'
+import { SortTableComponent } from './sort-table/sort-table.component';
+import { UserDefinedTableComponent } from './user-defined-table/user-defined-table.component'
+import {NzButtonModule} from 'ng-zorro-antd/button';
+@NgModule({
+  declarations: [ScoreComponent, SearchListComponent, ScoreTableComponent,SortTableComponent, UserDefinedTableComponent],
+  imports: [
+    CommonModule,
+    ScoreRoutingModule,
+    NzSelectModule,
+    FormsModule,
+    NzTableModule,
+    NzDropDownModule,
+    NzIconModule,
+    NzButtonModule
+  ]
+})
+export class ScoreModule { }
