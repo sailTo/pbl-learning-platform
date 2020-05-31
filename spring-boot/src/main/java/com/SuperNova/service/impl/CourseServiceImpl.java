@@ -2,15 +2,21 @@ package com.SuperNova.service.impl;
 
 import com.SuperNova.dao.CourseMapper;
 import com.SuperNova.dao.StudentCourseMapper;
+import com.SuperNova.dao.UserMapper;
 import com.SuperNova.model.Course;
 import com.SuperNova.model.StudentCourse;
+import com.SuperNova.model.User;
 import com.SuperNova.service.CourseService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,6 +30,9 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     private CourseMapper courseMapper;
     @Resource
     private StudentCourseMapper studentCourseMapper;
+    @Resource
+    private UserMapper userMapper;
+
     @Override
     public String getMyCourses(String u_id) {
         List<Course> courses = courseMapper.getMyCourses(u_id);
@@ -50,10 +59,23 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     }
 
     @Override
-    public String searchOtherCourses(String u_id) {
-
+    public String searchOtherCourses(String u_id, int pageIndex, int pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
         List<Course> courses = courseMapper.searchOtherCourses(u_id);
-        return JSON.toJSONString(courses);
+        List<User> teachers = new ArrayList<User>();
+
+        for (Course c:courses) {
+            User user = userMapper.selectByPrimaryKey(c.gett_id());
+            teachers.add(user);
+        }
+        JSONObject data = new JSONObject();
+
+        PageInfo coursePageInfo = new PageInfo(courses);
+        PageInfo teachersPageInfo = new PageInfo(teachers);
+        data.put("courses",coursePageInfo);
+        data.put("teachers",teachersPageInfo);
+        data.put("total",teachers.size());
+        return data.toJSONString();
     }
 
     @Override
@@ -68,5 +90,11 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     public String searchAllCourses() {
         List<Course> courses = courseMapper.selectAll();
         return JSON.toJSONString(courses);
+    }
+
+    @Override
+    public boolean isTeacher(String u_id, int c_id) {
+        Course course = courseMapper.selectByPrimaryKey(c_id);
+        return u_id.equals(course.gett_id());
     }
 }

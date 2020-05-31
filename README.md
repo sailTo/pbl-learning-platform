@@ -750,6 +750,27 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
+接口URL：/api/changeProject
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |                             说明                             |  类型  | 是否必填 |                             备注                             |
+| :-------: | :----------------------------------------------------------: | :----: | :------: | :----------------------------------------------------------: |
+| pbl_token |                              -                               | String |    是    |                         用于验证身份                         |
+|  project  |                    json序列化Project对象                     | String |    是    | Project对象包含属性p_id,c_id,p_name,description, grading_status, teacher_grade_ratio, self_grade_ratio, mutual_grade_ratio |
+|  grades   | 200：教师评分细则，json序列化GradeSystem对象数组<br/>其它：无 | String |    是    | GradeSystem对象的属性为：p_id,item_id,description,max_grade  |
+
+返回参数：
+
+| 字段名  | 说明                                                  |  类型  | 备注 |
+| :-----: | :---------------------------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br/>208：登录超时<br/>209：修改失败     |  int   |  -   |
+| message | 200：无<br>208：登录超时，请重新登录<br>209：修改失败 | String |  -   |
+
+
+
 接口URL：/api/searchProjectGradeSystem
 
 请求方法：GET

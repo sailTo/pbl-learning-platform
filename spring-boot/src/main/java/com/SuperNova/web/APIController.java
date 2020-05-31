@@ -1,10 +1,12 @@
 package com.SuperNova.web;
 
-import com.SuperNova.core.Result;
-import com.SuperNova.core.ResultCode;
-import com.SuperNova.core.ResultGenerator;
+import com.SuperNova.core.*;
+import com.SuperNova.dao.CourseMapper;
+import com.SuperNova.model.Course;
 import com.SuperNova.model.User;
 import com.SuperNova.service.CourseService;
+import com.SuperNova.service.FileService;
+import com.SuperNova.service.ProjectService;
 import com.SuperNova.service.UserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -20,7 +22,10 @@ public class APIController {
     private CourseService courseService;
     @Resource
     private UserService userService;
-
+    @Resource
+    private FileService fileService;
+    @Resource
+    private ProjectService projectService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
@@ -64,18 +69,19 @@ public class APIController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchOtherCourses")
-    public Result searchOtherCourses(@RequestParam String pbl_token) {
-
-
-        return ResultGenerator.genSuccessResult();
+    public Result searchOtherCourses(@RequestParam String pbl_token,
+                                     @RequestParam int pageIndex,
+                                     @RequestParam int pageSize) {
+        String u_id = userService.getUIdByToken(pbl_token);
+        return ResultGenerator.genSuccessResult(courseService.searchOtherCourses(u_id,pageIndex,pageSize));
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchAllCourses")
     public Result searchAllCourses(@RequestParam String pbl_token) {
-
-
-        return ResultGenerator.genSuccessResult();
+        JSONObject data = new JSONObject();
+        data.put("courses",courseService.searchAllCourses());
+        return ResultGenerator.genSuccessResult(data.toJSONString());
     }
 
     @CrossOrigin(origins = "*")
@@ -83,17 +89,17 @@ public class APIController {
     public Result changeCourseStatus(@RequestParam String pbl_token,
                                      @RequestParam Integer c_id,
                                      @RequestParam String status) {
-
-        return ResultGenerator.genSuccessResult();
+        courseService.changeCourseStatus(c_id,status);
+        return ResultGenerator.genSuccessResult().setMessage("修改成功");
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/changeCourse")
     public Result changeCourseStatus(@RequestParam String pbl_token,
                                      @RequestParam String course) {
-
-
-        return ResultGenerator.genSuccessResult();
+        Course courseObj = JSON.parseObject(course,Course.class);
+        courseService.updateCourse(courseObj);
+        return ResultGenerator.genSuccessResult().setMessage("修改成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -101,9 +107,17 @@ public class APIController {
     public Result addCourse(@RequestParam String pbl_token,
                             @RequestParam String course,
                             @RequestParam MultipartFile image) {
+        Course courseObj = JSON.parseObject(course,Course.class);
+        int c_id = courseService.addCourse(courseObj);
+        String imgURL = fileService.getImageURL(image,""+c_id);
+        FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"\\");
+        courseObj.setimage_URL(imgURL);
+        courseService.updateCourse(courseObj);
 
-
-        return ResultGenerator.genSuccessResult();
+        JSONObject data = new JSONObject();
+        data.put("c_id",c_id);
+        data.put("image_URL",ProjectConstant.WEB_IMG_BASE+c_id+"/"+imgURL);
+        return ResultGenerator.genSuccessResult(data.toJSONString()).setMessage("课程创建成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -111,18 +125,24 @@ public class APIController {
     public Result joinCourse(@RequestParam String pbl_token,
                              @RequestParam String s_id,
                              @RequestParam Integer c_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        courseService.joinCourse(c_id,s_id);
+        return ResultGenerator.genSuccessResult().setMessage("成功加入课程");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchProject")
     public Result searchProject(@RequestParam String pbl_token,
                                 @RequestParam Integer c_id) {
+        String u_id = userService.getUIdByToken(pbl_token);
+        int p_id = projectService.studentCoursePID(u_id,c_id);
+        User user = userService.searchUser(u_id);
 
+        JSONObject data = new JSONObject();
+        data.put("type",user.getType());
+        data.put("project_take",p_id);
+        data.put("projects",projectService.searchProject(c_id));
 
-        return ResultGenerator.genSuccessResult();
+        return ResultGenerator.genSuccessResult(data.toJSONString());
     }
 
 
@@ -140,6 +160,16 @@ public class APIController {
     @DeleteMapping("/deleteProject")
     public Result deleteProject(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id) {
+
+
+        return ResultGenerator.genSuccessResult();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/changeProject")
+    public Result changeProject(@RequestParam String pbl_token,
+                                @RequestParam String project,
+                                @RequestParam String grades) {
 
 
         return ResultGenerator.genSuccessResult();

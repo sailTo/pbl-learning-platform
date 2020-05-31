@@ -42,7 +42,7 @@ public interface CourseService extends Service<Course> {
      * @param u_id
      * @return
      */
-    String searchOtherCourses(String u_id);
+    String searchOtherCourses(String u_id,int pageIndex,int pageSize);
 
     /**
      * 修改课程状态(删除：-1,未发布：0,已发布：1)
@@ -56,4 +56,12 @@ public interface CourseService extends Service<Course> {
      * @return
      */
     String searchAllCourses();
+
+    /**
+     * 判断该用户是否为该课程的主讲老师
+     * @param u_id
+     * @param c_id
+     * @return
+     */
+    boolean isTeacher(String u_id,int c_id);
 }

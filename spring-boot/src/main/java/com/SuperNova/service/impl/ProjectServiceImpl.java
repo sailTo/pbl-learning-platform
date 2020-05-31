@@ -2,6 +2,7 @@ package com.SuperNova.service.impl;
 
 import com.SuperNova.dao.GradeSystemMapper;
 import com.SuperNova.dao.ProjectMapper;
+import com.SuperNova.dao.StudentProjectMapper;
 import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.service.ProjectService;
@@ -24,6 +25,13 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private ProjectMapper projectMapper;
     @Resource
     private GradeSystemMapper gradeSystemMapper;
+    @Resource
+    private StudentProjectMapper studentProjectMapper;
+
+    @Override
+    public int studentCoursePID(String s_id, int c_id) {
+        return studentProjectMapper.studentCoursePID(s_id,c_id);
+    }
 
     @Override
     public String searchProject(int c_id) {

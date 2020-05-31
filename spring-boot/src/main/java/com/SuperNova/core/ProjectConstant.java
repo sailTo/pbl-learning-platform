@@ -8,6 +8,9 @@ public final class ProjectConstant {
 
     public static final String IMG_BASE = "C:\\UploadImage\\";//上传图片根地址，部署前记得修改
     public static final String File_BASE = "C:\\UploadFile\\";//上传文件根地址，部署前记得修改
+    public static final String WEB_IMG_BASE = "http://127.0.0.1/UploadImage/";//前端下载图片根地址，部署前记得修改
+    public static final String WEB_File_BASE = "http://127.0.0.1/UploadFile/";//前端下载文件根地址，部署前记得修改
+
 
     public static final String MODEL_PACKAGE = BASE_PACKAGE + ".model";//生成的Model所在包
     public static final String MAPPER_PACKAGE = BASE_PACKAGE + ".dao";//生成的Mapper所在包

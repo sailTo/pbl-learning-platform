@@ -46,7 +46,7 @@ public class FileUtil {
         }
     }
 
-    public static boolean  storageImage(MultipartFile image,String imageName){
+    public static boolean  storageImage(MultipartFile image,String imageName,String dir){
         try {
             if(image==null){
                 return false;
@@ -57,7 +57,7 @@ public class FileUtil {
 
             if(suffix.equals("jpg") || suffix.equals("jpeg") || suffix.equals("png") || suffix.equals("gif")) {
 
-                java.io.File targetFile = new java.io.File(ProjectConstant.IMG_BASE, imageName);
+                java.io.File targetFile = new java.io.File(dir, imageName);
                 if(!targetFile.getParentFile().exists()){ //注意，判断父级路径是否存在
                     targetFile.getParentFile().mkdirs();
                 }
