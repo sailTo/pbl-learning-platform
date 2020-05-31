@@ -16,13 +16,13 @@ public class StudentProject {
     private Boolean is_group_leader;
 
     @Column(name = "self_grade")
-    private Integer self_grade;
+    private Double self_grade;
 
     @Column(name = "mutual_grade")
-    private Integer mutual_grade;
+    private Double mutual_grade;
 
     @Column(name = "teacher_grade")
-    private Integer teacher_grade;
+    private Double teacher_grade;
 
     /**
      * @return u_id
@@ -69,42 +69,42 @@ public class StudentProject {
     /**
      * @return self_grade
      */
-    public Integer getself_grade() {
+    public Double getself_grade() {
         return self_grade;
     }
 
     /**
      * @param self_grade
      */
-    public void setself_grade(Integer self_grade) {
+    public void setself_grade(Double self_grade) {
         this.self_grade = self_grade;
     }
 
     /**
      * @return mutual_grade
      */
-    public Integer getmutual_grade() {
+    public Double getmutual_grade() {
         return mutual_grade;
     }
 
     /**
      * @param mutual_grade
      */
-    public void setmutual_grade(Integer mutual_grade) {
+    public void setmutual_grade(Double mutual_grade) {
         this.mutual_grade = mutual_grade;
     }
 
     /**
      * @return teacher_grade
      */
-    public Integer getteacher_grade() {
+    public Double getteacher_grade() {
         return teacher_grade;
     }
 
     /**
      * @param teacher_grade
      */
-    public void setteacher_grade(Integer teacher_grade) {
+    public void setteacher_grade(Double teacher_grade) {
         this.teacher_grade = teacher_grade;
     }
 }

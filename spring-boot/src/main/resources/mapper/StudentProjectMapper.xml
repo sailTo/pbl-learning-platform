@@ -8,8 +8,8 @@
     <id column="u_id" jdbcType="CHAR" property="uId" />
     <id column="p_id" jdbcType="INTEGER" property="pId" />
     <result column="is_group_leader" jdbcType="BIT" property="isGroupLeader" />
-    <result column="self_grade" jdbcType="INTEGER" property="selfGrade" />
-    <result column="mutual_grade" jdbcType="INTEGER" property="mutualGrade" />
-    <result column="teacher_grade" jdbcType="INTEGER" property="teacherGrade" />
+    <result column="self_grade" jdbcType="DOUBLE" property="selfGrade" />
+    <result column="mutual_grade" jdbcType="DOUBLE" property="mutualGrade" />
+    <result column="teacher_grade" jdbcType="DOUBLE" property="teacherGrade" />
   </resultMap>
 </mapper>

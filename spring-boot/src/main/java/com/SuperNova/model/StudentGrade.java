@@ -17,7 +17,7 @@ public class StudentGrade {
     @Column(name = "u_id")
     private String u_id;
 
-    private Integer grade;
+    private Double grade;
 
     /**
      * @return item_id
@@ -64,14 +64,14 @@ public class StudentGrade {
     /**
      * @return grade
      */
-    public Integer getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
     /**
      * @param grade
      */
-    public void setGrade(Integer grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 }

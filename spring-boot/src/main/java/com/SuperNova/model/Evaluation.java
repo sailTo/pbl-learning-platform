@@ -16,7 +16,7 @@ public class Evaluation {
     @Column(name = "passive_s_id")
     private String passive_s_id;
 
-    private Integer grade;
+    private Double grade;
 
     /**
      * @return p_id
@@ -63,14 +63,14 @@ public class Evaluation {
     /**
      * @return grade
      */
-    public Integer getGrade() {
+    public Double getGrade() {
         return grade;
     }
 
     /**
      * @param grade
      */
-    public void setGrade(Integer grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 }

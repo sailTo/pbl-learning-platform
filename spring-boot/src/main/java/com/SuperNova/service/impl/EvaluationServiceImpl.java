@@ -48,7 +48,7 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     }
 
     @Override
-    public void evaluate(int p_id, String s_id, String u_id, int grade) {
+    public void evaluate(int p_id, String s_id, String u_id, double grade) {
         Evaluation tmp = new Evaluation();
         tmp.setp_id(p_id);
         tmp.setactive_s_id(s_id);

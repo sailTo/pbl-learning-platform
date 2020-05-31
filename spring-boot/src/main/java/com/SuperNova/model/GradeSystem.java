@@ -14,7 +14,7 @@ public class GradeSystem {
     private Integer item_id;
 
     @Column(name = "max_grade")
-    private Integer max_grade;
+    private Double max_grade;
 
     private String description;
 
@@ -49,14 +49,14 @@ public class GradeSystem {
     /**
      * @return max_grade
      */
-    public Integer getmax_grade() {
+    public Double getmax_grade() {
         return max_grade;
     }
 
     /**
      * @param max_grade
      */
-    public void setmax_grade(Integer max_grade) {
+    public void setmax_grade(Double max_grade) {
         this.max_grade = max_grade;
     }
 

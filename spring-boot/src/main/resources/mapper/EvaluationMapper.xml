@@ -8,7 +8,7 @@
     <id column="p_id" jdbcType="INTEGER" property="pId" />
     <id column="active_s_id" jdbcType="CHAR" property="activeSId" />
     <id column="passive_s_id" jdbcType="CHAR" property="passiveSId" />
-    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="grade" jdbcType="DOUBLE" property="grade" />
   </resultMap>
   <select id="searchEvaluateByOther" resultType="double">
     select avg(grade) from evaluation

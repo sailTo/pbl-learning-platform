@@ -8,6 +8,6 @@
     <id column="item_id" jdbcType="INTEGER" property="itemId" />
     <id column="p_id" jdbcType="INTEGER" property="pId" />
     <id column="u_id" jdbcType="CHAR" property="uId" />
-    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="grade" jdbcType="DOUBLE" property="grade" />
   </resultMap>
 </mapper>

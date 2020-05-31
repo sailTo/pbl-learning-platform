@@ -17,13 +17,13 @@ public class Project {
     private Boolean grading_status;
 
     @Column(name = "teacher_grade_ratio")
-    private Integer teacher_grade_ratio;
+    private Double teacher_grade_ratio;
 
     @Column(name = "self_grade_ratio")
-    private Integer self_grade_ratio;
+    private Double self_grade_ratio;
 
     @Column(name = "mutual_grade_ratio")
-    private Integer mutual_grade_ratio;
+    private Double mutual_grade_ratio;
 
     private String description;
 
@@ -86,42 +86,42 @@ public class Project {
     /**
      * @return teacher_grade_ratio
      */
-    public Integer getteacher_grade_ratio() {
+    public Double getteacher_grade_ratio() {
         return teacher_grade_ratio;
     }
 
     /**
      * @param teacher_grade_ratio
      */
-    public void setteacher_grade_ratio(Integer teacher_grade_ratio) {
+    public void setteacher_grade_ratio(Double teacher_grade_ratio) {
         this.teacher_grade_ratio = teacher_grade_ratio;
     }
 
     /**
      * @return self_grade_ratio
      */
-    public Integer getself_grade_ratio() {
+    public Double getself_grade_ratio() {
         return self_grade_ratio;
     }
 
     /**
      * @param self_grade_ratio
      */
-    public void setself_grade_ratio(Integer self_grade_ratio) {
+    public void setself_grade_ratio(Double self_grade_ratio) {
         this.self_grade_ratio = self_grade_ratio;
     }
 
     /**
      * @return mutual_grade_ratio
      */
-    public Integer getmutual_grade_ratio() {
+    public Double getmutual_grade_ratio() {
         return mutual_grade_ratio;
     }
 
     /**
      * @param mutual_grade_ratio
      */
-    public void setmutual_grade_ratio(Integer mutual_grade_ratio) {
+    public void setmutual_grade_ratio(Double mutual_grade_ratio) {
         this.mutual_grade_ratio = mutual_grade_ratio;
     }
 

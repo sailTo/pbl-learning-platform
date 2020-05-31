@@ -33,6 +33,6 @@ public class AssignmentTest extends Tester {
     @Test
     public void test2(){
         List<DoneInformation> result = assignmentMapper.countAssignmentDone(1);
-        Assert.assertEquals(3,result.size());
+        Assert.assertEquals(1,result.size());
     }
 }

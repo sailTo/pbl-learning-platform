@@ -23,5 +23,5 @@ public interface EvaluationService extends Service<Evaluation> {
      * @param u_id
      * @param grade
      */
-    void evaluate(int p_id,String s_id,String u_id,int grade);
+    void evaluate(int p_id,String s_id,String u_id,double grade);
 }

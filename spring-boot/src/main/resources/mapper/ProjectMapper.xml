@@ -9,9 +9,9 @@
     <result column="c_id" jdbcType="INTEGER" property="cId" />
     <result column="p_name" jdbcType="CHAR" property="pName" />
     <result column="grading_status" jdbcType="BIT" property="gradingStatus" />
-    <result column="teacher_grade_ratio" jdbcType="INTEGER" property="teacherGradeRatio" />
-    <result column="self_grade_ratio" jdbcType="INTEGER" property="selfGradeRatio" />
-    <result column="mutual_grade_ratio" jdbcType="INTEGER" property="mutualGradeRatio" />
+    <result column="teacher_grade_ratio" jdbcType="DOUBLE" property="teacherGradeRatio" />
+    <result column="self_grade_ratio" jdbcType="DOUBLE" property="selfGradeRatio" />
+    <result column="mutual_grade_ratio" jdbcType="DOUBLE" property="mutualGradeRatio" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <select id="countDone" resultType="int">

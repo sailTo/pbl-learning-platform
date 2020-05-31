@@ -7,7 +7,7 @@
     -->
     <id column="p_id" jdbcType="INTEGER" property="pId" />
     <id column="item_id" jdbcType="INTEGER" property="itemId" />
-    <result column="max_grade" jdbcType="INTEGER" property="maxGrade" />
+    <result column="max_grade" jdbcType="DOUBLE" property="maxGrade" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <select id="getMaxItemId" resultType="int">
