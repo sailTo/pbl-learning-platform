@@ -17,6 +17,5 @@ public final class ProjectConstant {
 
     public static final String DEAFULT_IMAGE = "default.jpg";//默认头像
 
-
     public static final String MAPPER_INTERFACE_REFERENCE = BASE_PACKAGE + ".core.Mapper";//Mapper插件基础接口的完全限定名
 }

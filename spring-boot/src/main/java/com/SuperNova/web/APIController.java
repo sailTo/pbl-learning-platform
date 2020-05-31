@@ -3,27 +3,44 @@ package com.SuperNova.web;
 import com.SuperNova.core.Result;
 import com.SuperNova.core.ResultCode;
 import com.SuperNova.core.ResultGenerator;
+import com.SuperNova.model.User;
+import com.SuperNova.service.CourseService;
+import com.SuperNova.service.UserService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/api")
 public class APIController {
+    @Resource
+    private CourseService courseService;
+    @Resource
+    private UserService userService;
+
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
     public Result searchMyCourses(@RequestParam String pbl_token) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        String courses = courseService.getMyCourses(u_id);
+        JSONObject data = new JSONObject();
+        data.put("courses",courses);
+        return ResultGenerator.genSuccessResult(data.toJSONString());
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyInformation")
     public Result searchMyInformation(@RequestParam String pbl_token) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(u_id);
+        JSONObject data = new JSONObject();
+        data.put("content", JSON.toJSONString(user));
+        data.put("image",userService.getImageURL(u_id));
+        return ResultGenerator.genSuccessResult(data.toJSONString());
     }
 
     @CrossOrigin(origins = "*")

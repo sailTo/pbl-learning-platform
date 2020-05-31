@@ -5,14 +5,13 @@ import com.SuperNova.core.ResultCode;
 import com.SuperNova.core.ResultGenerator;
 import com.SuperNova.model.User;
 import com.SuperNova.service.UserService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
+@RestController
+@RequestMapping("/account")
 public class AccountController {
     @Resource
     private UserService userService;
@@ -88,8 +87,6 @@ public class AccountController {
         user.setImage(image!=null);
 
         userService.register(user);
-
-
 
         //新建成功后记得检查是否上传头像，是否设置描述
         if(image==null){

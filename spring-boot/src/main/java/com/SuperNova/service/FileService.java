@@ -22,12 +22,23 @@ public interface FileService extends Service<File> {
      */
     String addFile(File file);
 
+
+
     /**
      * 从数据库中删除文件
      * @param p_id
      * @param f_id
      */
     void deleteFile(int p_id,int f_id);
+
+    /**
+     * 通过u_id和上传文件后缀生成存储用户头像的文件名，如17302010025.jpg
+     * 图像文件后缀仅支持jpg,jpeg,png,gif
+     * @param image
+     * @param u_id
+     * @return
+     */
+    String getImageURL(MultipartFile image,String u_id);
 
     /**
      * 保存上传的图片
@@ -41,8 +52,9 @@ public interface FileService extends Service<File> {
     /**
      * 保存上传的文件
      * @param file
+     * @param p_id
      * @return True : 上传成功
      *         False: 上传失败
      */
-    boolean saveFile(MultipartFile file);
+    boolean saveFile(MultipartFile file,int p_id);
 }
