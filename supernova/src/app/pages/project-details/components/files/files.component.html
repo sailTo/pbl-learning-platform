@@ -1,2 +1,22 @@
-<p>files works!</p>
-{{p_id}}
+<nz-table #basicTable [nzData]="files">
+    <thead>
+        <tr>
+            <th>名称</th>
+            <th>描述</th>
+            <th>上传者</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.f_name }}</td>
+            <td>{{ data.description }}</td>
+            <td>{{ data.u_name }}</td>
+            <td>
+                <a>Action</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a>Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

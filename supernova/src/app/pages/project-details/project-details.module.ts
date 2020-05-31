@@ -7,6 +7,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -27,6 +29,8 @@ import { FilesComponent } from './components/files/files.component';
     NzGridModule, 
     NzIconModule, 
     NzTabsModule, 
+    NzTableModule, 
+    NzDividerModule, 
   ]
 })
 export class ProjectDetailsModule { }
