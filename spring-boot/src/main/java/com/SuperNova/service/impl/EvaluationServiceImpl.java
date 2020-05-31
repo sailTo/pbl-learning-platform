@@ -48,6 +48,19 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     }
 
     @Override
+    public String searchEvaluateBySelf(int p_id,String s_id) {
+        Evaluation tmp = new Evaluation();
+        tmp.setp_id(p_id);
+        tmp.setactive_s_id(s_id);
+        tmp.setpassive_s_id(s_id);
+        tmp = evaluationMapper.selectByPrimaryKey(tmp);
+        if(tmp==null){
+            return "-1";
+        }
+        return ""+tmp.getGrade();
+    }
+
+    @Override
     public void evaluate(int p_id, String s_id, String u_id, double grade) {
         Evaluation tmp = new Evaluation();
         tmp.setp_id(p_id);

@@ -17,6 +17,13 @@ public interface EvaluationService extends Service<Evaluation> {
     String searchEvaluateByOther(int p_id,String s_id);
 
     /**
+     * 获取学生自评分
+     * @param s_id
+     * @return
+     */
+    String searchEvaluateBySelf(int p_id,String s_id);
+
+    /**
      * 学生评分，s_id为评价方，u_id为被评价方，若相等则为自评
      * @param p_id
      * @param s_id

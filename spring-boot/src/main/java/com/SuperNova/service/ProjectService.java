@@ -41,6 +41,13 @@ public interface ProjectService extends Service<Project> {
     int addProject(Project project, List<GradeSystem> grades);
 
     /**
+     * 修改项目
+     * @param project
+     * @param grades
+     */
+    void changeProject(Project project, List<GradeSystem> grades);
+
+    /**
      * 获取项目评分细则
      * @param p_id
      * @return

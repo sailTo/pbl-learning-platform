@@ -64,6 +64,14 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
+    public void changeProject(Project project, List<GradeSystem> grades) {
+        projectMapper.updateByPrimaryKey(project);
+        for (GradeSystem grade:grades) {
+            gradeSystemMapper.updateByPrimaryKey(grade);
+        }
+    }
+
+    @Override
     public String searchGradeSystem(int p_id) {
         GradeSystem tmp = new GradeSystem();
         tmp.setp_id(p_id);
