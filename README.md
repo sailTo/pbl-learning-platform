@@ -396,6 +396,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   | 说明 |  类型  | 是否必填 |     备注     |
 | :-------: | :--: | :----: | :------: | :----------: |
 | pbl_token |  -   | String |    是    | 用于验证身份 |
+| pageIndex | 当前请求页码 |  int   |    是    |          -           |
+| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -404,6 +406,8 @@ A course project for Advanced Web Technologies at FDU.
 |  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
 | message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
 | courses | json序列化course数组                 | String | course对象包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了老师教的课程/学生选的课程 |
+| teachers | json序列化user数组                   | String |          至少包含u_id, image, 再加其它字段也可以的           |
+|  total   | 课程对象总数量                       |  int   |                        用于计算总页码                        |
 
 
 
@@ -495,7 +499,7 @@ A course project for Advanced Web Technologies at FDU.
 |   code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
 | message  | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
 | courses  | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了其它已发布的课程信息，供学生/老师查看<br>需要对课程按照用户是否可见进行过滤 |
-| teachers | json序列化user数组                   | String |                       包含u_id,u_name                        |
+| teachers | json序列化user数组                   | String |          至少包含u_id, image, 再加其它字段也可以的           |
 |  total   | 课程对象总数量                       |  int   |                        用于计算总页码                        |
 
 > 期望的结构能做到如下这样，如果不行，把course和teacher并列放也可以。——黄
@@ -508,15 +512,15 @@ A course project for Advanced Web Technologies at FDU.
 >
 > ​		 u_id: number,
 >
->  		type: string, 
->	
->  		u_name: string, 
->	
->  		gender: string,
->	
->  		description: string,
->	
->  		image: string, 
+> ​		type: string, 
+>​	
+> ​				u_name: string, 
+>​	
+> ​				gender: string,
+>​	
+> ​				description: string,
+>​	
+> ​				image: string, 
 >
 > ​	}, 
 >
@@ -535,6 +539,8 @@ A course project for Advanced Web Technologies at FDU.
 > ​    //t_image_URL: string, // 教师头像，没有的话应该返回默认图URL
 >
 > }
+
+
 
 接口URL：/api/searchAllCourses
 
@@ -950,7 +956,21 @@ A course project for Advanced Web Technologies at FDU.
 | message  | 200：无<br/>208：登录超时，请重新登录 | String |                   -                   |
 | groupers | 200：json序列化User对象数组           | String | User对象中可用属性为：<br>u_id,u_name |
 
+User {
 
+  u_id: number,
+
+  type: string, 
+
+  u_name: string, 
+
+  gender: string,
+
+  description: string,
+
+  image: string, 
+
+}
 
 这里可以复用上面/api/searchProjectGradeSystem，获得该项目的评分方式，再展示相应的接口
 
