@@ -16,7 +16,7 @@ public class User {
 
     private String password;
 
-    private Boolean image;
+    private String image;
 
     private String description;
 
@@ -93,14 +93,14 @@ public class User {
     /**
      * @return image
      */
-    public Boolean getImage() {
+    public String getImage() {
         return image;
     }
 
     /**
      * @param image
      */
-    public void setImage(Boolean image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

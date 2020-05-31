@@ -10,7 +10,7 @@
     <result column="u_name" jdbcType="CHAR" property="uName" />
     <result column="gender" jdbcType="CHAR" property="gender" />
     <result column="password" jdbcType="CHAR" property="password" />
-    <result column="image" jdbcType="BIT" property="image" />
+    <result column="image" jdbcType="CHAR" property="image" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <select id="idExist" parameterType="String" resultType="boolean">
