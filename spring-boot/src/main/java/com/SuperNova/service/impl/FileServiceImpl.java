@@ -81,7 +81,7 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     }
 
     @Override
-    public boolean saveImage(MultipartFile image,String imageName) {
-        return FileUtil.storageImage(image,imageName);
+    public boolean saveImage(MultipartFile image,String imageName,String dir) {
+        return FileUtil.storageImage(image,imageName,dir);
     }
 }
