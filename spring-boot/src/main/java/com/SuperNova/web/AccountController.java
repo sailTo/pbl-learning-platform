@@ -84,7 +84,7 @@ public class AccountController {
         if (description!=null){
             user.setDescription(description);
         }
-        user.setImage(image!=null);
+//        user.setImage(image!=null);
 
         userService.register(user);
 

@@ -15,7 +15,12 @@
   </resultMap>
   <select id="getMyCourses" resultType="Course" parameterType="String">
     select * from course
-    where c_id in (select c_id from student_course where u_id = #{u_id})
+    <if test="_parameter.indexOf('t') == 0">
+      where t_id = #{u_id}
+    </if>
+    <if test="_parameter.indexOf('s') == 0">
+      where c_id in (select c_id from student_course where u_id = #{u_id})
+    </if>
   </select>
 
   <select id="searchOtherCourses" resultType="Course" parameterType="String">

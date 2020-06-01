@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseMapper extends Mapper<Course> {
     /**
-     * 获取个人的课程
+     * 获取个人的课程,支持老师和同学
      * @param u_id
      * @return
      */

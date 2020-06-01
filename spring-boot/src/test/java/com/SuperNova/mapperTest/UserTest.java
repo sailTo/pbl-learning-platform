@@ -35,8 +35,10 @@ public class UserTest extends Tester {
 
     @Test
     public void test3(){
-        String users = userService.getAllUser();
-        Assert.assertEquals(users,3);
+        User u = new User();
+        u.setGender("man");
+        List<User> users = userMapper.select(u);
+        Assert.assertEquals(3,users.size());
     }
 
     @Test
@@ -47,7 +49,7 @@ public class UserTest extends Tester {
         user.setType("teacher");
         user.setPassword("123456");
         user.setDescription("empty");
-        user.setImage(false);
+//        user.setImage(false);
         user.setGender("man");
 //        user.setType("student");
         userMapper.insertSelective(user);
