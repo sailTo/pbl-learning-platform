@@ -18,9 +18,16 @@ import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
 
+import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
 @NgModule({
-  declarations: [ProjectDetailsComponent, TasksComponent, MembersComponent, DiscussionsComponent, FilesComponent],
+  declarations: [
+    ProjectDetailsComponent, 
+    TasksComponent, 
+    MembersComponent, 
+    DiscussionsComponent, 
+    FilesComponent, 
+  ],
   imports: [
     CommonModule,
     ProjectDetailsRoutingModule, 
@@ -33,6 +40,7 @@ import { FilesComponent } from './components/files/files.component';
     NzTableModule, 
     NzDividerModule, 
     NzButtonModule, 
+    AngularGanttScheduleTimelineCalendarModule, 
   ]
 })
 export class ProjectDetailsModule { }

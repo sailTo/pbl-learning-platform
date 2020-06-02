@@ -19,6 +19,8 @@ import zh from '@angular/common/locales/zh';
 import {fakeBackendProvider} from '../helper/fake-backend';
 import {JwtInterceptor} from '../helper/jwt.interceptor';
 import {ErrorInterceptor} from '../helper/error.interceptor';
+
+
 registerLocaleData(zh);
 
 @NgModule({

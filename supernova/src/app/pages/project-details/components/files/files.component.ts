@@ -74,12 +74,12 @@ export class FilesComponent implements OnInit {
 
   downLoadFile(f_id: number): void {
     // TODO: download logic
-    console.log(f_id);
+    console.log('Download ' + f_id);
   }
 
   deleteFile(f_id: number): void {
     // TODO: delete logic
-    console.log(f_id);
+    console.log('Delete ' + f_id);
     this.files = this.files.filter((file) => file.f_id !== f_id);
   }
 
