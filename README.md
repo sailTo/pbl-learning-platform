@@ -552,6 +552,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   | 说明 |  类型  | 是否必填 |     备注     |
 | :-------: | :--: | :----: | :------: | :----------: |
 | pbl_token |  -   | String |    是    | 用于验证身份 |
+| pageIndex | 当前请求页码 |  int   |    是    |          -           |
+| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -560,6 +562,8 @@ A course project for Advanced Web Technologies at FDU.
 |  code   | 200：查询成功<br>208：登录超时       |  int   |                              -                               |
 | message | 200：无<br>208：登录超时，请重新登录 | String |                              -                               |
 | courses | json序列化course数组                 | String | 包含属性c_id,t_id,c_name,point, description, status,image_URL<br>这里包含了所有课程信息，供管理员查询 |
+| teachers | json序列化user数组                   | String |          至少包含u_id, image, 再加其它字段也可以的           |
+|  total   | 课程对象总数量                       |  int   |                        用于计算总页码                        |
 
 
 
