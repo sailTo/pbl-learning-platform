@@ -42,4 +42,11 @@ public interface DiscussionService extends Service<Discussion> {
      * @return
      */
     String countDiscussion(int p_id);
+
+    /**
+     * 统计该课程讨论情况
+     * @param p_id
+     * @return
+     */
+    String getMaxDiscussionNum(int p_id);
 }

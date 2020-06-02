@@ -53,4 +53,9 @@ public class DiscussionServiceImpl extends AbstractService<Discussion> implement
     public String countDiscussion(int p_id) {
         return JSON.toJSONString(discussionMapper.countDiscussion(p_id));
     }
+
+    @Override
+    public String getMaxDiscussionNum(int p_id) {
+        return JSON.toJSONString(discussionMapper.maxDiscussionNum(p_id));
+    }
 }

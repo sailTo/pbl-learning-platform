@@ -20,4 +20,9 @@ public class DiscussionTest extends Tester {
         List<DiscussInformation> result = discussionMapper.countDiscussion(1);
         Assert.assertEquals(2,result.size());
     }
+    @Test
+    public void test2(){
+        int result = discussionMapper.maxDiscussionNum(1);
+        Assert.assertEquals(3,result);
+    }
 }

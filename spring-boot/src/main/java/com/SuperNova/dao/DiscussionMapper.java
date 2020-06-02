@@ -37,12 +37,12 @@ public interface DiscussionMapper extends Mapper<Discussion> {
 //     */
 //    void deleteDiscussion(int p_id,int d_id);
 
-//    /**
-//     * 统计最大讨论数
-//     * @param p_id
-//     * @return
-//     */
-//    int maxDiscussionNum(int p_id);
+    /**
+     * 统计最大讨论数
+     * @param p_id
+     * @return
+     */
+    int maxDiscussionNum(int p_id);
 
     /**
      * 统计讨论情况

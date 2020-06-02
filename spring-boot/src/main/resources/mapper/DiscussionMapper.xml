@@ -11,6 +11,25 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+    <select id="maxDiscussionNum" parameterType="int" resultType="int">
+        select max(dis_count)
+        from (
+                 select tmp.u_id,count(tmp.u_id) as dis_count
+                 from (
+                          select u_id
+                          from discussion
+                                   natural join user
+                          where p_id = #{p_id}
+                          union all
+                          select u_id
+                          from reply
+                                   natural join user
+                                   natural join (select d_id,p_id from discussion) as dis2pj
+                          where p_id = #{p_id}
+                      ) as tmp
+                 group by tmp.u_id
+             ) as all_dis_count
+    </select>
   <select id="countDiscussion" parameterType="int" resultType="DiscussInformation">
     select tmp.u_id,tmp.u_name,count(tmp.u_id)
     from (

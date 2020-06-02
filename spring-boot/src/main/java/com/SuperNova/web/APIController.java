@@ -479,9 +479,7 @@ public class APIController {
     public Result countDiscussion(@RequestParam String pbl_token,
                                   @RequestParam Integer p_id) {
         JSONObject data = new JSONObject();
-        data.put("maxDiscussNum",discussionService.);
-
-
+        data.put("maxDiscussNum",discussionService.getMaxDiscussionNum(p_id));
         return ResultGenerator.genSuccessResult();
     }
 
