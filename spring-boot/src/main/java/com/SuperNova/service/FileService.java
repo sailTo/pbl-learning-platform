@@ -44,10 +44,11 @@ public interface FileService extends Service<File> {
      * 保存上传的图片
      * @param image
      * @param imageName
+     * @param dir
      * @return True : 上传成功
      *         False: 上传失败
      */
-    boolean saveImage(MultipartFile image,String imageName);
+    boolean saveImage(MultipartFile image,String imageName,String dir);
 
     /**
      * 保存上传的文件

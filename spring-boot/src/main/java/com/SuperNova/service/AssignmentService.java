@@ -42,6 +42,13 @@ public interface AssignmentService extends Service<Assignment> {
     String searchAssignment(int p_id);
 
     /**
+     * 获得该项目下任务总数
+     * @param p_id
+     * @return
+     */
+    int countAssignment(int p_id);
+
+    /**
      * 搜索项目中任务的完成情况(按s_id排序)
      * @param p_id
      * @return

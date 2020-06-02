@@ -4,12 +4,14 @@ import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.UserMapper;
 import com.SuperNova.model.User;
 import com.SuperNova.service.EncryptService;
+import com.SuperNova.service.FileService;
 import com.SuperNova.service.UserService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.persistence.OrderBy;
@@ -26,6 +28,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     private UserMapper userMapper;
     @Resource
     private EncryptService encryptService;
+    @Resource
+    private FileService fileService;
 
     /**
      * 通过uId获得token
@@ -169,19 +173,26 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public void setImage(String uId, boolean defaultOrNot) {
+    public String setImage(String uId, MultipartFile image) {
         User user = userMapper.selectByPrimaryKey(uId);
-        user.setImage(defaultOrNot);
+
+        String imgURL;
+        if(image==null){
+            imgURL = ProjectConstant.DEAFULT_IMAGE;
+        }else{
+            imgURL = fileService.getImageURL(image,uId);
+            fileService.saveImage(image,imgURL,ProjectConstant.IMG_BASE);
+        }
+
+        user.setImage(imgURL);
         userMapper.updateByPrimaryKeySelective(user);
+        return imgURL;
     }
 
     @Override
     public String getImageURL(String uId) {
         User user = userMapper.selectByPrimaryKey(uId);
-        if(!user.getImage()){
-            return ProjectConstant.DEAFULT_IMAGE;
-        }
-        return uId+".jpg";
+        return user.getImage();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.SuperNova.mapperTest;
 
 import com.SuperNova.Tester;
+import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.UserMapper;
 import com.SuperNova.model.Course;
 import com.SuperNova.model.User;
@@ -35,10 +36,8 @@ public class UserTest extends Tester {
 
     @Test
     public void test3(){
-        User u = new User();
-        u.setGender("man");
-        List<User> users = userMapper.select(u);
-        Assert.assertEquals(3,users.size());
+        String users = userService.getAllUser();
+        Assert.assertEquals(users,3);
     }
 
     @Test
@@ -49,7 +48,7 @@ public class UserTest extends Tester {
         user.setType("teacher");
         user.setPassword("123456");
         user.setDescription("empty");
-//        user.setImage(false);
+        user.setImage(ProjectConstant.DEAFULT_IMAGE);
         user.setGender("man");
 //        user.setType("student");
         userMapper.insertSelective(user);

@@ -1,6 +1,7 @@
 package com.SuperNova.service;
 import com.SuperNova.model.User;
 import com.SuperNova.core.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -61,9 +62,9 @@ public interface UserService extends Service<User> {
     /**
      * 设置用户的头像
      * @param uId
-     * @param defaultOrNot
+     * @param image
      */
-    void setImage(String uId,boolean defaultOrNot);
+    String setImage(String uId, MultipartFile image);
 
     /**
      * 获得头像的地址

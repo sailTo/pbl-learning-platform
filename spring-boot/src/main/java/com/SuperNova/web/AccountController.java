@@ -1,10 +1,12 @@
 package com.SuperNova.web;
 
+import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.core.Result;
 import com.SuperNova.core.ResultCode;
 import com.SuperNova.core.ResultGenerator;
 import com.SuperNova.model.User;
 import com.SuperNova.service.UserService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,8 +69,6 @@ public class AccountController {
                            @RequestParam String password,
                            @RequestParam(required = false) String description,
                            @RequestParam(required = false) MultipartFile image){
-
-
         //检查用户名是否存在
         if(u_id==null||userService.idExist(u_id)){
             return ResultGenerator.genFailResult("学号已存在");
@@ -81,21 +81,18 @@ public class AccountController {
         user.setu_name(u_name);
         user.setGender(gender);
         user.setPassword(password);
+
         if (description!=null){
             user.setDescription(description);
         }
-//        user.setImage(image!=null);
 
         userService.register(user);
+        String imgURL = userService.setImage(u_id,image);
 
-        //新建成功后记得检查是否上传头像，是否设置描述
-        if(image==null){
+        JSONObject data = new JSONObject();
+        data.put("user",user);
+        data.put("image", ProjectConstant.WEB_IMG_BASE+imgURL);
 
-        }else{
-
-        }
-
-
-        return result;
+        return result.setMessage(userService.getToken(u_id)).setData(data);
     }
 }

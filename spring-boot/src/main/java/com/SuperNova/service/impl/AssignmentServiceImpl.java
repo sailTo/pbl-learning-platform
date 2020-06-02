@@ -54,6 +54,12 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
     }
 
+    @Override
+    public int countAssignment(int p_id) {
+        Assignment tmp = new Assignment();
+        tmp.setp_id(p_id);
+        return assignmentMapper.select(tmp).size();
+    }
 
     @Override
     public String searchAssignment(int p_id) {

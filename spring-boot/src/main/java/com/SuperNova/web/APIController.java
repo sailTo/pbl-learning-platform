@@ -27,6 +27,12 @@ public class APIController {
     private AssignmentService assignmentService;
     @Resource
     private EvaluationService evaluationService;
+    @Resource
+    private StudentGradeService studentGradeService;
+    @Resource
+    private DiscussionService discussionService;
+    @Resource
+    private ReplyService replyService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
@@ -53,9 +59,11 @@ public class APIController {
     @PutMapping("/changeMyImage")
     public Result changeMyImage(@RequestParam String pbl_token,
                                 @RequestParam(required = false) MultipartFile image) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        String imgURL = userService.setImage(u_id,image);
+        JSONObject data = new JSONObject();
+        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        return ResultGenerator.genSuccessResult(data).setMessage("修改头像成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -63,9 +71,13 @@ public class APIController {
     public Result changeMyInformation(@RequestParam String pbl_token,
                                       @RequestParam String content,
                                       @RequestParam(required = false) MultipartFile image) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        User user = JSON.parseObject(content,User.class);
+        userService.setUser(user);
+        String imgURL = userService.setImage(u_id,image);
+        JSONObject data = new JSONObject();
+        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        return ResultGenerator.genSuccessResult(data).setMessage("修改个人信息成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -311,100 +323,114 @@ public class APIController {
     public Result evaluateSelf(@RequestParam String pbl_token,
                                @RequestParam Integer p_id,
                                @RequestParam Double grade){
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        evaluationService.evaluate(p_id,u_id,u_id,grade);
+        return ResultGenerator.genSuccessResult().setMessage("自评成功");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateByOther")
     public Result searchEvaluateByOther(@RequestParam String pbl_token,
                                         @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String u_id = userService.getUIdByToken(pbl_token);
+        return ResultGenerator.genSuccessResult(evaluationService.searchEvaluateByOther(p_id,u_id));
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/evaluateOther")
     public Result evaluateOther(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id,
-                                @RequestParam Integer u_id,
+                                @RequestParam String u_id,
                                 @RequestParam Double grade) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String s_id = userService.getUIdByToken(pbl_token);
+        evaluationService.evaluate(p_id,s_id,u_id,grade);
+        return ResultGenerator.genSuccessResult("评分成功");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateByTeacher")
     public Result searchEvaluateByTeacher(@RequestParam String pbl_token,
                                           @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String s_id = userService.getUIdByToken(pbl_token);
+        String res = studentGradeService.searchEvaluateByTeacher(p_id,s_id);
+        if(res==null){
+            return ResultGenerator.genFailResult("教师未评分").setCode(ResultCode.DENY);
+        }
+        JSONObject data = new JSONObject();
+        data.put("grades",res);
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchGrade")
     public Result searchGrade(@RequestParam String pbl_token,
                               @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String s_id = userService.getUIdByToken(pbl_token);
+        String grade = studentGradeService.searchGrade(p_id,s_id);
+        if(grade==null){
+            return ResultGenerator.genFailResult("未生成最终评分").setCode(ResultCode.DENY);
+        }
+        JSONObject data = new JSONObject();
+        data.put("grade",grade);
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchDiscussions")
     public Result searchDiscussions(@RequestParam String pbl_token,
                                     @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        JSONObject data = new JSONObject();
+        data.put("discussions",discussionService.searchDiscussions(p_id));
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/createDiscussion")
     public Result createDiscussion(@RequestParam String pbl_token,
                                    @RequestParam String discussion) {
-
-
-        return ResultGenerator.genSuccessResult();
+        Discussion discussionObj = JSON.parseObject(discussion,Discussion.class);
+        int d_id = discussionService.createDiscussion(discussionObj);
+        JSONObject data = new JSONObject();
+        data.put("d_id",d_id);
+        return ResultGenerator.genSuccessResult(data).setMessage("发布成功");
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteDiscussion")
-    public Result deleteDiscussion(@RequestParam String pbl_token, @RequestParam String discussion) {
-
-
-        return ResultGenerator.genSuccessResult();
+    public Result deleteDiscussion(@RequestParam String pbl_token,
+                                   @RequestParam Integer d_id,
+                                   @RequestParam Integer p_id) {
+        discussionService.deleteDiscussion(p_id,d_id);
+        return ResultGenerator.genSuccessResult().setMessage("删除成功");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchReply")
     public Result searchReply(@RequestParam String pbl_token,
                               @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        JSONObject data = new JSONObject();
+        data.put("replies",replyService.searchReplise(p_id));
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/createReply")
     public Result createReply(@RequestParam String pbl_token,
                               @RequestParam String reply) {
-
-
-        return ResultGenerator.genSuccessResult();
+        Reply replyObj = JSON.parseObject(reply,Reply.class);
+        int r_id = replyService.createReply(replyObj);
+        JSONObject data = new JSONObject();
+        data.put("r_id",r_id);
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteReply")
     public Result deleteReply(@RequestParam String pbl_token,
-                              @RequestParam Integer r_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+                              @RequestParam Integer r_id,
+                              @RequestParam Integer p_id) {
+        replyService.deleteReply(p_id,r_id);
+        return ResultGenerator.genSuccessResult("删除成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -441,15 +467,19 @@ public class APIController {
     @GetMapping("/countAssignmentDone")
     public Result countAssignmentDone(@RequestParam String pbl_token,
                                       @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+        int totalAssignmentNum = assignmentService.countAssignment(p_id);
+        JSONObject data = new JSONObject();
+        data.put("totalAssignmentNum",totalAssignmentNum);
+        data.put("doneInformations",assignmentService.countAssignmentDone(p_id));
+        return ResultGenerator.genSuccessResult(data).setMessage("查询成功");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/countDiscussion")
     public Result countDiscussion(@RequestParam String pbl_token,
                                   @RequestParam Integer p_id) {
+        JSONObject data = new JSONObject();
+        data.put("maxDiscussNum",discussionService.);
 
 
         return ResultGenerator.genSuccessResult();
