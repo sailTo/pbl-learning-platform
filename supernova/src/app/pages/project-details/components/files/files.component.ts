@@ -33,11 +33,14 @@ export class FilesComponent implements OnInit {
   ngOnInit(): void {
     // get files
     // this.getFiles();
-    this.files = [
-      JSON.parse(JSON.stringify(this.file)), 
-      JSON.parse(JSON.stringify(this.file)), 
-      JSON.parse(JSON.stringify(this.file))
-    ];
+    this.files = (() => {
+      let files = [];
+      for (let i = 0; i < 3; i++) {
+        this.file.f_id = i;
+        files.push(JSON.parse(JSON.stringify(this.file)));
+      }
+      return files;
+    })();
 
     // get param p_name, groupers
     this.route.queryParams.subscribe(
@@ -46,6 +49,7 @@ export class FilesComponent implements OnInit {
         this.groupers = JSON.parse(params.groupers);
 
         this.processFiles();
+        console.log(this.files);
       }
     );
   }
@@ -66,6 +70,17 @@ export class FilesComponent implements OnInit {
       // add key to each file
       file['key'] = index + 1;
     });
+  }
+
+  downLoadFile(f_id: number): void {
+    // TODO: download logic
+    console.log(f_id);
+  }
+
+  deleteFile(f_id: number): void {
+    // TODO: delete logic
+    console.log(f_id);
+    this.files = this.files.filter((file) => file.f_id !== f_id);
   }
 
 }

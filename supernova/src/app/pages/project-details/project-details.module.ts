@@ -9,6 +9,7 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -31,6 +32,7 @@ import { FilesComponent } from './components/files/files.component';
     NzTabsModule, 
     NzTableModule, 
     NzDividerModule, 
+    NzButtonModule, 
   ]
 })
 export class ProjectDetailsModule { }

@@ -1,18 +1,32 @@
-import { Component, Input, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+import { UserService } from 'src/app/services/user.service';
+
 import { Project } from 'src/app/models/project';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-project-card',
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css']
 })
-export class ProjectCardComponent implements AfterViewInit {
+export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input() project: Project;
   @Input() taken: boolean;
   @Input() canTake: boolean;
+
+  groupers: User[];
+
+  user = {
+    u_id: 4,
+    type: 'S', 
+    u_name: '学生4', 
+    gender: 'M',
+    description: '学生4简介',
+    image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png', 
+  };
 
   @ViewChild('actionJoin') join: TemplateRef<void>;
   @ViewChild('actionInfo') info: TemplateRef<void>;
@@ -31,8 +45,15 @@ export class ProjectCardComponent implements AfterViewInit {
   ADMIN_PANEL: TemplateRef<void>[];
 
   constructor(
-    private message: NzMessageService
+    private message: NzMessageService, 
+    private userService: UserService, 
   ) { }
+
+  ngOnInit():void {
+    // get groupers
+    // this.getGroupers();
+    this.groupers = [this.user, this.user, this.user];
+  }
 
   ngAfterViewInit(): void {
     this.initControlPanel();
@@ -59,6 +80,16 @@ export class ProjectCardComponent implements AfterViewInit {
     };
 
     this.actions = PANEL_TYPE_USER['student'];
-}
+  }
+
+  getGroupers(): void {
+    this.userService.getGroupersByProjectId(Number(this.project.p_id)).subscribe((data) => {
+      this.groupers = data.groupers;
+    })
+  }
+
+  stringifyGroupers(): string {
+    return JSON.stringify(this.groupers);
+  }
 
 }
