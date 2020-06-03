@@ -282,6 +282,16 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PutMapping("/applyUrge")
+    public Result applyUrge(@RequestParam String pbl_token,
+                            @RequestParam Integer a_id,
+                            @RequestParam Integer p_id) {
+
+
+        return ResultGenerator.genSuccessResult().setMessage("成功回应催促消息");
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/countDone")
     public Result countDone(@RequestParam String pbl_token,
                             @RequestParam Integer p_id) {

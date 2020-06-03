@@ -937,6 +937,27 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
+接口URL：/api/applyUrge
+
+请求方法：PUT
+
+请求参数：
+
+|  字段名   |     说明      |  类型  | 是否必填 |     备注     |
+| :-------: | :-----------: | :----: | :------: | :----------: |
+| pbl_token |       -       | String |    是    | 用于验证身份 |
+|   a_id    | assignment id |  int   |    是    |      -       |
+|   p_id    |  project id   |  int   |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                                |  类型  | 备注 |
+| :-----: | :-------------------------------------------------- | :----: | :--: |
+|  code   | 200：成功回应催促消息<br/>208：登录超时             |  int   |  -   |
+| message | 200：成功回应催促消息<br/>208：登录超时，请重新登录 | String |  -   |
+
+
+
 接口URL：/api/countDone
 
 请求方法：GET
