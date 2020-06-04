@@ -51,7 +51,7 @@ public class APIController {
         User user = userService.searchUser(u_id);
         JSONObject data = new JSONObject();
         data.put("content", JSON.toJSONString(user));
-        data.put("image",userService.getImageURL(u_id));
+        data.put("image",ProjectConstant.WEB_IMG_BASE+userService.getImageURL(u_id));
         return ResultGenerator.genSuccessResult(data);
     }
 
