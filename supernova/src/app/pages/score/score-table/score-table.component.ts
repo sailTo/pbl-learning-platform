@@ -30,7 +30,7 @@ export class ScoreTableComponent implements OnInit {
   searchValue = '';
   visible = false;
   editId:number | null = null;
-  canEdit = true;
+  canEdit:boolean;
   compare = (a, b) => {return a.name.localeCompare(b.name);};
   listofColumns: columnItem[] = [
     {
@@ -87,6 +87,7 @@ export class ScoreTableComponent implements OnInit {
 
   ngOnInit(): void {
     const data = [];
+    this.canEdit = true;
     for (let i = 0; i < 100; i++) {
       data.push({
         id : i,
@@ -118,5 +119,8 @@ export class ScoreTableComponent implements OnInit {
   search(): void {
     this.visible = false;
     this.listOfDisplayData = this.listOfData.filter((item: ItemData) => item.name.indexOf(this.searchValue) !== -1);
+  }
+  confirm():void{
+    this.canEdit = false; 
   }
 }

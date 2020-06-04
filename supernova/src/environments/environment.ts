@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4000',
-  jwtHeader: "supernova"
+  apiUrl: 'http://localhost:8081',
+  jwtHeader: "supernova",
+  defaultImgPath:"./default.img"
 };
 
 /*

@@ -1,10 +1,19 @@
 
 <!-- <app-search-list></app-search-list> -->
-<nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择一门课程" [(ngModel)]="selectedValue" (ngModelChange)="onChanges()">
+<!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择一门课程" [(ngModel)]="selectedValue" (ngModelChange)="onChanges()">
     <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
     <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
     <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
   </nz-select>
+ -->
+<div>
+  <nz-select [(ngModel)]="selectedCourse" (ngModelChange)="courseChange($event)">
+    <nz-option *ngFor="let course of courseData" [nzValue]="course.name" [nzLabel]="course.id"></nz-option>
+  </nz-select>
+  <nz-select [(ngModel)]="selectedProject"  (ngModelChange)="projectChange()">
+    <nz-option *ngFor="let project of projectData[selectedCourse]" [nzValue]="project.name" [nzLabel]="project.id"></nz-option>
+  </nz-select>
+</div>
 <app-score-table></app-score-table>
 <!-- <app-sort-table></app-sort-table>
 <app-user-defined-table></app-user-defined-table> -->

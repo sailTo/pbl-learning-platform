@@ -35,16 +35,43 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
       
     }
-    this.authService.login(this.validateForm.controls.id.value,this.validateForm.controls.password.value)
-    .pipe(first())
-    .subscribe(
-      data => {
-          this.router.navigate([this.returnUrl]);
-      },
-      error => {
-          this.error = error;
-          this.loading = false;
+    this.authService.login(this.validateForm.controls.id.value,this.validateForm.controls.password.value).subscribe(
+      (data) =>{
+                
+               if(data.code!=200){
+                  this.error = data.message;
+                  return;
+                }else{
+                    // alert(JSON.parse(data.data).user);
+                  var ret_user; 
+                  // = {
+                  //   u_id: data.data.user.u_id,
+                  //   type: data.data.user.type, 
+                  //   u_name: data.data.user.u_name, 
+                  //   gender: data.data.user.gender,
+                  //   description:data.data.user.description,
+                  //   image: data.data.image, 
+                  //   token: data.message
+                     
+                  // }
+                  ret_user = JSON.parse(data.data).user;
+                  alert(data.message);
+                  ret_user.token = data.message;
+                  ret_user.image = JSON.parse(data.data).image;
+                  localStorage.setItem('User', JSON.stringify(ret_user));
+                  this.authService.setCurrentUserValue(ret_user);
+                  this.router.navigateByUrl(this.returnUrl);       
       }
+      this.loading = false;
+    }
+    );
+    // }else{
+    //   
+    // }
+    
+  
+          
+  
       // if (this.authService.isLogin) {
       //   // Get the redirect URL from our auth service
       //   // If no redirect has been set, use the default
@@ -53,7 +80,7 @@ export class LoginComponent implements OnInit {
       //   // Redirect the user
       //   this.router.navigateByUrl(redirect);
       // }
-    );
+    
  
   }
 
@@ -65,7 +92,7 @@ export class LoginComponent implements OnInit {
         Validators.maxLength(10),
         Validators.minLength(3),
         // Validators.pattern('^[0-9]'),
-        Validators.pattern('[0-9]+'),
+        Validators.pattern('[STA][0-9]+'),
         Validators.required
       ]],
       password: [null, [Validators.required]],

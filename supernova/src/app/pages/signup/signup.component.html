@@ -1,11 +1,13 @@
 
 <p>快来注册属于自己的账号吧！</p>
+<nz-spin [nzSpinning]="loading">
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">工号</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="工号输入有误!工号只能为数字！">
-        <input nz-input formControlName="id" id="id" />
+        <input nz-input formControlName="id" id="id"/>
+        <div *ngIf="idError" class="">{{idError}}</div>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -17,16 +19,26 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gender"> 性别 </nz-form-label>
        <nz-radio-group  formControlName="gender" id="gender">
-      <nz-form-control nzErrorTip="请填入你的性别">
-        <label nz-radio nzValue="male">男</label>
-        <label nz-radio nzValue="female">女</label>
-        <label nz-radio nzValue="unknown">未知</label>
+      <nz-form-control nzErrorTip="请选择你的性别">
+        <label nz-radio nzValue="M">男</label>
+        <label nz-radio nzValue="F">女</label>
+        <label nz-radio nzValue="N">未知</label>
       </nz-form-control>
     </nz-radio-group>
     </nz-form-item>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type"> 身份</nz-form-label>
+       <nz-radio-group  formControlName="type" id="type">
+      <nz-form-control nzErrorTip="请选择你的身份">
+        <label nz-radio nzValue="S">学生</label>
+        <label nz-radio nzValue="T">教师</label>
+        <label nz-radio nzValue="A">管理员</label>
+      </nz-form-control>
+    </nz-radio-group>
+    </nz-form-item> -->
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入的密码!密码长度应在8-16位之间！">
         <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" />
       </nz-form-control>
     </nz-form-item>
@@ -53,7 +65,11 @@
     </nz-form-item>
     <nz-form-item nz-row class="register-area">
       <nz-form-control [nzSpan]="14" [nzOffset]="6">
-        <button nz-button nzType="primary">注册</button>
+        <button nz-button nzType="primary">
+          <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
+          注册</button>
       </nz-form-control>
     </nz-form-item>
   </form>
+  <div *ngIf="error" class="">{{error}}</div>
+</nz-spin>

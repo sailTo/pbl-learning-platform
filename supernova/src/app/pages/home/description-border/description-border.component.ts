@@ -2,13 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 import { UploadFile } from 'ng-zorro-antd/upload';
-interface data{
-  id: string;
-  name: string;
-  gender: string;
-  description: string;
-  courses :courseItems[];
-}
+import {User} from '../../../models/user';
+import {HomeService} from  '../../../services/home.service'
+import { HttpParams } from '@angular/common/http';
+import {environment} from '../../../../environments/environment'
+// interface data{
+//   id: string;
+//   name: string;
+//   gender: string;
+//   description: string;
+//   courses :courseItems[];
+// }
 
 interface courseItems{
   name: string;
@@ -22,23 +26,31 @@ interface courseItems{
 })
 export class DescriptionBorderComponent implements OnInit {
   canEdit : boolean;
-  datas: data;
-  copydata:data;
+  datas:User ;
+  copydata:User;
+  defaultImg = environment.defaultImgPath;
 
   loading = false;
   avatarUrl: string;
   constructor(
     private msg: NzMessageService,
-  ){}
+    private homeServicce: HomeService
+  ){
+    
+  }
   ngOnInit(){
-    this.datas = {
-      id : "1",
-      name : "wqd",
-      gender : "男",
-      description: "不知道该写点啥",
-      courses : []
-    }
-    this.copydata = JSON.parse(JSON.stringify(this.datas));
+    // this.datas = {
+    //   id : "1",
+    //   name : "wqd",
+    //   gender : "男",
+    //   description: "不知道该写点啥",
+    //   courses : []
+    // }
+    // this.datas = JSON.parse(localStorage.getItem("User"));
+    this.getUser();
+    
+    // alert(this.datas.u_id);
+    
    
   }
   startEdit(){
@@ -55,9 +67,21 @@ export class DescriptionBorderComponent implements OnInit {
 
   saveEdit(){
     //向数据库发送数据
-    alert("保存成功!");
-    this.copydata = JSON.parse(JSON.stringify(this.datas));
+    this.homeServicce.changeInformation(this.datas,this.datas.image).subscribe(
+      (data) =>{
+        if(data.code==200){
+          alert("保存成功!");
+          this.copydata = JSON.parse(JSON.stringify(this.datas));
+          
+        }else{
+          //error
+          this.datas = JSON.parse(JSON.stringify(this.copydata));
+          alert("登录超时！");
+        }
+      }
+    )
     this.canEdit=false;
+    
     
   }
   beforeUpload = (file: File) => {
@@ -103,15 +127,30 @@ export class DescriptionBorderComponent implements OnInit {
         break;
     }
   }
+  getUser(){
+   
+     this.homeServicce.getUser().subscribe((data)=>{
+      if(data.code==200){
+        this.datas = JSON.parse(data.data).content;
+        this.datas.image = JSON.parse(data.data).image;
+        this.copydata = JSON.parse(JSON.stringify(this.datas));
+      }else{
+        //error
+      }
+      
+    });
+   
+  }
 
   resetAvatar(){
     //将头像恢复为默认的头像
-
+    this.datas.image = this.defaultImg;
+    this.homeServicce.changeInformation(this.datas,null);
   }
 
-  changePassword(){
-    //添加弹窗，弹窗中是表单
-  }
+  // changePassword(){
+  //   //添加弹窗，弹窗中是表单
+  // }
 
 
 }

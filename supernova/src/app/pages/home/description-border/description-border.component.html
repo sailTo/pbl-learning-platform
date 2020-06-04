@@ -3,7 +3,10 @@
     
 
  <div style="text-align: center;" #default>
-  <div>
+  <div *ngIf="datas.image!=defaultImg;else defaultHeader">
+    <nz-avatar nzSrc="datas.image" [nzSize]="172"></nz-avatar>
+  </div>
+  <ng-template #defaultHeader>
     <nz-avatar nzIcon="user" [nzSize]="172"></nz-avatar>
   </div>
   <br>
@@ -41,8 +44,8 @@
       </button>
       </span>
       <nz-descriptions nzTitle="个人信息" nzBordered>
-        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">{{datas.name}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">{{datas.id}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">{{datas.u_name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">{{datas.u_id}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="性别" [nzSpan]="2">{{datas.gender}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="个人简介" >
           {{datas.description}}
@@ -53,19 +56,19 @@
         
       <nz-descriptions nzTitle="个人信息" nzBordered >
         <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
-          <input type="text" nz-input [(ngModel)]="datas.name" />
+          <input type="text" nz-input [(ngModel)]="datas.u_name" />
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">
-          {{datas.id}}
+          {{datas.u_id}}
           <!-- <input type="text" nz-input [(ngModel)]="datas.id" /> -->
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="性别" [nzSpan]="2">
           <!-- <input type="text" nz-input [(ngModel)]="datas.gender" /> -->
           <nz-radio-group [(ngModel)]="datas.gender" >
           
-            <label nz-radio nzValue="男">男</label>
-            <label nz-radio nzValue="女">女</label>
-            <label nz-radio nzValue="未知">未知</label>
+            <label nz-radio nzValue="male">男</label>
+            <label nz-radio nzValue="female">女</label>
+            <label nz-radio nzValue="unknown">未知</label>
         </nz-radio-group>
           <!-- 改成单选框，选择性别 -->
         </nz-descriptions-item>
