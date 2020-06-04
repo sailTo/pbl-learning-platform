@@ -20,7 +20,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   groupers: User[];
 
   user = {
-    u_id: 4,
+    u_id: "S4",
     type: 'S', 
     u_name: '学生4', 
     gender: 'M',

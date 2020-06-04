@@ -17,7 +17,7 @@ export class ProjectDetailsComponent implements OnInit {
   groupers: User[];
 
   user = {
-    u_id: 4,
+    u_id: "S4",
     type: 'S', 
     u_name: '学生4', 
     gender: 'M',

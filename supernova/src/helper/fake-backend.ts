@@ -6,7 +6,7 @@ import {environment} from '../environments/environment'
 import { User } from '../app/models/user';
 
 const users: User[] = [
-    {   u_id: 123,  
+    {   u_id: "123",  
         type: "student", 
         u_name: "wqd", 
         gender: "male",
@@ -45,7 +45,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const { id, password } = body;
             alert(id);
             alert(password);
-            const user = users.find(x => x.u_id === +id && x.password === password);
+            const user = users.find(x => x.u_id === id && x.password === password);
             if (!user) return error('用户名或密码不正确');
             return ok({
                 u_id: user.u_id,

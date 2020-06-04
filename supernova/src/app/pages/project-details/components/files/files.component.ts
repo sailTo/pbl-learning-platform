@@ -19,7 +19,7 @@ export class FilesComponent implements OnInit {
   file = {
     f_id: 4,
     p_id: 4,
-    u_id: 4,
+    u_id: "S4",
     f_name: '文件名称',
     description: '文件描述',
     file_URL: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
@@ -55,8 +55,8 @@ export class FilesComponent implements OnInit {
   }
 
   getFiles(): void {
-    this.fileService.getFilesByProjectId(this.p_id).subscribe((data) => {
-      this.files = data.data.files;
+    this.fileService.getFilesByProjectId(this.p_id).subscribe((response) => {
+      this.files = response.data.files;
     });
   }
 
