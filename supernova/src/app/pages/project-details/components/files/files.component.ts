@@ -56,7 +56,7 @@ export class FilesComponent implements OnInit {
 
   getFiles(): void {
     this.fileService.getFilesByProjectId(this.p_id).subscribe((data) => {
-      this.files = data.files;
+      this.files = data.data.files;
     });
   }
 
