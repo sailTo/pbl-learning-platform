@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.persistence.OrderBy;
+import java.util.List;
 
 
 /**
@@ -29,7 +29,7 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public int createAssignment(Assignment assignment) {
         assignmentMapper.addAssignment(assignment);
-        return assignment.geta_id();
+        return assignment.getA_id();
     }
 
     @Override
@@ -40,16 +40,16 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public void deleteAssignment(int p_id, int a_id) {
         Assignment tmp = new Assignment();
-        tmp.setp_id(p_id);
-        tmp.seta_id(a_id);
+        tmp.setP_id(p_id);
+        tmp.setA_id(a_id);
         assignmentMapper.delete(tmp);
     }
 
     @Override
     public void urgeAssignment(int p_id, int a_id) {
         StudentAssignment tmp = new StudentAssignment();
-        tmp.setp_id(p_id);
-        tmp.seta_id(a_id);
+        tmp.setP_id(p_id);
+        tmp.setA_id(a_id);
         tmp.setUrge(true);
         studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
     }
@@ -57,15 +57,15 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public int countAssignment(int p_id) {
         Assignment tmp = new Assignment();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         return assignmentMapper.select(tmp).size();
     }
 
     @Override
-    public String searchAssignment(int p_id) {
+    public List<Assignment> searchAssignment(int p_id) {
         Assignment tmp = new Assignment();
-        tmp.setp_id(p_id);
-        return JSON.toJSONString(assignmentMapper.select(tmp));
+        tmp.setP_id(p_id);
+        return assignmentMapper.select(tmp);
     }
 
     @Override
@@ -76,8 +76,8 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public String searchDoneStatus(int p_id, String s_id) {
         StudentAssignment tmp = new StudentAssignment();
-        tmp.setp_id(p_id);
-        tmp.sets_id(s_id);
+        tmp.setP_id(p_id);
+        tmp.setU_id(s_id);
         tmp.setStatus(true);//表示已完成
         return JSON.toJSONString(studentAssignmentMapper.select(tmp));
     }
@@ -85,9 +85,9 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public boolean searchStudentDone(int p_id, String s_id, int a_id) {
         StudentAssignment tmp = new StudentAssignment();
-        tmp.setp_id(p_id);
-        tmp.sets_id(s_id);
-        tmp.seta_id(a_id);
+        tmp.setP_id(p_id);
+        tmp.setU_id(s_id);
+        tmp.setA_id(a_id);
         studentAssignmentMapper.select(tmp);
         return tmp.getStatus();
     }
@@ -95,9 +95,9 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public void updateStudentDone(int p_id, String s_id, int a_id, boolean doneOrNot) {
         StudentAssignment tmp = new StudentAssignment();
-        tmp.setp_id(p_id);
-        tmp.sets_id(s_id);
-        tmp.seta_id(a_id);
+        tmp.setP_id(p_id);
+        tmp.setU_id(s_id);
+        tmp.setA_id(a_id);
         tmp.setStatus(doneOrNot);
         studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
     }
@@ -105,8 +105,8 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public int searchAssignmentDoneNum(int p_id, int a_id) {
         StudentAssignment tmp = new StudentAssignment();
-        tmp.setp_id(p_id);
-        tmp.seta_id(a_id);
+        tmp.setP_id(p_id);
+        tmp.setA_id(a_id);
         tmp.setStatus(true);
         return studentAssignmentMapper.selectCount(tmp);
     }

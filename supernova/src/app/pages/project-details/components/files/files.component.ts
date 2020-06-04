@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { FileService } from 'src/app/services/file.service';
 
 import { File } from "src/app/models/file";
@@ -16,6 +17,9 @@ export class FilesComponent implements OnInit {
   files: File[];
   groupers: User[];
 
+  isVisible = false;
+  isOkLoading = false;
+
   file = {
     f_id: 4,
     p_id: 4,
@@ -27,6 +31,7 @@ export class FilesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
+    private message: NzMessageService, 
     private fileService: FileService, 
   ) { }
 
@@ -72,15 +77,54 @@ export class FilesComponent implements OnInit {
     });
   }
 
-  downLoadFile(f_id: number): void {
+  downLoadFile(file: File): void {
     // TODO: download logic
-    console.log('Download ' + f_id);
+    this.fileService.getFileString(file.p_id, file.f_id).subscribe((response) => {
+      const blob = new Blob([response.data.file_str]);
+      const link = document.createElement('a');
+
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', file.f_name);
+        link.style.visibility = 'hidden';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        console.log('HTML 5 download feature not supported. ');
+      }
+    })
   }
 
-  deleteFile(f_id: number): void {
+  deleteFile(file: File): void {
     // TODO: delete logic
-    console.log('Delete ' + f_id);
-    this.files = this.files.filter((file) => file.f_id !== f_id);
+    // this.files = this.files.filter((file) => file.f_id !== file.f_id);
+    this.fileService.deleteFile(file.p_id, file.f_id).subscribe((response) => {
+      if (response.code === 200) {
+        this.message.success(`${file.f_name}已成功删除`);
+      } else {
+        this.message.error(`${file.f_name}删除失败，请稍后重试！`);
+      }
+    });
+  }
+
+  showUploadModel(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
 }

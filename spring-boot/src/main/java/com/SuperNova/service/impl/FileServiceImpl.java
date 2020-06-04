@@ -1,8 +1,6 @@
 package com.SuperNova.service.impl;
 
 import com.SuperNova.core.FileUtil;
-import com.SuperNova.core.ProjectConstant;
-import com.SuperNova.core.ResultGenerator;
 import com.SuperNova.dao.FileMapper;
 import com.SuperNova.model.File;
 import com.SuperNova.service.FileService;
@@ -14,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.UUID;
 
 
 /**
@@ -27,10 +24,10 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     private FileMapper fileMapper;
 
     @Override
-    public String searchFiles(int p_id) {
+    public List<File> searchFiles(int p_id) {
         File tmp = new File();
         tmp.setp_id(p_id);
-        return JSON.toJSONString(fileMapper.select(tmp));
+        return fileMapper.select(tmp);
     }
 
     @Override

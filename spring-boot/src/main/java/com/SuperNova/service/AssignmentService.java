@@ -2,6 +2,8 @@ package com.SuperNova.service;
 import com.SuperNova.model.Assignment;
 import com.SuperNova.core.Service;
 
+import java.util.List;
+
 
 /**
  * Created by Chongli on 2020/05/14.
@@ -39,7 +41,7 @@ public interface AssignmentService extends Service<Assignment> {
      * @param p_id
      * @return
      */
-    String searchAssignment(int p_id);
+    List<Assignment> searchAssignment(int p_id);
 
     /**
      * 获得该项目下任务总数

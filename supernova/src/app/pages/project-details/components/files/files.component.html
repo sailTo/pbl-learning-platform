@@ -1,3 +1,7 @@
+<div>
+    <button nz-button nzType="primary" (click)="showUploadModel()">上传文件</button>
+</div>
+
 <nz-table #basicTable [nzData]="files">
     <thead>
         <tr>
@@ -13,12 +17,25 @@
             <td>{{ data.description }}</td>
             <td>{{ data.u_name }}</td>
             <td>
-                <a nz-button nzType="link" (click)="downLoadFile(data.f_id)">下载</a>
-                <ng-container *ngIf="data.u_id === 4"> <!--TODO：判断为自己上传的文件才能删除-->
+                <a nz-button nzType="link" (click)="downLoadFile(data)">下载</a>
+                <ng-container *ngIf="data.u_id === 'S4'"> <!--TODO：判断为自己上传的文件才能删除-->
                     <nz-divider nzType="vertical"></nz-divider>
-                    <a nz-button nzType="link" (click)="deleteFile(data.f_id)">删除</a>
+                    <a nz-button nzType="link" (click)="deleteFile(data)">删除</a>
                 </ng-container>
             </td>
         </tr>
     </tbody>
 </nz-table>
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    nzTitle="The first Modal" 
+    (nzOnCancel)="handleCancel()" 
+    (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading"
+    >
+    <p>Content one</p>
+    <p>Content two</p>
+    <p>Content three</p>
+    <p>Content three</p>
+</nz-modal>

@@ -30,10 +30,6 @@ public class Assignment {
     /**
      * @return a_id
      */
-    public Integer geta_id() {
-        return a_id;
-    }
-
     public Integer getA_id() {
         return a_id;
     }
@@ -41,10 +37,6 @@ public class Assignment {
     /**
      * @param a_id
      */
-    public void seta_id(Integer a_id) {
-        this.a_id = a_id;
-    }
-
     public void setA_id(Integer a_id) {
         this.a_id = a_id;
     }
@@ -52,10 +44,6 @@ public class Assignment {
     /**
      * @return p_id
      */
-    public Integer getp_id() {
-        return p_id;
-    }
-
     public Integer getP_id() {
         return p_id;
     }
@@ -63,10 +51,6 @@ public class Assignment {
     /**
      * @param p_id
      */
-    public void setp_id(Integer p_id) {
-        this.p_id = p_id;
-    }
-
     public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
@@ -74,10 +58,6 @@ public class Assignment {
     /**
      * @return a_name
      */
-    public String geta_name() {
-        return a_name;
-    }
-
     public String getA_name() {
         return a_name;
     }
@@ -85,10 +65,6 @@ public class Assignment {
     /**
      * @param a_name
      */
-    public void seta_name(String a_name) {
-        this.a_name = a_name;
-    }
-
     public void setA_name(String a_name) {
         this.a_name = a_name;
     }
@@ -110,10 +86,6 @@ public class Assignment {
     /**
      * @return a_start_date
      */
-    public Date geta_start_date() {
-        return a_start_date;
-    }
-
     public Date getA_start_date() {
         return a_start_date;
     }
@@ -121,10 +93,6 @@ public class Assignment {
     /**
      * @param a_start_date
      */
-    public void seta_start_date(Date a_start_date) {
-        this.a_start_date = a_start_date;
-    }
-
     public void setA_start_date(Date a_start_date) {
         this.a_start_date = a_start_date;
     }
@@ -132,10 +100,6 @@ public class Assignment {
     /**
      * @return a_end_date
      */
-    public Date geta_end_date() {
-        return a_end_date;
-    }
-
     public Date getA_end_date() {
         return a_end_date;
     }
@@ -143,10 +107,6 @@ public class Assignment {
     /**
      * @param a_end_date
      */
-    public void seta_end_date(Date a_end_date) {
-        this.a_end_date = a_end_date;
-    }
-
     public void setA_end_date(Date a_end_date) {
         this.a_end_date = a_end_date;
     }
@@ -154,10 +114,6 @@ public class Assignment {
     /**
      * @return a_description
      */
-    public String geta_description() {
-        return a_description;
-    }
-
     public String getA_description() {
         return a_description;
     }
@@ -165,10 +121,6 @@ public class Assignment {
     /**
      * @param a_description
      */
-    public void seta_description(String a_description) {
-        this.a_description = a_description;
-    }
-
     public void setA_description(String a_description) {
         this.a_description = a_description;
     }

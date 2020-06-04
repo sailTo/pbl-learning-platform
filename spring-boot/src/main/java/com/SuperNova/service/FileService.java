@@ -3,6 +3,8 @@ import com.SuperNova.model.File;
 import com.SuperNova.core.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 /**
  * Created by Chongli on 2020/05/14.
@@ -13,7 +15,7 @@ public interface FileService extends Service<File> {
      * @param p_id
      * @return
      */
-    String searchFiles(int p_id);
+    List<File> searchFiles(int p_id);
 
     /**
      * 从数据库中新建文件相关信息

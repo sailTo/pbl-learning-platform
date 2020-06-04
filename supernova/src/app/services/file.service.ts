@@ -19,4 +19,20 @@ export class FileService {
     }});
     return this.http.get<Response<{files: File[]}>>('/api/searchAllFiles', { params });
   }
+
+  getFileString(projectId: number, fileId: number) {
+    const params = new HttpParams({ fromObject: {
+      f_id: String(fileId), 
+      p_id: String(projectId), 
+    }});
+    return this.http.get<Response<{file_str: string}>>('/api/downloadFile', { params });
+  }
+
+  deleteFile(projectId: number, fileId: number) {
+    const params = new HttpParams({ fromObject: {
+      f_id: String(fileId), 
+      p_id: String(projectId), 
+    }});
+    return this.http.delete<Response<{}>>('/api/deleteFile', { params });
+  }
 }

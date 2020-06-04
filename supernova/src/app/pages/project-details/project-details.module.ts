@@ -12,6 +12,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -44,6 +46,8 @@ import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedu
     NzDividerModule, 
     NzButtonModule, 
     NzSliderModule, 
+    NzMessageModule, 
+    NzModalModule, 
     AngularGanttScheduleTimelineCalendarModule, 
   ]
 })
