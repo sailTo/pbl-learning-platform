@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -10,6 +11,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -30,6 +32,7 @@ import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedu
   ],
   imports: [
     CommonModule,
+    FormsModule, 
     ProjectDetailsRoutingModule, 
     NzAvatarModule, 
     NzCardModule, 
@@ -40,6 +43,7 @@ import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedu
     NzTableModule, 
     NzDividerModule, 
     NzButtonModule, 
+    NzSliderModule, 
     AngularGanttScheduleTimelineCalendarModule, 
   ]
 })
