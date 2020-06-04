@@ -25,10 +25,18 @@ public class Reply {
         return r_id;
     }
 
+    public Integer getR_id() {
+        return r_id;
+    }
+
     /**
      * @param r_id
      */
     public void setr_id(Integer r_id) {
+        this.r_id = r_id;
+    }
+
+    public void setR_id(Integer r_id) {
         this.r_id = r_id;
     }
 
@@ -39,10 +47,18 @@ public class Reply {
         return d_id;
     }
 
+    public Integer getD_id() {
+        return d_id;
+    }
+
     /**
      * @param d_id
      */
     public void setd_id(Integer d_id) {
+        this.d_id = d_id;
+    }
+
+    public void setD_id(Integer d_id) {
         this.d_id = d_id;
     }
 
@@ -53,10 +69,18 @@ public class Reply {
         return u_id;
     }
 
+    public String getU_id() {
+        return u_id;
+    }
+
     /**
      * @param u_id
      */
     public void setu_id(String u_id) {
+        this.u_id = u_id;
+    }
+
+    public void setU_id(String u_id) {
         this.u_id = u_id;
     }
 

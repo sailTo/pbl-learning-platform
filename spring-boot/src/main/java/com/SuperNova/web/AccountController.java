@@ -81,6 +81,7 @@ public class AccountController {
         user.setu_name(u_name);
         user.setGender(gender);
         user.setPassword(password);
+        user.setType("student");
 
         if (description!=null){
             user.setDescription(description);

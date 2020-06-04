@@ -28,10 +28,18 @@ public class StudentAssignment {
         return a_id;
     }
 
+    public Integer getA_id() {
+        return a_id;
+    }
+
     /**
      * @param a_id
      */
     public void seta_id(Integer a_id) {
+        this.a_id = a_id;
+    }
+
+    public void setA_id(Integer a_id) {
         this.a_id = a_id;
     }
 
@@ -42,10 +50,18 @@ public class StudentAssignment {
         return p_id;
     }
 
+    public Integer getP_id() {
+        return p_id;
+    }
+
     /**
      * @param p_id
      */
     public void setp_id(Integer p_id) {
+        this.p_id = p_id;
+    }
+
+    public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
 
@@ -56,11 +72,19 @@ public class StudentAssignment {
         return u_id;
     }
 
+    public String getU_id() {
+        return u_id;
+    }
+
     /**
      * @param s_id
      */
     public void sets_id(String s_id) {
         this.u_id = s_id;
+    }
+
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
     }
 
     /**

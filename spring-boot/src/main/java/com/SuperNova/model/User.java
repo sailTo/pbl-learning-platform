@@ -27,10 +27,18 @@ public class User {
         return u_id;
     }
 
+    public String getU_id() {
+        return u_id;
+    }
+
     /**
      * @param u_id
      */
     public void setu_id(String u_id) {
+        this.u_id = u_id;
+    }
+
+    public void setU_id(String u_id) {
         this.u_id = u_id;
     }
 
@@ -55,10 +63,18 @@ public class User {
         return u_name;
     }
 
+    public String getU_name() {
+        return u_name;
+    }
+
     /**
      * @param u_name
      */
     public void setu_name(String u_name) {
+        this.u_name = u_name;
+    }
+
+    public void setU_name(String u_name) {
         this.u_name = u_name;
     }
 
