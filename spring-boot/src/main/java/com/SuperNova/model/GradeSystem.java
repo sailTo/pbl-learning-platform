@@ -25,10 +25,18 @@ public class GradeSystem {
         return p_id;
     }
 
+    public Integer getP_id() {
+        return p_id;
+    }
+
     /**
      * @param p_id
      */
     public void setp_id(Integer p_id) {
+        this.p_id = p_id;
+    }
+
+    public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
 
@@ -39,10 +47,18 @@ public class GradeSystem {
         return item_id;
     }
 
+    public Integer getItem_id() {
+        return item_id;
+    }
+
     /**
      * @param item_id
      */
     public void setitem_id(Integer item_id) {
+        this.item_id = item_id;
+    }
+
+    public void setItem_id(Integer item_id) {
         this.item_id = item_id;
     }
 
@@ -53,10 +69,18 @@ public class GradeSystem {
         return max_grade;
     }
 
+    public Double getMax_grade() {
+        return max_grade;
+    }
+
     /**
      * @param max_grade
      */
     public void setmax_grade(Double max_grade) {
+        this.max_grade = max_grade;
+    }
+
+    public void setMax_grade(Double max_grade) {
         this.max_grade = max_grade;
     }
 
