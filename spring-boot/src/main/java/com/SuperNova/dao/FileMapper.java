@@ -14,7 +14,7 @@ public interface FileMapper extends Mapper<File> {
 //    List<File> searchFiles(int p_id);
 
     /**
-     * 搜索文件的最大id，用于存储下一个文件(maxid+1.xxx)
+     * 搜索文件的最大id，用于存储下一个文件(maxid+1.xxx),如果没有则返回0
      * @param p_id
      * @return
      */
