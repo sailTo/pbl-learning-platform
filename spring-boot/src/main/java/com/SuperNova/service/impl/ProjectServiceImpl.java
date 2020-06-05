@@ -1,10 +1,7 @@
 package com.SuperNova.service.impl;
 
-import com.SuperNova.dao.GradeSystemMapper;
-import com.SuperNova.dao.ProjectMapper;
-import com.SuperNova.dao.StudentProjectMapper;
-import com.SuperNova.model.GradeSystem;
-import com.SuperNova.model.Project;
+import com.SuperNova.dao.*;
+import com.SuperNova.model.*;
 import com.SuperNova.service.ProjectService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -12,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +25,10 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private GradeSystemMapper gradeSystemMapper;
     @Resource
     private StudentProjectMapper studentProjectMapper;
+    @Resource
+    private AssignmentMapper assignmentMapper;
+    @Resource
+    private StudentAssignmentMapper studentAssignmentMapper;
 
     @Override
     public int studentCoursePID(String s_id, int c_id) {
@@ -45,7 +47,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         projectMapper.deleteByPrimaryKey(p_id);
 
         GradeSystem tmp = new GradeSystem();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         gradeSystemMapper.delete(tmp);
     }
 
@@ -55,9 +57,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         int p_id = project.getp_id();
         int item_id = gradeSystemMapper.getMaxItemId(p_id);
         for (GradeSystem grade:grades) {
-            grade.setp_id(p_id);
+            grade.setP_id(p_id);
             //这里需要修改成设置item_id，因为它不是自增的
-            grade.setitem_id(++item_id);
+            grade.setItem_id(++item_id);
         }
         gradeSystemMapper.insertList(grades);
         return p_id;
@@ -74,7 +76,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public String searchGradeSystem(int p_id) {
         GradeSystem tmp = new GradeSystem();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         return JSON.toJSONString(gradeSystemMapper.select(tmp));
     }
 
@@ -93,5 +95,43 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public String searchGroupers(int p_id) {
         return JSON.toJSONString(projectMapper.searchGroupers(p_id));
+    }
+
+    @Override
+    public String searchLeader(int p_id) {
+        StudentProject tmp = new StudentProject();
+        tmp.setIs_group_leader(true);
+        tmp.setP_id(p_id);
+        List<StudentProject> list = studentProjectMapper.select(tmp);
+
+        return list.get(0).getU_id();
+    }
+
+    @Override
+    public void joinProject(int p_id, String u_id) {
+        StudentProject tmp = new StudentProject();
+        tmp.setP_id(p_id);
+        List<StudentProject> list = studentProjectMapper.select(tmp);
+        if(list.size()==0){
+            tmp.setIs_group_leader(true);
+        }
+        tmp.setU_id(u_id);
+        //插入学生选项目
+        studentProjectMapper.insert(tmp);
+
+        //插入学生任务
+        Assignment assignment = new Assignment();
+        assignment.setP_id(p_id);
+        List<Assignment> aList = assignmentMapper.select(assignment);
+        List<StudentAssignment> addList = new ArrayList<>();
+        for (Assignment a:aList) {
+            StudentAssignment t = new StudentAssignment();
+            t.setA_id(a.getA_id());
+            t.setP_id(a.getP_id());
+            t.setU_id(u_id);
+            t.setStatus(false);
+            addList.add(t);
+        }
+        studentAssignmentMapper.insertList(addList);
     }
 }

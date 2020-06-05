@@ -73,8 +73,8 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     @Override
     public void joinCourse(int c_id, String u_id) {
         StudentCourse tmp = new StudentCourse();
-        tmp.setc_id(c_id);
-        tmp.sets_id(u_id);
+        tmp.setC_id(c_id);
+        tmp.setU_id(u_id);
         studentCourseMapper.insert(tmp);
     }
 

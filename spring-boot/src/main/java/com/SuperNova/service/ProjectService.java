@@ -75,4 +75,17 @@ public interface ProjectService extends Service<Project> {
      */
     String searchGroupers(int p_id);
 
+    /**
+     * 获取项目的组长s_id
+     * @param p_id
+     * @return
+     */
+    String searchLeader(int p_id);
+
+    /**
+     * 学生加入项目
+     * @param p_id
+     * @param u_id
+     */
+    void joinProject(int p_id,String u_id);
 }

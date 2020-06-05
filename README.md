@@ -1026,6 +1026,7 @@ A course project for Advanced Web Technologies at FDU.
 |   code   | 200：搜索成功<br/>208：登录超时       |  int   |                   -                   |
 | message  | 200：无<br/>208：登录超时，请重新登录 | String |                   -                   |
 | groupers | 200：json序列化User对象数组           | String | User对象中可用属性为：<br>u_id,u_name |
+|  leader  | 200：组长s_id                         | String |                   -                   |
 
 User {
 

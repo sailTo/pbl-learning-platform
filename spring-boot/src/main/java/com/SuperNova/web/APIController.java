@@ -93,6 +93,7 @@ public class APIController {
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
         data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("token",userService.getToken(u_id));
         return ResultGenerator.genSuccessResult(data).setMessage("修改个人信息成功");
     }
 
@@ -201,6 +202,15 @@ public class APIController {
         data.put("p_id",p_id);
 
         return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/joinProject")
+    public Result joinProject(@RequestParam String pbl_token,
+                              @RequestParam String p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        projectService.joinProject(Integer.parseInt(p_id),s_id);
+        return ResultGenerator.genSuccessResult().setMessage("加入项目成功！");
     }
 
     @CrossOrigin(origins = "*")
@@ -332,6 +342,8 @@ public class APIController {
                                  @RequestParam Integer p_id) {
         JSONObject data = new JSONObject();
         data.put("groupers",projectService.searchGroupers(p_id));
+        data.put("leader",projectService.searchLeader(p_id));
+
         return ResultGenerator.genSuccessResult(data);
     }
 

@@ -15,10 +15,6 @@ public class StudentCourse {
     /**
      * @return u_id
      */
-    public String gets_id() {
-        return u_id;
-    }
-
     public String getU_id() {
         return u_id;
     }
@@ -26,21 +22,13 @@ public class StudentCourse {
     /**
      * @param s_id
      */
-    public void sets_id(String s_id) {
+    public void setU_id(String s_id) {
         this.u_id = s_id;
-    }
-
-    public void setU_id(String u_id) {
-        this.u_id = u_id;
     }
 
     /**
      * @return c_id
      */
-    public Integer getc_id() {
-        return c_id;
-    }
-
     public Integer getC_id() {
         return c_id;
     }
@@ -48,10 +36,6 @@ public class StudentCourse {
     /**
      * @param c_id
      */
-    public void setc_id(Integer c_id) {
-        this.c_id = c_id;
-    }
-
     public void setC_id(Integer c_id) {
         this.c_id = c_id;
     }

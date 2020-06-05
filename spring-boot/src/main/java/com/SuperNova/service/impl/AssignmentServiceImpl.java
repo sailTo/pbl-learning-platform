@@ -2,8 +2,11 @@ package com.SuperNova.service.impl;
 
 import com.SuperNova.dao.AssignmentMapper;
 import com.SuperNova.dao.StudentAssignmentMapper;
+import com.SuperNova.dao.StudentProjectMapper;
 import com.SuperNova.model.Assignment;
 import com.SuperNova.model.StudentAssignment;
+import com.SuperNova.model.StudentGrade;
+import com.SuperNova.model.StudentProject;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,9 +30,28 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Resource
     private StudentAssignmentMapper studentAssignmentMapper;
 
+    @Resource
+    private StudentProjectMapper studentProjectMapper;
+
     @Override
     public int createAssignment(Assignment assignment) {
         assignmentMapper.addAssignment(assignment);
+        StudentProject tmp = new StudentProject();
+        tmp.setP_id(assignment.getP_id());
+        List<StudentProject> sList = studentProjectMapper.select(tmp);
+        List<StudentAssignment> stuAssigmentList = new ArrayList<>();
+
+        for (StudentProject s:sList) {
+            StudentAssignment studentAssignment = new StudentAssignment();
+            studentAssignment.setA_id(assignment.getA_id());
+            studentAssignment.setP_id(assignment.getP_id());
+            studentAssignment.setU_id(s.getU_id());
+            studentAssignment.setStatus(false);
+            studentAssignment.setUrge(false);
+            stuAssigmentList.add(studentAssignment);
+        }
+        studentAssignmentMapper.insertList(stuAssigmentList);
+
         return assignment.getA_id();
     }
 
@@ -43,6 +66,11 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         tmp.setP_id(p_id);
         tmp.setA_id(a_id);
         assignmentMapper.delete(tmp);
+
+        StudentAssignment studentAssignment = new StudentAssignment();
+        studentAssignment.setP_id(p_id);
+        studentAssignment.setA_id(a_id);
+        studentAssignmentMapper.delete(studentAssignment);
     }
 
     @Override

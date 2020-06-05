@@ -27,10 +27,6 @@ public class StudentProject {
     /**
      * @return u_id
      */
-    public String gets_id() {
-        return u_id;
-    }
-
     public String getU_id() {
         return u_id;
     }
@@ -38,21 +34,13 @@ public class StudentProject {
     /**
      * @param s_id
      */
-    public void sets_id(String s_id) {
+    public void setU_id(String s_id) {
         this.u_id = s_id;
-    }
-
-    public void setU_id(String u_id) {
-        this.u_id = u_id;
     }
 
     /**
      * @return p_id
      */
-    public Integer getp_id() {
-        return p_id;
-    }
-
     public Integer getP_id() {
         return p_id;
     }
@@ -60,10 +48,6 @@ public class StudentProject {
     /**
      * @param p_id
      */
-    public void setp_id(Integer p_id) {
-        this.p_id = p_id;
-    }
-
     public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
@@ -71,10 +55,6 @@ public class StudentProject {
     /**
      * @return is_group_leader
      */
-    public Boolean getis_group_leader() {
-        return is_group_leader;
-    }
-
     public Boolean getIs_group_leader() {
         return is_group_leader;
     }
@@ -82,10 +62,6 @@ public class StudentProject {
     /**
      * @param is_group_leader
      */
-    public void setis_group_leader(Boolean is_group_leader) {
-        this.is_group_leader = is_group_leader;
-    }
-
     public void setIs_group_leader(Boolean is_group_leader) {
         this.is_group_leader = is_group_leader;
     }
@@ -93,10 +69,6 @@ public class StudentProject {
     /**
      * @return self_grade
      */
-    public Double getself_grade() {
-        return self_grade;
-    }
-
     public Double getSelf_grade() {
         return self_grade;
     }
@@ -104,10 +76,6 @@ public class StudentProject {
     /**
      * @param self_grade
      */
-    public void setself_grade(Double self_grade) {
-        this.self_grade = self_grade;
-    }
-
     public void setSelf_grade(Double self_grade) {
         this.self_grade = self_grade;
     }
@@ -115,10 +83,6 @@ public class StudentProject {
     /**
      * @return mutual_grade
      */
-    public Double getmutual_grade() {
-        return mutual_grade;
-    }
-
     public Double getMutual_grade() {
         return mutual_grade;
     }
@@ -126,10 +90,6 @@ public class StudentProject {
     /**
      * @param mutual_grade
      */
-    public void setmutual_grade(Double mutual_grade) {
-        this.mutual_grade = mutual_grade;
-    }
-
     public void setMutual_grade(Double mutual_grade) {
         this.mutual_grade = mutual_grade;
     }
@@ -137,10 +97,6 @@ public class StudentProject {
     /**
      * @return teacher_grade
      */
-    public Double getteacher_grade() {
-        return teacher_grade;
-    }
-
     public Double getTeacher_grade() {
         return teacher_grade;
     }
@@ -148,10 +104,6 @@ public class StudentProject {
     /**
      * @param teacher_grade
      */
-    public void setteacher_grade(Double teacher_grade) {
-        this.teacher_grade = teacher_grade;
-    }
-
     public void setTeacher_grade(Double teacher_grade) {
         this.teacher_grade = teacher_grade;
     }

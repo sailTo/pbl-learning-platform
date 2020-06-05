@@ -33,8 +33,8 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     @Override
     public String searchEvaluateByTeacher(int p_id, String s_id) {
         StudentGrade tmp = new StudentGrade();
-        tmp.setp_id(p_id);
-        tmp.sets_id(s_id);
+        tmp.setP_id(p_id);
+        tmp.setU_id(s_id);
         List<StudentGrade> grades = studentGradeMapper.select(tmp);
         if(grades.size()==0){
             return null;
@@ -45,8 +45,8 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     @Override
     public String searchGrade(int p_id, String s_id) {
         StudentGrade studentGrade = new StudentGrade();
-        studentGrade.setp_id(p_id);
-        studentGrade.sets_id(s_id);
+        studentGrade.setP_id(p_id);
+        studentGrade.setU_id(s_id);
         List<StudentGrade> grades = studentGradeMapper.select(studentGrade);
         Project project = projectMapper.selectByPrimaryKey(p_id);
 
@@ -55,8 +55,8 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         }
 
         Evaluation evaluation = new Evaluation();
-        evaluation.setpassive_s_id(s_id);
-        evaluation.setp_id(p_id);
+        evaluation.setPassive_s_id(s_id);
+        evaluation.setP_id(p_id);
         Project tmp = new Project();
         tmp.setp_id(p_id);
 
@@ -66,9 +66,9 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         }
 
         evaluation = new Evaluation();
-        evaluation.setp_id(p_id);
-        evaluation.setpassive_s_id(s_id);
-        evaluation.setactive_s_id(s_id);
+        evaluation.setP_id(p_id);
+        evaluation.setPassive_s_id(s_id);
+        evaluation.setActive_s_id(s_id);
 
         double gradeBySelf = evaluationMapper.select(evaluation)==null ? -1 : evaluation.getGrade();
 
