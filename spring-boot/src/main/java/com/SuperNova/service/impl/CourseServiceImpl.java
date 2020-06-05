@@ -9,7 +9,9 @@ import com.SuperNova.model.StudentCourse;
 import com.SuperNova.model.User;
 import com.SuperNova.service.CourseService;
 import com.SuperNova.core.AbstractService;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -37,15 +39,10 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     private JSONObject splitPage(List<Course> courses, int pageIndex, int pageSize){
         List<User> teachers = new ArrayList<User>();
 
-//        for (Course c:courses) {
-//            User user = userMapper.selectByPrimaryKey(c.getT_id());
-//            user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
-//            teachers.add(user);
-//        }
+        JSON.DEFAULT_GENERATE_FEATURE |= SerializerFeature.DisableCircularReferenceDetect.getMask();
 
-        for (int i=0;i<courses.size();i++){
-            User user = userMapper.selectByPrimaryKey(courses.get(i).getT_id());
-            user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
+        for (Course c:courses) {
+            User user = userMapper.selectByPrimaryKey(c.getT_id());
             teachers.add(user);
         }
 

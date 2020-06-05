@@ -91,7 +91,7 @@ public class AccountController {
 
         JSONObject data = new JSONObject();
         data.put("user",user);
-        data.put("image", ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("image",imgURL);
 
         return result.setMessage(userService.getToken(u_id)).setData(data);
     }

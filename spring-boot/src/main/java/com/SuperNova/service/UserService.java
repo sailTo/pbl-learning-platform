@@ -86,4 +86,10 @@ public interface UserService extends Service<User> {
      * @return
      */
     List<User> getAllUser();
+
+    /**
+     * 删除用户的旧头像(如果default.jpg则不删除)
+     * @param user
+     */
+    void deleteImage(User user);
 }

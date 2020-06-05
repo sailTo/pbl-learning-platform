@@ -1,5 +1,6 @@
 package com.SuperNova.service.impl;
 
+import com.SuperNova.core.FileUtil;
 import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.UserMapper;
 import com.SuperNova.model.User;
@@ -178,10 +179,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
         String imgURL;
         if(image==null){
-            imgURL = ProjectConstant.DEAFULT_IMAGE;
+            imgURL = ProjectConstant.WEB_IMG_BASE+ProjectConstant.DEAFULT_IMAGE;
         }else{
             imgURL = fileService.getImageURL(image,uId);
             fileService.saveImage(image,imgURL,ProjectConstant.IMG_BASE);
+            imgURL = ProjectConstant.WEB_IMG_BASE+imgURL;
         }
 
         user.setImage(imgURL);
@@ -193,6 +195,15 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public String getImageURL(String uId) {
         User user = userMapper.selectByPrimaryKey(uId);
         return user.getImage();
+    }
+
+    @Override
+    public void deleteImage(User user) {
+        String imagePath = user.getImage();
+        if(!imagePath.equals(ProjectConstant.WEB_IMG_BASE+ProjectConstant.DEAFULT_IMAGE)){
+            imagePath = imagePath.substring(ProjectConstant.WEB_IMG_BASE.length());
+            FileUtil.deleteStorageFile(ProjectConstant.IMG_BASE+imagePath);
+        }
     }
 
     @Override

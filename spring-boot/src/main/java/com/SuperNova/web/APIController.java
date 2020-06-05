@@ -70,7 +70,7 @@ public class APIController {
         User user = userService.searchUser(u_id);
         JSONObject data = new JSONObject();
         data.put("content",user);
-        data.put("image",ProjectConstant.WEB_IMG_BASE+userService.getImageURL(u_id));
+        data.put("image",userService.getImageURL(u_id));
         return ResultGenerator.genSuccessResult(data);
     }
 
@@ -79,9 +79,11 @@ public class APIController {
     public Result changeMyImage(@RequestParam String pbl_token,
                                 @RequestParam String u_id,
                                 @RequestParam(required = false) MultipartFile image) {
+        User user = userService.searchUser(u_id);
+        userService.deleteImage(user);
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
-        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("image",imgURL);
         return ResultGenerator.genSuccessResult(data).setMessage("修改头像成功");
     }
 
@@ -93,9 +95,10 @@ public class APIController {
         String u_id = userService.getUIdByToken(pbl_token);
         User user = JSON.parseObject(content,User.class);
         userService.setUser(user);
+        userService.deleteImage(user);
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
-        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("image",imgURL);
         data.put("token",userService.getToken(u_id));
         return ResultGenerator.genSuccessResult(data).setMessage("修改个人信息成功");
     }
@@ -593,7 +596,7 @@ public class APIController {
         List<String> imgURL = new ArrayList<>();
         List<User> users = userService.getAllUser();
         for (User u:users) {
-            imgURL.add(ProjectConstant.WEB_IMG_BASE+u.getImage());
+            imgURL.add(u.getImage());
         }
         JSONObject data = new JSONObject();
         data.put("users",users);
@@ -611,9 +614,10 @@ public class APIController {
         if(!user.getType().equals("admin")){
             return ResultGenerator.genFailResult("修改失败");
         }
+        userService.deleteImage(user);
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
-        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("image",imgURL);
         return ResultGenerator.genSuccessResult(data).setMessage("修改成功");
     }
 
@@ -652,7 +656,7 @@ public class APIController {
         userService.register(userObj);
         String imgURL = userService.setImage(userObj.getU_id(),image);
         JSONObject data = new JSONObject();
-        data.put("image", ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("image",imgURL);
         return ResultGenerator.genSuccessResult().setMessage("添加成功！");
     }
 
