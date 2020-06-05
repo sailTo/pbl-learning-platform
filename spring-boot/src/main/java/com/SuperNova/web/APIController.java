@@ -94,6 +94,7 @@ public class APIController {
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
         data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        data.put("token",userService.getToken(u_id));
         return ResultGenerator.genSuccessResult(data).setMessage("修改个人信息成功");
     }
 
