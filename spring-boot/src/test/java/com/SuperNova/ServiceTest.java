@@ -1,5 +1,6 @@
 package com.SuperNova;
 
+import com.SuperNova.dao.FileMapper;
 import com.SuperNova.model.Course;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.service.CourseService;
@@ -16,6 +17,8 @@ public class ServiceTest extends Tester {
     private AssignmentService assignmentService;
     @Resource
     private ProjectService projectService;
+    @Resource
+    private FileMapper fileMapper;
     @Test
     public void test1(){
         Course course = courseService.findById(1);
@@ -24,7 +27,8 @@ public class ServiceTest extends Tester {
 
     @Test
     public void test2(){
-        String str = assignmentService.searchDoneStatus(1,"s001");
+        String str = assignmentService.searchDoneStatus(1,"S001");
+//        String str = assignmentService.searchAssignmentUrge(1,"S001");
         System.out.println(str);
 //        Assert.assertEquals(course.getc_name(),"Ad_web");
     }
@@ -33,6 +37,14 @@ public class ServiceTest extends Tester {
     public void test3(){
         String str = projectService.searchGroupers(1);
         System.out.println(str);
+//        Assert.assertEquals(course.getc_name(),"Ad_web");
+    }
+
+    @Test
+    public void test4(){
+//        String str = projectService.searchGroupers(1);
+        System.out.println("pid=1: "+fileMapper.searchMaxId(1));
+        System.out.println("pid=2: "+fileMapper.searchMaxId(2));
 //        Assert.assertEquals(course.getc_name(),"Ad_web");
     }
 }

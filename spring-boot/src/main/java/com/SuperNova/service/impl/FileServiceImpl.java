@@ -1,6 +1,7 @@
 package com.SuperNova.service.impl;
 
 import com.SuperNova.core.FileUtil;
+import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.FileMapper;
 import com.SuperNova.model.File;
 import com.SuperNova.service.FileService;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -31,12 +33,21 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     }
 
     @Override
-    public String addFile(File file) {
-        fileMapper.createFile(file);
-        return JSON.toJSONString(file);
+    public File getFile(int p_id, int f_id) {
+        File tmp = new File();
+        tmp.setP_id(p_id);
+        tmp.setF_id(f_id);
+        return fileMapper.selectByPrimaryKey(tmp);
     }
 
-
+    @Override
+    public File addFile(File file) {
+        int maxId = fileMapper.searchMaxId(file.getP_id());
+        file.setF_id(maxId+1);
+        file.setFile_URL(ProjectConstant.File_BASE+file.getP_id()+"\\"+getFileStorageName(file));
+        fileMapper.createFile(file);
+        return file;
+    }
 
     @Override
     public void deleteFile(int p_id, int f_id) {
@@ -44,15 +55,15 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
         tmp.setP_id(p_id);
         tmp.setF_id(f_id);
 
-        List<File> files = fileMapper.select(tmp);
-        String file_url = files.get(0).getFile_URL();
-
+        //删除数据库中的信息
         fileMapper.delete(tmp);
+        //删除磁盘中存储的文件
+        FileUtil.deleteStorageFile(ProjectConstant.File_BASE+p_id+"\\"+getFileStorageName(tmp));
     }
 
     @Override
-    public boolean saveFile(MultipartFile file,int p_id) {
-        return FileUtil.storageFile(file,p_id);
+    public boolean saveFile(MultipartFile file,File fileObj) {
+        return FileUtil.storageFile(file,fileObj.getP_id(),getFileStorageName(fileObj));
     }
 
     @Override
@@ -81,4 +92,14 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     public boolean saveImage(MultipartFile image,String imageName,String dir) {
         return FileUtil.storageImage(image,imageName,dir);
     }
+
+    @Override
+    public boolean downloadFile(File file, HttpServletResponse response) {
+        return FileUtil.downloadFile(response,file.getP_id(),getFileStorageName(file),file.getF_name());
+    }
+
+    private String getFileStorageName(File file){
+        return file.getF_id()+".file";
+    }
+
 }

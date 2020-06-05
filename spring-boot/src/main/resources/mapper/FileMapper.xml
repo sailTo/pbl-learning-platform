@@ -13,7 +13,7 @@
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <select id="searchMaxId" resultType="int">
-    select max(f_id) from file where p_id = #{p_id}
+    select IFNULL(max(f_id),0) from file where p_id = #{p_id}
   </select>
   <insert id="createFile">
     <selectKey keyProperty="f_id" resultType="java.lang.Integer" order="AFTER">

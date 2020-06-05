@@ -37,8 +37,14 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     private JSONObject splitPage(List<Course> courses, int pageIndex, int pageSize){
         List<User> teachers = new ArrayList<User>();
 
-        for (Course c:courses) {
-            User user = userMapper.selectByPrimaryKey(c.getT_id());
+//        for (Course c:courses) {
+//            User user = userMapper.selectByPrimaryKey(c.getT_id());
+//            user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
+//            teachers.add(user);
+//        }
+
+        for (int i=0;i<courses.size();i++){
+            User user = userMapper.selectByPrimaryKey(courses.get(i).getT_id());
             user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
             teachers.add(user);
         }

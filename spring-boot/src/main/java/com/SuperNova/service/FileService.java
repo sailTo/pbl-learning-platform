@@ -3,6 +3,7 @@ import com.SuperNova.model.File;
 import com.SuperNova.core.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -22,12 +23,18 @@ public interface FileService extends Service<File> {
      * @param file
      * @return json序列化的file对象
      */
-    String addFile(File file);
-
-
+    File addFile(File file);
 
     /**
-     * 从数据库中删除文件
+     * 获得file对象
+     * @param p_id
+     * @param f_id
+     * @return
+     */
+    File getFile(int p_id,int f_id);
+
+    /**
+     * 从数据库与磁盘中删除文件
      * @param p_id
      * @param f_id
      */
@@ -55,9 +62,17 @@ public interface FileService extends Service<File> {
     /**
      * 保存上传的文件
      * @param file
-     * @param p_id
+     * @param fileObj
      * @return True : 上传成功
      *         False: 上传失败
      */
-    boolean saveFile(MultipartFile file,int p_id);
+    boolean saveFile(MultipartFile file,File fileObj);
+
+    /**
+     * 下载文件
+     * @param file
+     * @param response
+     * @return
+     */
+    boolean downloadFile(File file, HttpServletResponse response);
 }

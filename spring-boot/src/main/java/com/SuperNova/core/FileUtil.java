@@ -2,7 +2,8 @@ package com.SuperNova.core;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 public class FileUtil {
 
@@ -24,15 +25,13 @@ public class FileUtil {
         }
     }
 
-    public static boolean storageFile(MultipartFile file,int p_id){
+    public static boolean storageFile(MultipartFile file,int p_id,String fileStorageName){
         try {
             if(file==null){
                 return false;
             }
 
-            String fileName = file.getOriginalFilename();
-
-            java.io.File targetFile = new java.io.File(ProjectConstant.File_BASE+p_id+"\\", fileName);
+            java.io.File targetFile = new java.io.File(ProjectConstant.File_BASE+p_id+"\\", fileStorageName);
             if(!targetFile.getParentFile().exists()){ //注意，判断父级路径是否存在
                 targetFile.getParentFile().mkdirs();
             }
@@ -45,6 +44,50 @@ public class FileUtil {
             return false;
         }
     }
+
+    public static boolean downloadFile(HttpServletResponse response, int p_id, String fileStorageName,String fileName){
+        File file = new File(ProjectConstant.File_BASE+p_id+"\\"+fileStorageName);
+        if (file.exists()) {
+            response.setContentType("application/force-download");// 设置强制下载不打开
+//            System.out.println(fileName);
+            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                OutputStream os = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        }
+
+        return false;
+    }
+
 
     public static boolean  storageImage(MultipartFile image,String imageName,String dir){
         try {
@@ -75,4 +118,5 @@ public class FileUtil {
             return false;
         }
     }
+
 }
