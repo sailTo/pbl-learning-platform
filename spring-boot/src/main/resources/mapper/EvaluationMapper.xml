@@ -12,6 +12,11 @@
   </resultMap>
   <select id="searchEvaluateByOther" resultType="double">
     select avg(grade) from evaluation
-    where p_id = #{p_id} and passive_s_id = #{s_id} and active_s_id != #{s_id}
+    where p_id = #{p_id} and passive_s_id = #{s_id}
+  </select>
+
+  <select id="getMyEvaluate" resultType="double">
+    select grade from evaluation
+    where p_id = #{p_id} and passive_s_id = #{u_id} and active_s_id != #{s_id}
   </select>
 </mapper>

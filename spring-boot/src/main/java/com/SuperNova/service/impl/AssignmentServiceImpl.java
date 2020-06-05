@@ -12,6 +12,7 @@ import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -79,7 +80,9 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         tmp.setP_id(p_id);
         tmp.setA_id(a_id);
         tmp.setUrge(true);
-        studentAssignmentMapper.updateByPrimaryKeySelective(tmp);
+        Condition condition = new Condition(StudentAssignment.class);
+        condition.createCriteria().andEqualTo("status",0);
+        studentAssignmentMapper.updateByConditionSelective(tmp,condition);
     }
 
     @Override
@@ -109,6 +112,7 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     @Override
     public String searchAssignmentUrge(int p_id, String s_id) {
         return JSON.toJSONString(studentAssignmentMapper.searchAssignmentUrge(p_id,s_id));
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.SuperNova.dao.EvaluationMapper;
 import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.model.Evaluation;
 import com.SuperNova.model.Project;
+import com.SuperNova.model.User;
 import com.SuperNova.service.EvaluationService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -68,5 +72,16 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
         tmp.setPassive_s_id(u_id);
         tmp.setGrade(grade);
         evaluationMapper.insertSelective(tmp);
+    }
+
+    @Override
+    public Map<String, Double> getMyEvaluate(int p_id, String s_id) {
+        Map<String,Double> res = new HashMap<>();
+        List<User> users = projectMapper.searchGroupers(p_id);
+        users.forEach(user -> {
+            double rate = evaluationMapper.getMyEvaluate(p_id,s_id,user.getU_id());
+            res.put(user.getU_id(),rate);
+        });
+        return res;
     }
 }

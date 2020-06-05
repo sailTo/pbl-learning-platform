@@ -39,5 +39,11 @@ public interface EvaluationMapper extends Mapper<Evaluation> {
 //     * @param grade
 //     */
 //    void evaluate(int p_id,int s_id,int u_id,double grade);
-
+    /**
+     * 获取学生评分，s_id为评价方，u_id为被评价方，若相等则为自评
+     * @param p_id
+     * @param s_id
+     * @param u_id
+     */
+    double getMyEvaluate(@Param("p_id")int p_id, @Param("s_id")String s_id, @Param("s_id")String u_id);
 }
