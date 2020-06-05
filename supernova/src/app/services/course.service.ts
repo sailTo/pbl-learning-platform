@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { Response } from '../models/generic-response';
 import { Course } from '../models/course';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +22,20 @@ export class CourseService {
 
   getCourses(type: string, pageIndex: number, pageSize: number) {
     const params = new HttpParams({ fromObject: {
+      // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+      pbl_token: String(), 
       pageIndex: String(pageIndex), 
       pageSize: String(pageSize)
     }});
-    return this.http.get<{courses: Course[], total: number}>(this.requestURL[type], {params});
+    return this.http.get<Response<{
+      courses: { 
+        list: Course[], 
+      }, 
+      teachers: {
+        list: User[], 
+      }
+      total: number
+    }>>(this.requestURL[type], {params});
   }
 
   getMyCourseNames() {

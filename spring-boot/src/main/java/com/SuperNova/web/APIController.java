@@ -1,7 +1,6 @@
 package com.SuperNova.web;
 
 import com.SuperNova.core.*;
-import com.SuperNova.dao.CourseMapper;
 import com.SuperNova.model.*;
 import com.SuperNova.service.*;
 import com.alibaba.fastjson.JSON;
@@ -141,7 +140,7 @@ public class APIController {
         int c_id = courseService.addCourse(courseObj);
         String imgURL = fileService.getImageURL(image,""+c_id);
         FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"\\");
-        courseObj.setimage_URL(imgURL);
+        courseObj.setImage_URL(imgURL);
         courseService.updateCourse(courseObj);
 
         JSONObject data = new JSONObject();

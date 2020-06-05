@@ -25,10 +25,6 @@ public class Course {
     /**
      * @return c_id
      */
-    public Integer getcId() {
-        return c_id;
-    }
-
     public Integer getC_id() {
         return c_id;
     }
@@ -36,10 +32,6 @@ public class Course {
     /**
      * @param c_id
      */
-    public void setcId(Integer c_id) {
-        this.c_id = c_id;
-    }
-
     public void setC_id(Integer c_id) {
         this.c_id = c_id;
     }
@@ -47,10 +39,6 @@ public class Course {
     /**
      * @return t_id
      */
-    public String gett_id() {
-        return t_id;
-    }
-
     public String getT_id() {
         return t_id;
     }
@@ -58,10 +46,6 @@ public class Course {
     /**
      * @param t_id
      */
-    public void sett_id(String t_id) {
-        this.t_id = t_id;
-    }
-
     public void setT_id(String t_id) {
         this.t_id = t_id;
     }
@@ -69,10 +53,6 @@ public class Course {
     /**
      * @return c_name
      */
-    public String getc_name() {
-        return c_name;
-    }
-
     public String getC_name() {
         return c_name;
     }
@@ -80,10 +60,6 @@ public class Course {
     /**
      * @param c_name
      */
-    public void setc_name(String c_name) {
-        this.c_name = c_name;
-    }
-
     public void setC_name(String c_name) {
         this.c_name = c_name;
     }
@@ -119,10 +95,6 @@ public class Course {
     /**
      * @return image_URL
      */
-    public String getimage_URL() {
-        return image_URL;
-    }
-
     public String getImage_URL() {
         return image_URL;
     }
@@ -130,10 +102,6 @@ public class Course {
     /**
      * @param image_URL
      */
-    public void setimage_URL(String image_URL) {
-        this.image_URL = image_URL;
-    }
-
     public void setImage_URL(String image_URL) {
         this.image_URL = image_URL;
     }

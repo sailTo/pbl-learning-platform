@@ -17,7 +17,7 @@ public class ServiceTest extends Tester {
     @Test
     public void test1(){
         Course course = courseService.findById(1);
-        Assert.assertEquals(course.getc_name(),"Ad_web");
+        Assert.assertEquals(course.getC_name(),"Ad_web");
     }
 
     @Test
