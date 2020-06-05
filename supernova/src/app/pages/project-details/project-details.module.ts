@@ -14,6 +14,12 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzListModule } from 'ng-zorro-antd/list';
+
+import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -21,40 +27,39 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
-import { NzCommentModule} from 'ng-zorro-antd/comment';
-import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 import { addDays, formatDistance } from 'date-fns';
-import {NzFormModule, NzInputModule, NzListComponent, NzListModule} from "ng-zorro-antd";
+
+
 @NgModule({
   declarations: [
-    ProjectDetailsComponent, 
-    TasksComponent, 
-    MembersComponent, 
-    DiscussionsComponent, 
-    FilesComponent, 
+    ProjectDetailsComponent,
+    TasksComponent,
+    MembersComponent,
+    DiscussionsComponent,
+    FilesComponent,
   ],
   imports: [
+    CommonModule,
+    FormsModule,
+    ProjectDetailsRoutingModule,
+    NzAvatarModule,
+    NzCardModule,
+    NzEmptyModule,
+    NzGridModule,
+    NzIconModule,
+    NzTabsModule,
+    NzTableModule,
+    NzDividerModule,
+    NzButtonModule,
+    NzSliderModule,
+    NzMessageModule,
+    NzModalModule,
     NzModalModule,
     NzInputModule,
     NzFormModule,
     NzListModule,
     NzCommentModule,
-    CommonModule,
-    FormsModule, 
-    ProjectDetailsRoutingModule, 
-    NzAvatarModule, 
-    NzCardModule, 
-    NzEmptyModule, 
-    NzGridModule, 
-    NzIconModule, 
-    NzTabsModule, 
-    NzTableModule, 
-    NzDividerModule, 
-    NzButtonModule, 
-    NzSliderModule, 
-    NzMessageModule, 
-    NzModalModule, 
-    AngularGanttScheduleTimelineCalendarModule, 
+    AngularGanttScheduleTimelineCalendarModule,
   ]
 })
 export class ProjectDetailsModule { }
