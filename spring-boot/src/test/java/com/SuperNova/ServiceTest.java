@@ -44,7 +44,7 @@ public class ServiceTest extends Tester {
     }
 
     @Test
-    public void test4(){
+    public void test5(){
         int res = projectService.studentCoursePID("S001",1);
         Assert.assertEquals(1,res);
 //        Assert.assertEquals(course.getc_name(),"Ad_web");

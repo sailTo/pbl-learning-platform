@@ -30,7 +30,7 @@ import { FilesComponent } from './components/files/files.component';
 import { addDays, formatDistance } from 'date-fns';
 
 
-import {NzFormModule, NzInputModule, NzListComponent, NzListModule} from "ng-zorro-antd";
+import { NzListComponent } from "ng-zorro-antd";
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 @NgModule({
@@ -44,11 +44,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
   imports: [
     NzSwitchModule,
     NzInputNumberModule,
-    NzModalModule,
-    NzInputModule,
-    NzFormModule,
-    NzListModule,
-    NzCommentModule,
     CommonModule,
     FormsModule,
     ProjectDetailsRoutingModule,
@@ -63,7 +58,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     NzButtonModule,
     NzSliderModule,
     NzMessageModule,
-    NzModalModule,
     NzModalModule,
     NzInputModule,
     NzFormModule,
