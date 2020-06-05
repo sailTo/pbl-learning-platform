@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -21,31 +22,31 @@ public class DiscussionServiceImpl extends AbstractService<Discussion> implement
     private DiscussionMapper discussionMapper;
 
     @Override
-    public String searchDiscussions(int p_id) {
+    public List<Discussion> searchDiscussions(int p_id) {
         Discussion tmp = new Discussion();
-        tmp.setp_id(p_id);
-        return JSON.toJSONString(discussionMapper.select(tmp));
+        tmp.setP_id(p_id);
+        return discussionMapper.select(tmp);
     }
 
     @Override
     public String searchDiscussion(int p_id, int d_id) {
         Discussion tmp = new Discussion();
-        tmp.setp_id(p_id);
-        tmp.setd_id(d_id);
+        tmp.setP_id(p_id);
+        tmp.setD_id(d_id);
         return JSON.toJSONString(discussionMapper.select(tmp));
     }
 
     @Override
     public int createDiscussion(Discussion discussion) {
         discussionMapper.addDiscussion(discussion);
-        return discussion.getd_id();
+        return discussion.getD_id();
     }
 
     @Override
     public void deleteDiscussion(int p_id, int d_id) {
         Discussion tmp = new Discussion();
-        tmp.setp_id(p_id);
-        tmp.setd_id(d_id);
+        tmp.setP_id(p_id);
+        tmp.setD_id(d_id);
         discussionMapper.delete(tmp);
     }
 

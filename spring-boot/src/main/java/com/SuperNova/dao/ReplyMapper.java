@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReplyMapper extends Mapper<Reply> {
     /**
-     * 搜索所有回复
+     * 搜索一个pj下所有回复
      * @param p_id
      * @return
      */

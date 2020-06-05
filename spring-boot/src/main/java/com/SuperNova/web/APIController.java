@@ -34,6 +34,24 @@ public class APIController {
     @Resource
     private ReplyService replyService;
 
+
+//    @CrossOrigin(origins = "*")
+//    @GetMapping("/searchDiscussionsTest")
+//    public Result searchDiscussionsTest(@RequestParam int p_id) {
+//        JSONObject data = new JSONObject();
+//
+//        data.put("discussions",discussionService.searchDiscussions(p_id));
+//        return ResultGenerator.genSuccessResult(data);
+//    }
+
+//    @CrossOrigin(origins = "*")
+//    @GetMapping("/searchReplyByDidTest")
+//    public Result searchReplyByDidTest(@RequestParam int d_id) {
+//        JSONObject data = new JSONObject();
+//        data.put("replies",replyService.searchRepliseByDid(d_id));
+//        return ResultGenerator.genSuccessResult(data);
+//    }
+
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
     public Result searchMyCourses(@RequestParam String pbl_token) {
@@ -417,9 +435,9 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @GetMapping("/searchReply")
     public Result searchReply(@RequestParam String pbl_token,
-                              @RequestParam Integer p_id) {
+                              @RequestParam Integer d_id) {
         JSONObject data = new JSONObject();
-        data.put("replies",replyService.searchReplise(p_id));
+        data.put("replies",replyService.searchReplise(d_id));
         return ResultGenerator.genSuccessResult(data);
     }
 

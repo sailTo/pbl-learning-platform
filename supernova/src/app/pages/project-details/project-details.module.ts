@@ -21,9 +21,10 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
-
+import { NzCommentModule} from 'ng-zorro-antd/comment';
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
-
+import { addDays, formatDistance } from 'date-fns';
+import {NzFormModule, NzInputModule, NzListComponent, NzListModule} from "ng-zorro-antd";
 @NgModule({
   declarations: [
     ProjectDetailsComponent, 
@@ -33,6 +34,11 @@ import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedu
     FilesComponent, 
   ],
   imports: [
+    NzModalModule,
+    NzInputModule,
+    NzFormModule,
+    NzListModule,
+    NzCommentModule,
     CommonModule,
     FormsModule, 
     ProjectDetailsRoutingModule, 

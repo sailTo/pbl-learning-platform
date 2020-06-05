@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -21,8 +22,10 @@ public class ReplyServiceImpl extends AbstractService<Reply> implements ReplySer
     private ReplyMapper replyMapper;
 
     @Override
-    public String searchReplise(int p_id) {
-        return JSON.toJSONString(replyMapper.searchReplise(p_id));
+    public List<Reply> searchReplise(int d_id) {
+        Reply reply = new Reply();
+        reply.setD_id(d_id);
+        return replyMapper.select(reply);
     }
 
     @Override
@@ -33,7 +36,7 @@ public class ReplyServiceImpl extends AbstractService<Reply> implements ReplySer
     @Override
     public int createReply(Reply reply) {
         replyMapper.createReply(reply);
-        return reply.getr_id();
+        return reply.getR_id();
     }
 
     @Override

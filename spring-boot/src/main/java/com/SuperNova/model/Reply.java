@@ -1,5 +1,7 @@
 package com.SuperNova.model;
 
+import org.apache.ibatis.javassist.runtime.Desc;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ public class Reply {
     @Column(name = "u_id")
     private String u_id;
 
+    @OrderBy("Desc")
     private Date time;
 
     private String content;
@@ -21,10 +24,6 @@ public class Reply {
     /**
      * @return r_id
      */
-    public Integer getr_id() {
-        return r_id;
-    }
-
     public Integer getR_id() {
         return r_id;
     }
@@ -32,10 +31,6 @@ public class Reply {
     /**
      * @param r_id
      */
-    public void setr_id(Integer r_id) {
-        this.r_id = r_id;
-    }
-
     public void setR_id(Integer r_id) {
         this.r_id = r_id;
     }
@@ -43,10 +38,6 @@ public class Reply {
     /**
      * @return d_id
      */
-    public Integer getd_id() {
-        return d_id;
-    }
-
     public Integer getD_id() {
         return d_id;
     }
@@ -54,10 +45,6 @@ public class Reply {
     /**
      * @param d_id
      */
-    public void setd_id(Integer d_id) {
-        this.d_id = d_id;
-    }
-
     public void setD_id(Integer d_id) {
         this.d_id = d_id;
     }
@@ -65,10 +52,6 @@ public class Reply {
     /**
      * @return u_id
      */
-    public String getu_id() {
-        return u_id;
-    }
-
     public String getU_id() {
         return u_id;
     }
@@ -76,10 +59,6 @@ public class Reply {
     /**
      * @param u_id
      */
-    public void setu_id(String u_id) {
-        this.u_id = u_id;
-    }
-
     public void setU_id(String u_id) {
         this.u_id = u_id;
     }

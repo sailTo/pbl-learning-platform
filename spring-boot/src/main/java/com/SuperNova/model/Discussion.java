@@ -21,10 +21,6 @@ public class Discussion {
     /**
      * @return d_id
      */
-    public Integer getd_id() {
-        return d_id;
-    }
-
     public Integer getD_id() {
         return d_id;
     }
@@ -32,10 +28,6 @@ public class Discussion {
     /**
      * @param d_id
      */
-    public void setd_id(Integer d_id) {
-        this.d_id = d_id;
-    }
-
     public void setD_id(Integer d_id) {
         this.d_id = d_id;
     }
@@ -43,10 +35,6 @@ public class Discussion {
     /**
      * @return p_id
      */
-    public Integer getp_id() {
-        return p_id;
-    }
-
     public Integer getP_id() {
         return p_id;
     }
@@ -54,10 +42,6 @@ public class Discussion {
     /**
      * @param p_id
      */
-    public void setp_id(Integer p_id) {
-        this.p_id = p_id;
-    }
-
     public void setP_id(Integer p_id) {
         this.p_id = p_id;
     }
@@ -65,10 +49,6 @@ public class Discussion {
     /**
      * @return u_id
      */
-    public String getu_id() {
-        return u_id;
-    }
-
     public String getU_id() {
         return u_id;
     }
@@ -76,10 +56,6 @@ public class Discussion {
     /**
      * @param u_id
      */
-    public void setu_id(String u_id) {
-        this.u_id = u_id;
-    }
-
     public void setU_id(String u_id) {
         this.u_id = u_id;
     }

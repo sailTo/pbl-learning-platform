@@ -2,6 +2,8 @@ package com.SuperNova.service;
 import com.SuperNova.model.Discussion;
 import com.SuperNova.core.Service;
 
+import java.util.List;
+
 
 /**
  * Created by Chongli on 2020/05/14.
@@ -13,7 +15,7 @@ public interface DiscussionService extends Service<Discussion> {
      * @param p_id
      * @return
      */
-    String searchDiscussions(int p_id);
+    List<Discussion> searchDiscussions(int p_id);
 
     /**
      * 搜索项目讨论

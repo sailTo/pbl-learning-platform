@@ -2,17 +2,19 @@ package com.SuperNova.service;
 import com.SuperNova.model.Reply;
 import com.SuperNova.core.Service;
 
+import java.util.List;
+
 
 /**
  * Created by Chongli on 2020/05/14.
  */
 public interface ReplyService extends Service<Reply> {
     /**
-     * 搜索所有回复
-     * @param p_id
+     * 搜索一个讨论下所有回复
+     * @param d_id
      * @return
      */
-    String searchReplise(int p_id);
+    List<Reply> searchReplise(int d_id);
 
     /**
      * 搜索回复
