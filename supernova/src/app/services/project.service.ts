@@ -12,15 +12,19 @@ export class ProjectService {
     private http: HttpClient
   ) { }
 
-  findProjectsByCourseId(courseId: number, 
+  findProjectsByCourseId(courseId: number,
     // pageIndex: number, pageSize: number
   ) {
-    const params = new HttpParams({ fromObject: {
-      courseId: String(courseId), 
-      // pageIndex: String(pageIndex), 
-      // pageSize: String(pageSize)
-    }});
-    return this.http.get<{project_take: number, projects: Project[]}>('/api/searchProject', { params });
+    const params = new HttpParams({
+      fromObject: {
+        // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        pbl_token: String(),
+        c_id: String(courseId),
+        // pageIndex: String(pageIndex), 
+        // pageSize: String(pageSize)
+      }
+    });
+    return this.http.get<{ project_take: number, projects: Project[] }>('/api/searchProject', { params });
   }
 
   // getProjectById(projectId: number) {
