@@ -11,6 +11,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzMessageModule } from "ng-zorro-antd/message";
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
@@ -37,6 +39,8 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     NzButtonModule, 
     NzTagModule, 
     NzStatisticModule, 
+    NzModalModule, 
+    NzMessageModule, 
   ], 
 })
 export class CoursesModule { }
