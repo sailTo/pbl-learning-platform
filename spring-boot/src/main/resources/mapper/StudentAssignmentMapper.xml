@@ -12,10 +12,11 @@
     <result column="urge" jdbcType="BIT" property="urge" />
   </resultMap>
   <select id="searchDoneStatus" resultType="Boolean">
-    select status
-    from student_assignment
-    where p_id = #{p_id} and u_id = #{s_id}
-    order by a_id
+      select a_id from assignment
+#     select status
+#     from student_assignment
+#     where p_id = #{p_id} and u_id = #{s_id}
+#     order by a_id
   </select>
   <select id="searchAssignmentUrge" resultType="Boolean">
     select urge

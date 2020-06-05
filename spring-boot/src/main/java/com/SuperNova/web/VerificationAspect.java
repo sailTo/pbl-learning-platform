@@ -21,7 +21,7 @@ public class VerificationAspect {
     private UserService userService;
 
     //拦截条件
-    @Pointcut("within(com.SuperNova.web.APIController)&&!within(com.SuperNova.web.AccountController)")
+    @Pointcut("!within(com.SuperNova.web.APIController)&&within(com.SuperNova.web.AccountController)")
     public void log() {}
 
     @Around("log()")
