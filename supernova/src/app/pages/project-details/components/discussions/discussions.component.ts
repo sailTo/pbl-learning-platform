@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {DiscussionService} from "../../../../services/discussion.service";
 import {Discussion} from "../../../../models/discussion";
 import {User} from "../../../../models/user";
+import {Reply} from "../../../../models/reply";
 
 @Component({
   selector: 'app-discussions',
@@ -14,6 +15,8 @@ import {User} from "../../../../models/user";
 export class DiscussionsComponent implements OnInit {
   p_id: number;
   groupers: User[];
+  u_id:string;
+  u_name:string;
   // isVisible:boolean[];
   num:number;
   likes:number[];
@@ -44,7 +47,7 @@ export class DiscussionsComponent implements OnInit {
         // })();
         this.likes = Array.apply(0,{length:this.num});
         this.dislikes = Array.apply(0,{length:this.num});
-        this.isVisible = Array.apply(false,{length:this.num});
+        // this.isVisible = Array.apply(false,{length:this.num});
 
         // this.likes = (() => {
         //   let likes = [];
@@ -60,6 +63,11 @@ export class DiscussionsComponent implements OnInit {
         // })();
       }
     );
+
+    this.u_id = 'S001';
+    this.u_name = this.groupers.find(
+      (grouper) => grouper.u_id == this.u_id
+    )['u_name']
   }
 
   //方法复杂，怀疑会有bug
@@ -68,19 +76,22 @@ export class DiscussionsComponent implements OnInit {
       this.num = 0;
       this.discussions = data.data.discussions;
       // console.log(this.discussions);
-      this.discussions.forEach((discussion) => {
+      this.discussions.forEach((discussion, index) => {
         // map u_id in file to u_name
         discussion['u_name'] = this.groupers.find(
           (grouper) => grouper.u_id == discussion.u_id
         )['u_name'];
         discussion['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
         // add key to each file
-        discussion['key'] = this.num++;
+        discussion['key'] = index;
         discussion['time_for_show'] = formatDistance(discussion['time'], new Date());
         this.discussionService.getReplyByDid(discussion.d_id).subscribe((data) => {
           data.data.replies.forEach((reply) => {
+            reply['u_name'] = this.groupers.find(
+              (grouper) => grouper.u_id == reply['u_id']
+            )['u_name'];
             reply['time_for_show'] = formatDistance(reply['time'], new Date());
-            reply['key'] = this.num++;
+            reply['key'] = index;
             reply['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
           });
           discussion['replies'] = data.data.replies;
@@ -109,57 +120,64 @@ export class DiscussionsComponent implements OnInit {
   inputValue = '';
 
 
-  reply2Discussion(d_id): void{
-    let i = 0;
-    for (;i<this.discussions.length ; i++){
-      if (this.discussions[i].d_id == d_id)
-        break;
-    }
-    this.inputValue = "reply to "
-  }
-  reply2Reply(d_id, u_id): void{
-    this.inputValue = "reply to "
-  }
-
-  handleSubmit(): void {
-    this.submitting = true;
-    const content = this.inputValue;
-    this.inputValue = '';
-    setTimeout(() => {
-      this.submitting = false;
-      this.data = [
-        ...this.data,
-        {
-          ...this.user,
-          content,
-          datetime: new Date(),
-          displayTime: formatDistance(new Date(), new Date())
-        }
-      ].map(e => {
-        return {
-          ...e,
-          displayTime: formatDistance(new Date(), e.datetime)
-        };
-      });
-    }, 800);
-  }
-
-
   isVisible = false;
   isConfirmLoading = false;
 
-  // constructor() {}
-
-  showModal(): void {
+  //回复的讨论的序号
+  reply_d_id:number;
+  //点击回复的讨论在数组中的信号
+  reply_discussion_index:number;
+  //点击回复的人名
+  reply_to_u_name:string;
+  showModal(u_name, d_id, index): void {
+    this.reply_d_id=d_id;
+    this.reply_to_u_name=u_name;
+    this.reply_discussion_index = index;
     this.isVisible = true;
   }
 
+
   handleOk(): void {
+    this.inputValue = 'Reply '+this.reply_to_u_name+': ' + this.inputValue ;
     this.isConfirmLoading = true;
+    let s = {};
+    s["d_id"] = this.reply_d_id;
+    s["u_id"] = this.u_id;
+    s["u_name"] = this.u_name;
+    s["content"] = this.inputValue;
+    s['key'] = this.reply_discussion_index;
+    s['time_for_show'] = formatDistance( new Date(), new Date());
+    // s['key'] = this.num++;
+    s['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+    this.discussions[this.reply_discussion_index]["replies"].push(s);
+
     setTimeout(() => {
       this.isVisible = false;
       this.isConfirmLoading = false;
-    }, 3000);
+    }, 100);
+    this.submitting = true;
+    const content = this.inputValue;
+    this.inputValue = '';
+
+    //此处需要添加向后台请求添加数据的http请求
+
+    // setTimeout(() => {
+    //   this.submitting = false;
+    //   this.data = [
+    //     ...this.data,
+    //     {
+    //       ...this.user,
+    //       content,
+    //       datetime: new Date(),
+    //       displayTime: formatDistance(new Date(), new Date())
+    //     }
+    //   ].map(e => {
+    //     return {
+    //       ...e,
+    //       displayTime: formatDistance(new Date(), e.datetime)
+    //     };
+    //   });
+    // }, 800);
   }
 
   handleCancel(): void {

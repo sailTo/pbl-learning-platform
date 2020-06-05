@@ -14,27 +14,15 @@
       <!--<i nz-tooltip nzTitle="Dislike" nz-icon nzType="dislike" [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'" (click)="dislike()"></i>-->
       <!--<span class="count dislike">{{ dislikes }}</span>-->
     <!--</nz-comment-action>-->
-    <nz-comment-action onclick="">Reply to</nz-comment-action>
-    <nz-comment [(nzVisible)]="isVisible[comment.key]">
-      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
-      <nz-comment-content>
-        <nz-form-item>
-          <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
-        </nz-form-item>
-        <nz-form-item>
-          <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
-            Add Comment
-          </button>
-        </nz-form-item>
-      </nz-comment-content>
-    </nz-comment>
+    <nz-comment-action><span (click)="showModal(comment.u_name, comment.d_id,comment.key)">Reply to</span></nz-comment-action>
+    <nz-divider></nz-divider>
     <ng-container *ngIf="comment.hasOwnProperty('replies') && comment.replies != null">
       <ng-template ngFor let-reply [ngForOf]="comment.replies">
         <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: reply }"> </ng-template>
       </ng-template>
     </ng-container>
   </nz-comment>
-  <nz-divider></nz-divider>
+
 
 </ng-template>
 
@@ -44,25 +32,25 @@
   </ng-template>
 </nz-list>
 
-<nz-comment>
-  <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
-  <nz-comment-content>
-    <nz-form-item>
-      <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
-    </nz-form-item>
-    <nz-form-item>
-      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
-        Add Comment
-      </button>
-    </nz-form-item>
-  </nz-comment-content>
-</nz-comment>
+<!--<nz-comment>-->
+  <!--<nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>-->
+  <!--<nz-comment-content>-->
+    <!--<nz-form-item>-->
+      <!--<textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>-->
+    <!--</nz-form-item>-->
+    <!--<nz-form-item>-->
+      <!--<button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">-->
+        <!--Add Comment-->
+      <!--</button>-->
+    <!--</nz-form-item>-->
+  <!--</nz-comment-content>-->
+<!--</nz-comment>-->
 </div>
 <ng-template #elseBlock><nz-empty></nz-empty></ng-template>
 
-<button nz-button nzType="primary" (click)="showModal()">
-  <span>Show Modal</span>
-</button>
+<!--<button nz-button nzType="primary" (click)="showModal()">-->
+  <!--<span>Show Modal</span>-->
+<!--</button>-->
 
 <nz-modal
   [(nzVisible)]="isVisible"
@@ -72,15 +60,14 @@
   (nzOnCancel)="handleCancel()"
 >
   <ng-template #modalTitle>
-    Add Reply
+    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar> Reply To {{reply_to_u_name}}
   </ng-template>
-
   <ng-template #modalContent>
-    <nz-comment>
-      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+    <!--<nz-comment>-->
+      <!--<nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>-->
       <nz-comment-content>
         <nz-form-item>
-          <textarea [(ngModel)]="inputValue" nz-input rows="5"></textarea>
+          <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
         </nz-form-item>
         <!--<nz-form-item>-->
           <!--<button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">-->
@@ -88,12 +75,12 @@
           <!--</button>-->
         <!--</nz-form-item>-->
       </nz-comment-content>
-    </nz-comment>
+    <!--</nz-comment>-->
   </ng-template>
 
   <ng-template #modalFooter>
     <!--<span>Modal Footer: </span>-->
-    <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
-    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading" [nzLoading]="submitting" [disabled]="!inputValue" >Add Comment</button>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading" [disabled]="!inputValue" >Add Comment</button>
   </ng-template>
 </nz-modal>

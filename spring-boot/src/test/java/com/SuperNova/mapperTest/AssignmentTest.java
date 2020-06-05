@@ -2,8 +2,10 @@ package com.SuperNova.mapperTest;
 
 import com.SuperNova.Tester;
 import com.SuperNova.dao.AssignmentMapper;
+import com.SuperNova.dao.StudentAssignmentMapper;
 import com.SuperNova.model.Assignment;
 import com.SuperNova.model.DoneInformation;
+import com.SuperNova.model.StudentAssignment;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +15,8 @@ import java.util.List;
 public class AssignmentTest extends Tester {
     @Resource
     private AssignmentMapper assignmentMapper;
+    @Resource
+    private StudentAssignmentMapper studentAssignmentMapper;
     @Test
 //    @Rollback(false)
     public void test1(){
@@ -31,5 +35,11 @@ public class AssignmentTest extends Tester {
     public void test2(){
         List<DoneInformation> result = assignmentMapper.countAssignmentDone(1);
         Assert.assertEquals(1,result.size());
+    }
+
+    @Test
+    public void test3(){
+        List<Boolean> result = studentAssignmentMapper.searchAssignmentUrge(1,"S001");
+        Assert.assertEquals(2,result.size());
     }
 }

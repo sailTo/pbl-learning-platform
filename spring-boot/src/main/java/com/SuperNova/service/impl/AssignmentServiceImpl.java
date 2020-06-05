@@ -75,17 +75,12 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Override
     public String searchDoneStatus(int p_id, String s_id) {
-        StudentAssignment tmp = new StudentAssignment();
-        tmp.setP_id(p_id);
-        tmp.setU_id(s_id);
-        tmp.setStatus(true);//表示已完成
-        return JSON.toJSONString(studentAssignmentMapper.select(tmp));
+        return JSON.toJSONString(studentAssignmentMapper.searchDoneStatus(p_id,s_id));
     }
 
     @Override
     public String searchAssignmentUrge(int p_id, String s_id) {
-
-        return null;
+        return JSON.toJSONString(studentAssignmentMapper.searchAssignmentUrge(p_id,s_id));
     }
 
     @Override
