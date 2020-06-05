@@ -2,7 +2,6 @@ package com.SuperNova.web;
 
 import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.core.Result;
-import com.SuperNova.core.ResultCode;
 import com.SuperNova.core.ResultGenerator;
 import com.SuperNova.model.User;
 import com.SuperNova.service.UserService;

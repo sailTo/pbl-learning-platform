@@ -1,7 +1,6 @@
 package com.SuperNova.web;
 
 import com.SuperNova.core.*;
-import com.SuperNova.dao.CourseMapper;
 import com.SuperNova.model.*;
 import com.SuperNova.service.*;
 import com.alibaba.fastjson.JSON;

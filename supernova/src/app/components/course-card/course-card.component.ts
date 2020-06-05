@@ -19,9 +19,9 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
     @ViewChild('actionResume') resume: TemplateRef<void>;
 
     BADGE_STATUS = {
-        'unpublished': 'default', 
-        'published': 'success', 
-        'deleted': 'error', 
+        1: 'default', 
+        2: 'success', 
+        0: 'error', 
     }
 
     // 课程card下的控制按键列表
@@ -46,9 +46,9 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
 
     initControlPanel(): void {
         const PANEL_STATUS = {
-            'unpublished': [this.edit, this.publish], 
-            'published': [this.info, this.delete], 
-            'deleted': [this.info, this.resume], 
+            1: [this.edit, this.publish], 
+            2: [this.info, this.delete], 
+            0: [this.info, this.resume], 
         }
 
         this.STUDENT_MY_PANEL = [this.info];

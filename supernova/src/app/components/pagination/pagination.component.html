@@ -4,10 +4,10 @@
     [nzTotal]="total" 
     nzShowQuickJumper 
     nzResponsive 
-    nzHideOnSinglePage
     [nzShowTotal]="rangeTemplate" 
     (nzPageIndexChange)="pageIndexChange.emit($event)"
     >
+    <!--  nzHideOnSinglePage -->
 </nz-pagination>
 
 <ng-template #rangeTemplate let-range="range" let-total>

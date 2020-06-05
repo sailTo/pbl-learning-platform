@@ -1,8 +1,7 @@
 package com.SuperNova.service;
 import com.SuperNova.model.Course;
 import com.SuperNova.core.Service;
-
-import java.util.List;
+import com.alibaba.fastjson.JSONObject;
 
 
 /**
@@ -15,7 +14,7 @@ public interface CourseService extends Service<Course> {
      * @param u_id
      * @return
      */
-    String getMyCourses(String u_id,int pageIndex,int pageSize);
+    JSONObject getMyCourses(String u_id, int pageIndex, int pageSize);
 
     /**
      * 更新课程相关信息
@@ -42,7 +41,7 @@ public interface CourseService extends Service<Course> {
      * @param u_id
      * @return
      */
-    String searchOtherCourses(String u_id,int pageIndex,int pageSize);
+    JSONObject searchOtherCourses(String u_id, int pageIndex, int pageSize);
 
     /**
      * 修改课程状态(删除：-1,未发布：0,已发布：1)
@@ -55,7 +54,7 @@ public interface CourseService extends Service<Course> {
      * 获取所有课程(分页)
      * @return
      */
-    String searchAllCourses(int pageIndex,int pageSize);
+    JSONObject searchAllCourses(int pageIndex, int pageSize);
 
     /**
      *

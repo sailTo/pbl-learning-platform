@@ -9,7 +9,6 @@ import com.SuperNova.model.StudentCourse;
 import com.SuperNova.model.User;
 import com.SuperNova.service.CourseService;
 import com.SuperNova.core.AbstractService;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,7 +34,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     private UserMapper userMapper;
 
 
-    private String splitPage(List<Course> courses,int pageIndex,int pageSize){
+    private JSONObject splitPage(List<Course> courses, int pageIndex, int pageSize){
         List<User> teachers = new ArrayList<User>();
 
         for (Course c:courses) {
@@ -51,11 +50,11 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
         data.put("courses",coursePageInfo);
         data.put("teachers",teachersPageInfo);
         data.put("total",teachers.size());
-        return data.toJSONString();
+        return data;
     }
 
     @Override
-    public String getMyCourses(String u_id,int pageIndex,int pageSize) {
+    public JSONObject getMyCourses(String u_id, int pageIndex, int pageSize) {
         List<Course> courses = courseMapper.getMyCourses(u_id);
         return splitPage(courses,pageIndex,pageSize);
     }
@@ -80,7 +79,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     }
 
     @Override
-    public String searchOtherCourses(String u_id, int pageIndex, int pageSize) {
+    public JSONObject searchOtherCourses(String u_id, int pageIndex, int pageSize) {
         List<Course> courses = courseMapper.searchOtherCourses(u_id);
         return splitPage(courses,pageIndex,pageSize);
     }
@@ -94,7 +93,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     }
 
     @Override
-    public String searchAllCourses(int pageIndex,int pageSize) {
+    public JSONObject searchAllCourses(int pageIndex, int pageSize) {
         List<Course> courses = courseMapper.selectAll();
         return splitPage(courses,pageIndex,pageSize);
     }

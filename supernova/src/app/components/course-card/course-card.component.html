@@ -15,12 +15,12 @@
 
 <ng-template #avatarTemplate>
   <!-- <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
-  <nz-avatar [nzSrc]=course.t_image_URL></nz-avatar>
+  <nz-avatar [nzSrc]=course.teacher.image></nz-avatar>
 </ng-template>
 
 <ng-template #coverTemplate>
   <!-- <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /> -->
-  <img [alt]=course.c_name [src]=course.c_image_URL />
+  <img [alt]=course.c_name [src]=course.image_URL />
 </ng-template>
 
 <ng-template #actionJoin>

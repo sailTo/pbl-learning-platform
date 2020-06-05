@@ -3,16 +3,12 @@ package com.SuperNova.mapperTest;
 import com.SuperNova.Tester;
 import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.UserMapper;
-import com.SuperNova.model.Course;
 import com.SuperNova.model.User;
-import com.SuperNova.service.CourseService;
 import com.SuperNova.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 public class UserTest extends Tester {
     @Resource
