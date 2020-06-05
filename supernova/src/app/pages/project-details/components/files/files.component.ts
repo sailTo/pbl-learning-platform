@@ -21,9 +21,9 @@ export class FilesComponent implements OnInit {
   isOkLoading = false;
 
   file = {
-    f_id: 4,
-    p_id: 4,
-    u_id: "S4",
+    f_id: 1,
+    p_id: 1,
+    u_id: "S001",
     f_name: '文件名称',
     description: '文件描述',
     file_URL: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',

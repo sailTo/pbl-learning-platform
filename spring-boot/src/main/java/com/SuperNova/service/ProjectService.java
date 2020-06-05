@@ -73,7 +73,7 @@ public interface ProjectService extends Service<Project> {
      * @param p_id
      * @return
      */
-    String searchGroupers(int p_id);
+    Object searchGroupers(int p_id);
 
     /**
      * 获取项目的组长s_id

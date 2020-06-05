@@ -1,6 +1,6 @@
 <nz-card>
     <nz-card-tab>
-        <nz-tabset nzLinkRouter nzSize="large" [nzTabBarExtraContent]="extraTemplate">
+        <nz-tabset nzLinkRouter nzLinkExact=false nzSize="large" [nzTabBarExtraContent]="extraTemplate">
             <nz-tab>
                 <a nz-tab-link [routerLink]="['tasks']" [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="unordered-list"></i>任务列表

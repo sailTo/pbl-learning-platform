@@ -11,17 +11,6 @@ import { Project } from 'src/app/models/project';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  project = {
-    p_id: 2,
-    c_id: 4,
-    p_name: '项目名称',
-    description: '项目描述描述描述',
-    grading_status: false, // true 表示已评分，false 未评分
-    teacher_grade_ratio: 0.2,
-    self_grade_ratio: 0.4,
-    mutual_grade_ratio: 0.4,
-  }
-
   optionList: { label: string, value: number }[];
   selectedValue: { label: string, value: number };
 
@@ -70,12 +59,6 @@ export class ProjectsComponent implements OnInit {
         }
       );
     });
-    // this.optionList = [
-    //   {label: '测试课程1', value: 1},
-    //   {label: '测试课程2测试课程2测试课程2测试课程2', value: 2},
-    //   {label: '测试课程3', value: 3},
-    //   {label: '测试课程4', value: 4},
-    // ];
   }
 
   // tslint:disable-next-line:no-any
@@ -92,12 +75,6 @@ export class ProjectsComponent implements OnInit {
       this.projectTaking = response.data.project_take;
       this.projects = response.data.projects;
     })
-    // this.projectTaking = 1;
-    // for (let i = 0; i < 10; i++) {
-    //   const project = { ...this.project };
-    //   project.p_id = i;
-    //   this.projects.push(project);
-    // }
   }
 
 }

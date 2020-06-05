@@ -26,15 +26,16 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('actionFileMgmt') fileMgmt: TemplateRef<void>;
 
   groupers: User[];
+  leaderId: string;
 
-  user = {
-    u_id: "S4",
-    type: 'S', 
-    u_name: '学生4', 
-    gender: 'M',
-    description: '学生4简介',
-    image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png', 
-  };
+  // user = {
+  //   u_id: "S4",
+  //   type: 'S', 
+  //   u_name: '学生4', 
+  //   gender: 'M',
+  //   description: '学生4简介',
+  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png', 
+  // };
 
   // card下的控制按键列表
   actions: TemplateRef<void>[] = [];
@@ -52,9 +53,9 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
 
   ngOnInit():void {
     // get groupers
-    // this.getGroupers();
+    this.getGroupers();
     this.actions = [];
-    this.groupers = [this.user, this.user, this.user];
+    // this.groupers = [this.user, this.user, this.user];
   }
 
   ngAfterViewInit(): void {
@@ -86,8 +87,9 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   getGroupers(): void {
-    this.userService.getGroupersByProjectId(this.project.p_id).subscribe((data) => {
-      this.groupers = data.groupers;
+    this.userService.getGroupersByProjectId(this.project.p_id).subscribe((response) => {
+      this.groupers = response.data.groupers;
+      this.leaderId = response.data.leader;
     })
   }
 

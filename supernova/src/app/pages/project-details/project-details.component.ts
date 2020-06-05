@@ -15,6 +15,7 @@ export class ProjectDetailsComponent implements OnInit {
   p_name: string;
 
   groupers: User[];
+  leaderId: string;
 
   user1 = {
     u_id: 'S001',
@@ -47,13 +48,14 @@ export class ProjectDetailsComponent implements OnInit {
     );
 
     // get groupers
-    // this.getGroupers();
-    this.groupers = [this.user1, this.user2];
+    this.getGroupers();
+    // this.groupers = [this.user1, this.user2];
   }
 
   getGroupers(): void {
-    this.userService.getGroupersByProjectId(this.p_id).subscribe((data) => {
-      this.groupers = data.groupers;
+    this.userService.getGroupersByProjectId(this.p_id).subscribe((response) => {
+      this.groupers = response.data.groupers;
+      this.leaderId = response.data.leader;
     })
   }
 

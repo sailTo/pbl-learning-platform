@@ -96,8 +96,8 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
-    public String searchGroupers(int p_id) {
-        return JSON.toJSONString(projectMapper.searchGroupers(p_id));
+    public Object searchGroupers(int p_id) {
+        return JSON.toJSON(projectMapper.searchGroupers(p_id));
     }
 
     @Override
