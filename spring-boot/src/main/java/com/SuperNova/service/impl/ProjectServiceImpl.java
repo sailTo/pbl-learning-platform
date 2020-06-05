@@ -39,10 +39,10 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
-    public String searchProject(int c_id) {
+    public Object searchProject(int c_id) {
         Project tmp = new Project();
-        tmp.setc_id(c_id);
-        return JSON.toJSONString(projectMapper.select(tmp));
+        tmp.setC_id(c_id);
+        return JSON.toJSON(projectMapper.select(tmp));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public int addProject(Project project, List<GradeSystem> grades) {
         projectMapper.addProject(project);
-        int p_id = project.getp_id();
+        int p_id = project.getP_id();
         int item_id = gradeSystemMapper.getMaxItemId(p_id);
         for (GradeSystem grade:grades) {
             grade.setP_id(p_id);
@@ -86,7 +86,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public int searchTotalNum(int p_id) {
         Project tmp = new Project();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         return projectMapper.selectCount(tmp);
     }
 

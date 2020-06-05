@@ -18,6 +18,8 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
@@ -27,12 +29,8 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
-import { addDays, formatDistance } from 'date-fns';
 
 
-import { NzListComponent } from "ng-zorro-antd";
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
 @NgModule({
   declarations: [
     ProjectDetailsComponent,
@@ -42,8 +40,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     FilesComponent,
   ],
   imports: [
-    NzSwitchModule,
-    NzInputNumberModule,
     CommonModule,
     FormsModule,
     ProjectDetailsRoutingModule,
@@ -63,6 +59,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
     NzFormModule,
     NzListModule,
     NzCommentModule,
+    NzSwitchModule,
+    NzInputNumberModule,
     AngularGanttScheduleTimelineCalendarModule,
   ]
 })

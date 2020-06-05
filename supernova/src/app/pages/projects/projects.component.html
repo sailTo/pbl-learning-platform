@@ -17,6 +17,7 @@
     <nz-select 
         [(ngModel)]="selectedValue" 
         [compareWith]="compareFn" 
+        [nzLoading]="selectLoading"
         (ngModelChange)="onChange($event)" 
         nzShowSearch
         nzAllowClear 

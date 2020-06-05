@@ -30,6 +30,8 @@ export class ProjectsComponent implements OnInit {
 
   numOfCardsARow: number = 4;
 
+  selectLoading: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
@@ -43,6 +45,8 @@ export class ProjectsComponent implements OnInit {
 
   getOptionList(): void {
     this.optionList = [];
+    this.selectLoading = true;
+
     this.courseService.getMyCourseNames().subscribe((response) => {
       response.data.courses.map((course) => {
         this.optionList.push({
@@ -50,6 +54,8 @@ export class ProjectsComponent implements OnInit {
           value: course.c_id,
         });
       });
+
+      this.selectLoading = false;
 
       // get param c_id if there is
       this.route.params.subscribe(
@@ -65,9 +71,9 @@ export class ProjectsComponent implements OnInit {
       );
     });
     // this.optionList = [
-    //   {label: '测试课程1', value: 1}, 
-    //   {label: '测试课程2测试课程2测试课程2测试课程2', value: 2}, 
-    //   {label: '测试课程3', value: 3}, 
+    //   {label: '测试课程1', value: 1},
+    //   {label: '测试课程2测试课程2测试课程2测试课程2', value: 2},
+    //   {label: '测试课程3', value: 3},
     //   {label: '测试课程4', value: 4},
     // ];
   }
@@ -82,16 +88,16 @@ export class ProjectsComponent implements OnInit {
       return;
     }
 
-    // this.projectService.findProjectsByCourseId(value.value).subscribe((data) => {
-    //   this.projectTaking = data.project_take;
-    //   this.projects = data.projects;
-    // })
-    this.projectTaking = 4;
-    for (let i = 0; i < 10; i++) {
-      const project = { ...this.project };
-      project.p_id = i;
-      this.projects.push(project);
-    }
+    this.projectService.findProjectsByCourseId(value.value).subscribe((response) => {
+      this.projectTaking = response.data.project_take;
+      this.projects = response.data.projects;
+    })
+    // this.projectTaking = 1;
+    // for (let i = 0; i < 10; i++) {
+    //   const project = { ...this.project };
+    //   project.p_id = i;
+    //   this.projects.push(project);
+    // }
   }
 
 }

@@ -4,7 +4,6 @@ import com.SuperNova.dao.EvaluationMapper;
 import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.dao.StudentGradeMapper;
 import com.SuperNova.model.Evaluation;
-import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.model.StudentGrade;
 import com.SuperNova.service.StudentGradeService;
@@ -50,7 +49,7 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         List<StudentGrade> grades = studentGradeMapper.select(studentGrade);
         Project project = projectMapper.selectByPrimaryKey(p_id);
 
-        if(project.getteacher_grade_ratio()>0&&grades.size()==0){
+        if(project.getTeacher_grade_ratio()>0&&grades.size()==0){
             return null;
         }
 
@@ -58,10 +57,10 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         evaluation.setPassive_s_id(s_id);
         evaluation.setP_id(p_id);
         Project tmp = new Project();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
 
         //这里选出来评分人包括了自己,可能会有bug
-        if(project.getmutual_grade_ratio() > 0 && evaluationMapper.selectCount(evaluation) < projectMapper.selectCount(tmp)-1){
+        if(project.getMutual_grade_ratio() > 0 && evaluationMapper.selectCount(evaluation) < projectMapper.selectCount(tmp)-1){
             return null;
         }
 
@@ -72,7 +71,7 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
 
         double gradeBySelf = evaluationMapper.select(evaluation)==null ? -1 : evaluation.getGrade();
 
-        if(project.getself_grade_ratio()>0 && gradeBySelf < 0){
+        if(project.getSelf_grade_ratio()>0 && gradeBySelf < 0){
             return null;
         }
 
@@ -83,7 +82,7 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
             gradeByTeacher += grade.getGrade();
         }
 
-        double totalGrade = gradeByTeacher*project.getteacher_grade_ratio()+gradeByOther*project.getmutual_grade_ratio()+gradeBySelf*project.getself_grade_ratio();
+        double totalGrade = gradeByTeacher*project.getTeacher_grade_ratio()+gradeByOther*project.getMutual_grade_ratio()+gradeBySelf*project.getSelf_grade_ratio();
 
         return ""+totalGrade;
     }

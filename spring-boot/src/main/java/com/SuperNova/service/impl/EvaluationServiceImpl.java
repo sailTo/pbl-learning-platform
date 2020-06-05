@@ -7,7 +7,6 @@ import com.SuperNova.model.Project;
 import com.SuperNova.model.User;
 import com.SuperNova.service.EvaluationService;
 import com.SuperNova.core.AbstractService;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,7 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
         JSONObject data = new JSONObject();
 
         Project project = new Project();
-        project.setp_id(p_id);
+        project.setP_id(p_id);
         data.put("totalNum",projectMapper.selectCount(project));
 
         Evaluation evaluation = new Evaluation();

@@ -41,8 +41,8 @@ export class ProjectDetailsComponent implements OnInit {
     // get params
     this.route.queryParams.subscribe(
       (params: {p_id: string, p_name: string}) => {
-        this.p_id = 1;
-        this.p_name = "pbl_learning";
+        this.p_id = Number(params.p_id);
+        this.p_name = params.p_name;
       }
     );
 
@@ -52,7 +52,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getGroupers(): void {
-    this.userService.getGroupersByProjectId(Number(this.p_id)).subscribe((data) => {
+    this.userService.getGroupersByProjectId(this.p_id).subscribe((data) => {
       this.groupers = data.groupers;
     })
   }

@@ -26,7 +26,7 @@ export class ProjectService {
         // pageSize: String(pageSize)
       }
     });
-    return this.http.get<{ project_take: number, projects: Project[] }>('/api/searchProject', { params });
+    return this.http.get<Response<{ projects: Project[], project_take: number, type: string }>>('/api/searchProject', { params });
   }
 
   getProject(projectId: number) {

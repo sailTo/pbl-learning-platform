@@ -24,7 +24,7 @@ public interface ProjectService extends Service<Project> {
      * @param c_id
      * @return
      */
-    String searchProject(int c_id);
+    Object searchProject(int c_id);
 
     /**
      * 删除指定项目

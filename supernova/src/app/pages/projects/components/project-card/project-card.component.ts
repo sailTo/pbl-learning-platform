@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnInit, OnChanges, ChangeDetectorRef } from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -17,6 +17,14 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input() taken: boolean;
   @Input() canTake: boolean;
 
+  @ViewChild('actionJoin') join: TemplateRef<void>;
+  @ViewChild('actionInfo') info: TemplateRef<void>;
+  @ViewChild('actionEdit') edit: TemplateRef<void>;
+  @ViewChild('actionMember') member: TemplateRef<void>;
+  @ViewChild('actionDiscussion') discussion: TemplateRef<void>;
+  @ViewChild('actionDelete') delete: TemplateRef<void>;
+  @ViewChild('actionFileMgmt') fileMgmt: TemplateRef<void>;
+
   groupers: User[];
 
   user = {
@@ -27,14 +35,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     description: '学生4简介',
     image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png', 
   };
-
-  @ViewChild('actionJoin') join: TemplateRef<void>;
-  @ViewChild('actionInfo') info: TemplateRef<void>;
-  @ViewChild('actionEdit') edit: TemplateRef<void>;
-  @ViewChild('actionMember') member: TemplateRef<void>;
-  @ViewChild('actionDiscussion') discussion: TemplateRef<void>;
-  @ViewChild('actionDelete') delete: TemplateRef<void>;
-  @ViewChild('actionFileMgmt') fileMgmt: TemplateRef<void>;
 
   // card下的控制按键列表
   actions: TemplateRef<void>[] = [];
@@ -47,16 +47,19 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   constructor(
     private message: NzMessageService, 
     private userService: UserService, 
+    private changeDectect: ChangeDetectorRef, 
   ) { }
 
   ngOnInit():void {
     // get groupers
     // this.getGroupers();
+    this.actions = [];
     this.groupers = [this.user, this.user, this.user];
   }
 
   ngAfterViewInit(): void {
     this.initControlPanel();
+    this.changeDectect.detectChanges();
   }
 
   onJoin(): void {
@@ -73,7 +76,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.TEACHER_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.delete];
     this.ADMIN_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.edit, this.delete];
 
-    let PANEL_TYPE_USER = {
+    const PANEL_TYPE_USER = {
       'student': this.taken ? this.MY_PANEL : this.STUDENT_PANEL, 
       'teacher': this.TEACHER_PANEL, 
       'admin': this.ADMIN_PANEL, 
@@ -83,7 +86,7 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   getGroupers(): void {
-    this.userService.getGroupersByProjectId(Number(this.project.p_id)).subscribe((data) => {
+    this.userService.getGroupersByProjectId(this.project.p_id).subscribe((data) => {
       this.groupers = data.groupers;
     })
   }
