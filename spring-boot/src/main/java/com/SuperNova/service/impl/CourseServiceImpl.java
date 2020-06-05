@@ -105,7 +105,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     }
 
     @Override
-    public String searchAllMyCourses(String u_id) {
+    public Object searchAllMyCourses(String u_id) {
         User user = userMapper.selectByPrimaryKey(u_id);
         List<Course> courses;
         JSONObject data = new JSONObject();
@@ -119,6 +119,6 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
         }
         data.put("courses",courses);
 
-        return data.toJSONString();
+        return JSONObject.toJSON(data);
     }
 }

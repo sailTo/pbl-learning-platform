@@ -61,7 +61,7 @@ public interface CourseService extends Service<Course> {
      * @param u_id
      * @return
      */
-    String searchAllMyCourses(String u_id);
+    Object searchAllMyCourses(String u_id);
 
     /**
      * 判断该用户是否为该课程的主讲老师

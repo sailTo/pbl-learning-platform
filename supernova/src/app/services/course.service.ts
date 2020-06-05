@@ -23,7 +23,7 @@ export class CourseService {
   getCourses(type: string, pageIndex: number, pageSize: number) {
     const params = new HttpParams({ fromObject: {
       // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-      pbl_token: String(), 
+      pbl_token: String(),
       pageIndex: String(pageIndex), 
       pageSize: String(pageSize)
     }});
@@ -35,10 +35,14 @@ export class CourseService {
         list: User[], 
       }
       total: number
-    }>>(this.requestURL[type], {params});
+    }>>(this.requestURL[type], { params });
   }
 
   getMyCourseNames() {
-    return this.http.get<{c_id: number, c_name: string}[]>(this.requestURL['all_my'], );
+    const params = new HttpParams({ fromObject: {
+      // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+      pbl_token: String(),
+    }});
+    return this.http.get<Response<{courses: Course[], type: string}>>(this.requestURL['all_my'], { params });
   }
 }
