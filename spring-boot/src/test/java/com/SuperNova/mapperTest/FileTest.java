@@ -22,12 +22,12 @@ public class FileTest extends Tester {
     @Test
     public void test2(){
         File file = new File();
-        file.setp_id(1);
-        file.setu_id("s001");
-        file.setf_name("tmp");
-        file.setfile_URL("tmp");
+        file.setP_id(1);
+        file.setU_id("s001");
+        file.setF_name("tmp");
+        file.setFile_URL("tmp");
         file.setDescription("tmp");
         fileMapper.createFile(file);
-        Assert.assertEquals(5,(int)file.getf_id());
+        Assert.assertEquals(5,(int)file.getF_id());
     }
 }

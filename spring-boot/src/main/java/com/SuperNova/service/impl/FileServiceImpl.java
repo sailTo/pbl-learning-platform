@@ -26,7 +26,7 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     @Override
     public List<File> searchFiles(int p_id) {
         File tmp = new File();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         return fileMapper.select(tmp);
     }
 
@@ -41,11 +41,11 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     @Override
     public void deleteFile(int p_id, int f_id) {
         File tmp = new File();
-        tmp.setp_id(p_id);
-        tmp.setf_id(f_id);
+        tmp.setP_id(p_id);
+        tmp.setF_id(f_id);
 
         List<File> files = fileMapper.select(tmp);
-        String file_url = files.get(0).getfile_URL();
+        String file_url = files.get(0).getFile_URL();
 
         fileMapper.delete(tmp);
     }

@@ -77,8 +77,8 @@ public class AccountController {
         Result result = ResultGenerator.genSuccessResult();
         //如果不存在则新建用户，否则设置错误码并报错
         User user = new User();
-        user.setu_id(u_id);
-        user.setu_name(u_name);
+        user.setU_id(u_id);
+        user.setU_name(u_name);
         user.setGender(gender);
         user.setPassword(password);
         user.setType("student");

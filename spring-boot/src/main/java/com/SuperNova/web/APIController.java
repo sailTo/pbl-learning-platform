@@ -141,7 +141,7 @@ public class APIController {
         int c_id = courseService.addCourse(courseObj);
         String imgURL = fileService.getImageURL(image,""+c_id);
         FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"\\");
-        courseObj.setimage_URL(imgURL);
+        courseObj.setImage_URL(imgURL);
         courseService.updateCourse(courseObj);
 
         JSONObject data = new JSONObject();
@@ -333,6 +333,8 @@ public class APIController {
                                  @RequestParam Integer p_id) {
         JSONObject data = new JSONObject();
         data.put("groupers",projectService.searchGroupers(p_id));
+        data.put("leader",projectService.searchLeader(p_id));
+
         return ResultGenerator.genSuccessResult(data);
     }
 

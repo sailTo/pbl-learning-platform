@@ -39,7 +39,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
         List<User> teachers = new ArrayList<User>();
 
         for (Course c:courses) {
-            User user = userMapper.selectByPrimaryKey(c.gett_id());
+            User user = userMapper.selectByPrimaryKey(c.getT_id());
             user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
             teachers.add(user);
         }
@@ -68,14 +68,14 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     @Override
     public int addCourse(Course course) {
         courseMapper.addCourse(course);
-        return course.getcId();
+        return course.getC_id();
     }
 
     @Override
     public void joinCourse(int c_id, String u_id) {
         StudentCourse tmp = new StudentCourse();
-        tmp.setc_id(c_id);
-        tmp.sets_id(u_id);
+        tmp.setC_id(c_id);
+        tmp.setU_id(u_id);
         studentCourseMapper.insert(tmp);
     }
 
@@ -88,7 +88,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     @Override
     public void changeCourseStatus(int c_id, String status) {
         Course tmp = new Course();
-        tmp.setcId(c_id);
+        tmp.setC_id(c_id);
         tmp.setStatus(Integer.parseInt(status));
         courseMapper.updateByPrimaryKeySelective(tmp);
     }
@@ -102,7 +102,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     @Override
     public boolean isTeacher(String u_id, int c_id) {
         Course course = courseMapper.selectByPrimaryKey(c_id);
-        return u_id.equals(course.gett_id());
+        return u_id.equals(course.getT_id());
     }
 
     @Override

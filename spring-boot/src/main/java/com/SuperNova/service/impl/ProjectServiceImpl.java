@@ -5,6 +5,7 @@ import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.dao.StudentProjectMapper;
 import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
+import com.SuperNova.model.StudentProject;
 import com.SuperNova.service.ProjectService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -45,7 +46,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         projectMapper.deleteByPrimaryKey(p_id);
 
         GradeSystem tmp = new GradeSystem();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         gradeSystemMapper.delete(tmp);
     }
 
@@ -55,9 +56,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         int p_id = project.getp_id();
         int item_id = gradeSystemMapper.getMaxItemId(p_id);
         for (GradeSystem grade:grades) {
-            grade.setp_id(p_id);
+            grade.setP_id(p_id);
             //这里需要修改成设置item_id，因为它不是自增的
-            grade.setitem_id(++item_id);
+            grade.setItem_id(++item_id);
         }
         gradeSystemMapper.insertList(grades);
         return p_id;
@@ -74,7 +75,7 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public String searchGradeSystem(int p_id) {
         GradeSystem tmp = new GradeSystem();
-        tmp.setp_id(p_id);
+        tmp.setP_id(p_id);
         return JSON.toJSONString(gradeSystemMapper.select(tmp));
     }
 
@@ -93,5 +94,15 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public String searchGroupers(int p_id) {
         return JSON.toJSONString(projectMapper.searchGroupers(p_id));
+    }
+
+    @Override
+    public String searchLeader(int p_id) {
+        StudentProject tmp = new StudentProject();
+        tmp.setIs_group_leader(true);
+        tmp.setP_id(p_id);
+        List<StudentProject> list = studentProjectMapper.select(tmp);
+
+        return list.get(0).getU_id();
     }
 }

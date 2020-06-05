@@ -43,8 +43,8 @@ public class UserTest extends Tester {
     @Test
     public void test4(){
         User user = new User();
-        user.setu_id("t002");
-        user.setu_name("teacher_test");
+        user.setU_id("t002");
+        user.setU_name("teacher_test");
         user.setType("teacher");
         user.setPassword("123456");
         user.setDescription("empty");
