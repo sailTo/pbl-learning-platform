@@ -12,4 +12,9 @@
     <result column="mutual_grade" jdbcType="DOUBLE" property="mutualGrade" />
     <result column="teacher_grade" jdbcType="DOUBLE" property="teacherGrade" />
   </resultMap>
+  <select id="studentCoursePID" resultType="Integer">
+    select p_id
+    from project natural join student_project
+    where c_id=#{c_id} and u_id=#{u_id}
+  </select>
 </mapper>

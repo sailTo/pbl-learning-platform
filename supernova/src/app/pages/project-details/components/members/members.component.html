@@ -1,1 +1,28 @@
-<p>members works!</p>
+<nz-table #basicTable [nzData]="ratings">
+  <thead>
+  <tr>
+    <th>Index</th>
+    <th>Name</th>
+    <th>Student ID</th>
+    <th *ngIf="ifOpenRating">Rating</th>
+    <th *ngIf="ifOpenRating">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data let i = index">
+    <td>{{ i+1 }}</td>
+]    <td>{{ data.u_name }}</td>
+    <td>{{ data.u_id }}</td>
+    <td *ngIf="ifOpenRating">
+        <span><nz-input-number [nzDisabled]="ifEdit[i] || ifUpdate[i]" [(ngModel)]="data.rating" [nzMin]="0" [nzMax]="100" [nzStep]="0.1" [nzPlaceHolder]="'Empty' "></nz-input-number></span>
+    </td>
+    <td *ngIf="ifOpenRating">
+      <button nz-button nzType="default" *ngIf="ifEdit[i]" (click)="edit(i)"><i nz-icon nzType="edit" nzTheme="outline"></i>Edit</button>
+      <button nz-button nzType="default" *ngIf="!ifEdit[i] || ifUpdate[i]" [disabled]="ifUpdate[i]" (click)="update(i)"><i nz-icon nzType="upload" nzTheme="outline"></i>Update</button>
+    </td>
+  </tr>
+  </tbody>
+  <!--<nz-switch [ngModel]="true" [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>-->
+  <!--<ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>-->
+  <!--<ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>-->
+</nz-table>

@@ -29,10 +29,13 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private AssignmentMapper assignmentMapper;
     @Resource
     private StudentAssignmentMapper studentAssignmentMapper;
+//    @Resource
+//    private
 
     @Override
-    public int studentCoursePID(String s_id, int c_id) {
-        return studentProjectMapper.studentCoursePID(s_id,c_id);
+    public int studentCoursePID(String u_id, int c_id) {
+          Integer res = studentProjectMapper.studentCoursePID(c_id,u_id);
+          return res==null?-1:res;
     }
 
     @Override

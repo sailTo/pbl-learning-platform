@@ -7,7 +7,7 @@
   </nz-card-tab>
   <nz-row [nzGutter]="[24, 24]">
     <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let course of courses">
-      <app-course-card [course]=course [type]=type></app-course-card>
+      <app-course-card [course]=course [type]=type (change)="getCourses()"></app-course-card>
     </nz-col>
   </nz-row>
   <app-pagination

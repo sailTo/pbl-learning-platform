@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -396,6 +397,17 @@ public class APIController {
         String s_id = userService.getUIdByToken(pbl_token);
         evaluationService.evaluate(p_id,s_id,u_id,grade);
         return ResultGenerator.genSuccessResult("评分成功");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getMyEvaluation")
+    public Result getMyEvaluation(@RequestParam String pbl_token,
+                                @RequestParam Integer p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        Map<String,Double> ret = evaluationService.getMyEvaluate(p_id,s_id);
+        JSONObject data = new JSONObject();
+        data.put("rateMapping",ret);
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")

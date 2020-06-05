@@ -82,7 +82,10 @@ export class CoursesComponent implements OnInit {
   }
 
   changeTab(selectedTitle: string): void {
+    // reset params
     this.pageIndex = 1;
+    this.courses = [];
+
     if (selectedTitle === this.myCourseTabTitle) {
       this.type = 'my';
       this.getCourses();

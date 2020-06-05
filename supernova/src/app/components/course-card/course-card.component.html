@@ -24,7 +24,7 @@
 </ng-template>
 
 <ng-template #actionJoin>
-  <a nz-icon nzType="plus"></a>
+  <a nz-icon nzType="plus" (click)="showConfirm('确认加入课程' + course.c_name + '吗？', 'primary')"></a>
 </ng-template>
 
 <!-- 进入项目详情页 -->

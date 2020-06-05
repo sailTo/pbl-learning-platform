@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Response } from '../models/generic-response';
 import { Course } from '../models/course';
@@ -9,6 +9,8 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class CourseService {
+  user: User;
+
   requestURL = {
     'my': '/api/searchMyCourses', 
     'other': '/api/searchOtherCourses', 
@@ -18,12 +20,23 @@ export class CourseService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) { 
+    // this.user = JSON.parse(localStorage.getItem("User"));
+    this.user = {
+      u_id: "S001", 
+      type: "student", 
+      u_name: "001", 
+      gender: "male",
+      description: "user desc",
+      image: "", 
+      token: "",
+      password: "", 
+    }
+  }
 
   getCourses(type: string, pageIndex: number, pageSize: number) {
     const params = new HttpParams({ fromObject: {
-      // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-      pbl_token: String(),
+      pbl_token: String(this.user.token),
       pageIndex: String(pageIndex), 
       pageSize: String(pageSize)
     }});
@@ -40,9 +53,20 @@ export class CourseService {
 
   getMyCourseNames() {
     const params = new HttpParams({ fromObject: {
-      // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-      pbl_token: String(),
+      pbl_token: String(this.user.token),
     }});
     return this.http.get<Response<{courses: Course[], type: string}>>(this.requestURL['all_my'], { params });
+  }
+
+  joinCourse(courseId: number) {
+    const headers = new HttpHeaders({
+      'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
+    });
+    const params = new HttpParams({ fromObject: {
+      pbl_token: String(this.user.token),
+      s_id: String(this.user.u_id), 
+      c_id: String(courseId), 
+    }});
+    return this.http.post<Response<{}>>('/api/joinCourse', params.toString(), { headers });
   }
 }
