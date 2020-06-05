@@ -205,6 +205,15 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping("/joinProject")
+    public Result joinProject(@RequestParam String pbl_token,
+                              @RequestParam String p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        projectService.joinProject(Integer.parseInt(p_id),s_id);
+        return ResultGenerator.genSuccessResult().setMessage("加入项目成功！");
+    }
+
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteProject")
     public Result deleteProject(@RequestParam String pbl_token,
                                 @RequestParam Integer p_id) {
