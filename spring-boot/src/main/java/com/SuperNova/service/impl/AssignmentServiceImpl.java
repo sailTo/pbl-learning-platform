@@ -83,6 +83,12 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     }
 
     @Override
+    public String searchAssignmentUrge(int p_id, String s_id) {
+
+        return null;
+    }
+
+    @Override
     public boolean searchStudentDone(int p_id, String s_id, int a_id) {
         StudentAssignment tmp = new StudentAssignment();
         tmp.setP_id(p_id);

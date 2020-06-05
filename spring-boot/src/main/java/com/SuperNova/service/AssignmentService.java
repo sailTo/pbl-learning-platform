@@ -58,6 +58,14 @@ public interface AssignmentService extends Service<Assignment> {
     String countAssignmentDone(int p_id);
 
     /**
+     * 搜索该生在每个项目中被urge的情况(按s_id排序)
+     * @param p_id
+     * @param s_id
+     * @return
+     */
+    String searchAssignmentUrge(int p_id,String s_id);
+
+    /**
      * 搜索学生完成所有任务的状态(按a_id排序)
      * @param p_id
      * @param s_id

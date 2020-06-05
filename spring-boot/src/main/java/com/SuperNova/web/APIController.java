@@ -54,12 +54,11 @@ public class APIController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
-    public Result searchMyCourses(@RequestParam String pbl_token) {
+    public Result searchMyCourses(@RequestParam String pbl_token,
+                                  @RequestParam String pageIndex,
+                                  @RequestParam String pageSize) {
         String u_id = userService.getUIdByToken(pbl_token);
-        String courses = courseService.getMyCourses(u_id);
-        JSONObject data = new JSONObject();
-        data.put("courses",courses);
-        return ResultGenerator.genSuccessResult(data);
+        return ResultGenerator.genSuccessResult(courseService.getMyCourses(u_id,Integer.parseInt(pageIndex),Integer.parseInt(pageSize)));
     }
 
     @CrossOrigin(origins = "*")
@@ -101,18 +100,18 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @GetMapping("/searchOtherCourses")
     public Result searchOtherCourses(@RequestParam String pbl_token,
-                                     @RequestParam int pageIndex,
-                                     @RequestParam int pageSize) {
+                                     @RequestParam String pageIndex,
+                                     @RequestParam String pageSize) {
         String u_id = userService.getUIdByToken(pbl_token);
-        return ResultGenerator.genSuccessResult(courseService.searchOtherCourses(u_id,pageIndex,pageSize));
+        return ResultGenerator.genSuccessResult(courseService.searchOtherCourses(u_id,Integer.parseInt(pageIndex),Integer.parseInt(pageSize)));
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchAllCourses")
-    public Result searchAllCourses(@RequestParam String pbl_token) {
-        JSONObject data = new JSONObject();
-        data.put("courses",courseService.searchAllCourses());
-        return ResultGenerator.genSuccessResult(data);
+    public Result searchAllCourses(@RequestParam String pbl_token,
+                                   @RequestParam String pageIndex,
+                                   @RequestParam String pageSize) {
+        return ResultGenerator.genSuccessResult(courseService.searchAllCourses(Integer.parseInt(pageIndex),Integer.parseInt(pageSize)));
     }
 
     @CrossOrigin(origins = "*")
@@ -158,6 +157,13 @@ public class APIController {
                              @RequestParam Integer c_id) {
         courseService.joinCourse(c_id,s_id);
         return ResultGenerator.genSuccessResult().setMessage("成功加入课程");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/searchAllMyCourses")
+    public Result searchAllMyCourses(@RequestParam String pbl_token) {
+        String u_id = userService.getUIdByToken(pbl_token);
+        return ResultGenerator.genSuccessResult(courseService.searchAllMyCourses(u_id));
     }
 
     @CrossOrigin(origins = "*")

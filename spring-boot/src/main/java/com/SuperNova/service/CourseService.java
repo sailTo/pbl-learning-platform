@@ -11,11 +11,11 @@ import java.util.List;
 public interface CourseService extends Service<Course> {
 
     /**
-     * 获取个人的课程
+     * 获取个人的课程(分页)
      * @param u_id
      * @return
      */
-    String getMyCourses(String u_id);
+    String getMyCourses(String u_id,int pageIndex,int pageSize);
 
     /**
      * 更新课程相关信息
@@ -38,7 +38,7 @@ public interface CourseService extends Service<Course> {
     void joinCourse(int c_id,String u_id);
 
     /**
-     * 获取自己的其它未选的课程/未教的课程(已发布)+教师信息
+     * 获取自己的其它未选的课程/未教的课程(已发布)+教师信息 (分页)
      * @param u_id
      * @return
      */
@@ -52,10 +52,17 @@ public interface CourseService extends Service<Course> {
     void changeCourseStatus(int c_id,String status);
 
     /**
-     * 获取所有课程
+     * 获取所有课程(分页)
      * @return
      */
-    String searchAllCourses();
+    String searchAllCourses(int pageIndex,int pageSize);
+
+    /**
+     *
+     * @param u_id
+     * @return
+     */
+    String searchAllMyCourses(String u_id);
 
     /**
      * 判断该用户是否为该课程的主讲老师

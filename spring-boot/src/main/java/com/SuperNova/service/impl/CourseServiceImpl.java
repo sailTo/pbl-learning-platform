@@ -1,5 +1,6 @@
 package com.SuperNova.service.impl;
 
+import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.CourseMapper;
 import com.SuperNova.dao.StudentCourseMapper;
 import com.SuperNova.dao.UserMapper;
@@ -33,10 +34,30 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     @Resource
     private UserMapper userMapper;
 
+
+    private String splitPage(List<Course> courses,int pageIndex,int pageSize){
+        List<User> teachers = new ArrayList<User>();
+
+        for (Course c:courses) {
+            User user = userMapper.selectByPrimaryKey(c.gett_id());
+            user.setImage(ProjectConstant.WEB_IMG_BASE+user.getImage());
+            teachers.add(user);
+        }
+
+        PageHelper.startPage(pageIndex, pageSize);
+        JSONObject data = new JSONObject();
+        PageInfo coursePageInfo = new PageInfo(courses);
+        PageInfo teachersPageInfo = new PageInfo(teachers);
+        data.put("courses",coursePageInfo);
+        data.put("teachers",teachersPageInfo);
+        data.put("total",teachers.size());
+        return data.toJSONString();
+    }
+
     @Override
-    public String getMyCourses(String u_id) {
+    public String getMyCourses(String u_id,int pageIndex,int pageSize) {
         List<Course> courses = courseMapper.getMyCourses(u_id);
-        return JSON.toJSONString(courses);
+        return splitPage(courses,pageIndex,pageSize);
     }
 
     @Override
@@ -60,22 +81,8 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
 
     @Override
     public String searchOtherCourses(String u_id, int pageIndex, int pageSize) {
-        PageHelper.startPage(pageIndex, pageSize);
         List<Course> courses = courseMapper.searchOtherCourses(u_id);
-        List<User> teachers = new ArrayList<User>();
-
-        for (Course c:courses) {
-            User user = userMapper.selectByPrimaryKey(c.gett_id());
-            teachers.add(user);
-        }
-        JSONObject data = new JSONObject();
-
-        PageInfo coursePageInfo = new PageInfo(courses);
-        PageInfo teachersPageInfo = new PageInfo(teachers);
-        data.put("courses",coursePageInfo);
-        data.put("teachers",teachersPageInfo);
-        data.put("total",teachers.size());
-        return data.toJSONString();
+        return splitPage(courses,pageIndex,pageSize);
     }
 
     @Override
@@ -87,14 +94,32 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     }
 
     @Override
-    public String searchAllCourses() {
+    public String searchAllCourses(int pageIndex,int pageSize) {
         List<Course> courses = courseMapper.selectAll();
-        return JSON.toJSONString(courses);
+        return splitPage(courses,pageIndex,pageSize);
     }
 
     @Override
     public boolean isTeacher(String u_id, int c_id) {
         Course course = courseMapper.selectByPrimaryKey(c_id);
         return u_id.equals(course.gett_id());
+    }
+
+    @Override
+    public String searchAllMyCourses(String u_id) {
+        User user = userMapper.selectByPrimaryKey(u_id);
+        List<Course> courses;
+        JSONObject data = new JSONObject();
+
+        if(user.getType().equals("admin")){
+            courses = courseMapper.selectAll();
+            data.put("type","A");
+        }else{
+            courses = courseMapper.getMyCourses(u_id);
+            data.put("type",user.getType().equals("teacher")? "T":"S");
+        }
+        data.put("courses",courses);
+
+        return data.toJSONString();
     }
 }
