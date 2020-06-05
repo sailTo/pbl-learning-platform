@@ -77,8 +77,8 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @PutMapping("/changeMyImage")
     public Result changeMyImage(@RequestParam String pbl_token,
+                                @RequestParam String u_id,
                                 @RequestParam(required = false) MultipartFile image) {
-        String u_id = userService.getUIdByToken(pbl_token);
         String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
         data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);

@@ -12,11 +12,11 @@ import { User } from 'src/app/models/user';
 export class CoursesComponent implements OnInit {
   // course = {
   //   c_id: 4,
-  //   t_id: 4, 
-  //   c_name: "course name", 
-  //   t_name: "teacher name", 
-  //   point: 2.0, 
-  //   description: "course description", 
+  //   t_id: 4,
+  //   c_name: "course name",
+  //   t_name: "teacher name",
+  //   point: 2.0,
+  //   description: "course description",
   //   status: "published", // 未发布unpublished, 已发布published, 已删除deleted
   //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
   //   t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
@@ -24,11 +24,11 @@ export class CoursesComponent implements OnInit {
 
   // dcourse = {
   //   c_id: 4,
-  //   t_id: 4, 
-  //   c_name: "course name", 
-  //   t_name: "teacher name", 
-  //   point: 2.0, 
-  //   description: "course description", 
+  //   t_id: 4,
+  //   c_name: "course name",
+  //   t_name: "teacher name",
+  //   point: 2.0,
+  //   description: "course description",
   //   status: "deleted", // 未发布unpublished, 已发布published, 已删除deleted
   //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
   //   t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
@@ -36,10 +36,10 @@ export class CoursesComponent implements OnInit {
 
   // ucourse = {
   //   c_id: 4,
-  //   t_id: 4, 
-  //   c_name: "course name", 
-  //   point: 2.0, 
-  //   description: "course description", 
+  //   t_id: 4,
+  //   c_name: "course name",
+  //   point: 2.0,
+  //   description: "course description",
   //   status: "unpublished", // 未发布unpublished, 已发布published, 已删除deleted
   //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
   // };
@@ -57,7 +57,7 @@ export class CoursesComponent implements OnInit {
   numOfCardsARow: number = 4;
 
   constructor(
-    private courseService: CourseService, 
+    private courseService: CourseService,
   ) { }
 
   ngOnInit(): void {
@@ -69,13 +69,15 @@ export class CoursesComponent implements OnInit {
   getCourses(): void {
     this.courseService.getCourses(this.type, this.pageIndex, this.pageSize).subscribe((response) => {
       this.courses = response.data.courses.list;
-      const teachers = response.data.teachers.list;     
+      const teachers = response.data.teachers.list;
       this.total = response.data.total;
 
       // assign teacher to course
       this.courses.forEach((course, index) => {
         course.teacher = teachers[index];
       })
+
+      console.log(teachers);
     });
   }
 

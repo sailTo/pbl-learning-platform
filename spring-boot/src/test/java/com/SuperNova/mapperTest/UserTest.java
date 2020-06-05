@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 public class UserTest extends Tester {
     @Resource
@@ -32,8 +33,8 @@ public class UserTest extends Tester {
 
     @Test
     public void test3(){
-//        String users = userService.getAllUser();
-//        Assert.assertEquals(users,3);
+        List<User> users = userService.getAllUser();
+        Assert.assertEquals(users,3);
     }
 
     @Test
