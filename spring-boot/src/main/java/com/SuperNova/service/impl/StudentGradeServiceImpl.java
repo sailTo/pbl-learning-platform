@@ -88,5 +88,8 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         return ""+totalGrade;
     }
 
-
+    @Override
+    public void evaluateByTeacher(List<StudentGrade> studentGrades) {
+        studentGradeMapper.insertList(studentGrades);
+    }
 }

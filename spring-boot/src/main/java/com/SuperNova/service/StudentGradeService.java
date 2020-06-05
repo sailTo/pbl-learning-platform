@@ -25,4 +25,9 @@ public interface StudentGradeService extends Service<StudentGrade> {
      */
     String searchGrade(int p_id, String s_id);
 
+    /**
+     * 教师为学生评分
+     * @param studentGrades
+     */
+    void evaluateByTeacher(List<StudentGrade> studentGrades);
 }

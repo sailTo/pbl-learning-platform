@@ -201,8 +201,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public String getAllUser() {
-        List<User> users = userMapper.selectAll();
-        return JSON.toJSONString(users);
+    public List<User> getAllUser() {
+        return userMapper.selectAll();
     }
 }

@@ -6,10 +6,12 @@ import com.SuperNova.model.*;
 import com.SuperNova.service.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,11 +65,11 @@ public class APIController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyInformation")
-    public Result searchMyInformation(@RequestParam String pbl_token) {
-        String u_id = userService.getUIdByToken(pbl_token);
+    public Result searchMyInformation(@RequestParam String pbl_token,
+                                      @RequestParam String u_id) {
         User user = userService.searchUser(u_id);
         JSONObject data = new JSONObject();
-        data.put("content", JSON.toJSONString(user));
+        data.put("content",user);
         data.put("image",ProjectConstant.WEB_IMG_BASE+userService.getImageURL(u_id));
         return ResultGenerator.genSuccessResult(data);
     }
@@ -532,28 +534,45 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @GetMapping("/getGradeItems")
     public Result getGradeItems(@RequestParam String pbl_token,
-                                @RequestParam Integer p_id) {
-
-
-        return ResultGenerator.genSuccessResult();
+                                @RequestParam String p_id) {
+        JSONObject data = new JSONObject();
+        data.put("grades",projectService.searchGradeSystem(Integer.parseInt(p_id)));
+        return ResultGenerator.genSuccessResult(data).setMessage("查询成功");
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/evaluateByTeacher")
     public Result evaluateByTeacher(@RequestParam String pbl_token,
-                                    @RequestParam Integer p_id,
+                                    @RequestParam String p_id,
                                     @RequestParam String s_id,
-                                    @RequestParam String grade) {
-
-        return ResultGenerator.genSuccessResult();
+                                    @RequestParam String grades) {
+        String t_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(t_id);
+        if(!user.getType().equals("teacher")){
+            return ResultGenerator.genFailResult("评分失败");
+        }
+        List<StudentGrade> studentGrades = JSON.parseArray(grades,StudentGrade.class);
+        studentGradeService.evaluateByTeacher(studentGrades);
+        return ResultGenerator.genSuccessResult().setMessage("评分成功");
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/searchAllUsers")
     public Result searchAllUsers(@RequestParam String pbl_token) {
-
-
-        return ResultGenerator.genSuccessResult();
+        String a_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(a_id);
+        if(!user.getType().equals("admin")){
+            return ResultGenerator.genFailResult("查询失败");
+        }
+        List<String> imgURL = new ArrayList<>();
+        List<User> users = userService.getAllUser();
+        for (User u:users) {
+            imgURL.add(ProjectConstant.WEB_IMG_BASE+u.getImage());
+        }
+        JSONObject data = new JSONObject();
+        data.put("users",users);
+        data.put("images",imgURL);
+        return ResultGenerator.genSuccessResult(data);
     }
 
     @CrossOrigin(origins = "*")
@@ -561,16 +580,30 @@ public class APIController {
     public Result changeImage(@RequestParam String pbl_token,
                               @RequestParam String u_id,
                               @RequestParam(required = false) MultipartFile image) {
-
-        return ResultGenerator.genSuccessResult();
+        String a_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(a_id);
+        if(!user.getType().equals("admin")){
+            return ResultGenerator.genFailResult("修改失败");
+        }
+        String imgURL = userService.setImage(u_id,image);
+        JSONObject data = new JSONObject();
+        data.put("image",ProjectConstant.WEB_IMG_BASE+imgURL);
+        return ResultGenerator.genSuccessResult(data).setMessage("修改成功");
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/changeInformation")
     public Result changeInformation(@RequestParam String pbl_token,
                                     @RequestParam String user){
+        String a_id = userService.getUIdByToken(pbl_token);
+        User admin = userService.searchUser(a_id);
+        if(!admin.getType().equals("admin")){
+            return ResultGenerator.genFailResult("修改用户信息失败");
+        }
 
-        return ResultGenerator.genSuccessResult();
+        User userObj = JSON.parseObject(user,User.class);
+        userService.setUser(userObj);
+        return ResultGenerator.genSuccessResult().setMessage("修改用户信息成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -579,8 +612,22 @@ public class APIController {
                           @RequestParam String user,
                           @RequestParam String password,
                           @RequestParam(required = false) MultipartFile image) {
+        String a_id = userService.getUIdByToken(pbl_token);
+        User admin = userService.searchUser(a_id);
+        if(!admin.getType().equals("admin")){
+            return ResultGenerator.genFailResult("添加用户失败");
+        }
+        User userObj = JSON.parseObject(user,User.class);
 
-        return ResultGenerator.genSuccessResult();
+        //检查用户名是否存在
+        if(userService.idExist(userObj.getU_id())){
+            return ResultGenerator.genFailResult("用户名已存在");
+        }
+        userService.register(userObj);
+        String imgURL = userService.setImage(userObj.getU_id(),image);
+        JSONObject data = new JSONObject();
+        data.put("image", ProjectConstant.WEB_IMG_BASE+imgURL);
+        return ResultGenerator.genSuccessResult().setMessage("添加成功！");
     }
 
 }

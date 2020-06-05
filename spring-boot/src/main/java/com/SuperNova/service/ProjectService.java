@@ -52,7 +52,7 @@ public interface ProjectService extends Service<Project> {
      * @param p_id
      * @return
      */
-    String searchGradeSystem(int p_id);
+    List<GradeSystem> searchGradeSystem(int p_id);
 
     /**
      * 获得选择该项目的用户数

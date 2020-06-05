@@ -74,10 +74,10 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
-    public String searchGradeSystem(int p_id) {
+    public List<GradeSystem> searchGradeSystem(int p_id) {
         GradeSystem tmp = new GradeSystem();
         tmp.setP_id(p_id);
-        return JSON.toJSONString(gradeSystemMapper.select(tmp));
+        return gradeSystemMapper.select(tmp);
     }
 
     @Override

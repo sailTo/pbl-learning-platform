@@ -417,9 +417,10 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
-| :-------: | :--: | :----: | :------: | :----------: |
-| pbl_token |  -   | String |    是    | 用于验证身份 |
+|  字段名   | 说明 |  类型  | 是否必填 |        备注        |
+| :-------: | :--: | :----: | :------: | :----------------: |
+| pbl_token |  -   | String |    是    |    用于验证身份    |
+|   u_id    |  -   | String |    是    | 用于确认是谁的信息 |
 
 返回参数：
 
@@ -472,6 +473,7 @@ A course project for Advanced Web Technologies at FDU.
 |  code   | 200：修改成功<br>208：登录超时       |  int   |  -   |
 | message | 200：无<br>208：登录超时，请重新登录 | String |  -   |
 |  image  | 200：image_URL<br>208：无            | String |  -   |
+|  token  | 200：新的token                       | String |  -   |
 
 
 
@@ -801,6 +803,26 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :------------------------------------------------ | :----: | :--: |
 |  code   | 200：修改成功<br/>208：登录超时<br/>209：修改失败 |  int   |  -   |
 | message | 200：无<br>208：登录超时，请重新登录<br>209：失败 | String |  -   |
+
+
+
+接口URL：/api/joinProject
+
+请求方法：POST
+
+请求参数：
+
+|  字段名   |  说明  |  类型  | 是否必填 |     备注     |
+| :-------: | :----: | :----: | :------: | :----------: |
+| pbl_token |   -    | String |    是    | 用于验证身份 |
+|   p_id    | 项目id | String |    是    |      -       |
+
+返回参数：
+
+| 字段名  | 说明                                 |  类型  | 备注 |
+| :-----: | :----------------------------------- | :----: | :--: |
+|  code   | 200：加入成功<br/>208：登录超时      |  int   |  -   |
+| message | 200：无<br>208：登录超时，请重新登录 | String |  -   |
 
 
 
@@ -1471,7 +1493,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1492,7 +1514,7 @@ User {
 |  字段名   |              说明              |  类型  | 是否必填 |                             备注                             |
 | :-------: | :----------------------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token |               -                | String |    是    |                         用于验证身份                         |
-|   p_id    |             项目id             |  int   |    是    |                              -                               |
+|   p_id    |             项目id             | String |    是    |                              -                               |
 |   s_id    |             学生id             | String |    是    |                              -                               |
 |  grades   | json序列化StudentGrade对象数组 | String |    是    | StudentGrade对象的属性为：item_id,p_id,s_id,description,grade<br>这里的description可以不填 |
 
@@ -1574,18 +1596,16 @@ User {
 
 请求参数：
 
-|  字段名   |       说明       |     类型      | 是否必填 |                      备注                       |
-| :-------: | :--------------: | :-----------: | :------: | :---------------------------------------------: |
-| pbl_token |        -         |    String     |    是    |                  用于验证身份                   |
-|   user    | json序列化的User |    String     |    是    | User属性有u_id,type, u_name, gender,description |
-| password  |       密码       |    String     |    是    |                    md5码加密                    |
-|   image   |       头像       | MultipartFile |    否    |               没有则生成默认头像                |
+|  字段名   |       说明       |     类型      | 是否必填 |                           备注                           |
+| :-------: | :--------------: | :-----------: | :------: | :------------------------------------------------------: |
+| pbl_token |        -         |    String     |    是    |                       用于验证身份                       |
+|   user    | json序列化的User |    String     |    是    | User属性有u_id,type, u_name, gender,description,password |
+|   image   |       头像       | MultipartFile |    否    |                    没有则生成默认头像                    |
 
 返回参数：
 
-| 字段名  | 说明                                     |  类型  |                             备注                             |
-| :-----: | :--------------------------------------- | :----: | :----------------------------------------------------------: |
-|  code   | 200：注册成功<br>其它：用户名不存在      |  int   |                              -                               |
-| message | 200时：携带token<br>其它时：返回错误信息 | String | 在请求/api/login，/api/register和/api/searchId以外的api时需要以pbl_token的名字携带于header中以做身份校验 |
-| content | json序列化的User对象                     |  User  |     User对象属性有u_id,type, u_name, gender,description      |
-|  image  | 0时：携带图像url<br>-1/-2时：空字符串    | String |                              -                               |
+| 字段名  | 说明                                                |  类型  | 备注 |
+| :-----: | :-------------------------------------------------- | :----: | :--: |
+|  code   | 200：添加成功<br>208：登录超时<br>209：用户名已存在 |  int   |  -   |
+| message | 200：添加成功<br>其它：返回错误信息                 | String |  -   |
+|  image  | 200：携带图像url<br>其它：空字符串                  | String |  -   |

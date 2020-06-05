@@ -85,5 +85,5 @@ public interface UserService extends Service<User> {
      * User:u_id，type，u_name，gender，description
      * @return
      */
-    String getAllUser();
+    List<User> getAllUser();
 }
