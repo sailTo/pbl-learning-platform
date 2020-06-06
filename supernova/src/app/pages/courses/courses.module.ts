@@ -17,6 +17,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from "ng-zorro-antd/message";
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from "ng-zorro-antd/input";
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
@@ -51,6 +53,8 @@ import { CreateCourseComponent } from './components/create-course/create-course.
     NzMessageModule, 
     NzFormModule, 
     NzInputModule, 
+    NzInputNumberModule, 
+    NzUploadModule, 
   ], 
 })
 export class CoursesModule { }

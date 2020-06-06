@@ -11,17 +11,16 @@
     </nz-col>
   </nz-row>
   <app-pagination
-    [pageIndex]="pageIndex" 
-    [pageSize]="pageSize" 
-    [total]="total" 
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    [total]="total"
     (pageIndexChange)="onPageIndexChange($event)"
     >
   </app-pagination>
 </nz-card>
 
 <ng-template #extraTemplate>
-  <!-- TODO：教师才显示 -->
-  <button *ngIf="true" nz-button nzType="primary" (click)="showModal()">
+  <button *ngIf="currentUser.type === 'teacher'" nz-button nzType="primary" (click)="showModal()">
     <span>新建课程</span>
   </button>
 </ng-template>

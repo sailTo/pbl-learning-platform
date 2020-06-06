@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NzModalService } from 'ng-zorro-antd';
 import { CourseService } from 'src/app/services/course.service';
+import { UserService } from 'src/app/services/user.service';
+
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
-import { NzModalService } from 'ng-zorro-antd';
+
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 
 @Component({
@@ -12,44 +15,16 @@ import { CreateCourseComponent } from './components/create-course/create-course.
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
-  // course = {
-  //   c_id: 4,
-  //   t_id: 4,
-  //   c_name: "course name",
-  //   t_name: "teacher name",
-  //   point: 2.0,
-  //   description: "course description",
-  //   status: "published", // 未发布unpublished, 已发布published, 已删除deleted
-  //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
-  //   t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
-  // };
-
-  // dcourse = {
-  //   c_id: 4,
-  //   t_id: 4,
-  //   c_name: "course name",
-  //   t_name: "teacher name",
-  //   point: 2.0,
-  //   description: "course description",
-  //   status: "deleted", // 未发布unpublished, 已发布published, 已删除deleted
-  //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
-  //   t_image_URL: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png", // 教师头像，没有的话应该返回默认图URL
-  // };
-
-  // ucourse = {
-  //   c_id: 4,
-  //   t_id: 4,
-  //   c_name: "course name",
-  //   point: 2.0,
-  //   description: "course description",
-  //   status: "unpublished", // 未发布unpublished, 已发布published, 已删除deleted
-  //   c_image_URL: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png", // course封面图，没有的话应该返回默认图URL
-  // };
-
+  currentUser: User = this.userService.getUser();
   courses: Course[];
 
+  myTabTitle = {
+    'student': '我学的课',
+    'teacher': '我教的课',
+  };
+
   type: string = 'my';
-  myCourseTabTitle: string = '我学的课';
+  myCourseTabTitle: string = this.myTabTitle[this.currentUser.type];
   otherCourseTabTitle: string = '其它课程';
 
   pageIndex: number = 1;
@@ -58,19 +33,14 @@ export class CoursesComponent implements OnInit {
 
   numOfCardsARow: number = 4;
 
-  // modal
-  loading = false;
-  isVisible = false;
-
   constructor(
     private courseService: CourseService,
-    private modalService: NzModalService, 
+    private userService: UserService,
+    private modalService: NzModalService,
   ) { }
 
   ngOnInit(): void {
     this.getCourses();
-    this.total = 10;
-    // this.courses = [this.course, this.dcourse, this.ucourse, this.course, this.course, this.course, this.course, this.course];
   }
 
   getCourses(): void {
@@ -110,21 +80,9 @@ export class CoursesComponent implements OnInit {
   showModal(): void {
     // this.isVisible = true;
     this.modalService.create({
-      nzTitle: '新建课程', 
-      nzContent: CreateCourseComponent, 
+      nzTitle: '新建课程',
+      nzContent: CreateCourseComponent,
     })
   }
-
-  // handleOk(): void {
-  //   this.loading = true;
-  //   setTimeout(() => {
-  //     this.isVisible = false;
-  //     this.loading = false;
-  //   }, 1000);
-  // }
-
-  // handleCancel(): void {
-  //   this.isVisible = false;
-  // }
 
 }

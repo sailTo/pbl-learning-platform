@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
-import { NzModalRef } from 'ng-zorro-antd';
+import { NzModalRef, UploadFile, NzMessageService } from 'ng-zorro-antd';
 
+import { Course } from 'src/app/models/course';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 import { Observable, Observer } from 'rxjs';
 
 @Component({
@@ -12,18 +15,23 @@ import { Observable, Observer } from 'rxjs';
   styleUrls: ['./create-course.component.css']
 })
 export class CreateCourseComponent {
+  currentUser: User = this.userService.getUser();
+
   validateForm: FormGroup;
+  fileList: UploadFile[] = [];
 
   constructor(
-    private fb: FormBuilder, 
-    private modal: NzModalRef, 
+    private fb: FormBuilder,
+    private modal: NzModalRef,
+    private userService: UserService,
+    private msg: NzMessageService,
   ) {
     this.validateForm = this.fb.group({
-      userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
-      confirm: ['', [this.confirmValidator]],
-      comment: ['', [Validators.required]]
+      c_name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      point: ['', [Validators.required]],
+      t_id: ['', [Validators.required]],
+      // image: ['', [this.uploadValidator]],
     });
   }
 
@@ -31,12 +39,13 @@ export class CreateCourseComponent {
     this.modal.destroy();
   }
 
-  submitForm(value: { userName: string; email: string; password: string; confirm: string; comment: string }): void {
+  submitForm(value: Course): void {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
     console.log(value);
+    this.destroyModal();
   }
 
   resetForm(e: MouseEvent): void {
@@ -48,29 +57,23 @@ export class CreateCourseComponent {
     }
   }
 
-  validateConfirmPassword(): void {
-    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
-  }
-
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
+  beforeUpload = (file: UploadFile): boolean => {
+    const isLt2M = file.size! / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.msg.error('图片必须小于2MB!');
+      return false;
     }
-    return {};
+
+    this.fileList = [file];
+    this.validateForm.controls.image.setValue(file.filename);
+    this.validateForm.controls.image.updateValueAndValidity();
+    return false;
   };
+
+  uploadValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (this.fileList.length < 1) {
+      return { error:true, required: true };
+    } 
+    return {};
+  }
 }

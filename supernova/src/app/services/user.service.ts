@@ -19,14 +19,14 @@ export class UserService {
     } else {
       // return undefined;
       return {
-        u_id: "S001", 
-        type: "student", 
-        u_name: "001", 
+        u_id: "T001",
+        type: "teacher",
+        u_name: "001",
         gender: "male",
         description: "user desc",
-        image: "", 
+        image: "",
         token: "",
-        password: "", 
+        password: "",
       };
     }
   }

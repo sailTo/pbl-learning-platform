@@ -10,14 +10,12 @@
 </ng-template>
 
 <ng-template #avatarTemplate>
-  <!-- <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
   <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]">
   </nz-avatar><br />
 </ng-template>
 
 <ng-template #coverTemplate>
-  <!-- <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /> -->
-  <img [alt]=course.c_name [src]=course.image_URL />
+  <img [alt]=course.c_name [src]=course.image_URL/>
 </ng-template>
 
 <ng-template #actionJoin>

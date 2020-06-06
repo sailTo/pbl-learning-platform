@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnChanges, Output, EventEmitter } from '@angular/core';
 
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 import { CourseService } from 'src/app/services/course.service';
 
@@ -10,7 +10,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
     selector: 'app-course-card',
-    templateUrl: './course-card.component.html'
+    templateUrl: './course-card.component.html',
+    styleUrls: ['./course-card.component.css']
 })
 export class CourseCardComponent implements AfterViewInit, OnChanges {
     @Input() course: Course;
