@@ -201,7 +201,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public void deleteImage(User user) {
         String imagePath = user.getImage();
         if(!imagePath.equals(ProjectConstant.WEB_IMG_BASE+ProjectConstant.DEAFULT_IMAGE)){
-            imagePath = imagePath.substring(ProjectConstant.WEB_IMG_BASE.length());
+            imagePath = imagePath.substring(imagePath.lastIndexOf('/')+1);
             FileUtil.deleteStorageFile(ProjectConstant.IMG_BASE+imagePath);
         }
     }

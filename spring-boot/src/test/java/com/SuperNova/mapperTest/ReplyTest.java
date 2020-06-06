@@ -31,7 +31,7 @@ public class ReplyTest extends Tester {
 //        user.setGender("man");
 //        user.setType("student");
 //        List<User> users = userMapper.select(user);
-        int a = reply.getR_id();
-        Assert.assertEquals(a,1);
+//        int a = reply.getR_id();
+//        Assert.assertEquals(a,1);
     }
 }

@@ -39,7 +39,6 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
     private JSONObject splitPage(List<Course> courses, int pageIndex, int pageSize){
         List<User> teachers = new ArrayList<User>();
 
-        JSON.DEFAULT_GENERATE_FEATURE |= SerializerFeature.DisableCircularReferenceDetect.getMask();
 
         for (Course c:courses) {
             User user = userMapper.selectByPrimaryKey(c.getT_id());

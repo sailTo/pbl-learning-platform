@@ -34,7 +34,7 @@ public class UserTest extends Tester {
     @Test
     public void test3(){
         List<User> users = userService.getAllUser();
-        Assert.assertEquals(users,3);
+        Assert.assertEquals(users.size(),3);
     }
 
     @Test
