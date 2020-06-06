@@ -1,5 +1,7 @@
 package com.SuperNova.service.impl;
 
+import com.SuperNova.core.FileUtil;
+import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.dao.*;
 import com.SuperNova.model.*;
 import com.SuperNova.service.ProjectService;
@@ -29,6 +31,11 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private AssignmentMapper assignmentMapper;
     @Resource
     private StudentAssignmentMapper studentAssignmentMapper;
+    @Resource
+    private StudentGradeMapper studentGradeMapper;
+    @Resource
+    private FileMapper fileMapper;
+
 //    @Resource
 //    private
 
@@ -47,6 +54,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public void deletProject(int p_id) {
+        //删除项目文件存储的文件夹
+        FileUtil.deleteStorageDir(ProjectConstant.File_BASE+p_id);
+
         projectMapper.deleteByPrimaryKey(p_id);
 
         GradeSystem tmp = new GradeSystem();

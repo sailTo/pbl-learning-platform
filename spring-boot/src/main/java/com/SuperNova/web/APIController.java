@@ -162,7 +162,7 @@ public class APIController {
         Course courseObj = JSON.parseObject(course,Course.class);
         int c_id = courseService.addCourse(courseObj);
         String imgURL = fileService.getImageURL(image,""+c_id);
-        FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"\\");
+        FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"/");
         courseObj.setImage_URL(imgURL);
         courseService.updateCourse(courseObj);
 

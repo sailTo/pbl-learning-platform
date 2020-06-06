@@ -44,7 +44,7 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
     public File addFile(File file) {
         int maxId = fileMapper.searchMaxId(file.getP_id());
         file.setF_id(maxId+1);
-        file.setFile_URL(ProjectConstant.File_BASE+file.getP_id()+"\\"+getFileStorageName(file));
+        file.setFile_URL(ProjectConstant.File_BASE+file.getP_id()+"/"+getFileStorageName(file));
         fileMapper.createFile(file);
         return file;
     }
@@ -58,7 +58,7 @@ public class FileServiceImpl extends AbstractService<File> implements FileServic
         //删除数据库中的信息
         fileMapper.delete(tmp);
         //删除磁盘中存储的文件
-        FileUtil.deleteStorageFile(ProjectConstant.File_BASE+p_id+"\\"+getFileStorageName(tmp));
+        FileUtil.deleteStorageFile(ProjectConstant.File_BASE+p_id+"/"+getFileStorageName(tmp));
     }
 
     @Override
