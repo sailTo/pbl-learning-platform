@@ -106,7 +106,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         tmp.setIs_group_leader(true);
         tmp.setP_id(p_id);
         List<StudentProject> list = studentProjectMapper.select(tmp);
-
+        if(list.size()==0){
+            return "null";
+        }
         return list.get(0).getU_id();
     }
 

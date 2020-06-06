@@ -7,6 +7,7 @@ import com.SuperNova.model.StudentAssignment;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.service.CourseService;
 import com.SuperNova.service.ProjectService;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -65,6 +66,17 @@ public class ServiceTest extends Tester {
 //        String str = projectService.searchGroupers(1);
 
         System.out.println(ResultGenerator.genSuccessResult(courseService.getMyCourses("S001",1,8)));
+//        System.out.println("pid=2: "+fileMapper.searchMaxId(2));
+//        Assert.assertEquals(course.getc_name(),"Ad_web");
+    }
+
+    @Test
+    public void test7(){
+//        String str = projectService.searchGroupers(1);
+        JSONObject data = new JSONObject();
+        data.put("groupers",projectService.searchGroupers(2));
+        data.put("leader",projectService.searchLeader(2));
+        System.out.println(ResultGenerator.genSuccessResult(data));
 //        System.out.println("pid=2: "+fileMapper.searchMaxId(2));
 //        Assert.assertEquals(course.getc_name(),"Ad_web");
     }

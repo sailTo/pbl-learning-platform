@@ -76,7 +76,7 @@ public interface ProjectService extends Service<Project> {
     Object searchGroupers(int p_id);
 
     /**
-     * 获取项目的组长s_id
+     * 获取项目的组长s_id，如果该项目还没有组员则返回null
      * @param p_id
      * @return
      */

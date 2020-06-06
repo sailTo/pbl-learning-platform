@@ -37,6 +37,13 @@ public interface AssignmentService extends Service<Assignment> {
     void urgeAssignment(int p_id,int a_id);
 
     /**
+     * 同学回应urge
+     * @param p_id
+     * @param a_id
+     */
+    void applyUrge(int p_id,int a_id,String s_id);
+
+    /**
      * 搜索项目中所有的任务(按a_id排序)
      * @param p_id
      * @return

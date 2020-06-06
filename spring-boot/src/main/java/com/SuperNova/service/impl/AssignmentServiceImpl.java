@@ -86,6 +86,16 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     }
 
     @Override
+    public void applyUrge(int p_id, int a_id,String s_id) {
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setP_id(p_id);
+        tmp.setA_id(a_id);
+        tmp.setU_id(s_id);
+        tmp.setUrge(false);
+        studentAssignmentMapper.updateByPrimaryKey(tmp);
+    }
+
+    @Override
     public int countAssignment(int p_id) {
         Assignment tmp = new Assignment();
         tmp.setP_id(p_id);
