@@ -369,9 +369,9 @@ A course project for Advanced Web Technologies at FDU.
 
 |   字段名    | 说明 |     类型      | 是否必填 |        备注        |
 | :---------: | :--: | :-----------: | :------: | :----------------: |
-|    u_id     | 学号 |      int      |    是    |         -          |
+|    u_id     | 学号 |    String     |    是    |   类似S001、S002   |
 |   u_name    | 姓名 |    String     |    是    |         -          |
-|   gender    | 性别 |    String     |    是    |       M/F/N        |
+|   gender    | 性别 |    String     |    是    |      男/女/无      |
 |  password   | 密码 |    String     |    是    |     md5码加密      |
 |    image    | 头像 | MultipartFile |    否    | 没有则生成默认头像 |
 | description | 描述 |    String     |    否    |         -          |
@@ -396,8 +396,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   | 说明 |  类型  | 是否必填 |     备注     |
 | :-------: | :--: | :----: | :------: | :----------: |
 | pbl_token |  -   | String |    是    | 用于验证身份 |
-| pageIndex | 当前请求页码 |  int   |    是    |          -           |
-| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
+| pageIndex | 当前请求页码 |  String  |    是    |          -           |
+| pageSize  | 一页元素数量 |  String  |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -439,10 +439,11 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   | 说明 |     类型      | 是否必填 |        备注        |
-| :-------: | :--: | :-----------: | :------: | :----------------: |
-| pbl_token |  -   |    String     |    是    |    用于验证身份    |
-|   image   | 头像 | MultipartFile |    否    | 无则修改为默认头像 |
+|  字段名   | 说明 |     类型      | 是否必填 |          备注          |
+| :-------: | :--: | :-----------: | :------: | :--------------------: |
+| pbl_token |  -   |    String     |    是    |      用于验证身份      |
+|   u_id    |  -   |    String     |    是    | 用于指定修改头像的对象 |
+|   image   | 头像 | MultipartFile |    否    |   无则修改为默认头像   |
 
 返回参数：
 
@@ -491,10 +492,10 @@ A course project for Advanced Web Technologies at FDU.
 
 返回参数：
 
-| 字段名  | 说明                                 |  类型  | 备注 |
-| :-----: | :----------------------------------- | :----: | :--: |
-|  code   | 200：修改成功<br>204:  原密码错误<br>208：登录超时       |  int   |  -   |
-| message | 200：新密码的token<br>204：原有密码错误<br>208：登录超时，请重新登录 | String |  -   |
+| 字段名  | 说明                                                         |  类型  | 备注 |
+| :-----: | :----------------------------------------------------------- | :----: | :--: |
+|  code   | 200：修改成功<br>209:  原密码错误<br>208：登录超时           |  int   |  -   |
+| message | 200：新密码的token<br>209：原有密码错误<br>208：登录超时，请重新登录 | String |  -   |
 
 
 
@@ -514,8 +515,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |     说明     |  类型  | 是否必填 |         备注         |
 | :-------: | :----------: | :----: | :------: | :------------------: |
 | pbl_token |      -       | String |    是    |     用于验证身份     |
-| pageIndex | 当前请求页码 |  int   |    是    |          -           |
-| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
+| pageIndex | 当前请求页码 | String |    是    |          -           |
+| pageSize  | 一页元素数量 | String |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -576,8 +577,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   | 说明 |  类型  | 是否必填 |     备注     |
 | :-------: | :--: | :----: | :------: | :----------: |
 | pbl_token |  -   | String |    是    | 用于验证身份 |
-| pageIndex | 当前请求页码 |  int   |    是    |          -           |
-| pageSize  | 一页元素数量 |  int   |    是    | 用于计算返回哪些元素 |
+| pageIndex | 当前请求页码 | String |    是    |          -           |
+| pageSize  | 一页元素数量 | String |    是    | 用于计算返回哪些元素 |
 
 返回参数：
 
@@ -600,8 +601,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |      说明      |  类型  | 是否必填 |        备注        |
 | :-------: | :------------: | :----: | :------: | :----------------: |
 | pbl_token |       -        | String |    是    |    用于验证身份    |
-|   c_id    |     课程id     |  int   |    是    |         -          |
-|  status   | 课程修改后状态 |  int   |    是    | 已发布(1)/删除(-1) |
+|   c_id    |     课程id     | String |    是    |         -          |
+|  status   | 课程修改后状态 | String |    是    | 已发布(1)/删除(-1) |
 
 返回参数：
 
@@ -665,7 +666,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
 |   s_id    | 学生id | String |    是    |      -       |
-|   c_id    | 课程id |  int   |    是    |      -       |
+|   c_id    | 课程id | String |    是    |      -       |
 
 返回参数：
 
@@ -708,7 +709,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   c_id    | 课程id |  int   |    是    |      -       |
+|   c_id    | 课程id | String |    是    |      -       |
 
 返回参数：
 
@@ -774,7 +775,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |      说明      |  类型  | 是否必填 |     备注     |
 | :-------: | :------------: | :----: | :------: | :----------: |
 | pbl_token |       -        | String |    是    | 用于验证身份 |
-|   p_id    | 要删除的项目id |  int   |    是    |      -       |
+|   p_id    | 要删除的项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -835,7 +836,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -862,7 +863,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -886,8 +887,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
-|   a_id    | 任务id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
+|   a_id    | 任务id | String |    是    |      -       |
 
 返回参数：
 
@@ -950,8 +951,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |     说明      |  类型  | 是否必填 |     备注     |
 | :-------: | :-----------: | :----: | :------: | :----------: |
 | pbl_token |       -       | String |    是    | 用于验证身份 |
-|   a_id    | assignment id |  int   |    是    |      -       |
-|   p_id    |  project id   |  int   |    是    |      -       |
+|   a_id    | assignment id | String |    是    |      -       |
+|   p_id    |  project id   | String |    是    |      -       |
 
 返回参数：
 
@@ -992,8 +993,8 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |     说明      |  类型  | 是否必填 |     备注     |
 | :-------: | :-----------: | :----: | :------: | :----------: |
 | pbl_token |       -       | String |    是    | 用于验证身份 |
-|   a_id    | assignment id |  int   |    是    |      -       |
-|   p_id    |  project id   |  int   |    是    |      -       |
+|   a_id    | assignment id | String |    是    |      -       |
+|   p_id    |  project id   | String |    是    |      -       |
 
 返回参数：
 
@@ -1013,7 +1014,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |    说明    |  类型  | 是否必填 |     备注     |
 | :-------: | :--------: | :----: | :------: | :----------: |
 | pbl_token |     -      | String |    是    | 用于验证身份 |
-|   p_id    | project id |  int   |    是    |      -       |
+|   p_id    | project id | String |    是    |      -       |
 
 返回参数：
 
@@ -1039,7 +1040,7 @@ A course project for Advanced Web Technologies at FDU.
 |  字段名   |    说明    |  类型  | 是否必填 |     备注     |
 | :-------: | :--------: | :----: | :------: | :----------: |
 | pbl_token |     -      | String |    是    | 用于验证身份 |
-|   p_id    | project id |  int   |    是    |      -       |
+|   p_id    | project id | String |    是    |      -       |
 
 返回参数：
 
@@ -1079,7 +1080,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1100,8 +1101,8 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |      备注       |
 | :-------: | :----: | :----: | :------: | :-------------: |
 | pbl_token |   -    | String |    是    |  用于验证身份   |
-|   p_id    | 项目id |  int   |    是    |        -        |
-|   grade   |   -    | double |    是    | 0-100之间的数字 |
+|   p_id    | 项目id | String |    是    |        -        |
+|   grade   |   -    | String |    是    | 0-100之间的数字 |
 
 返回参数：
 
@@ -1121,7 +1122,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1141,12 +1142,12 @@ User {
 
 请求参数：
 
-|  字段名   |      说明      |  类型  | 是否必填 |      备注       |
-| :-------: | :------------: | :----: | :------: | :-------------: |
-| pbl_token |       -        | String |    是    |  用于验证身份   |
-|   p_id    |     项目id     |  int   |    是    |        -        |
-|   u_id    | 被评分用户的id | String |    是    |        -        |
-|   grade   |       -        | double |    是    | 0-100之间的数字 |
+|  字段名   |      说明      |  类型  | 是否必填 |         备注          |
+| :-------: | :------------: | :----: | :------: | :-------------------: |
+| pbl_token |       -        | String |    是    |     用于验证身份      |
+|   p_id    |     项目id     | String |    是    |           -           |
+|   u_id    | 被评分用户的id | String |    是    |           -           |
+|   grade   |       -        | String |    是    | 0-100之间的double小数 |
 
 返回参数：
 
@@ -1166,7 +1167,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1187,7 +1188,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1210,7 +1211,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1252,8 +1253,8 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   d_id    | 讨论id |  int   |    是    |      -       |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   d_id    | 讨论id | String |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1273,7 +1274,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   d_id    | 讨论id |  int   |    是    |      -       |
+|   d_id    | 讨论id | String |    是    |      -       |
 
 返回参数：
 
@@ -1397,8 +1398,8 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   f_id    | 文件id |  int   |    是    |      -       |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   f_id    | 文件id | String |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1449,7 +1450,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
@@ -1471,7 +1472,7 @@ User {
 |  字段名   |  说明  |  类型  | 是否必填 |     备注     |
 | :-------: | :----: | :----: | :------: | :----------: |
 | pbl_token |   -    | String |    是    | 用于验证身份 |
-|   p_id    | 项目id |  int   |    是    |      -       |
+|   p_id    | 项目id | String |    是    |      -       |
 
 返回参数：
 
