@@ -25,13 +25,26 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 删除文件夹
+     * @param dirPath
+     */
+    public static void deleteStorageDir(String dirPath){
+        String[] cmd = new String[] { "/bin/sh", "-c", "rm -rf "+dirPath};
+        try{
+            Process process = Runtime.getRuntime().exec(cmd);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public static boolean storageFile(MultipartFile file,int p_id,String fileStorageName){
         try {
             if(file==null){
                 return false;
             }
 
-            java.io.File targetFile = new java.io.File(ProjectConstant.File_BASE+p_id+"\\", fileStorageName);
+            java.io.File targetFile = new java.io.File(ProjectConstant.File_BASE+p_id+"/", fileStorageName);
             if(!targetFile.getParentFile().exists()){ //注意，判断父级路径是否存在
                 targetFile.getParentFile().mkdirs();
             }
@@ -46,7 +59,7 @@ public class FileUtil {
     }
 
     public static boolean downloadFile(HttpServletResponse response, int p_id, String fileStorageName,String fileName){
-        File file = new File(ProjectConstant.File_BASE+p_id+"\\"+fileStorageName);
+        File file = new File(ProjectConstant.File_BASE+p_id+"/"+fileStorageName);
         if (file.exists()) {
             response.setContentType("application/force-download");// 设置强制下载不打开
 //            System.out.println(fileName);

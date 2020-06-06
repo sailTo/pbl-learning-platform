@@ -22,9 +22,9 @@ public class AccountController {
      * @return
      */
     @CrossOrigin(origins = "*")
-    @PostMapping("/hello")
-    public Result hello() {
-        return ResultGenerator.genSuccessResult();
+    @PutMapping("/hello")
+    public Result hello(@RequestParam String name) {
+        return ResultGenerator.genSuccessResult(name);
     }
 
     @CrossOrigin(origins = "*")
