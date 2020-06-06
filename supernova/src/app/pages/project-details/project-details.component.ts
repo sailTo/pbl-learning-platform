@@ -17,22 +17,30 @@ export class ProjectDetailsComponent implements OnInit {
   groupers: User[];
   leaderId: string;
 
-  user1 = {
-    u_id: 'S001',
-    type: 'student',
-    u_name: 'student_1_test',
-    gender: 'man',
-    description: '5student_1 for test',
-    image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  };
-  user2 = {
-    u_id: 'S002',
-    type: 'student',
-    u_name: 'student_2_test',
-    gender: 'man',
-    description: '3student_2 for test',
-    image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  };
+  // user1 = {
+  //   u_id: 'S001',
+  //   type: 'student',
+  //   u_name: 'student_1_test',
+  //   gender: 'man',
+  //   description: '5student_1 for test',
+  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  // };
+  // user2 = {
+  //   u_id: 'S002',
+  //   type: 'student',
+  //   u_name: 'student_2_test',
+  //   gender: 'man',
+  //   description: '3student_2 for test',
+  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  // };
+  // user3 = {
+  //   u_id: 'S003',
+  //   type: 'student',
+  //   u_name: 'student_3_test',
+  //   gender: 'man',
+  //   description: '3student_3 for test',
+  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  // };
   constructor(    
     private route: ActivatedRoute, 
     private userService: UserService, 
@@ -53,6 +61,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getGroupers(): void {
+    // this.groupers = [this.user1,this.user2,this.user3];
     this.userService.getGroupersByProjectId(this.p_id).subscribe((response) => {
       this.groupers = response.data.groupers;
       this.leaderId = response.data.leader;

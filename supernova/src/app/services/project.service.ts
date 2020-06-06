@@ -4,6 +4,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Project } from '../models/project';
 import {Response} from "../models/generic-response";
 import {Discussion} from "../models/discussion";
+import {environment} from "../../environments/environment";
+import {Reply} from "../models/reply";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,8 @@ import {Discussion} from "../models/discussion";
 export class ProjectService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService,
   ) { }
 
   findProjectsByCourseId(courseId: number,
@@ -20,7 +24,7 @@ export class ProjectService {
     const params = new HttpParams({
       fromObject: {
         // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-        pbl_token: String(),
+        pbl_token: String(this.userService.getUser().token),
         c_id: String(courseId),
         // pageIndex: String(pageIndex), 
         // pageSize: String(pageSize)
@@ -29,17 +33,17 @@ export class ProjectService {
     return this.http.get<Response<{ projects: Project[], project_take: number, type: string }>>('/api/searchProject', { params });
   }
 
-  getProject(projectId: number) {
+  getProject(projectId: number){
     const params = new HttpParams({ fromObject: {
+        pbl_token: String(this.userService.getUser().token),
         p_id: String(projectId),
-        pbl_token: '123456'
       }});
-    return this.http.get<Response<{project: Project}>>('/api/searchProject', { params });
+    return this.http.get<Response<{project: Project}>>(`${environment.apiUrl}/api/getProjectByPid`, { params });
   }
 
   // getProjectById(projectId: number) {
   //   const params = new HttpParams({ fromObject: {
-  //     projectId: String(projectId), 
+  //     projectId: String(projectId),
   //   }});
   //   return this.http.get<{project: Project}>('/api/')
   // }

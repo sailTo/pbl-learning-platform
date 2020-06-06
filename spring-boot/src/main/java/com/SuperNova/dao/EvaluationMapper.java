@@ -45,5 +45,5 @@ public interface EvaluationMapper extends Mapper<Evaluation> {
      * @param s_id
      * @param u_id
      */
-    double getMyEvaluate(@Param("p_id")int p_id, @Param("s_id")String s_id, @Param("s_id")String u_id);
+    Double getMyEvaluate(@Param("p_id")int p_id, @Param("s_id")String s_id, @Param("u_id")String u_id);
 }

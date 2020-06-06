@@ -195,7 +195,6 @@ public class APIController {
         String u_id = userService.getUIdByToken(pbl_token);
         int p_id = projectService.studentCoursePID(u_id,Integer.parseInt(c_id));
         User user = userService.searchUser(u_id);
-
         JSONObject data = new JSONObject();
         data.put("type",user.getType());
         data.put("project_take",p_id);
@@ -203,7 +202,16 @@ public class APIController {
 
         return ResultGenerator.genSuccessResult(data);
     }
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getProjectByPid")
+    public Result getProjectByPid(@RequestParam String pbl_token,
+                                @RequestParam Integer p_id) {
+        JSONObject data = new JSONObject();
 
+        data.put("project",projectService.findById(p_id));
+
+        return ResultGenerator.genSuccessResult(data);
+    }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/createProject")
@@ -418,7 +426,7 @@ public class APIController {
     public Result getMyEvaluation(@RequestParam String pbl_token,
                                 @RequestParam String p_id) {
         String s_id = userService.getUIdByToken(pbl_token);
-        Map<String,Double> ret = evaluationService.getMyEvaluate(Integer.parseInt(p_id),s_id);
+        ArrayList<Map<String, String>> ret = evaluationService.getMyEvaluate(Integer.parseInt(p_id),s_id);
         JSONObject data = new JSONObject();
         data.put("rateMapping",ret);
         return ResultGenerator.genSuccessResult(data);

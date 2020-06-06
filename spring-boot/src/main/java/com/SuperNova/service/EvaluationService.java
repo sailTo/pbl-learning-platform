@@ -2,6 +2,7 @@ package com.SuperNova.service;
 import com.SuperNova.model.Evaluation;
 import com.SuperNova.core.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public interface EvaluationService extends Service<Evaluation> {
      * @param p_id
      * @param s_id
      */
-    Map<String,Double> getMyEvaluate(int p_id, String s_id);
+    ArrayList<Map<String, String>> getMyEvaluate(int p_id, String s_id);
 
     /**
      * 学生评分，s_id为评价方，u_id为被评价方，若相等则为自评

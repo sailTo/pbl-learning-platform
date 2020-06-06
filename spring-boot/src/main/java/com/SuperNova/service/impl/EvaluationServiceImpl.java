@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,12 +75,19 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     }
 
     @Override
-    public Map<String, Double> getMyEvaluate(int p_id, String s_id) {
-        Map<String,Double> res = new HashMap<>();
+    public ArrayList<Map<String, String>> getMyEvaluate(int p_id, String s_id) {
+        ArrayList<Map<String, String>> res = new ArrayList<>();
         List<User> users = projectMapper.searchGroupers(p_id);
         users.forEach(user -> {
-            double rate = evaluationMapper.getMyEvaluate(p_id,s_id,user.getU_id());
-            res.put(user.getU_id(),rate);
+            Map<String,String> tmp = new HashMap<>();
+            Evaluation evaluation = new Evaluation();
+            evaluation.setP_id(p_id);
+            evaluation.setActive_s_id(s_id);
+            evaluation.setPassive_s_id(user.getU_id());
+            evaluation = evaluationMapper.selectOne(evaluation);
+            tmp.put("u_id",user.getU_id());
+            tmp.put("rating",evaluation==null?null:evaluation.getGrade().toString());
+            res.add(tmp);
         });
         return res;
     }

@@ -113,10 +113,10 @@ export class DiscussionsComponent implements OnInit {
   // tslint:disable-next-line:no-any
   data: any[] = [];
   submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-  };
+  // user = {
+  //   author: 'Han Solo',
+  //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+  // };
   inputValue = '';
 
 

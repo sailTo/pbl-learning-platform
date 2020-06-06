@@ -29,6 +29,7 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { FilesComponent } from './components/files/files.component';
     FilesComponent,
   ],
   imports: [
+    NzAffixModule,
     CommonModule,
     FormsModule,
     ProjectDetailsRoutingModule,

@@ -38,28 +38,20 @@ export class SignupService {
       gender:validateForm.controls.gender.value,
       password:validateForm.controls.password.value,
     };
-    return this.http.post<any>(`${environment.apiUrl}/account/register`,this.transformRequest(params), {headers: new HttpHeaders({
+    return this.http.post<any>(`${environment.apiUrl}/account/register`,
+      this.transformRequest(params),
+      {headers: new HttpHeaders({
               'Content-Type': 'application/x-www-form-urlencoded'
             })
-      
           });
-      
-
   }
 
   transformRequest(data) {
-
-            var str = '';
-    
-            for (var i in data) {
-    
-              str += i + '=' + data[i] + '&';
-    
-            }
-    
-            str.substring(0, str.length - 1);
-    
-            return str;
-    
-      };
+    var str = '';
+    for (var i in data) {
+      str += i + '=' + data[i] + '&';
+    }
+    str.substring(0, str.length - 1);
+    return str;
+  };
 }

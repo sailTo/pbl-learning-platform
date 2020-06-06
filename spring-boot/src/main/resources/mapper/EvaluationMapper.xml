@@ -15,7 +15,7 @@
     where p_id = #{p_id} and passive_s_id = #{s_id}
   </select>
 
-  <select id="getMyEvaluate" resultType="double">
+  <select id="getMyEvaluate" resultType="Double">
     select grade from evaluation
     where p_id = #{p_id} and passive_s_id = #{u_id} and active_s_id != #{s_id}
   </select>
