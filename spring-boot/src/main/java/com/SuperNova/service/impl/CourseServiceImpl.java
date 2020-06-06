@@ -51,6 +51,7 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
         PageInfo coursePageInfo = new PageInfo(courses);
         PageInfo teachersPageInfo = new PageInfo(teachers);
         data.put("courses",coursePageInfo);
+//        System.out.println(teachers.get(0).getImage());
         data.put("teachers",teachersPageInfo);
         data.put("total",teachers.size());
         return data;
