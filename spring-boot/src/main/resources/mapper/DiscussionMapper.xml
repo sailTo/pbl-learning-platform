@@ -30,7 +30,7 @@
                  group by tmp.u_id
              ) as all_dis_count
     </select>
-  <select id="countDiscussion" parameterType="int" resultType="DiscussInformation">
+  <select id="countDiscussion" parameterType="int" resultType="com.SuperNova.model.DiscussInformation">
     select tmp.u_id,tmp.u_name,count(tmp.u_id)
     from (
            select u_id,u_name

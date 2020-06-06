@@ -19,7 +19,7 @@
       select u_id from student_assignment where p_id = #{p_id} and status = false
       )
   </select>
-  <select id="searchGroupers" resultType="User">
+  <select id="searchGroupers" resultType="com.SuperNova.model.User">
     select * from user
     where u_id in (
       select u_id from student_project

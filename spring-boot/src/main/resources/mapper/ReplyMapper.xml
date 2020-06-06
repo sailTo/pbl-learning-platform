@@ -11,11 +11,11 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
-  <select id="searchReplise" resultType="Reply">
+  <select id="searchReplise" resultType="com.SuperNova.model.Reply">
     select * from reply where d_id in (
       select discussion.d_id from discussion where p_id = #{p_id})
   </select>
-  <select id="searchReply" resultType="Reply">
+  <select id="searchReply" resultType="com.SuperNova.model.Reply">
     select * from reply where r_id = #{r_id}
   </select>
 

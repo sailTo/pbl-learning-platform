@@ -13,7 +13,7 @@
     <result column="image_URL" jdbcType="CHAR" property="imageUrl" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
-  <select id="getMyCourses" resultType="Course" parameterType="String">
+  <select id="getMyCourses" resultType="com.SuperNova.model.Course" parameterType="String">
     select * from course
     <if test="_parameter.indexOf('T') == 0">
       where t_id = #{u_id}
@@ -23,7 +23,7 @@
     </if>
   </select>
 
-  <select id="searchOtherCourses" resultType="Course" parameterType="String">
+  <select id="searchOtherCourses" resultType="com.SuperNova.model.Course" parameterType="String">
     select * from course where status = 1
     <if test="_parameter.indexOf('T') == 0">
       and t_id != #{u_id}
