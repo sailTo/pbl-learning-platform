@@ -24,7 +24,7 @@ export class ProjectService {
     const params = new HttpParams({
       fromObject: {
         // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-        pbl_token: String(this.userService.getUser().token),
+        pbl_token: this.userService.getUser().token,
         c_id: String(courseId),
         // pageIndex: String(pageIndex), 
         // pageSize: String(pageSize)
@@ -40,11 +40,4 @@ export class ProjectService {
       }});
     return this.http.get<Response<{project: Project}>>(`${environment.apiUrl}/api/getProjectByPid`, { params });
   }
-
-  // getProjectById(projectId: number) {
-  //   const params = new HttpParams({ fromObject: {
-  //     projectId: String(projectId),
-  //   }});
-  //   return this.http.get<{project: Project}>('/api/')
-  // }
 }

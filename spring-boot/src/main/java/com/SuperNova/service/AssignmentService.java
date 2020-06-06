@@ -78,7 +78,7 @@ public interface AssignmentService extends Service<Assignment> {
      * @param s_id
      * @return
      */
-    String searchDoneStatus(int p_id,String s_id);
+    Object searchDoneStatus(int p_id, String s_id);
 
     /**
      * 搜索学生完成该任务的状态

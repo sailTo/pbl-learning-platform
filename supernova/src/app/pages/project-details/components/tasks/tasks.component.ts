@@ -4,6 +4,10 @@ import ItemMovement from "gantt-schedule-timeline-calendar/dist/ItemMovement.plu
 import Selection from "gantt-schedule-timeline-calendar/dist/Selection.plugin.js";
 import CalendarScroll from "gantt-schedule-timeline-calendar/dist/CalendarScroll.plugin.js";
 import WeekendHighlight from "gantt-schedule-timeline-calendar/dist/WeekendHighlight.plugin.js";
+import { Task } from 'src/app/models/task';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -11,10 +15,18 @@ import WeekendHighlight from "gantt-schedule-timeline-calendar/dist/WeekendHighl
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
+  p_id: number;
+  groupers: User[];
+
   config: any;
   gstcState: any;
 
-  constructor() { }
+  tasks: Task[];
+
+  constructor(
+    private route: ActivatedRoute,
+    private taskService: TaskService,
+  ) { }
 
   ngOnInit() {
     const iterations = 10;
@@ -34,7 +46,7 @@ export class TasksComponent implements OnInit {
       '#707070'
     ];
 
-    const rows = {};
+    const rows = {}; // 决定每行左边的行名，ID，%
     for (let i = 0; i < iterations; i++) {
       const withParent = i > 0 && i % 2 === 0;
       const id = i.toString();
@@ -49,7 +61,7 @@ export class TasksComponent implements OnInit {
 
     const startDate = new Date();
 
-    const items = {};
+    const items = {}; // 决定每行彩色的item
     for (let i = 0; i < iterations; i++) {
       let rowId;
       let id = (rowId = i.toString());
@@ -64,9 +76,9 @@ export class TasksComponent implements OnInit {
         time: {
           start: startDayjs.valueOf(),
           end: startDayjs.setDate(startDate.getDate() + 3),
-            // .clone()
-            // .add(Math.floor(Math.random() * 10) + 4, 'days')
-            // .valueOf()
+          // .clone()
+          // .add(Math.floor(Math.random() * 10) + 4, 'days')
+          // .valueOf()
         },
         progress: 50,
         rowId,
@@ -75,7 +87,7 @@ export class TasksComponent implements OnInit {
       };
     }
 
-    const columns = {
+    const columns = { // 决定左边几列的列名、标签样式
       percent: 100,
       resizer: {
         inRealTime: true
@@ -179,7 +191,7 @@ export class TasksComponent implements OnInit {
     this.config = {
       plugins: [
         ItemMovement({
-          moveable: 'x',
+          moveable: 'x', // 只允许在本行移动（x轴）
           resizeable: true,
           collisionDetection: true
         }),
@@ -222,6 +234,32 @@ export class TasksComponent implements OnInit {
     //     items
     //   }
     // };
+
+    // get param p_name, groupers
+    this.route.queryParams.subscribe(
+      (params: { p_id: string, p_name: string, groupers: string }) => {
+        this.p_id = Number(params.p_id);
+        this.groupers = JSON.parse(params.groupers);
+
+        // request tasks
+        this.getTasks();
+      }
+    );
+  }
+
+  getTasks() {
+    this.taskService.getTasks(this.p_id).subscribe((response) => {
+      this.tasks = response.data.assignments;
+      const finished = response.data.studentStatus;
+      // const urged = response.data.urge;
+
+      this.tasks.forEach((task, index) => {
+        task.finished = finished[index];
+        // task.urged = urged[index];
+      })
+
+      console.log(this.tasks);
+    });
   }
 
   // GET THE GANTT INTERNAL STATE
@@ -263,7 +301,7 @@ export class TasksComponent implements OnInit {
       return rows;
     });
   }
-  
+
   deleteItem() {
     const random = r => r[Math.floor(Math.random() * r.length)];
     this.gstcState.update('config.chart.items', items => {

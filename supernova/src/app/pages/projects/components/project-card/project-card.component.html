@@ -25,7 +25,7 @@
     nz-icon 
     nzType="unordered-list" 
     [routerLink]="['/project/tasks']" 
-    [queryParams]="{p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers()}"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
   ></a>
 </ng-template>
 
@@ -38,7 +38,7 @@
     nz-icon 
     nzType="user" 
     [routerLink]="['/project/members']" 
-    [queryParams]="{p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers()}"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
   ></a>
 </ng-template>
 
@@ -47,7 +47,7 @@
     nz-icon 
     nzType="comment" 
     [routerLink]="['/project/discussions']" 
-    [queryParams]="{p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers()}"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
   ></a>
 </ng-template>
 
@@ -60,6 +60,6 @@
     nz-icon 
     nzType="download" 
     [routerLink]="['/project/files']" 
-    [queryParams]="{p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers()}"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
   ></a>
 </ng-template>

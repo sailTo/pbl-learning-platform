@@ -5,7 +5,6 @@ import com.SuperNova.dao.StudentAssignmentMapper;
 import com.SuperNova.dao.StudentProjectMapper;
 import com.SuperNova.model.Assignment;
 import com.SuperNova.model.StudentAssignment;
-import com.SuperNova.model.StudentGrade;
 import com.SuperNova.model.StudentProject;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.core.AbstractService;
@@ -115,8 +114,8 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     }
 
     @Override
-    public String searchDoneStatus(int p_id, String s_id) {
-        return JSON.toJSONString(studentAssignmentMapper.searchDoneStatus(p_id,s_id));
+    public Object searchDoneStatus(int p_id, String s_id) {
+        return JSON.toJSON(studentAssignmentMapper.searchDoneStatus(p_id,s_id));
     }
 
     @Override

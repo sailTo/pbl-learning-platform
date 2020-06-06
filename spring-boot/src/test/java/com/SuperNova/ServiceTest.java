@@ -33,14 +33,14 @@ public class ServiceTest extends Tester {
     @Test
     @Rollback(false)
     public void test3(){
-        String res = assignmentService.searchDoneStatus(1,"S001");
+        Object res = assignmentService.searchDoneStatus(1,"S001");
 //        Assert.assertEquals("Ad_web",course.getc_name());
         System.out.println(res);
     }
 
     @Test
     public void test2(){
-        String str = assignmentService.searchDoneStatus(1,"S001");
+        Object str = assignmentService.searchDoneStatus(1,"S001");
 //        String str = assignmentService.searchAssignmentUrge(1,"S001");
         System.out.println(str);
 //        Assert.assertEquals(course.getc_name(),"Ad_web");

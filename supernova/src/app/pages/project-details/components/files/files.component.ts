@@ -14,8 +14,8 @@ import { User } from 'src/app/models/user';
 })
 export class FilesComponent implements OnInit {  
   p_id: number;
-  files: File[];
   groupers: User[];
+  files: File[];
 
   isVisible = false;
   isOkLoading = false;
