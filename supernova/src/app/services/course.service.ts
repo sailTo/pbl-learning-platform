@@ -57,4 +57,26 @@ export class CourseService {
     }});
     return this.http.post<Response<{}>>('/api/joinCourse', params.toString(), { headers });
   }
+
+  changeCourse(course: Course) {
+    const params = new HttpParams({ fromObject: {
+      pbl_token: String(this.userService.getUser().token),
+      course: JSON.stringify(course), 
+    }})
+    return this.http.put<Response<{}>>('/api/changeCourse', params);
+  }
+
+  deleteCourse(course: Course) {
+    course['status'] = 0;
+    return this.changeCourse(course);
+  }
+
+  publishCourse(course: Course) {
+    course['status'] = 2;
+    return this.changeCourse(course);
+  }
+
+  resumeCourse(course: Course) {
+    return this.publishCourse(course);
+  }
 }

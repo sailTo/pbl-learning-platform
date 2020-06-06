@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
+import { NzModalService } from 'ng-zorro-antd';
+import { CreateCourseComponent } from './components/create-course/create-course.component';
 
 @Component({
   selector: 'app-courses',
@@ -56,8 +58,13 @@ export class CoursesComponent implements OnInit {
 
   numOfCardsARow: number = 4;
 
+  // modal
+  loading = false;
+  isVisible = false;
+
   constructor(
     private courseService: CourseService,
+    private modalService: NzModalService, 
   ) { }
 
   ngOnInit(): void {
@@ -76,8 +83,6 @@ export class CoursesComponent implements OnInit {
       this.courses.forEach((course, index) => {
         course.teacher = teachers[index];
       })
-
-      console.log(teachers);
     });
   }
 
@@ -101,5 +106,25 @@ export class CoursesComponent implements OnInit {
     this.pageIndex = pageIndex;
     // this.getCourses();
   }
+
+  showModal(): void {
+    // this.isVisible = true;
+    this.modalService.create({
+      nzTitle: '新建课程', 
+      nzContent: CreateCourseComponent, 
+    })
+  }
+
+  // handleOk(): void {
+  //   this.loading = true;
+  //   setTimeout(() => {
+  //     this.isVisible = false;
+  //     this.loading = false;
+  //   }, 1000);
+  // }
+
+  // handleCancel(): void {
+  //   this.isVisible = false;
+  // }
 
 }

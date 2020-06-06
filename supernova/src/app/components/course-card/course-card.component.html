@@ -1,8 +1,4 @@
-<nz-card
-  [nzCover]="coverTemplate"
-  [nzActions]=actions
-  nzHoverable
-  >
+<nz-card [nzCover]="coverTemplate" [nzActions]=actions nzHoverable>
   <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
   <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=course.description [nzAvatar]="avatarTemplate"></nz-card-meta>
 </nz-card>
@@ -15,7 +11,8 @@
 
 <ng-template #avatarTemplate>
   <!-- <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
-  <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]"></nz-avatar><br/>
+  <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]">
+  </nz-avatar><br />
 </ng-template>
 
 <ng-template #coverTemplate>
@@ -24,7 +21,7 @@
 </ng-template>
 
 <ng-template #actionJoin>
-  <a nz-icon nzType="plus" (click)="showConfirm('确认加入课程' + course.c_name + '吗？', 'primary')"></a>
+  <a nz-icon nzType="plus" (click)="showJoinConfirm()"></a>
 </ng-template>
 
 <!-- 进入项目详情页 -->
@@ -37,13 +34,13 @@
 </ng-template>
 
 <ng-template #actionPublish>
-  <a nz-icon nzType="check"></a>
+  <a nz-icon nzType="check" (click)="showPublishConfirm('发布')"></a>
 </ng-template>
 
 <ng-template #actionDelete>
-  <a nz-icon nzType="delete"></a>
+  <a nz-icon nzType="delete" (click)="showDeleteConfirm()"></a>
 </ng-template>
 
 <ng-template #actionResume>
-  <a nz-icon nzType="redo"></a>
+  <a nz-icon nzType="redo" (click)="showPublishConfirm('恢复')"></a>
 </ng-template>

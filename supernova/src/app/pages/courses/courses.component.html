@@ -1,6 +1,6 @@
 <nz-card>
   <nz-card-tab>
-    <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)">
+    <nz-tabset nzSize="large" (nzSelectChange)="changeTab($event.tab.nzTitle)"  [nzTabBarExtraContent]="extraTemplate">
       <nz-tab [nzTitle]="myCourseTabTitle"></nz-tab>
       <nz-tab [nzTitle]="otherCourseTabTitle"></nz-tab>
     </nz-tabset>
@@ -19,3 +19,9 @@
   </app-pagination>
 </nz-card>
 
+<ng-template #extraTemplate>
+  <!-- TODO：教师才显示 -->
+  <button *ngIf="true" nz-button nzType="primary" (click)="showModal()">
+    <span>新建课程</span>
+  </button>
+</ng-template>

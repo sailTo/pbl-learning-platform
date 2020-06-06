@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -13,11 +15,14 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzMessageModule } from "ng-zorro-antd/message";
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from "ng-zorro-antd/input";
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { CourseCardComponent } from '../../components/course-card/course-card.component';
-import { PaginationComponent } from '../../components/pagination/pagination.component'; 
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { CreateCourseComponent } from './components/create-course/create-course.component'; 
 
 
 @NgModule({
@@ -25,10 +30,13 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     CoursesComponent, 
     CourseCardComponent, 
     PaginationComponent, 
+    CreateCourseComponent, 
   ],
   imports: [
     CommonModule,
     CoursesRoutingModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
     NzAvatarModule, 
     NzCardModule, 
     NzIconModule, 
@@ -41,6 +49,8 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     NzStatisticModule, 
     NzModalModule, 
     NzMessageModule, 
+    NzFormModule, 
+    NzInputModule, 
   ], 
 })
 export class CoursesModule { }

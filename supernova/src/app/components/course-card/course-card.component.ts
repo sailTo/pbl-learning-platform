@@ -5,7 +5,6 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { CourseService } from 'src/app/services/course.service';
 
 import { Course } from 'src/app/models/course';
-import { NzButtonType } from 'ng-zorro-antd/button/ng-zorro-antd-button';
 import { NzMessageService } from 'ng-zorro-antd';
 
 
@@ -42,13 +41,13 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
     ADMIN_PANEL: TemplateRef<void>[];
     SIMPLE_PANEL: TemplateRef<void>[];
 
-    // 确认框
-    confirmModal?: NzModalRef;
+    // modal
+    loading = false;
 
     constructor(
         private modal: NzModalService,
-        private message: NzMessageService, 
-        private courseService: CourseService, 
+        private message: NzMessageService,
+        private courseService: CourseService,
     ) { }
 
     ngAfterViewInit(): void {
@@ -93,16 +92,18 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
             }
         };
 
-        this.actions = PANEL_TYPE_USER[this.type]['student'];
+        this.actions = PANEL_TYPE_USER[this.type]['teacher'];
     }
 
-    showConfirm(title: string, type: NzButtonType): void {
-        this.confirmModal = this.modal.confirm({
-            nzTitle: title,
+    showJoinConfirm(): void {
+        this.modal.confirm({
+            nzTitle: `确认加入课程${this.course.c_name}吗？`,
+            nzOkLoading: this.loading,
             // nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
-            nzOkType: type, 
             nzOnOk: () => {
+                this.loading = true;
                 this.courseService.joinCourse(this.course.c_id).subscribe((response) => {
+                    this.loading = false;
                     if (response.code === 200) {
                         this.message.success(`加入课程${this.course.c_name}成功！`);
                         this.change.emit();
@@ -110,6 +111,62 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
                         this.message.error(`加入课程${this.course.c_name}失败，请稍后重试！`);
                     }
                 })
+            }
+        });
+    }
+
+    showDeleteConfirm(): void {
+        this.modal.confirm({
+            nzTitle: `确认删除课程${this.course.c_name}吗？`,
+            nzContent: '<b>删除之后不可恢复<b/>',
+            nzOkType: 'danger',
+            nzOkLoading: this.loading,
+            nzOnOk: () => {
+                this.loading = true;
+                this.courseService.deleteCourse(this.course).subscribe((response) => {
+                    this.loading = false;
+                    if (response.code === 200) {
+                        this.message.success(`删除课程${this.course.c_name}成功！`);
+                        this.change.emit();
+                    } else {
+                        this.message.error(`删除课程${this.course.c_name}失败，请稍后重试！`);
+                    }
+                })
+            }
+        });
+    }
+
+    showPublishConfirm(action: string): void {
+        this.modal.confirm({
+            nzTitle: `确认${action}课程${this.course.c_name}吗？`,
+            nzContent: `<b>${action}之后学生可见<b/>`,
+            nzOkLoading: this.loading,
+            nzOnOk: () => {
+                if (action === '发布') {
+                    this.loading = true;
+                    this.courseService.publishCourse(this.course).subscribe((response) => {
+                        this.loading = false;
+                        if (response.code === 200) {
+                            this.message.success(`${action}课程${this.course.c_name}成功！`);
+                            this.change.emit();
+                        } else {
+                            this.message.error(`${action}课程${this.course.c_name}失败，请稍后重试！`);
+                        }
+                    })
+                } else if (action === '恢复') {
+                    this.loading = true;
+                    this.courseService.resumeCourse(this.course).subscribe((response) => {
+                        this.loading = false;
+                        if (response.code === 200) {
+                            this.message.success(`${action}课程${this.course.c_name}成功！`);
+                            this.change.emit();
+                        } else {
+                            this.message.error(`${action}课程${this.course.c_name}失败，请稍后重试！`);
+                        }
+                    })
+                } else {
+                    this.message.error('出错了，请稍后重试！');
+                }
             }
         });
     }
