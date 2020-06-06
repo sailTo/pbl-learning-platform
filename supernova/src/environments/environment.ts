@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8081',
   jwtHeader: "supernova",
-  defaultImgPath:"./default.img"
+  defaultImgPath:"http://127.0.0.1/UploadImage/default.img"
 };
 
 /*

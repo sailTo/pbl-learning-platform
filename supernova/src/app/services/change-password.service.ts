@@ -16,13 +16,12 @@ export class ChangePasswordService {
   ) { 
 
   }
-  changePassword(oldPassword:string,newPassword:string){
+  changePassword(newPassword:string){
        const params = new HttpParams({fromObject:{
         pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-        oldPassword: oldPassword,
-        newPassword: newPassword
+        
       }})
-      return this.http.put<any>(`${environment.apiUrl}/api/changeMyPassword`,{params});
+      return this.http.put<any>(`${environment.apiUrl}/api/changeMyPassword`,params);
     // if(this.checkPassword(oldPassword)){
     //   //合法， 可以完成修改,向服务器请求修改password
 

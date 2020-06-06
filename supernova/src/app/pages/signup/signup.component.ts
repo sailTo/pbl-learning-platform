@@ -125,7 +125,9 @@ export class SignupComponent implements OnInit {
             (data2) =>{
               // alert(data2.code==200);
               if(data2.code==200){
+                alert(data2.user);
                 var ret_user;
+                
                 ret_user = JSON.parse(data2.user);
                 ret_user.token = JSON.parse(data2.message).token;
                 ret_user.image = data2.image;

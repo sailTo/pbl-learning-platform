@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 import { UploadFile } from 'ng-zorro-antd/upload';
@@ -25,7 +25,9 @@ interface courseItems{
   templateUrl: './description-border.component.html'
 })
 export class DescriptionBorderComponent implements OnInit {
-  canEdit : boolean;
+  @Input()  u_id :string; 
+  canEdit : boolean;//是否有权限编辑
+  editStatus:boolean;//编辑状态
   datas:User ;
   copydata:User;
   defaultImg = environment.defaultImgPath;
@@ -39,22 +41,14 @@ export class DescriptionBorderComponent implements OnInit {
     
   }
   ngOnInit(){
-    // this.datas = {
-    //   id : "1",
-    //   name : "wqd",
-    //   gender : "男",
-    //   description: "不知道该写点啥",
-    //   courses : []
-    // }
-    // this.datas = JSON.parse(localStorage.getItem("User"));
-    this.getUser();
     
-    // alert(this.datas.u_id);
+    this.getUser(this.u_id);
+    
     
    
   }
   startEdit(){
-    this.canEdit = true;
+    this.editStatus = true;
   }
 
   cancelEdit(){
@@ -62,7 +56,7 @@ export class DescriptionBorderComponent implements OnInit {
     // Object.assign( this.copydata,this.datas);
   
     // this.datas = this.copydata;
-    this.canEdit = false;
+    this.editStatus = false;
   }
 
   saveEdit(){
@@ -80,7 +74,7 @@ export class DescriptionBorderComponent implements OnInit {
         }
       }
     )
-    this.canEdit=false;
+    this.editStatus=false;
     
     
   }
@@ -127,14 +121,27 @@ export class DescriptionBorderComponent implements OnInit {
         break;
     }
   }
-  getUser(){
-   
-     this.homeServicce.getUser().subscribe((data)=>{
+  getUser(u_id:string){
+      // alert(u_id);
+     this.homeServicce.getUser(u_id).subscribe(
+       (data)=>{
+        // alert(JSON.stringify(data.data.content))
       if(data.code==200){
-        this.datas = JSON.parse(data.data).content;
-        this.datas.image = JSON.parse(data.data).image;
+        // alert(data.data.content);
+        this.datas = data.data.content;
+        // alert(this.datas.u_id);
+        // this.datas.image = JSON.parse(data.data).image;
+        
         this.copydata = JSON.parse(JSON.stringify(this.datas));
+        if(this.u_id==JSON.parse(localStorage.getItem("User")).u_id){
+          this.canEdit = true;
+        }else{
+          this.canEdit = false;
+        }
+        
+        // alert(this.datas.u_id);
       }else{
+        alert("error");
         //error
       }
       

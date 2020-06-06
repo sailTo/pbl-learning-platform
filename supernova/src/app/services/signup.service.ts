@@ -25,6 +25,13 @@ export class SignupService {
         'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
       })
     }
+    alert(validateForm.controls.id.value);
+    // const params = new HttpParams({ fromObject: {
+    //   u_id: validateForm.controls.id.value,
+    //   u_name:validateForm.controls.name.value,
+    //   gender:validateForm.controls.gender.value,
+    //   password:validateForm.controls.password.value,
+    // }});
     const params = {
       u_id: validateForm.controls.id.value,
       u_name:validateForm.controls.name.value,

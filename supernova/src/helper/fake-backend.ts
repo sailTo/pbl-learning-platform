@@ -6,7 +6,7 @@ import {environment} from '../environments/environment'
 import { User } from '../app/models/user';
 
 const users: User[] = [
-    {   u_id: "123",  
+    {   u_id: "123",
         type: "student", 
         u_name: "wqd", 
         gender: "male",
@@ -62,6 +62,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!isLoggedIn()) return unauthorized();
             return ok(users);
         }
+
+        // function getUserById(){
+        //     // alert(1);
+        //     // if (!isLoggedIn()) return unauthorized();
+
+        //     // const user_id = urlWithParams.split("?")[1].split("=")[1];
+
+        //     const user = users.find(x => x.u_id === user_id);
+        //     // alert(user);
+        //     if (!user) return error("没有此用户");
+        //     return ok(user);
+        // }
+        // function getShowUsers(){
+        //     if (!isLoggedIn()) return unauthorized();
+        //     const user_id = JSON.parse(localStorage.getItem("User")).u_id;
+        //     const user = users.find(x => x.u_id === +user_id);
+
+        //     if (!user) return error("没有此用户");
+        //     return ok(user);
+        // }
+        // function checkPassword(){
+        //     const user_id = urlWithParams.split("?")[1].split("=")[1];
+        //     const password= urlWithParams.split("?")[2].split("=")[1];
+        //     const user = users.find(x => x.u_id === +user_id && x.password === password);
+        //     if (!user) return error('您的密码不正确!');
+        //     return ok({
+        //         valid : true
+        //     })
+        // }
+
 
         // helper functions
 

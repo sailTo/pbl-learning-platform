@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+// import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+import {columnItem} from '../../../models/colunmItem';
 interface ItemData {
   id: number;
   name: string;
@@ -11,15 +12,7 @@ interface ItemData {
   mutualScore:number;
   teacherScore:number;
 }
-interface columnItem {
-  name: string;
-  sortOrder?: NzTableSortOrder;
-  sortFn?: NzTableSortFn;
-  listOfFilter?: NzTableFilterList;
-  filterFn?: NzTableFilterFn;
-  filterMultiple?: boolean;
-  sortDirections?: NzTableSortOrder[];
-}
+
 
 @Component({
   selector: 'app-score-table',

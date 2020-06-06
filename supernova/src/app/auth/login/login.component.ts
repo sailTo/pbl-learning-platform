@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router,ActivatedRoute }      from '@angular/router';
 import { first } from 'rxjs/operators';
-
+import { Md5 } from 'ts-md5/dist/md5';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
       
     }
-    this.authService.login(this.validateForm.controls.id.value,this.validateForm.controls.password.value).subscribe(
+    
+    this.authService.login(this.validateForm.controls.id.value,String(Md5.hashStr(this.validateForm.controls.password.value))).subscribe(
       (data) =>{
                 
                if(data.code!=200){
@@ -44,18 +45,7 @@ export class LoginComponent implements OnInit {
                 }else{
                     // alert(JSON.parse(data.data).user);
                   var ret_user; 
-                  // = {
-                  //   u_id: data.data.user.u_id,
-                  //   type: data.data.user.type, 
-                  //   u_name: data.data.user.u_name, 
-                  //   gender: data.data.user.gender,
-                  //   description:data.data.user.description,
-                  //   image: data.data.image, 
-                  //   token: data.message
-                     
-                  // }
                   ret_user = JSON.parse(data.data).user;
-                  alert(data.message);
                   ret_user.token = data.message;
                   ret_user.image = JSON.parse(data.data).image;
                   localStorage.setItem('User', JSON.stringify(ret_user));

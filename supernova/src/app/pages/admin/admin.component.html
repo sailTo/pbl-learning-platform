@@ -1,1 +1,74 @@
-<p>admin works!</p>
+<nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" [nzScroll]="{ y: '240px' }">
+    <thead>
+      <tr>
+        <th *ngFor="let column of listofColumns"
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        >
+        {{column.name}}
+        <div *ngIf="column.name=='姓名'">
+          <nz-filter-trigger  [(nzVisible)]="searchVisible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </div>
+
+        
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of adminTable.data">
+        <div [hidden]="editId === data.u_id" (click)= "startEdit(data.u_id)"> 
+        <td>
+            <a [routerLink]="['/home',data.u_id]">
+                {{ data.u_id }}
+            </a>
+            
+        </td>
+        <td>{{ data.u_name }}</td>
+        <td>{{ data.type }}</td>
+        
+        <td>{{ data.gender }}</td>
+        
+        </div>
+        <div [hidden]="editId !== data.u_id" type="text"  (blur)="stopEdit()">
+            <td>
+                <input nz-input  [(ngModel)]="data.u_id">
+            </td>
+            <td>
+                <input nz-input  [(ngModel)]="data.u_name">
+            </td>
+            <td>
+                <input nz-input  [(ngModel)]="data.type">
+            </td>
+            <td>
+                <nz-radio-group  [(ngModel)]="data.gender">
+                    <label nz-radio nzValue="M">男</label>
+                    <label nz-radio nzValue="F">女</label>
+                    <label nz-radio nzValue="N">未知</label>
+                </nz-radio-group>
+            </td>
+        </div> 
+        <td>******</td>
+        <td >
+            <button nz-button nzSize="small" (click)="changePassword(data.u_id)">
+                修改密码
+            </button>
+        </td>
+        
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="查找姓名" [(ngModel)]="searchValue" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+          查找
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">重置</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
