@@ -24,11 +24,11 @@
     <td>{{ data.u_id }}</td>
     <td>{{ data.description }}</td>
     <td *ngIf="ifOpenRating">
-        <span><nz-input-number [nzDisabled]="ifEdit[i] || ifUpdate[i]" [(ngModel)]="data.rating" [nzMin]="0" [nzMax]="100" [nzStep]="0.1" [nzPlaceHolder]="'Empty' "></nz-input-number></span>
+        <span><nz-input-number [nzDisabled]="ifEdit[i] || !ifUpdate[i]" [(ngModel)]="data.rating" [nzMin]="0" [nzMax]="100" [nzStep]="0.1" [nzPlaceHolder]="'待填写' "></nz-input-number></span>
     </td>
     <td *ngIf="ifOpenRating">
       <button nz-button nzType="default" *ngIf="ifEdit[i]" (click)="edit(i)"><i nz-icon nzType="edit" nzTheme="outline"></i>编辑</button>
-      <button nz-button nzType="primary" *ngIf="!ifEdit[i] || ifUpdate[i]" [disabled]="ifUpdate[i]" (click)="update(i)"><i nz-icon nzType="upload" nzTheme="outline"></i>更新</button>
+      <button nz-button nzType="primary" *ngIf="!ifEdit[i] || !ifUpdate[i]" [disabled]="!ifUpdate[i]" (click)="update(i)"><i nz-icon nzType="upload" nzTheme="outline"></i>更新</button>
     </td>
   </tr>
 

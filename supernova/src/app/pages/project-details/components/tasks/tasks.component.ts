@@ -270,7 +270,7 @@ export class TasksComponent implements OnInit {
     // YOU CAN SUBSCRIBE TO CHANGES
 
     this.gstcState.subscribe("config.list.rows", rows => {
-      console.log("rows changed", rows);
+      // console.log("rows changed", rows);
     });
 
     this.gstcState.subscribe(

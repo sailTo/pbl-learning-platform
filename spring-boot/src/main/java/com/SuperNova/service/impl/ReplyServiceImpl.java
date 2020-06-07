@@ -40,7 +40,7 @@ public class ReplyServiceImpl extends AbstractService<Reply> implements ReplySer
     }
 
     @Override
-    public void deleteReply(int p_id, int r_id) {
-        replyMapper.deleteReply(p_id,r_id);
+    public void deleteReply(int r_id) {
+        replyMapper.deleteByPrimaryKey(r_id);
     }
 }

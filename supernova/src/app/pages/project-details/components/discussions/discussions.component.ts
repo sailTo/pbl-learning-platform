@@ -5,6 +5,8 @@ import {DiscussionService} from "../../../../services/discussion.service";
 import {Discussion} from "../../../../models/discussion";
 import {User} from "../../../../models/user";
 import {Reply} from "../../../../models/reply";
+import {UserService} from "../../../../services/user.service";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-discussions',
@@ -15,19 +17,29 @@ import {Reply} from "../../../../models/reply";
 export class DiscussionsComponent implements OnInit {
   p_id: number;
   groupers: User[];
-  u_id:string;
-  u_name:string;
-  // isVisible:boolean[];
-  num:number;
-  likes:number[];
-  dislikes:number[];
+  user:User;
+  // likes:number[];
+  // dislikes:number[];
   // time:string;
-  // data:Date;
   discussions: Discussion[];
+  newDiscussion:string;
+  discussion_submitting:boolean=false;
+
+  // user1 = {
+  //   u_id: 'S001',
+  //   type: '学生',
+  //   u_name: '黄元敏',
+  //   gender: '男',
+  //   description: '5student_1 for test',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
+  // };
 
   constructor(
     private route: ActivatedRoute,
     private discussionService: DiscussionService,
+    private message: NzMessageService,
+    private userService:UserService,
+    private nzMessageService: NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -39,14 +51,8 @@ export class DiscussionsComponent implements OnInit {
         this.p_id = params.p_id;
         this.groupers = JSON.parse(params.groupers);
         this.getDiscussions();
-        // this.isVisible = (() => {
-        //   let isVisible = [];
-        //   for (let i = 0; i < this.num; i++)
-        //     isVisible.push(false);
-        //   return isVisible;
-        // })();
-        this.likes = Array.apply(0,{length:this.num});
-        this.dislikes = Array.apply(0,{length:this.num});
+        // this.likes = Array.apply(0,{length:this.num});
+        // this.dislikes = Array.apply(0,{length:this.num});
         // this.isVisible = Array.apply(false,{length:this.num});
 
         // this.likes = (() => {
@@ -64,16 +70,14 @@ export class DiscussionsComponent implements OnInit {
       }
     );
 
-    this.u_id = 'S001';
-    this.u_name = this.groupers.find(
-      (grouper) => grouper.u_id == this.u_id
-    )['u_name']
+    this.user = this.userService.getUser();
+    // this.user = this.user1;
   }
 
-  //方法复杂，怀疑会有bug
+  //方法复杂，但无bug
   getDiscussions(): void {
     this.discussionService.getAllDiscussion(this.p_id).subscribe((data) => {
-      this.num = 0;
+      // let num = 0;
       this.discussions = data.data.discussions;
       // console.log(this.discussions);
       this.discussions.forEach((discussion, index) => {
@@ -81,18 +85,28 @@ export class DiscussionsComponent implements OnInit {
         discussion['u_name'] = this.groupers.find(
           (grouper) => grouper.u_id == discussion.u_id
         )['u_name'];
-        discussion['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+        discussion['image'] = this.groupers.find(
+          (grouper) => grouper.u_id == discussion.u_id
+        )['image'];
         // add key to each file
-        discussion['key'] = index;
+        discussion['d_index'] = index;
+        discussion['show'] = true;
+        discussion['type'] = 'discussion';
+        // discussion['index'] = num++;
         discussion['time_for_show'] = formatDistance(discussion['time'], new Date());
         this.discussionService.getReplyByDid(discussion.d_id).subscribe((data) => {
           data.data.replies.forEach((reply) => {
             reply['u_name'] = this.groupers.find(
               (grouper) => grouper.u_id == reply['u_id']
             )['u_name'];
+            reply['type'] = 'reply';
+            reply['show'] = true;
+            reply['image'] = this.groupers.find(
+              (grouper) => grouper.u_id == reply['u_id']
+            )['image'];
             reply['time_for_show'] = formatDistance(reply['time'], new Date());
-            reply['key'] = index;
-            reply['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+            reply['d_index'] = index;
+            // reply['index'] = num++;
           });
           discussion['replies'] = data.data.replies;
         })
@@ -110,13 +124,8 @@ export class DiscussionsComponent implements OnInit {
   //   this.dislikes = 1;
   // }
 
-  // tslint:disable-next-line:no-any
   data: any[] = [];
   submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-  };
   inputValue = '';
 
 
@@ -136,51 +145,135 @@ export class DiscussionsComponent implements OnInit {
     this.isVisible = true;
   }
 
-
+  handleCancel(): void {
+    this.isVisible = false;
+    console.log(this.discussions[0]['replies']);
+  }
   handleOk(): void {
-    this.inputValue = 'Reply '+this.reply_to_u_name+': ' + this.inputValue ;
+    this.inputValue = '回复 '+this.reply_to_u_name+': ' + this.inputValue ;
     this.isConfirmLoading = true;
-    let s = {};
-    s["d_id"] = this.reply_d_id;
-    s["u_id"] = this.u_id;
-    s["u_name"] = this.u_name;
-    s["content"] = this.inputValue;
-    s['key'] = this.reply_discussion_index;
-    s['time_for_show'] = formatDistance( new Date(), new Date());
-    // s['key'] = this.num++;
-    s['avatar'] = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-    this.discussions[this.reply_discussion_index]["replies"].push(s);
+
+    let new_reply = {
+      d_id: this.reply_d_id,
+      u_id: this.user.u_id,
+      u_name: this.user.u_name,
+      content: this.inputValue,
+      d_index: this.reply_discussion_index,
+      time_for_show: formatDistance( new Date(), new Date()),
+      type: 'reply',
+      show: true,
+      image: this.user.image,
+    };
+
+    this.discussions[this.reply_discussion_index]["replies"].splice(0, 0, new_reply);
+
+    let reply = {
+      r_id: null,
+      d_id: this.reply_d_id,
+      u_id: this.user.u_id,
+      content: this.inputValue,
+      time: null
+    };
+    this.discussionService.createReply(JSON.stringify(reply)).subscribe(
+      (data) =>{
+        console.log(data);
+        this.discussions[this.reply_discussion_index]["replies"][0]['r_id'] = data.data.r_id;
+      }
+    );
 
     setTimeout(() => {
       this.isVisible = false;
       this.isConfirmLoading = false;
     }, 100);
     this.submitting = true;
-    const content = this.inputValue;
     this.inputValue = '';
-
-    //此处需要添加向后台请求添加数据的http请求
-
-    // setTimeout(() => {
-    //   this.submitting = false;
-    //   this.data = [
-    //     ...this.data,
-    //     {
-    //       ...this.user,
-    //       content,
-    //       datetime: new Date(),
-    //       displayTime: formatDistance(new Date(), new Date())
-    //     }
-    //   ].map(e => {
-    //     return {
-    //       ...e,
-    //       displayTime: formatDistance(new Date(), e.datetime)
-    //     };
-    //   });
-    // }, 800);
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
+  // cancel(index): void {
+  //   this.nzMessageService.info('delete cancel!');
+  // }
+
+  confirm(index, object, type): void {
+    if (type == 'discussion') {
+      this.discussions[index]['show'] = false;
+      this.discussionService.deleteDiscussion(object["d_id"],this.p_id);
+    }
+    else{
+      let i = this.discussions[index]["replies"].indexOf(object);
+      this.discussions[index]["replies"][i].show = false;
+      this.discussionService.deleteReply(object["r_id"]);
+    }
+    let flag = true;
+    this.discussions.forEach((discussion) => {
+      if (discussion['show']) {
+        flag = false;
+        return;
+      }
+    });
+    if (flag)
+      this.discussions = null;
+  }
+
+  handleSubmit(): void {
+    this.discussion_submitting = true;
+    const content = this.newDiscussion;
+    this.newDiscussion = '';
+
+    let length = this.discussions.length;
+    let new_discussion = {
+      d_id : null,
+      p_id : this.p_id,
+      u_id : this.user.u_id,
+      u_name: this.user.u_name,
+      image: this.user.image,
+      d_index: length,
+      show: true,
+      type: 'discussion',
+      time_for_show: formatDistance(new Date(), new Date()),
+      content : content,
+      time : new Date(),
+      replies : []
+    };
+    this.discussions = [
+      ...this.discussions,
+      new_discussion
+    ];
+    // this.discussions.push(new_discussion);
+
+    let discussion = {
+      d_id : null,
+      p_id : this.p_id,
+      u_id : this.user.u_id,
+      content : content,
+      time : new Date()
+    };
+    this.discussionService.createDiscussion(JSON.stringify(discussion)).subscribe(
+      (data) =>{
+        // console.log(data);
+        // this.getDiscussions();
+        this.discussions[length]["d_id"] = data.data.d_id;
+      }
+    );
+
+    setTimeout(() => {
+      this.discussion_submitting = false;
+      this.message.success('添加话题成功', {
+        nzDuration: 1500
+      });
+      // this.data = [
+      //   ...this.data,
+      //   {
+      //     ...this.user,
+      //     content,
+      //     datetime: new Date(),
+      //     displayTime: formatDistance(new Date(), new Date())
+      //   }
+      // ].map(e => {
+      //   return {
+      //     ...e,
+      //     displayTime: formatDistance(new Date(), e.datetime)
+      //   };
+      // });
+    }, 500);
   }
 }

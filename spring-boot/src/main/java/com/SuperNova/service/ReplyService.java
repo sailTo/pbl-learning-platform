@@ -32,8 +32,7 @@ public interface ReplyService extends Service<Reply> {
 
     /**
      * 删除回复
-     * @param p_id
      * @param r_id
      */
-    void deleteReply(int p_id,int r_id);
+    void deleteReply(int r_id);
 }

@@ -16,30 +16,30 @@ export class ProjectDetailsComponent implements OnInit {
 
   groupers: User[];
   leaderId: string;
-
+  // 以下部分用于本地测试数据
   // user1 = {
   //   u_id: 'S001',
-  //   type: 'student',
-  //   u_name: 'student_1_test',
-  //   gender: 'man',
+  //   type: '学生',
+  //   u_name: '黄元敏',
+  //   gender: '男',
   //   description: '5student_1 for test',
-  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
   // };
   // user2 = {
   //   u_id: 'S002',
-  //   type: 'student',
-  //   u_name: 'student_2_test',
-  //   gender: 'man',
+  //   type: '学生',
+  //   u_name: '张思源',
+  //   gender: '男',
   //   description: '3student_2 for test',
-  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/S002.jpeg',
   // };
   // user3 = {
   //   u_id: 'S003',
-  //   type: 'student',
-  //   u_name: 'student_3_test',
-  //   gender: 'man',
+  //   type: '学生',
+  //   u_name: '李翀',
+  //   gender: '男',
   //   description: '3student_3 for test',
-  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/S003.jpg',
   // };
   constructor(    
     private route: ActivatedRoute, 

@@ -30,6 +30,7 @@ import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
     FilesComponent,
   ],
   imports: [
+    NzPopconfirmModule,
     NzAffixModule,
     CommonModule,
     FormsModule,

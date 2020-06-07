@@ -6,6 +6,7 @@ import {ProjectService} from "../../../../services/project.service";
 import {ScoreService} from "../../../../services/score.service";
 import { concatMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-members',
@@ -32,7 +33,8 @@ export class MembersComponent implements OnInit {
     private route: ActivatedRoute,
     private scoreService: ScoreService,
     private projectService: ProjectService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private userService:UserService
   ) { }
 
   edit(index):void {
@@ -40,13 +42,13 @@ export class MembersComponent implements OnInit {
     this.all_submit_button_disable = true;
     this.ifEdit[index] = false;
     this.all_submit_button_rating.push(index);
-    console.log("edit "+this.all_submit_button_rating);
+    // console.log("edit "+this.all_submit_button_rating);
   }
 
   update(index): void{
     this.all_submit_button_rating.splice(this.all_submit_button_rating.indexOf(index),1);
     console.log("update "+this.all_submit_button_rating);
-    this.ifUpdate[index] = true;
+    this.ifUpdate[index] = false;
     let u_id = this.ratings[index].u_id;
     let score = this.groupers.find(
       (group) => group.u_id == this.ratings[index].u_id
@@ -63,7 +65,7 @@ export class MembersComponent implements OnInit {
   ngOnInit(): void {
     this.all_submit_button_style = "default";
     this.ifEdit =[];
-    this.ifUpdate =[];
+    this.ifUpdate = [];
     this.all_submit_button_rating = [];
 
     this.route.queryParams.subscribe(
@@ -72,7 +74,7 @@ export class MembersComponent implements OnInit {
         this.groupers = JSON.parse(params.groupers);
       }
     );
-    this.u_id = String(JSON.parse(localStorage.getItem("User")).u_id);
+    this.u_id = String(this.userService.getUser().u_id);
     // console.log(
       this.projectService.getProject(this.p_id).subscribe(
         (data) =>{
@@ -96,7 +98,7 @@ export class MembersComponent implements OnInit {
         )['rating'];
         // console.log(grouper['rating']);
         this.ifEdit.push(grouper['rating'] == null);
-        this.ifUpdate.push(grouper['rating'] != null);
+        this.ifUpdate.push(grouper['rating'] == null);
       });
       // console.log(this.groupers);
     })
@@ -120,7 +122,7 @@ export class MembersComponent implements OnInit {
     this.all_submit_button_disable = false;
 
     this.all_submit_button_rating.forEach((index)=>{
-      this.ifUpdate[index] = true;
+      this.ifUpdate[index] = false;
       let u_id = this.ratings[index].u_id;
       let score = this.groupers.find(
         (group) => group.u_id == this.ratings[index].u_id

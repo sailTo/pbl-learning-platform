@@ -37,24 +37,6 @@ public class APIController {
     @Resource
     private ReplyService replyService;
 
-
-//    @CrossOrigin(origins = "*")
-//    @GetMapping("/searchDiscussionsTest")
-//    public Result searchDiscussionsTest(@RequestParam int p_id) {
-//        JSONObject data = new JSONObject();
-//
-//        data.put("discussions",discussionService.searchDiscussions(p_id));
-//        return ResultGenerator.genSuccessResult(data);
-//    }
-
-//    @CrossOrigin(origins = "*")
-//    @GetMapping("/searchReplyByDidTest")
-//    public Result searchReplyByDidTest(@RequestParam int d_id) {
-//        JSONObject data = new JSONObject();
-//        data.put("replies",replyService.searchRepliseByDid(d_id));
-//        return ResultGenerator.genSuccessResult(data);
-//    }
-
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
     public Result searchMyCourses(@RequestParam String pbl_token,
@@ -517,9 +499,8 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @DeleteMapping("/deleteReply")
     public Result deleteReply(@RequestParam String pbl_token,
-                              @RequestParam String r_id,
-                              @RequestParam String p_id) {
-        replyService.deleteReply(Integer.parseInt(p_id),Integer.parseInt(r_id));
+                              @RequestParam String r_id) {
+        replyService.deleteReply(Integer.parseInt(r_id));
         return ResultGenerator.genSuccessResult("删除成功");
     }
 

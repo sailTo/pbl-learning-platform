@@ -31,10 +31,4 @@ public interface ReplyMapper extends Mapper<Reply> {
      */
     void createReply(Reply reply);
 
-    /**
-     * 删除回复
-     * @param p_id
-     * @param r_id
-     */
-    void deleteReply(int p_id,int r_id);
 }
