@@ -12,6 +12,7 @@ const users: User[] = [
         gender: "male",
         description: "a simple description",
         image: "../img.img",
+        status: true, 
         password: "wqd"  }
 ];
 

@@ -5,6 +5,7 @@ export interface User {
     gender: string,
     description: string,
     image: string, 
+    status: boolean, 
     token?: string,
     password?: string, 
 }
