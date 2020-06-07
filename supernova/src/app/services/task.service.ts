@@ -12,14 +12,20 @@ export class TaskService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService, 
+    private userService: UserService,
   ) { }
 
   getTasks(projectId: number) {
     const params = new HttpParams({ fromObject: {
-      pbl_token: this.userService.getUser().token, 
-      p_id: String(projectId), 
+      pbl_token: this.userService.getUser().token,
+      p_id: String(projectId),
     }});
-    return this.http.get<Response<{assignments: Task[], studentStatus: boolean[]}>>('/api/searchAssignment', { params });
+    return this.http.get<Response<{
+      assignments: Task[],
+      doneNum: number[], // 每个assignment已经完成的人数
+      totalNum: number, // 项目总人数
+      studentStatus: boolean[], // 当前学生每个assignment的完成情况，教师返回空数组
+      urgeStatus: boolean[], // 每个assignment是否被催促，教师返回空数组
+    }>>('/api/searchAssignment', { params });
   }
 }
