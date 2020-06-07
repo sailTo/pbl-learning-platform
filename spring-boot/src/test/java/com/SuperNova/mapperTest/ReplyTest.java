@@ -23,11 +23,11 @@ public class ReplyTest extends Tester {
     @Test
 //    @Rollback(false)
     public void test1(){
-        Reply reply = new Reply();
-        reply.setD_id(1);
-        reply.setU_id("u001");
-        reply.setContent("asd");
-        replyMapper.insertSelective(reply);
+//        Reply reply = new Reply();
+//        reply.setD_id(1);
+//        reply.setU_id("u001");
+//        reply.setContent("asd");
+//        replyMapper.insertSelective(reply);
 //        user.setGender("man");
 //        user.setType("student");
 //        List<User> users = userMapper.select(user);
