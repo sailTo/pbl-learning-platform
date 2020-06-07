@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {User} from '../models/user';
+import {Response} from  '../models/generic-response';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,7 @@ export class HomeService {
       pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
       u_id : u_id2
     }})
-    return this.http.get<any>(`${environment.apiUrl}/api/searchMyInformation`,{params});
+    return this.http.get<Response<{content:User}>>(`${environment.apiUrl}/api/searchMyInformation`,{params});
           
   }
   changeInformation(user:User,changeImage:string){
