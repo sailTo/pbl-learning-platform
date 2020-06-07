@@ -1,13 +1,15 @@
-<div>
-    <button 
-        nz-button nzType="primary" 
-        [disabled]="!modified" 
-        (click)="saveChanges()"
-        [nzLoading]="loading"
-        >
-        保存修改
-    </button>
-</div>
+<ng-container *ngIf="modifiable">
+    <div>
+        <button 
+            nz-button nzType="primary" 
+            [disabled]="!modified" 
+            (click)="saveChanges()" 
+            [nzLoading]="loading"
+            >
+            保存修改
+        </button>
+    </div>
+</ng-container>
 
 <div>
     <nz-slider [nzMin]="0" [nzMax]="100" [ngModel]="100" (ngModelChange)="onPercent($event)"></nz-slider>

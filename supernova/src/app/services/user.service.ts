@@ -28,20 +28,9 @@ export class UserService {
       //   password: "",
       //   status: true,
       // };
-      return {
-        u_id: "T001",
-        type: "teacher",
-        u_name: "黄元敏",
-        gender: "男",
-        description: "user desc",
-        image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
-        token: "",
-        password: "",
-        status: true,
-      };
       // return {
-      //   u_id: "S001",
-      //   type: "student",
+      //   u_id: "T001",
+      //   type: "teacher",
       //   u_name: "黄元敏",
       //   gender: "男",
       //   description: "user desc",
@@ -50,6 +39,17 @@ export class UserService {
       //   password: "",
       //   status: true,
       // };
+      return {
+        u_id: "S001",
+        type: "student",
+        u_name: "黄元敏",
+        gender: "男",
+        description: "user desc",
+        image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
+        token: "",
+        password: "",
+        status: true,
+      };
     }
   }
 

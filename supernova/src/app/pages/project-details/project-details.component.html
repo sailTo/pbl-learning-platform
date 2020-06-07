@@ -2,7 +2,7 @@
     <nz-card-tab>
         <nz-tabset nzLinkRouter [nzLinkExact]=false nzSize="large" [nzTabBarExtraContent]="extraTemplate">
             <nz-tab>
-                <a nz-tab-link [routerLink]="['tasks']" [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
+                <a nz-tab-link [routerLink]="['tasks']" [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="unordered-list"></i>任务列表
                 </a>
             </nz-tab>
