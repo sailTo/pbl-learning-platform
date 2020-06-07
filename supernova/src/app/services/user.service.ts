@@ -18,6 +18,17 @@ export class UserService {
       return JSON.parse(localStorage.getItem("User"))
     } else {
       // return undefined;
+      // return {
+      //   u_id: "T001",
+      //   type: "teacher",
+      //   u_name: "001",
+      //   gender: "male",
+      //   description: "user desc",
+      //   image: "",
+      //   token: "",
+      //   password: "",
+      //   status: true,
+      // };
       return {
         u_id: "A001",
         type: "admin",
@@ -27,7 +38,8 @@ export class UserService {
         image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
         token: "",
         password: "",
-      };
+        status: true,
+      }
     }
   }
 
