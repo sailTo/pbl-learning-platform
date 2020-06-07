@@ -95,9 +95,9 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public int searchTotalNum(int p_id) {
-        Project tmp = new Project();
+        StudentProject tmp = new StudentProject();
         tmp.setP_id(p_id);
-        return projectMapper.selectCount(tmp);
+        return studentProjectMapper.selectCount(tmp);
     }
 
     @Override
