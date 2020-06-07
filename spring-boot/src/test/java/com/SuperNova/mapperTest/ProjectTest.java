@@ -5,6 +5,7 @@ import com.SuperNova.dao.FileMapper;
 import com.SuperNova.dao.ProjectMapper;
 import com.SuperNova.dao.StudentProjectMapper;
 import com.SuperNova.model.StudentProject;
+import com.SuperNova.service.ProjectService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,10 +17,13 @@ public class ProjectTest extends Tester {
     private ProjectMapper projectMapper;
     @Resource
     private StudentProjectMapper studentProjectMapper;
+    @Resource
+    private ProjectService projectService;
+
     @Test
 //    @Rollback(false)
     public void test1(){
-//        List<Integer> result = studentProjectMapper.test(1);
-//        Assert.assertEquals(1,result);
+        int result = projectService.searchTotalNum(1);
+        Assert.assertEquals(3,result);
     }
 }
