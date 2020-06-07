@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import ItemMovement from "gantt-schedule-timeline-calendar/dist/ItemMovement.plugin.js";
@@ -11,7 +11,7 @@ import { User } from 'src/app/models/user';
 
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-tasks',
@@ -86,6 +86,7 @@ export class TasksComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private message: NzMessageService,
+    private modal: NzModalService,
     private taskService: TaskService,
     private userService: UserService,
   ) { }
@@ -154,7 +155,7 @@ export class TasksComponent implements OnInit {
             background: this.pallete[index],
           },
           task: task,
-        }
+        };
 
         // get dynamic from, to
         if (from > task.a_start_date) {
@@ -294,8 +295,27 @@ export class TasksComponent implements OnInit {
     );
   }
 
-  addRow() {
-    
+  addRow(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>) {
+    this.modal.create({
+      nzTitle: '新增任务',
+      nzContent: tplContent,
+      nzFooter: tplFooter,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzComponentParams: {
+        value: 'Template Context'
+      },
+      nzOnOk: () => console.log('Click ok')
+    });
+    this.gstcState.update('config.list.rows', rows => {
+      const id = String(rows.length);
+      rows[id] = {
+        id: id,
+        // label: task.a_name,
+        // progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
+        expanded: false,
+      };
+    })
   }
 
   deleteRow() {

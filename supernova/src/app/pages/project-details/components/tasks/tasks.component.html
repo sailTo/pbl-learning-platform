@@ -1,15 +1,11 @@
-<ng-container *ngIf="modifiable">
-    <div>
-        <button 
-            nz-button nzType="primary" 
-            [disabled]="!modified" 
-            (click)="saveChanges()" 
-            [nzLoading]="loading"
-            >
-            保存修改
-        </button>
-    </div>
-</ng-container>
+<div *ngIf="modifiable">
+    <button nz-button nzType="primary" (click)="addRow(tplContent, tplFooter)">新增任务</button>
+    <button nz-button nzType="primary" (click)="deleteRow()">删除任务</button>
+    <button nz-button nzType="primary" (click)="saveChanges()" 
+        [disabled]="!modified"
+        [nzLoading]="loading"
+    >保存修改</button>
+</div>
 
 <div>
     <nz-slider [nzMin]="0" [nzMax]="100" [ngModel]="100" (ngModelChange)="onPercent($event)"></nz-slider>
@@ -25,3 +21,15 @@
 </div>
 
 <gstc [config]="config" (onState)="onState($event)"></gstc>
+
+<ng-template #tplContent let-params let-ref="modalRef">
+    <p>some contents...</p>
+    <p>some contents...</p>
+    <p>{{ params.value }}</p>
+    <button nz-button (click)="ref.destroy()">Destroy</button>
+</ng-template>
+<ng-template #tplFooter>
+    <button nz-button nzType="primary">
+        Close after submit
+    </button>
+</ng-template>
