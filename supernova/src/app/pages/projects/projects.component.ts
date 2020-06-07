@@ -74,7 +74,7 @@ export class ProjectsComponent implements OnInit {
     this.projectService.findProjectsByCourseId(value.value).subscribe((response) => {
       this.projectTaking = response.data.project_take;
       this.projects = response.data.projects;
-    })
+    });
   }
 
 }

@@ -28,13 +28,15 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   groupers: User[];
   leaderId: string;
 
+  currentUser: User = this.userService.getUser();
+
   // user = {
   //   u_id: "S4",
-  //   type: 'S', 
-  //   u_name: '学生4', 
+  //   type: 'S',
+  //   u_name: '学生4',
   //   gender: 'M',
   //   description: '学生4简介',
-  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png', 
+  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
   // };
 
   // card下的控制按键列表
@@ -46,9 +48,9 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   ADMIN_PANEL: TemplateRef<void>[];
 
   constructor(
-    private message: NzMessageService, 
-    private userService: UserService, 
-    private changeDectect: ChangeDetectorRef, 
+    private message: NzMessageService,
+    private userService: UserService,
+    private changeDectect: ChangeDetectorRef,
   ) { }
 
   ngOnInit():void {
@@ -78,12 +80,12 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.ADMIN_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.edit, this.delete];
 
     const PANEL_TYPE_USER = {
-      'student': this.taken ? this.MY_PANEL : this.STUDENT_PANEL, 
-      'teacher': this.TEACHER_PANEL, 
-      'admin': this.ADMIN_PANEL, 
+      'student': this.taken ? this.MY_PANEL : this.STUDENT_PANEL,
+      'teacher': this.TEACHER_PANEL,
+      'admin': this.ADMIN_PANEL,
     };
 
-    this.actions = PANEL_TYPE_USER['student'];
+    this.actions = PANEL_TYPE_USER[this.currentUser.type];
   }
 
   getGroupers(): void {

@@ -20,6 +20,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
@@ -65,6 +66,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzCommentModule,
     NzSwitchModule,
     NzInputNumberModule,
+    NzUploadModule,
     AngularGanttScheduleTimelineCalendarModule,
   ]
 })
