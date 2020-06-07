@@ -286,10 +286,13 @@ public class APIController {
     public Result searchAssignment(@RequestParam String pbl_token,
                                    @RequestParam String p_id) {
         String u_id = userService.getUIdByToken(pbl_token);
-
+        int p_idInt = Integer.parseInt(p_id);
         JSONObject data = new JSONObject();
-        data.put("assignments",assignmentService.searchAssignment(Integer.parseInt(p_id)));
-        data.put("studentStatus",assignmentService.searchDoneStatus(Integer.parseInt(p_id),u_id));
+        data.put("assignments",assignmentService.searchAssignment(p_idInt));
+        data.put("studentStatus",assignmentService.searchDoneStatus(p_idInt,u_id));
+        data.put("urgeStatus",assignmentService.searchAssignmentUrge(p_idInt,u_id));
+        data.put("doneNum",assignmentService.searchAllAssignmentsDoneNum(p_idInt));
+        data.put("totalNum",projectService.searchTotalNum(p_idInt));
         return ResultGenerator.genSuccessResult(data);
     }
 
@@ -299,8 +302,10 @@ public class APIController {
                                        @RequestParam String p_id,
                                        @RequestParam String a_id) {
         JSONObject data = new JSONObject();
-        data.put("assignments",assignmentService.searchAssignmentDoneNum(Integer.parseInt(p_id),Integer.parseInt(a_id)));
-        data.put("totalNum",projectService.searchTotalNum(Integer.parseInt(p_id)));
+        int p_idInt = Integer.parseInt(p_id);
+        int a_idInt = Integer.parseInt(a_id);
+        data.put("assignments",assignmentService.searchAssignmentDoneNum(p_idInt,a_idInt));
+        data.put("totalNum",projectService.searchTotalNum(p_idInt));
 
         return ResultGenerator.genSuccessResult(data);
     }

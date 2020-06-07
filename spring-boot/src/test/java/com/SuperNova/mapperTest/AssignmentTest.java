@@ -42,4 +42,11 @@ public class AssignmentTest extends Tester {
         List<Boolean> result = studentAssignmentMapper.searchAssignmentUrge(1,"S001");
         Assert.assertEquals(2,result.size());
     }
+
+    @Test
+    public void test4(){
+        List<Integer> result = assignmentMapper.searchAllAssignmentsDoneNum(1);
+        System.out.println(result);
+        Assert.assertEquals(2,result.size());
+    }
 }

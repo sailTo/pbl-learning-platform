@@ -152,4 +152,9 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         tmp.setStatus(true);
         return studentAssignmentMapper.selectCount(tmp);
     }
+
+    @Override
+    public List<Integer> searchAllAssignmentsDoneNum(int p_id) {
+        return assignmentMapper.searchAllAssignmentsDoneNum(p_id);
+    }
 }

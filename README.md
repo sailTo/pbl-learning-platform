@@ -873,6 +873,9 @@ A course project for Advanced Web Technologies at FDU.
 |    message    | 200：查询成功<br>208：登录超时请重新登录<br>209：查询失败 | String |                              -                               |
 |  assignments  | 200：json序列化Assignment数组(按照a_id排序)<br>其它：无   | String | assignment类型包含属性：a_id,a_name,a_description,<br>importance,a_start_date,a_end_date |
 | studentStatus | 200：json序列化boolean数组(按照a_id排序)<br>其它：无      | String |      对应上面学生的完成状态：完成-true<br>未完成-false       |
+|  urgeStatus   | 200：学生每个任务的urge情况(按照a_id排序)                 | String |      对应上面学生的urge状态：完成-true<br/>未完成-false      |
+|    doneNum    | 200：每个任务的学生完成人数(按照a_id排序)                 | String |                              -                               |
+|   totalNum    | 200：项目总人数                                           |  int   |                              -                               |
 
 > 还需要student_assignment里的urge信息和分配给的学生的id和name，可以研究一下怎么样的形式返回来比较好
 

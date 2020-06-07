@@ -28,4 +28,14 @@
     group by u_id
     order by u_id
   </select>
+  <select id="searchAllAssignmentsDoneNum" parameterType="int" resultType="int">
+    SELECT DISTINCT
+      IFNULL(SubTable.SubNum, 0) AS TotalNum
+    FROM student_assignment AS MainTable
+    LEFT JOIN (
+        SELECT   a_id,COUNT(u_id) AS SubNum
+        FROM     student_assignment
+        WHERE    p_id = #{p_id} and status = true
+        GROUP BY a_id ) AS SubTable ON MainTable.a_id = SubTable.a_id order by MainTable.a_id;
+  </select>
 </mapper>
