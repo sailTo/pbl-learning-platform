@@ -119,8 +119,8 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     }
 
     @Override
-    public String searchAssignmentUrge(int p_id, String s_id) {
-        return JSON.toJSONString(studentAssignmentMapper.searchAssignmentUrge(p_id,s_id));
+    public Object searchAssignmentUrge(int p_id, String s_id) {
+        return JSON.toJSON(studentAssignmentMapper.searchAssignmentUrge(p_id,s_id));
 
     }
 
