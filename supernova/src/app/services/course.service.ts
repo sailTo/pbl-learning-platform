@@ -11,29 +11,30 @@ import { UserService } from './user.service';
 })
 export class CourseService {
   requestURL = {
-    'my': '/api/searchMyCourses', 
-    'other': '/api/searchOtherCourses', 
-    'all': '/api/searchAllCourses', 
-    'all_my': '/api/searchAllMyCourses', 
+    'my': '/api/searchMyCourses',
+    'other': '/api/searchOtherCourses',
+    'all': '/api/searchAllCourses',
+    'all_my': '/api/searchAllMyCourses',
   };
 
   constructor(
     private http: HttpClient,
-    private userService: UserService, 
+    private userService: UserService,
   ) { }
 
-  getCourses(type: string, pageIndex: number, pageSize: number) {
+  getCourses(type: string, userId: string, pageIndex: number, pageSize: number) {
     const params = new HttpParams({ fromObject: {
       pbl_token: String(this.userService.getUser().token),
-      pageIndex: String(pageIndex), 
+      u_id: userId,
+      pageIndex: String(pageIndex),
       pageSize: String(pageSize)
     }});
     return this.http.get<Response<{
-      courses: { 
-        list: Course[], 
-      }, 
+      courses: {
+        list: Course[],
+      },
       teachers: {
-        list: User[], 
+        list: User[],
       }
       total: number
     }>>(this.requestURL[type], { params });
@@ -52,8 +53,8 @@ export class CourseService {
     });
     const params = new HttpParams({ fromObject: {
       pbl_token: String(this.userService.getUser().token),
-      s_id: String(this.userService.getUser().u_id), 
-      c_id: String(courseId), 
+      s_id: String(this.userService.getUser().u_id),
+      c_id: String(courseId),
     }});
     return this.http.post<Response<{}>>('/api/joinCourse', params.toString(), { headers });
   }
@@ -61,7 +62,7 @@ export class CourseService {
   changeCourse(course: Course) {
     const params = new HttpParams({ fromObject: {
       pbl_token: String(this.userService.getUser().token),
-      course: JSON.stringify(course), 
+      course: JSON.stringify(course),
     }})
     return this.http.put<Response<{}>>('/api/changeCourse', params);
   }

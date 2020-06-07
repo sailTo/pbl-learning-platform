@@ -18,6 +18,8 @@ public class User {
 
     private String image;
 
+    private Boolean status;
+
     private String description;
 
     /**
@@ -116,5 +118,19 @@ public class User {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return status
+     */
+    public Boolean getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

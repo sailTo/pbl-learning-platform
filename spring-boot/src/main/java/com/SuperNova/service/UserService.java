@@ -48,6 +48,13 @@ public interface UserService extends Service<User> {
     boolean idExist(String uId);
 
     /**
+     * 查询id是否能够登录
+     * @param uId
+     * @return
+     */
+    boolean idLogin(String uId);
+
+    /**
      * 向表中添加新用户
      * @param user 保存新用户相关信息
      */

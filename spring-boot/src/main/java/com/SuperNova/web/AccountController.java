@@ -36,6 +36,10 @@ public class AccountController {
         if(u_id==null||!userService.idExist(u_id)){
             return ResultGenerator.genFailResult("用户id不存在");
         }
+        //userService.idLogin(u_id)为true代表能够登录
+        if (!userService.idLogin(u_id))
+            return ResultGenerator.genFailResult("禁止登录");
+
         String data = userService.login(u_id,password);
 
         if(data.equals("-1")){

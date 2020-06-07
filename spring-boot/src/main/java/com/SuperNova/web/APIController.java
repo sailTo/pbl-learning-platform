@@ -40,9 +40,9 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @GetMapping("/searchMyCourses")
     public Result searchMyCourses(@RequestParam String pbl_token,
+                                  @RequestParam String u_id,
                                   @RequestParam String pageIndex,
                                   @RequestParam String pageSize) {
-        String u_id = userService.getUIdByToken(pbl_token);
         return ResultGenerator.genSuccessResult(courseService.getMyCourses(u_id,Integer.parseInt(pageIndex),Integer.parseInt(pageSize)));
     }
 

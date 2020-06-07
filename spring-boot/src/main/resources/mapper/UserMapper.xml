@@ -11,12 +11,10 @@
     <result column="gender" jdbcType="CHAR" property="gender" />
     <result column="password" jdbcType="CHAR" property="password" />
     <result column="image" jdbcType="CHAR" property="image" />
+    <result column="status" jdbcType="BIT" property="status" />
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <select id="idExist" parameterType="String" resultType="boolean">
     select count(u_id) from user where u_id = #{u_id}
   </select>
-  <!--<select id="selectByPrimaryKey" result Type=”SysD ict” >-->
-  <!--select id, code , name ， 、v alue 、from sys dict where id= #{id}-->
-<!--</se lect>-->
 </mapper>

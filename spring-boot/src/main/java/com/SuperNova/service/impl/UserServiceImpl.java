@@ -32,6 +32,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Resource
     private FileService fileService;
 
+    @Override
+    public boolean idLogin(String uId) {
+        User user = userMapper.selectByPrimaryKey(uId);
+        return user.getStatus();
+    }
+
     /**
      * 通过uId获得token
      * @param uId

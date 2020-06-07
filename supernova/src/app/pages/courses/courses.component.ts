@@ -44,7 +44,7 @@ export class CoursesComponent implements OnInit {
   }
 
   getCourses(): void {
-    this.courseService.getCourses(this.type, this.pageIndex, this.pageSize).subscribe((response) => {
+    this.courseService.getCourses(this.type, this.currentUser.u_id, this.pageIndex, this.pageSize).subscribe((response) => {
       this.courses = response.data.courses.list;
       const teachers = response.data.teachers.list;
       this.total = response.data.total;
@@ -64,17 +64,15 @@ export class CoursesComponent implements OnInit {
     if (selectedTitle === this.myCourseTabTitle) {
       this.type = 'my';
       this.getCourses();
-      // this.courses = [this.course, this.course, this.course, this.course, this.course, this.course];
     } else {
       this.type = 'other';
       this.getCourses();
-      // this.courses = [this.course, this.course, ];
     }
   }
 
   onPageIndexChange(pageIndex: number) {
     this.pageIndex = pageIndex;
-    // this.getCourses();
+    this.getCourses();
   }
 
   showModal(): void {
