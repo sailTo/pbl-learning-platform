@@ -29,13 +29,24 @@
 
 <nz-modal 
     [(nzVisible)]="isVisible" 
-    nzTitle="The first Modal" 
-    (nzOnCancel)="handleCancel()" 
-    (nzOnOk)="handleOk()"
-    [nzOkLoading]="isOkLoading"
+    (nzOnCancel)="handleCancel()"
+    nzTitle="上传文件面板" 
     >
-    <p>Content one</p>
-    <p>Content two</p>
-    <p>Content three</p>
-    <p>Content three</p>
+    <ng-container *ngIf="buttonVis">
+        <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" id="forCenter">
+            <button nz-button><i nz-icon nzType="upload"></i>选择文件</button>
+        </nz-upload>
+    </ng-container>
+    
+    <ng-container *ngIf="fileList.length!=0">
+    <textarea nz-input placeholder="文件描述" [nzAutosize]="{ minRows: 3, maxRows: 5 }" [(ngModel)]="description">{{description}}</textarea>
+    </ng-container>
+
+    
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+        <ng-container *ngIf="fileList.length!=0">
+            <button nz-button nzType="primary" (click)="handleUpload()" [nzLoading]="isLoadingOne">确定上传</button>
+        </ng-container>
+    </div>
 </nz-modal>
