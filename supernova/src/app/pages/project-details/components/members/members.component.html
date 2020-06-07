@@ -19,7 +19,9 @@
   <tbody>
   <tr *ngFor="let data of basicTable.data let i = index">
     <td>{{ i+1 }}</td>
-    <td><nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="data.image"></nz-avatar></td>
+    <td><a [routerLink]="['/home',data.u_id]">
+      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="data.image"></nz-avatar></a>
+    </td>
     <td>{{ data.u_name }}</td>
     <td>{{ data.u_id }}</td>
     <td>{{ data.description }}</td>
