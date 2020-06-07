@@ -11,7 +11,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.image.prefix>SuperNova</docker.image.prefix>
+        <docker.image.prefix>supernova</docker.image.prefix>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
