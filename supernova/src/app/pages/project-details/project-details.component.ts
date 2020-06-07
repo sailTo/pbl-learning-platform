@@ -17,30 +17,30 @@ export class ProjectDetailsComponent implements OnInit {
   groupers: User[];
   leaderId: string;
   // 以下部分用于本地测试数据
-  user1 = {
-    u_id: 'S001',
-    type: '学生',
-    u_name: '黄元敏',
-    gender: '男',
-    description: '5student_1 for test',
-    image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
-  };
-  user2 = {
-    u_id: 'S002',
-    type: '学生',
-    u_name: '张思源',
-    gender: '男',
-    description: '3student_2 for test',
-    image: 'http://123.56.219.88/SuperNova/UploadImage/S002.jpeg',
-  };
-  user3 = {
-    u_id: 'S003',
-    type: '学生',
-    u_name: '李翀',
-    gender: '男',
-    description: '3student_3 for test',
-    image: 'http://123.56.219.88/SuperNova/UploadImage/S003.jpg',
-  };
+  // user1 = {
+  //   u_id: 'S001',
+  //   type: '学生',
+  //   u_name: '黄元敏',
+  //   gender: '男',
+  //   description: '5student_1 for test',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
+  // };
+  // user2 = {
+  //   u_id: 'S002',
+  //   type: '学生',
+  //   u_name: '张思源',
+  //   gender: '男',
+  //   description: '3student_2 for test',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/S002.jpeg',
+  // };
+  // user3 = {
+  //   u_id: 'S003',
+  //   type: '学生',
+  //   u_name: '李翀',
+  //   gender: '男',
+  //   description: '3student_3 for test',
+  //   image: 'http://123.56.219.88/SuperNova/UploadImage/S003.jpg',
+  // };
   constructor(    
     private route: ActivatedRoute, 
     private userService: UserService, 
@@ -60,11 +60,11 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getGroupers(): void {
-    this.groupers = [this.user1,this.user2,this.user3];
-    // this.userService.getGroupersByProjectId(this.p_id).subscribe((response) => {
-    //   this.groupers = response.data.groupers;
-    //   this.leaderId = response.data.leader;
-    // })
+    // this.groupers = [this.user1,this.user2,this.user3];
+    this.userService.getGroupersByProjectId(this.p_id).subscribe((response) => {
+      this.groupers = response.data.groupers;
+      this.leaderId = response.data.leader;
+    })
   }
 
   stringifyGroupers(): string {

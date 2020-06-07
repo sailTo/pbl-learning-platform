@@ -17,18 +17,6 @@ export class UserService {
     if (localStorage.getItem("User")) {
       return JSON.parse(localStorage.getItem("User"))
     } else {
-      // return undefined;
-      // return {
-      //   u_id: "T001",
-      //   type: "teacher",
-      //   u_name: "001",
-      //   gender: "male",
-      //   description: "user desc",
-      //   image: "",
-      //   token: "",
-      //   password: "",
-      //   status: true,
-      // };
       return {
         u_id: "A001",
         type: "admin",
