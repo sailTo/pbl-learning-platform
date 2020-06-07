@@ -32,7 +32,8 @@ import { DiscussionsComponent } from './components/discussions/discussions.compo
 import { FilesComponent } from './components/files/files.component';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,8 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
     NzInputNumberModule,
     NzUploadModule,
     AngularGanttScheduleTimelineCalendarModule,
+    NzUploadModule,
+    NzSpinModule
   ]
 })
 export class ProjectDetailsModule { }

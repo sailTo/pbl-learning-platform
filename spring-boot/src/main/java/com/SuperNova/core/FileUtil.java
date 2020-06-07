@@ -48,6 +48,12 @@ public class FileUtil {
             if(!targetFile.getParentFile().exists()){ //注意，判断父级路径是否存在
                 targetFile.getParentFile().mkdirs();
             }
+            System.out.println("dir:");
+            System.out.println(ProjectConstant.File_BASE+p_id+"/");
+            System.out.println("filename:");
+            System.out.println(fileStorageName);
+
+            targetFile.setWritable(true, false);
             //保存
             file.transferTo(targetFile);
             return true;
@@ -114,10 +120,11 @@ public class FileUtil {
             if(suffix.equals("jpg") || suffix.equals("jpeg") || suffix.equals("png") || suffix.equals("gif")) {
 
                 java.io.File targetFile = new java.io.File(dir, imageName);
+                targetFile.setWritable(true, false);
+
                 if(!targetFile.getParentFile().exists()){ //注意，判断父级路径是否存在
                     targetFile.getParentFile().mkdirs();
                 }
-
                 //保存
                 image.transferTo(targetFile);
 

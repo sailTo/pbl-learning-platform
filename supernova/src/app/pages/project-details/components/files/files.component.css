@@ -2,3 +2,8 @@ div {
     margin-bottom: 16px;
     text-align: right;
 }
+
+#forCenter{
+    text-align: center;
+    display: block;
+}
