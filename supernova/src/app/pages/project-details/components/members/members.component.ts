@@ -28,7 +28,8 @@ export class MembersComponent implements OnInit {
   all_submit_button_disable:boolean;
   all_submit_button_rating:number[];
 
-  u_id:string;
+  // u_id:string;
+  user:User;
   constructor(
     private route: ActivatedRoute,
     private scoreService: ScoreService,
@@ -67,6 +68,7 @@ export class MembersComponent implements OnInit {
     this.ifEdit =[];
     this.ifUpdate = [];
     this.all_submit_button_rating = [];
+    this.user = this.userService.getUser();
 
     this.route.queryParams.subscribe(
       (params: { p_id: number, p_name: string, groupers: string }) => {
@@ -74,18 +76,20 @@ export class MembersComponent implements OnInit {
         this.groupers = JSON.parse(params.groupers);
       }
     );
-    this.u_id = String(this.userService.getUser().u_id);
+    // this.u_id = String(this.user.u_id);
     // console.log(
-      this.projectService.getProject(this.p_id).subscribe(
-        (data) =>{
-          // console.log(data.data.project);
-          this.ifOpenRating = (data.data.project.self_grade_ratio != null);
-          // = data.rateMapping;
-          // this.ifOpenRating = false;
-          if (this.ifOpenRating)
-            this.getMyRating();
-        }
-  );
+    this.projectService.getProject(this.p_id).subscribe(
+      (data) =>{
+        // console.log(data.data.project);
+        this.ifOpenRating = (data.data.project.self_grade_ratio != null);
+        // this.ifOpenRating = false;
+        if (this.ifOpenRating)
+          this.getMyRating();
+        // if (this.user.type == 'admin')
+        //   this.ifOpenRating = false;
+      }
+    );
+
   }
 
   getMyRating():void{
@@ -97,8 +101,13 @@ export class MembersComponent implements OnInit {
           (rating) => rating.u_id == grouper['u_id']
         )['rating'];
         // console.log(grouper['rating']);
-        this.ifEdit.push(grouper['rating'] == null);
-        this.ifUpdate.push(grouper['rating'] == null);
+        if (this.user.type == 'admin') {
+          this.ifEdit.push(false);
+          this.ifUpdate.push(false);
+        }else {
+          this.ifEdit.push(grouper['rating'] == null);
+          this.ifUpdate.push(grouper['rating'] == null);
+        }
       });
       // console.log(this.groupers);
     })

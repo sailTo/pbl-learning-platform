@@ -19,12 +19,12 @@ export class UserService {
     } else {
       // return undefined;
       return {
-        u_id: "T001",
-        type: "teacher",
-        u_name: "001",
-        gender: "male",
+        u_id: "A001",
+        type: "admin",
+        u_name: "黄元敏",
+        gender: "男",
         description: "user desc",
-        image: "",
+        image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
         token: "",
         password: "",
       };
