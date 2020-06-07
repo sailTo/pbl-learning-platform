@@ -25,14 +25,14 @@ export class DiscussionsComponent implements OnInit {
   newDiscussion:string;
   discussion_submitting:boolean=false;
 
-  // user1 = {
-  //   u_id: 'S001',
-  //   type: '学生',
-  //   u_name: '黄元敏',
-  //   gender: '男',
-  //   description: '5student_1 for test',
-  //   image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
-  // };
+  user1 = {
+    u_id: 'S001',
+    type: '学生',
+    u_name: '黄元敏',
+    gender: '男',
+    description: '5student_1 for test',
+    image: 'http://123.56.219.88/SuperNova/UploadImage/default.jpg',
+  };
 
   constructor(
     private route: ActivatedRoute,

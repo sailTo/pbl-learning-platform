@@ -2,9 +2,7 @@
 <ng-template #commentTemplateRef let-comment="comment">
 
   <nz-comment *ngIf="comment.show" [nzAuthor]="comment.u_name" [nzDatetime]="comment.time_for_show">
-    <a [routerLink]="['/home',comment.u_id]">
-      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.image"></nz-avatar>
-    </a>
+    <nz-avatar [routerLink]="['/home',comment.u_id]" nz-comment-avatar nzIcon="user" [nzSrc]="comment.image"></nz-avatar>
     <nz-comment-content>
       <p>{{ comment.content }}</p>
     </nz-comment-content>
