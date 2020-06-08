@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import ItemMovement from "gantt-schedule-timeline-calendar/dist/ItemMovement.plugin.js";
@@ -8,10 +8,13 @@ import WeekendHighlight from "gantt-schedule-timeline-calendar/dist/WeekendHighl
 
 import { Task } from 'src/app/models/task';
 import { User } from 'src/app/models/user';
+import { Response } from 'src/app/models/generic-response';
+
+import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-tasks',
@@ -86,7 +89,7 @@ export class TasksComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private message: NzMessageService,
-    private modal: NzModalService,
+    private modalService: NzModalService,
     private taskService: TaskService,
     private userService: UserService,
   ) { }
@@ -111,6 +114,10 @@ export class TasksComponent implements OnInit {
     this.generateGantt();
   }
 
+  // get days offset
+  offset = (days: number) =>
+    new Date().setDate(new Date().getDate() + days).valueOf() - new Date().valueOf();
+
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
       this.tasks = response.data.assignments;
@@ -121,10 +128,6 @@ export class TasksComponent implements OnInit {
 
       let from = this.gstcState.get('config.chart.time.from');
       let to = this.gstcState.get('config.chart.time.to');
-
-      // get days offset
-      let offset = (days: number) =>
-        new Date().setDate(new Date().getDate() + days).valueOf() - new Date().valueOf();
 
       this.tasks.forEach((task, index) => {
         // generate fields for tasks
@@ -167,8 +170,8 @@ export class TasksComponent implements OnInit {
       });
 
       // adjust from, to date
-      this.gstcState.update('config.chart.time.from', from - offset(7));
-      this.gstcState.update('config.chart.time.to', to + offset(7));
+      this.gstcState.update('config.chart.time.from', from - this.offset(7));
+      this.gstcState.update('config.chart.time.to', to + this.offset(7));
 
       // set rows and items
       this.gstcState.update('config.list.rows', this.rows);
@@ -295,27 +298,67 @@ export class TasksComponent implements OnInit {
     );
   }
 
-  addRow(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>) {
-    this.modal.create({
+  showAddModal() {
+    this.modalService.create({
       nzTitle: '新增任务',
-      nzContent: tplContent,
-      nzFooter: tplFooter,
-      nzMaskClosable: false,
-      nzClosable: false,
+      nzContent: AddTaskComponent,
       nzComponentParams: {
-        value: 'Template Context'
-      },
-      nzOnOk: () => console.log('Click ok')
-    });
-    this.gstcState.update('config.list.rows', rows => {
-      const id = String(rows.length);
-      rows[id] = {
-        id: id,
-        // label: task.a_name,
-        // progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
-        expanded: false,
-      };
+        p_id: this.p_id,
+      }
+    }).afterClose.subscribe((task: Task) => {
+      if (task === undefined) {
+        return;
+      }
+      this.addTask(task);
     })
+  }
+
+  addTask(task: Task) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+    let from = this.gstcState.get('config.chart.time.from');
+    let to = this.gstcState.get('config.chart.time.to');
+
+    const rowId = String(Object.keys(rows).length + 1);
+    const itemId = String(Object.keys(items).length + 1);
+
+    rows[rowId] = {
+      id: rowId,
+      label: task.a_name,
+      progress: 0,
+      expanded: false,
+    };
+    items[itemId] = {
+      id: itemId,
+      label: task.a_description,
+      time: {
+        start: task.a_start_date,
+        end: task.a_end_date,
+      },
+      resizable: this.modifiable,
+      rowId: rowId,
+      style: {
+        background: this.pallete[0],
+      },
+      task: task,
+    };
+
+    // set rows and items
+    this.gstcState.update('config.list.rows', this.rows);
+    this.gstcState.update('config.chart.items', this.items);
+
+    // get dynamic from, to
+    if (from > task.a_start_date) {
+      from = task.a_start_date;
+      this.gstcState.update('config.chart.time.from', from - this.offset(7));
+    }
+    if (to < task.a_end_date) {
+      to = task.a_end_date;
+      this.gstcState.update('config.chart.time.to', to + this.offset(7));
+    }
+
+    this.addedList.push(itemId);
+    this.modified = true;
   }
 
   deleteRow() {
@@ -375,8 +418,9 @@ export class TasksComponent implements OnInit {
     this.items = this.gstcState.get('config.chart.items');
 
     // console.log(this.rows, this.items);
-    // this.handleModifications();
 
+    // this.handleModifications();
+    this.handleAdditions();
 
     setTimeout(() => {
       this.loading = false;
@@ -386,26 +430,39 @@ export class TasksComponent implements OnInit {
   }
 
   handleModifications() {
-    this.modifiedList.forEach((modified) => {
+    // generate modified tasks
+    const mTasks = this.modifiedList.map((modified) => {
       const item = this.items[modified];
 
       const mTask = item.task;
       [mTask.a_start_date, mTask.a_end_date] = [item.time.start, item.time.end];
 
-      this.taskService.modifyTask(mTask).subscribe((response) => {
-        if (response.code === 200) {
-          this.message.success(response.message);
-        } else if (response.code === 208) {
-          this.message.error(response.message);
-        } else if (response.code === 209) {
-          this.message.error(response.message);
-        }
-      });
+      return mTask;
+    });
+
+    this.taskService.modifyTasks(mTasks).subscribe((response) => {
+      this.handleResponse(response);
     });
   }
 
   handleAdditions() {
+    const aTasks = this.addedList.map((added) => {
+      return this.items[added].task;
+    });
 
+    this.taskService.addTasks(aTasks).subscribe((response) => {
+      this.handleResponse(response);
+    });
+  }
+
+  handleResponse(response: Response<{}>) {
+    if (response.code === 200) {
+      this.message.success(response.message);
+    } else if (response.code === 208) {
+      this.message.error(response.message);
+    } else if (response.code === 209) {
+      this.message.error(response.message);
+    }
   }
 
 }
