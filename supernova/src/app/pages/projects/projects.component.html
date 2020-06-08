@@ -13,6 +13,7 @@
 </nz-card>
 
 <ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="showModal()">Primary</button>
     请选择课程：
     <nz-select 
         [(ngModel)]="selectedValue" 

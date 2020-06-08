@@ -81,7 +81,7 @@ export class MembersComponent implements OnInit {
     this.projectService.getProject(this.p_id).subscribe(
       (data) =>{
         // console.log(data.data.project);
-        this.ifOpenRating = (data.data.project.self_grade_ratio != null);
+        this.ifOpenRating = (data.data.project.self_grade_ratio != 0);
         // this.ifOpenRating = false;
         if (this.ifOpenRating)
           this.getMyRating();

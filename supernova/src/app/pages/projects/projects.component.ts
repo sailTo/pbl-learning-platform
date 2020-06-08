@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { NzModalService } from 'ng-zorro-antd';
 import { CourseService } from "../../services/course.service";
 import { ProjectService } from "../../services/project.service";
 import { Project } from 'src/app/models/project';
+import {CreateCourseComponent} from "../courses/components/create-course/create-course.component";
+import {CreateProjectComponent} from "./components/create-project/create-project.component";
 
 @Component({
   selector: 'app-projects',
@@ -13,18 +15,18 @@ import { Project } from 'src/app/models/project';
 export class ProjectsComponent implements OnInit {
   optionList: { label: string, value: number }[];
   selectedValue: { label: string, value: number };
-
   projectTaking: number;
   projects: Project[];
-
   numOfCardsARow: number = 4;
-
   selectLoading: boolean = false;
+  current_c_id:number;
+  current_c_name:string;
 
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
     private projectService: ProjectService,
+    private modalService: NzModalService,
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +68,8 @@ export class ProjectsComponent implements OnInit {
 
   onChange(value: { label: string, value: number }): void {
     this.projects = [];
+    this.current_c_id=value.value;
+    this.current_c_name=value.label;
 
     if (value === null) {
       return;
@@ -77,4 +81,15 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
+  showModal(): void {
+    // this.isVisible = true;
+    this.modalService.create({
+      nzTitle: '新建项目',
+      nzContent: CreateProjectComponent,
+      nzComponentParams:{
+        course_id: this.current_c_id,
+        course_name: this.current_c_name,
+      }
+    })
+  }
 }
