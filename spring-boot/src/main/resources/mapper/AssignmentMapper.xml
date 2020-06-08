@@ -29,13 +29,6 @@
     order by u_id
   </select>
   <select id="searchAllAssignmentsDoneNum" parameterType="int" resultType="int">
-    SELECT DISTINCT
-      IFNULL(SubTable.SubNum, 0) AS TotalNum
-    FROM student_assignment AS MainTable
-    LEFT JOIN (
-        SELECT   a_id,COUNT(u_id) AS SubNum
-        FROM     student_assignment
-        WHERE    p_id = #{p_id} and status = true
-        GROUP BY a_id ) AS SubTable ON MainTable.a_id = SubTable.a_id order by MainTable.a_id;
+  SELECT IFNULL(subTable.SubNum, 0) FROM (SELECT a_id as keyr FROM student_assignment where p_id=#{p_id} group by a_id)as MainTable natural left outer join (SELECT a_id as keyr ,COUNT(*)as SubNum FROM student_assignment where p_id = #{p_id} AND status = true group by a_id) as subTable order by MainTable.keyr
   </select>
 </mapper>
