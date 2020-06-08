@@ -3,7 +3,7 @@
     <button nz-button nzType="primary" (click)="showDeleteModal()">删除任务</button>
     <button nz-button nzType="primary" (click)="saveChanges()" [disabled]="!modified"
         [nzLoading]="loading">保存修改</button>
-    <button nz-button nzType="primary" (click)="discardChanges()" [disabled]="!modified">放弃修改</button>
+    <button nz-button nzType="primary" (click)="discardChanges()" [disabled]="!modified && !loading">放弃修改</button>
 </div>
 
 <div>

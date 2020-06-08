@@ -8,6 +8,9 @@
                 <ng-container *ngIf="control.hasError('required')">
                     请输入任务ID！
                 </ng-container>
+                <ng-container *ngIf="control.hasError('inExist')">
+                    任务ID不存在！
+                </ng-container>
             </ng-template>
         </nz-form-control>
     </nz-form-item>

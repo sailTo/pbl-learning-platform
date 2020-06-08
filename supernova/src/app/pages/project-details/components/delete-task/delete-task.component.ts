@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { NzModalRef } from 'ng-zorro-antd';
 
@@ -9,7 +9,8 @@ import { NzModalRef } from 'ng-zorro-antd';
   styleUrls: ['./delete-task.component.css']
 })
 export class DeleteTaskComponent implements OnInit {
-  @Input() rowNum: number;
+  @Input() rows: {};
+  rowNum: number;
   
   validateForm: FormGroup;
 
@@ -18,12 +19,22 @@ export class DeleteTaskComponent implements OnInit {
     private modal: NzModalRef, 
   ) {
     this.validateForm = this.fb.group({
-      rowId: ['', [Validators.required]],
+      rowId: ['', [this.rowIdValidator]],
     });
   }
 
   ngOnInit(): void {
+    this.rowNum = Number(Object.keys(this.rows).sort((a, b) => Number(b) - Number(a))[0]);
   }
+
+  rowIdValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (!Object.keys(this.rows).includes(String(control.value))) {
+      return { inExist: true, error: true };
+    }
+    return {};
+  };
 
   destroyModal(): void {
     this.modal.destroy();

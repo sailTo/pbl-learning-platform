@@ -48,6 +48,17 @@ export class TaskService {
     return this.http.post<Response<{a_idList: number[]}>>('/api/createAssignments', params.toString(), { headers });
   }
 
+  addTask(task: Task) {
+    const headers = new HttpHeaders({
+      'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
+    });
+    const params = new HttpParams({ fromObject: {
+      pbl_token: this.userService.getUser().token,
+      assignment: JSON.stringify(task),
+    }});
+    return this.http.post<Response<{a_id: number}>>('/api/createAssignment', params.toString(), { headers });
+  }
+
   deleteTasks(assignmentIdList: number[], projectId: number) {
     const params = new HttpParams({ fromObject: {
       pbl_token: this.userService.getUser().token,
@@ -55,5 +66,14 @@ export class TaskService {
       p_id: String(projectId), 
     }});
     return this.http.delete<Response<{}>>('/api/deleteAssignments', { params });
+  }
+
+  modifyAndDeleteAssignments(assignmentList: Task[], opList: string[]) {
+    const params = new HttpParams({ fromObject: {
+      pbl_token: this.userService.getUser().token,
+      assignmentList: JSON.stringify(assignmentList),
+      opList: JSON.stringify(opList), 
+    }});
+    return this.http.put<Response<{}>>('/api/modifyAssignments', params);
   }
 }
