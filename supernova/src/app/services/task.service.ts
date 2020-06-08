@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Response } from "../models/generic-response";
 import { Task } from '../models/task';
@@ -29,11 +29,31 @@ export class TaskService {
     }>>('/api/searchAssignment', { params });
   }
 
-  modifyTask(task: Task) {
+  modifyTasks(tasks: Task[]) {
     const params = new HttpParams({ fromObject: {
       pbl_token: this.userService.getUser().token,
-      assignment: JSON.stringify(task),
+      assignments: JSON.stringify(tasks),
     }});
-    return this.http.put<Response<{}>>('/api/changeAssignment', params);
+    return this.http.put<Response<{}>>('/api/changeAssignments', params);
+  }
+
+  addTasks(tasks: Task[]) {
+    const headers = new HttpHeaders({
+      'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
+    });
+    const params = new HttpParams({ fromObject: {
+      pbl_token: this.userService.getUser().token,
+      assignments: JSON.stringify(tasks),
+    }});
+    return this.http.post<Response<{}>>('/api/createAssignments', params.toString(), { headers });
+  }
+
+  deleteTasks(assignmentIdList: number[], projectId: number) {
+    const params = new HttpParams({ fromObject: {
+      pbl_token: this.userService.getUser().token,
+      a_idList: JSON.stringify(assignmentIdList),
+      p_id: String(projectId), 
+    }});
+    return this.http.delete<Response<{}>>('/api/deleteAssignments', { params });
   }
 }
