@@ -66,15 +66,17 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public int addProject(Project project, List<GradeSystem> grades) {
+        project.setGrading_status(false);
         projectMapper.addProject(project);
         int p_id = project.getP_id();
-        int item_id = gradeSystemMapper.getMaxItemId(p_id);
+        //新创建一个项目，项目的id从1开始计算
+        int item_id = 1;
         for (GradeSystem grade:grades) {
             grade.setP_id(p_id);
             //这里需要修改成设置item_id，因为它不是自增的
-            grade.setItem_id(++item_id);
+            grade.setItem_id(item_id++);
+            gradeSystemMapper.insert(grade);
         }
-        gradeSystemMapper.insertList(grades);
         return p_id;
     }
 
@@ -129,8 +131,14 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         List<StudentProject> list = studentProjectMapper.select(tmp);
         if(list.size()==0){
             tmp.setIs_group_leader(true);
+        }else{
+            tmp.setIs_group_leader(false);
         }
         tmp.setU_id(u_id);
+        //初始化自评分、互评分、教师评分
+        tmp.setMutual_grade(0.0);
+        tmp.setSelf_grade(0.0);
+        tmp.setTeacher_grade(0.0);
         //插入学生选项目
         studentProjectMapper.insert(tmp);
 
@@ -138,15 +146,14 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         Assignment assignment = new Assignment();
         assignment.setP_id(p_id);
         List<Assignment> aList = assignmentMapper.select(assignment);
-        List<StudentAssignment> addList = new ArrayList<>();
         for (Assignment a:aList) {
             StudentAssignment t = new StudentAssignment();
             t.setA_id(a.getA_id());
             t.setP_id(a.getP_id());
             t.setU_id(u_id);
             t.setStatus(false);
-            addList.add(t);
+            t.setUrge(false);
+            studentAssignmentMapper.insert(t);
         }
-        studentAssignmentMapper.insertList(addList);
     }
 }
