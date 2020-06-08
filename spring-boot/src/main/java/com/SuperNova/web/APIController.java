@@ -167,6 +167,7 @@ public class APIController {
     @GetMapping("/searchAllMyCourses")
     public Result searchAllMyCourses(@RequestParam String pbl_token) {
         String u_id = userService.getUIdByToken(pbl_token);
+//        String u_id = "S001";
         return ResultGenerator.genSuccessResult(courseService.searchAllMyCourses(u_id));
     }
 
@@ -175,6 +176,7 @@ public class APIController {
     public Result searchProject(@RequestParam String pbl_token,
                                 @RequestParam String c_id) {
         String u_id = userService.getUIdByToken(pbl_token);
+//        String u_id = "S001";
         int p_id = projectService.studentCoursePID(u_id,Integer.parseInt(c_id));
         User user = userService.searchUser(u_id);
         JSONObject data = new JSONObject();
@@ -419,6 +421,7 @@ public class APIController {
         return ResultGenerator.genSuccessResult(data);
     }
 
+    //这个是学生查询自己的用的接口
     @CrossOrigin(origins = "*")
     @GetMapping("/searchEvaluateByTeacher")
     public Result searchEvaluateByTeacher(@RequestParam String pbl_token,
@@ -593,8 +596,6 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @PostMapping("/evaluateByTeacher")
     public Result evaluateByTeacher(@RequestParam String pbl_token,
-                                    @RequestParam String p_id,
-                                    @RequestParam String s_id,
                                     @RequestParam String grades) {
         String t_id = userService.getUIdByToken(pbl_token);
         User user = userService.searchUser(t_id);
@@ -680,4 +681,25 @@ public class APIController {
         return ResultGenerator.genSuccessResult().setMessage("添加成功！");
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/setTeacherGrade")
+    public Result setTeacherGrade(@RequestParam String pbl_token,
+                          @RequestParam String student_project) {
+        return null;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getItemsByPid")
+    public Result getItemsByPid(@RequestParam String pbl_token,
+                                  @RequestParam String p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(s_id);
+        if(user.getType().equals("student")){
+            return ResultGenerator.genFailResult("获得items权限不够").setCode(ResultCode.DENY);
+        }
+        ArrayList<Map<String, Object>> ret = studentGradeService.searchEvaluateByPid(Integer.parseInt(p_id));
+        JSONObject data = new JSONObject();
+        data.put("allItems",ret);
+        return ResultGenerator.genSuccessResult(data);
+    }
 }

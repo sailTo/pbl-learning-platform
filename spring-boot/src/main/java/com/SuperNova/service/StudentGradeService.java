@@ -2,7 +2,9 @@ package com.SuperNova.service;
 import com.SuperNova.model.StudentGrade;
 import com.SuperNova.core.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,4 +32,10 @@ public interface StudentGradeService extends Service<StudentGrade> {
      * @param studentGrades
      */
     void evaluateByTeacher(List<StudentGrade> studentGrades);
+
+    /**
+     * 获取项目中所有人的评分细则的真实评分list，未评的item分数为null
+     * @param pid
+     */
+    ArrayList<Map<String,Object>> searchEvaluateByPid(int pid);
 }

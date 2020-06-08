@@ -1,11 +1,7 @@
 package com.SuperNova.service.impl;
 
-import com.SuperNova.dao.EvaluationMapper;
-import com.SuperNova.dao.ProjectMapper;
-import com.SuperNova.dao.StudentGradeMapper;
-import com.SuperNova.model.Evaluation;
-import com.SuperNova.model.Project;
-import com.SuperNova.model.StudentGrade;
+import com.SuperNova.dao.*;
+import com.SuperNova.model.*;
 import com.SuperNova.service.StudentGradeService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -13,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -28,6 +27,49 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     private EvaluationMapper evaluationMapper;
     @Resource
     private ProjectMapper projectMapper;
+    @Resource
+    private StudentProjectMapper studentProjectMapper;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private GradeSystemMapper gradeSystemMapper;
+
+    @Override
+    public ArrayList<Map<String,Object>> searchEvaluateByPid(int pid) {
+        StudentProject studentProject = new StudentProject();
+        studentProject.setP_id(pid);
+        List<StudentProject> studentProjects = studentProjectMapper.select(studentProject);
+
+        GradeSystem gradeSystem = new GradeSystem();
+        gradeSystem.setP_id(pid);
+        List<GradeSystem> gradeSystems = gradeSystemMapper.select(gradeSystem);
+        ArrayList<Map<String,Object>> ret = new ArrayList<>();
+        for (StudentProject s : studentProjects) {
+            Map<String,Object> tmp = new HashMap<>();
+            User user = userMapper.selectByPrimaryKey(s.getU_id());
+            tmp.put("u_id",user.getU_id());
+            tmp.put("u_name",user.getU_name());
+            ArrayList<Map<String,Object>> mapList = new ArrayList<>();
+            for (GradeSystem g : gradeSystems) {
+                StudentGrade studentGrade = new StudentGrade();
+                studentGrade.setP_id(pid);
+                studentGrade.setU_id(user.getU_id());
+                studentGrade.setItem_id(g.getItem_id());
+                StudentGrade tmpStudentGrade = studentGradeMapper.selectOne(studentGrade);
+                Map<String,Object> tmp_map = new HashMap<>();
+                tmp_map.put("item_id",g.getItem_id());
+                tmp_map.put("item_name",g.getDescription());
+                if (tmpStudentGrade!=null){
+                    tmp_map.put("grade",tmpStudentGrade.getGrade());
+                }else
+                    tmp_map.put("grade",null);
+                mapList.add(tmp_map);
+            }
+            tmp.put("itemsList",mapList);
+            ret.add(tmp);
+        }
+        return ret;
+    }
 
     @Override
     public String searchEvaluateByTeacher(int p_id, String s_id) {
