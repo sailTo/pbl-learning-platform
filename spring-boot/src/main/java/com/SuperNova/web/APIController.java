@@ -729,8 +729,15 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @PostMapping("/setTeacherGrade")
     public Result setTeacherGrade(@RequestParam String pbl_token,
-                          @RequestParam String student_project) {
-        return null;
+                                  @RequestParam String student_grade) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(s_id);
+        if(user.getType().equals("student")){
+            return ResultGenerator.genFailResult("修改教师评分权限不够").setCode(ResultCode.DENY);
+        }
+        StudentGrade studentGradeObj = JSON.parseObject(student_grade,StudentGrade.class);
+        studentGradeService.update(studentGradeObj);
+        return ResultGenerator.genSuccessResult().setMessage("更新成功！");
     }
 
     @CrossOrigin(origins = "*")
@@ -745,6 +752,21 @@ public class APIController {
         ArrayList<Map<String, Object>> ret = studentGradeService.searchEvaluateByPid(Integer.parseInt(p_id));
         JSONObject data = new JSONObject();
         data.put("allItems",ret);
+        return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/SelfAndMutualevaluateScore")
+    public Result getSelfAndMutualGrade(@RequestParam String pbl_token,
+                                        @RequestParam String p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(s_id);
+        if(user.getType().equals("student")){
+            return ResultGenerator.genFailResult("获取自评互评分权限不够").setCode(ResultCode.DENY);
+        }
+        ArrayList<Map<String,Object>> ret = projectService.getSelfAndMutualGradeByPid(Integer.parseInt(p_id));
+        JSONObject data = new JSONObject();
+        data.put("selfAndMutualInformations",ret);
         return ResultGenerator.genSuccessResult(data);
     }
 }

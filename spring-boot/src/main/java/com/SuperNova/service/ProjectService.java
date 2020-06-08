@@ -3,7 +3,10 @@ import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.core.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -88,4 +91,11 @@ public interface ProjectService extends Service<Project> {
      * @param u_id
      */
     void joinProject(int p_id,String u_id);
+
+    /**
+     * 通过pid获取项目中所有成员的自评互评得分，没有评的设为null
+     * @param p_id
+     * @return
+     */
+    ArrayList<Map<String,Object>> getSelfAndMutualGradeByPid(int p_id);
 }

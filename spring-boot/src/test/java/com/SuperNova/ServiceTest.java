@@ -163,4 +163,10 @@ public class ServiceTest extends Tester {
         ArrayList<Map<String,Object>> ret = studentGradeService.searchEvaluateByPid(1);
         Assert.assertEquals(2,ret.size());
     }
+
+    @Test
+    public void test11(){
+        ArrayList<Map<String,Object>> ret = projectService.getSelfAndMutualGradeByPid(1);
+        Assert.assertEquals(2,ret.size());
+    }
 }

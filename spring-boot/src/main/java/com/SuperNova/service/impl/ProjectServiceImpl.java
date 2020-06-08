@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,9 +37,26 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private StudentGradeMapper studentGradeMapper;
     @Resource
     private FileMapper fileMapper;
+    @Resource
+    private UserMapper userMapper;
 
-//    @Resource
-//    private
+    @Override
+    public ArrayList<Map<String, Object>> getSelfAndMutualGradeByPid(int p_id) {
+        StudentProject studentProject = new StudentProject();
+        studentProject.setP_id(p_id);
+        ArrayList<Map<String, Object>> ret = new ArrayList<>();
+        List<StudentProject> studentProjects = studentProjectMapper.select(studentProject);
+        for (StudentProject s : studentProjects) {
+            Map<String, Object> tmp = new HashMap<>();
+            User user = userMapper.selectByPrimaryKey(s.getU_id());
+            tmp.put("s_id",s.getU_id());
+            tmp.put("s_name",user.getU_name());
+            tmp.put("selfScore",s.getSelf_grade());
+            tmp.put("mutualScore",s.getMutual_grade());
+            ret.add(tmp);
+        }
+        return ret;
+    }
 
     @Override
     public int studentCoursePID(String u_id, int c_id) {
