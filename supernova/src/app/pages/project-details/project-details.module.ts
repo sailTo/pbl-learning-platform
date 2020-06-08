@@ -23,6 +23,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDatePickerModule } from "ng-zorro-antd/date-picker";
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
@@ -77,6 +78,7 @@ import { DeleteTaskComponent } from './components/delete-task/delete-task.compon
     NzUploadModule,
     NzSpinModule, 
     NzDatePickerModule, 
+    NzBadgeModule, 
     AngularGanttScheduleTimelineCalendarModule,
   ]
 })

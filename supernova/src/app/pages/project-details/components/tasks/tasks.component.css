@@ -3,6 +3,10 @@ div {
     text-align: right;
 }
 
-div button {
+button {
+    margin-left: 16px;
+}
+
+nz-badge {
     margin-left: 16px;
 }

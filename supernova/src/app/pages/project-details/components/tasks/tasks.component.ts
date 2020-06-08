@@ -36,19 +36,20 @@ export class TasksComponent implements OnInit {
   tasks: Task[];
   totalNum: number; // 项目总人数
 
+  percent: number = 100; // 行头显示比例
   zoom: number = 20; // 日期缩放级别
+
+  percentFormatter = (value: number) => `行头缩放：${value}`;
+  zoomFormatter = (value: number) => `时间轴缩放：${value}`;
+
   daysOffset: number = 3; // 前后日期冗余显示天数
 
   modifiable: boolean; // 甘特图中内容是否可修改
   modified: boolean = false; // 甘特图中内容是否被修改过
   loading: boolean = false; // 保存按键是否正在提交
 
-  // modifiedList: string[] = []; // 存储被修改过的item id
-  // addedList: string[] = []; // 存储新建的item id
-  // deletedList: number[] = []; // 存储删除的a_id
-
-  modifiedAssignmentList: Task[] = [];
-  opList: string[] = [];
+  modifiedAssignmentList: Task[] = []; // 删改过的task列表
+  opList: string[] = []; // task列表对应的操作：modify or delete
 
   pallete = [
     '#E74C3C',
@@ -65,6 +66,16 @@ export class TasksComponent implements OnInit {
     '#707070'
   ];
 
+  colorMapping = {
+    1: '#f5222d', // red
+    2: '#fa8c16', // orange
+    3: '#fadb14', // yellow
+    4: '#13c2c2', // cyan
+    5: '#52c41a', // green
+    '急迫': '#722ed1', // purple
+    '完成' : '#d9d9d9', // grey
+  }
+
   rows: {
     [id: string]: {
       id: string,
@@ -72,6 +83,7 @@ export class TasksComponent implements OnInit {
       progress?: number,
       expanded?: boolean,
       itemId: string,
+      // status: string, 
     }
   } = {};
 
@@ -155,7 +167,18 @@ export class TasksComponent implements OnInit {
           progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
           expanded: false,
           itemId: (index + 1).toString(),
+          // status: '<b>测试</b>', 
         };
+
+        let itemColor: string;
+        if (task.finished) {
+          itemColor = this.colorMapping['完成']
+        } else if (task.urged) {
+          itemColor = this.colorMapping['急迫'];
+        } else {
+          itemColor = this.colorMapping[task.importance];
+        }
+
         this.items[(index + 1).toString()] = {
           id: (index + 1).toString(),
           label: task.a_description,
@@ -166,7 +189,7 @@ export class TasksComponent implements OnInit {
           resizable: this.modifiable,
           rowId: (index + 1).toString(),
           style: {
-            background: this.pallete[index],
+            background: itemColor,
           },
           task: task,
         };
@@ -208,6 +231,15 @@ export class TasksComponent implements OnInit {
             content: '任务ID'
           }
         },
+        // status: {
+        //   id: 'status', 
+        //   data: 'status', 
+        //   isHTML: true, 
+        //   width: 30, 
+        //   header: {
+        //     content: '状态'
+        //   }
+        // }, 
         label: {
           id: 'label',
           data: 'label',
@@ -287,6 +319,14 @@ export class TasksComponent implements OnInit {
     //   console.log("rows changed", rows);
     // });
 
+    this.gstcState.subscribe('config.list.columns.percent', (percent: number) => {
+      this.percent = percent;
+    });
+
+    this.gstcState.subscribe('config.chart.time.zoom', (zoom: number) => {
+      this.zoom = zoom;
+    });
+
     this.gstcState.subscribe(
       "config.chart.items.:id",
       (bulk, eventInfo) => {
@@ -296,14 +336,12 @@ export class TasksComponent implements OnInit {
           const thisModifiedTask = thisModifiedItem.task;
 
           this.modified = true;
-          // if (!this.modifiedList.includes(itemId)
-          //   && !this.deletedList.includes(itemId)) {
-          //   this.modifiedList.push(itemId);
-          // }
 
           let lastElementOf = (list: any[]) => list[list.length - 1];
 
           if (this.modifiedAssignmentList.length !== 0) {
+            // if this modified is last modified, then will not add a new operation
+            // instead, substitute the new one for the old one
             const lastModifiedItem = lastElementOf(this.modifiedAssignmentList);
             const lastOp = lastElementOf(this.opList);
 
@@ -319,7 +357,7 @@ export class TasksComponent implements OnInit {
           this.modifiedAssignmentList.push(thisModifiedTask);
           this.opList.push('modify');
 
-          console.log(this.items, this.lastItems);
+          // console.log(this.items, this.lastItems);
 
           // console.log(
           //   `item ${itemId} changed`,
@@ -356,8 +394,6 @@ export class TasksComponent implements OnInit {
     const rowId = String(Number(Object.keys(rows).sort((a, b) => Number(b) - Number(a))[0]) + 1);
     const itemId = String(Number(Object.keys(items).sort((a, b) => Number(b) - Number(a))[0]) + 1);
 
-    console.log(itemId);
-
     rows[rowId] = {
       id: rowId,
       label: task.a_name,
@@ -393,9 +429,6 @@ export class TasksComponent implements OnInit {
       to = task.a_end_date;
       this.gstcState.update('config.chart.time.to', to + this.offset(this.daysOffset));
     }
-
-    // this.addedList.push(itemId);
-    // this.modified = true;
   }
 
   showDeleteModal() {
@@ -403,7 +436,6 @@ export class TasksComponent implements OnInit {
       nzTitle: '删除任务',
       nzContent: DeleteTaskComponent,
       nzComponentParams: {
-        // rowNum: Object.keys(this.gstcState.get('config.list.rows')).length,
         rows: this.rows, 
       }
     }).afterClose.subscribe((rowId) => {
@@ -432,11 +464,7 @@ export class TasksComponent implements OnInit {
     this.gstcState.update('config.list.rows', rows);
     this.gstcState.update('config.chart.items', items);
 
-    // discard changes on the item
-    // this.modifiedList = this.modifiedList.filter(id => id !== itemId);
-
     // record the item
-    // this.deletedList.push(item.task.a_id);
     this.modifiedAssignmentList.push(item.task);
     this.opList.push('delete');
     this.modified = true;
@@ -451,28 +479,24 @@ export class TasksComponent implements OnInit {
   }
 
   discardChanges() {
-    // this.addedList = [];
     this.modifiedAssignmentList = [];
-    // this.deletedList = [];
     this.opList = [];
 
-    console.log(this.items, this.lastItems);
+    // console.log(this.items, this.lastItems);
 
     // roll back rows and items
     this.gstcState.update('config.list.rows', this.lastRows);
     this.gstcState.update('config.chart.items', this.lastItems);
+
+    this.lastRows = JSON.parse(JSON.stringify(this.lastRows));
+    this.lastItems = JSON.parse(JSON.stringify(this.lastItems));
 
     this.modified = false;
   }
 
   saveChanges() {
     this.loading = true;
-
-    // // async, nested
-    // this.handleAdditions();
-
     console.log(this.modifiedAssignmentList, this.opList);
-
     this.handleModifications();
   }
 
@@ -502,68 +526,6 @@ export class TasksComponent implements OnInit {
       this.handleResponse(response);
     })
   }
-
-  // handleModifications() {
-  //   if (this.modifiedList.length === 0) {
-  //     this.handleDeletions();
-  //     return;
-  //   }
-
-  //   // generate modified tasks
-  //   const mTasks = this.modifiedList.map((modified) => {
-  //     const item = this.items[modified];
-
-  //     const mTask = item.task;
-  //     [mTask.a_start_date, mTask.a_end_date] = [item.time.start, item.time.end];
-
-  //     return mTask;
-  //   });
-
-  //   this.taskService.modifyTasks(mTasks).subscribe((response) => {
-  //     this.handleResponse(response);
-  //     this.modifiedList = [];
-
-  //     this.handleDeletions();
-  //   });
-  // }
-
-  // handleAdditions() {
-  //   if (this.addedList.length === 0) {
-  //     this.handleModifications();
-  //     return;
-  //   }
-  //   const aTasks = this.addedList.map((added) => {
-  //     return this.items[added].task;
-  //   });
-
-  //   this.taskService.addTasks(aTasks).subscribe((response) => {
-  //     // update items with new a_id
-  //     response.data.a_idList.forEach((a_id, index) => {
-  //       this.items[this.addedList[index]].task.a_id = a_id;
-  //     });
-  //     this.gstcState.update('config.chart.items', this.items);
-
-  //     this.handleResponse(response);
-  //     this.addedList = [];
-
-  //     this.handleModifications();
-  //   });
-  // }
-
-  // handleDeletions() {
-  //   if (this.deletedList.length === 0) {
-  //     this.loading = false;
-  //     this.modified = false;
-  //     return;
-  //   }
-  //   this.taskService.deleteTasks(this.deletedList, this.p_id).subscribe((response) => {
-  //     this.handleResponse(response);
-  //     this.deletedList = [];
-
-  //     this.loading = false;
-  //     this.modified = false;
-  //   })
-  // }
 
   handleResponse(response: Response<{}>) {
     if (response.code === 200) {
