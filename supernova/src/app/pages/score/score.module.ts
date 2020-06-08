@@ -13,6 +13,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon'
 import { SortTableComponent } from './sort-table/sort-table.component';
 import { UserDefinedTableComponent } from './user-defined-table/user-defined-table.component'
 import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzMessageModule} from  'ng-zorro-antd/message'
 import { CascaderComponent } from './cascader/cascader.component';
 @NgModule({
   declarations: [ScoreComponent, SearchListComponent, ScoreTableComponent,SortTableComponent, UserDefinedTableComponent, CascaderComponent],
@@ -24,7 +25,8 @@ import { CascaderComponent } from './cascader/cascader.component';
     NzTableModule,
     NzDropDownModule,
     NzIconModule,
-    NzButtonModule
+    NzButtonModule,
+    NzMessageModule
   ]
 })
 export class ScoreModule { }

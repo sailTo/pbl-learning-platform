@@ -5,21 +5,24 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import{DescriptionBorderComponent} from './description-border/description-border.component'
 import { NgZorroAntdModule} from 'ng-zorro-antd';
-import {AvatarComponent} from './avatar/avatar.component';
+
 import {FormsModule} from '@angular/forms';
-import { CourseCardComponent } from './course-card/course-card.component';
-import { ChangepasswordComponent } from './changepassword/changepassword.component'
+import { MyCourseCardComponent } from './course-card/course-card.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
+// import { PaginationComponent} from '../../components/pagination/pagination.component';
+// import { CourseCardComponent} from '../../components/course-card/course-card.component';
+import {CoursesModule} from '../courses/courses.module';
 
 @NgModule({
-  declarations: [HomeComponent,DescriptionBorderComponent,AvatarComponent, CourseCardComponent, ChangepasswordComponent],
+  declarations: [HomeComponent,DescriptionBorderComponent, ChangepasswordComponent,MyCourseCardComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
     NgZorroAntdModule,
-    FormsModule
+    FormsModule,
+    CoursesModule
+    
   ],
-  providers:[
-    AvatarComponent
-  ]
+
 })
 export class HomeModule { }

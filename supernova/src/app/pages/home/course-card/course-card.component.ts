@@ -1,38 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-
-interface courseData{
-  name: string;
-  url : string;
-  description: string;
-}
-
+import { Course } from 'src/app/models/course';
+import { User } from 'src/app/models/user';
+import { NzModalService } from 'ng-zorro-antd';
+import { CourseService } from 'src/app/services/course.service';
+import { UserService } from 'src/app/services/user.service';
 @Component({
-  selector: 'app-course-card',
+  selector: 'app-mycourse-card',
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css']
 })
 
 
-export class CourseCardComponent implements OnInit {
-  arr = Array;
-  courseDatas: courseData[]=[];
-  linesNum : Number;
-  gridStyle = {
-    width: '25%',
-    textAlign: 'center',
-    margin: 12
-  };
-  constructor(){
+export class MyCourseCardComponent implements OnInit {
+  currentUser: User = this.userService.getUser();
+  courses: Course[];
+  
+  pageIndex: number = 1;
+  pageSize: number = 8;
+  total: number;
+
+  numOfCardsARow: number = 4;
+
+
+  constructor(
+    private courseService: CourseService,
+    private userService: UserService,
+    private modalService: NzModalService,
+  ){
 
   }
   ngOnInit(){
-    this.linesNum = 3;
-    for( var i=0;i<4;i++){
-      var coursedata = {name:"myname"+ i , url :"https://www.baidu.com/"+ i , description :"区别就在于，$apply是对$rootScope及子作用域做脏值检测，意味着性能消耗更大。支持回掉函数算是一个好处。"}
-      this.courseDatas.push(coursedata);
-    }
-    
+    this.getCourses();
+  }
+  getCourses(): void {
+    this.courseService.getCourses('my', this.currentUser.u_id, this.pageIndex, this.pageSize).subscribe((response) => {
+      this.courses = response.data.courses.list;
+      const teachers = response.data.teachers.list;
+      this.total = response.data.total;
+
+      // assign teacher to course
+      this.courses.forEach((course, index) => {
+        course.teacher = teachers[index];
+      })
+    });
   }
 
+
+  onPageIndexChange(pageIndex: number) {
+    this.pageIndex = pageIndex;
+    this.getCourses();
+  }
 
 }

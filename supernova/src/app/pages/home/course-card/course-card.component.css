@@ -1,5 +1,6 @@
 
-      p {
-        margin: 0;
-      }
+      app-pagination {
+        padding-top: 24px; 
+        float: right;
+    }
     

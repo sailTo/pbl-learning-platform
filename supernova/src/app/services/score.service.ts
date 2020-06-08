@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import {environment} from '../../environments/environment'
-import {Project} from '../models/project'
-import {Response} from "../models/generic-response";
-import {Rating} from "../models/rating";
-import {UserService} from "./user.service";
-export interface ret_courseData{
-  c_id :number,
-  c_name:string
-}
+import { environment } from '../../environments/environment'
+import { Project } from '../models/project'
+import { Response } from "../models/generic-response";
+import { Rating } from "../models/rating";
+import { UserService } from "./user.service";
+import { Course } from '../models/course'
+import { GradeItem } from '../models/GradeItem';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +15,9 @@ export interface ret_courseData{
 export class ScoreService {
   constructor(
     private http: HttpClient,
-    private userService:UserService
+    private userService: UserService
   ) { }
-  getProjectScoreById(project_id :string): any{
+  getProjectScoreById(project_id: string): any {
     //to do
     // const params = new HttpParams({fromObject:{
     //   pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
@@ -32,43 +30,86 @@ export class ScoreService {
     //  );
 
   }
-  getAllMyCourses():ret_courseData[]{
-      const params = new HttpParams({fromObject:{
+  getAllMyCourses() {
+    const params = new HttpParams({
+      fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-      }});
-        var ret_data;
-       this.http.get<any>(`${environment.apiUrl}/api/searchAllMyCourses`,{params}).subscribe(
-         (data) =>{
-           ret_data = data.courses;
-         }
-       );
-       return ret_data;
-  }
-
-  getProjectsByCourseId(id:number):Project[]{
-    const params = new HttpParams({fromObject:{
-      pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-      c_id : String(id),
-    }});
-    var ret_projects;
-    this.http.get<any>(`${environment.apiUrl}/api/searchProject`,{params}).subscribe(
-      (data) =>{
-        ret_projects = data.projects;
-      
       }
-    );
-   return ret_projects;
+    });
+    var ret_data;
+    return this.http.get<Response<{ courses: Course[] }>>(`${environment.apiUrl}/api/searchAllMyCourses`, { params });
+
   }
 
-  getRating(projectId: number){
-    const params = new HttpParams({ fromObject: {
+  getProjectsByCourseId(id: number) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        c_id: String(id),
+      }
+    });
+
+    return this.http.get<Response<{ projects: Project[] }>>(`${environment.apiUrl}/api/searchProject`, { params });
+  }
+
+  getColumnItems(p_id: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        p_id: p_id,
+      }
+    });
+    return this.http.get<Response<{ grades: GradeItem[] }>>(`${environment.apiUrl}/api/searchEvaluateByTeacher`, { params });
+  }
+  getAssignmentDone(p_id: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        p_id: p_id,
+      }
+    });
+    return this.http.get<Response<{ totalAssignmentNum: number, doneInformations: { s_id: string, s_name: string, doneNum: number }[] }>>(`${environment.apiUrl}/api/countAssignmentDone`, { params });
+  }
+  getCountDiscussion(p_id: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        p_id: p_id,
+      }
+    });
+    return this.http.get<Response<{ maxDiscussNum: number, discussInformations: { s_id: string, s_name: string, discussNum: number }[] }>>(`${environment.apiUrl}/api/countDiscussion`, { params });
+  }
+  getSelfAndMutualScore(p_id: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        p_id: p_id,
+      }
+    });
+    return this.http.get<Response<{ selfAndMutualInformations: { s_id: string, s_name: string, selfScore: number, mutualScore: number }[] }>>(`${environment.apiUrl}/api/SelfAndMutualeValuateScore`, { params });
+  }
+  getGradeItemScore(p_id: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        p_id: p_id,
+      }
+    });
+    // return this.http.get<Response<{selfAndMutualInformations:{s_id:string,s_name:string,selfScore:number,mutualScore:number}[]}>>(`${environment.apiUrl}/api/SelfAndMutualevaluateScore`,{params});
+    return this.http.get<Response<{ allitems: { s_id: string, s_name: string, itemsList: { item_id: string, item_name: string, grade: number }[] }[] }>>(`${environment.apiUrl}/api/getItemsByPid`, { params });
+  }
+
+  getRating(projectId: number) {
+    const params = new HttpParams({
+      fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: String(projectId)
-      }});
-    return this.http.get<Response<{rateMapping: Rating[]}>>('/api/getMyEvaluation', { params });
+      }
+    });
+    return this.http.get<Response<{ rateMapping: Rating[] }>>('/api/getMyEvaluation', { params });
   }
 
-  toRating(projectId: number, u_Id: string, grade:number){
+  toRating(projectId: number, u_Id: string, grade: number) {
     let headers = {
       headers: new HttpHeaders({
         'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
@@ -82,7 +123,8 @@ export class ScoreService {
     };
     return this.http.post<any>(`${environment.apiUrl}/api/evaluateOther`,
       this.transformRequest(params),
-      {headers: new HttpHeaders({
+      {
+        headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded'
         })
       });

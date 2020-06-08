@@ -7,13 +7,13 @@
   </nz-select>
  -->
 <div>
-  <nz-select [(ngModel)]="selectedCourse" (ngModelChange)="courseChange($event)">
-    <nz-option *ngFor="let course of courseData" [nzValue]="course.name" [nzLabel]="course.id"></nz-option>
+  <nz-select [(ngModel)]="selectedCourse" (ngModelChange)="courseChange($event)" nzPlaceHolder="请选择你的课程">
+    <nz-option *ngFor="let course of courseData" [nzValue]="course.c_id" [nzLabel]="course.c_name"></nz-option>
   </nz-select>
-  <nz-select [(ngModel)]="selectedProject"  (ngModelChange)="projectChange()">
-    <nz-option *ngFor="let project of projectData[selectedCourse]" [nzValue]="project.name" [nzLabel]="project.id"></nz-option>
+  <nz-select [(ngModel)]="selectedProject"  (ngModelChange)="projectChange()" nzPlaceHolder="请选择你的项目">
+    <nz-option *ngFor="let project of projectData[selectedCourse]" [nzValue]="project.p_id" [nzLabel]="project.p_name"></nz-option>
   </nz-select>
 </div>
-<app-score-table></app-score-table>
+<app-score-table [selectProject]="selectedProject"></app-score-table>
 <!-- <app-sort-table></app-sort-table>
 <app-user-defined-table></app-user-defined-table> -->
