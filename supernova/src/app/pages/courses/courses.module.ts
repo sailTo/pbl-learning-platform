@@ -56,5 +56,9 @@ import { CreateCourseComponent } from './components/create-course/create-course.
     NzInputNumberModule, 
     NzUploadModule, 
   ], 
+  exports:[
+    CourseCardComponent,
+    PaginationComponent
+  ]
 })
 export class CoursesModule { }

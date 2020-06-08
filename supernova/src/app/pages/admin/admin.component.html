@@ -1,7 +1,7 @@
 
   <app-add-user></app-add-user>
 
-<nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" [nzScroll]="{ y: '240px' }">
+<nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" >
   <thead>
     <tr>
       <th *ngFor="let column of listofColumns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn"
@@ -20,7 +20,7 @@
   <tbody>
     <tr  *ngFor="let data of adminTable.data" (click)=" startEdit(data.u_id)">
     <!-- <span [hidden]="editId === data.u_id" (click)= "startEdit(data.u_id)">  -->
-    <ng-container *ngIf="editId !== data.u_id" >
+    <ng-container *ngIf="editId !== data.u_id||data.status==false" >
      
         <td>
           <a [routerLink]="['/home',data.u_id]">
@@ -43,7 +43,7 @@
     </ng-container>
 
     <!-- </span> -->
-    <ng-container *ngIf="editId === data.u_id">
+    <ng-container *ngIf="editId === data.u_id&&data.status==true">
       
       <td>
         <a [routerLink]="['/home',data.u_id]">
