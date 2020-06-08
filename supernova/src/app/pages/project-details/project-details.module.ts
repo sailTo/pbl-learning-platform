@@ -36,6 +36,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { AddTaskComponent } from './components/add-task/add-task.component';
+import { DeleteTaskComponent } from './components/delete-task/delete-task.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AddTaskComponent } from './components/add-task/add-task.component';
     DiscussionsComponent,
     FilesComponent,
     AddTaskComponent,
+    DeleteTaskComponent,
   ],
   imports: [
     CommonModule,

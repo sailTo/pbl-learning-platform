@@ -1,8 +1,9 @@
 <div *ngIf="modifiable">
     <button nz-button nzType="primary" (click)="showAddModal()">新增任务</button>
-    <button nz-button nzType="primary" (click)="deleteRow()">删除任务</button>
+    <button nz-button nzType="primary" (click)="showDeleteModal()">删除任务</button>
     <button nz-button nzType="primary" (click)="saveChanges()" [disabled]="!modified"
         [nzLoading]="loading">保存修改</button>
+    <button nz-button nzType="primary" (click)="discardChanges()" [disabled]="!modified">放弃修改</button>
 </div>
 
 <div>
@@ -10,12 +11,12 @@
     <nz-slider [nzMin]="12" [nzMax]="23" [(ngModel)]="zoom" [nzStep]="0.1" (ngModelChange)="onZoom($event)"></nz-slider>
     <!-- <input type="range" min="0" max="100" value="100" id="percent" (change)="onPercent($event)" />
     <input type="range" min="12" max="23" value="20" id="zoom" (change)="onZoom($event)" /> -->
-    <div style="display: inline-block;width: 100px; text-align: center;font-weight: bold;" id="period"></div>
+    <!-- <div style="display: inline-block;width: 100px; text-align: center;font-weight: bold;" id="period"></div>
     <button id="change-something">Change something</button>
     <button (click)="deleteRow()">Delete row</button>
     <button (click)="deleteItem()">Delete item</button>
     <button (click)="clearAll()">clear all</button>
-    <button (click)="randomizeItems()">randomize items</button>
+    <button (click)="randomizeItems()">randomize items</button> -->
 </div>
 
 <gstc [config]="config" (onState)="onState($event)"></gstc>

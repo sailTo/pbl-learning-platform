@@ -10,11 +10,13 @@ import { Task } from 'src/app/models/task';
 import { User } from 'src/app/models/user';
 import { Response } from 'src/app/models/generic-response';
 
-import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
+
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { DeleteTaskComponent } from '../delete-task/delete-task.component';
 
 @Component({
   selector: 'app-tasks',
@@ -41,8 +43,8 @@ export class TasksComponent implements OnInit {
   loading: boolean = false; // 保存按键是否正在提交
 
   modifiedList: string[] = []; // 存储被修改过的item id
-  addedList: string[] = [];
-  deletedList: string[] = [];
+  addedList: string[] = []; // 存储新建的item id
+  deletedList: number[] = []; // 存储删除的a_id
 
   pallete = [
     '#E74C3C',
@@ -65,6 +67,7 @@ export class TasksComponent implements OnInit {
       label: string,
       progress?: number,
       expanded?: boolean,
+      itemId: string,
     }
   } = {};
 
@@ -85,6 +88,9 @@ export class TasksComponent implements OnInit {
       task: Task,
     }
   } = {};
+
+  lastRows: {};
+  lastItems: {};
 
   constructor(
     private route: ActivatedRoute,
@@ -144,6 +150,7 @@ export class TasksComponent implements OnInit {
           label: task.a_name,
           progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
           expanded: false,
+          itemId: (index + 1).toString(),
         };
         this.items[(index + 1).toString()] = {
           id: (index + 1).toString(),
@@ -176,6 +183,9 @@ export class TasksComponent implements OnInit {
       // set rows and items
       this.gstcState.update('config.list.rows', this.rows);
       this.gstcState.update('config.chart.items', this.items);
+
+      this.lastRows = JSON.parse(JSON.stringify(this.rows));
+      this.lastItems = JSON.parse(JSON.stringify(this.items));
     });
   }
 
@@ -283,7 +293,6 @@ export class TasksComponent implements OnInit {
 
           this.modified = true;
           if (!this.modifiedList.includes(itemId)
-            && !this.addedList.includes(itemId)
             && !this.deletedList.includes(itemId)) {
             this.modifiedList.push(itemId);
           }
@@ -319,14 +328,18 @@ export class TasksComponent implements OnInit {
     let from = this.gstcState.get('config.chart.time.from');
     let to = this.gstcState.get('config.chart.time.to');
 
-    const rowId = String(Object.keys(rows).length + 1);
-    const itemId = String(Object.keys(items).length + 1);
+    // obtain maxium id
+    const rowId = String(Number(Object.keys(rows).sort((a, b) => Number(b) - Number(a))[0]) + 1);
+    const itemId = String(Number(Object.keys(items).sort((a, b) => Number(b) - Number(a))[0]) + 1);
+
+    console.log(itemId);
 
     rows[rowId] = {
       id: rowId,
       label: task.a_name,
       progress: 0,
       expanded: false,
+      itemId: itemId,
     };
     items[itemId] = {
       id: itemId,
@@ -344,8 +357,8 @@ export class TasksComponent implements OnInit {
     };
 
     // set rows and items
-    this.gstcState.update('config.list.rows', this.rows);
-    this.gstcState.update('config.chart.items', this.items);
+    this.gstcState.update('config.list.rows', rows);
+    this.gstcState.update('config.chart.items', items);
 
     // get dynamic from, to
     if (from > task.a_start_date) {
@@ -358,6 +371,45 @@ export class TasksComponent implements OnInit {
     }
 
     this.addedList.push(itemId);
+    this.modified = true;
+  }
+
+  showDeleteModal() {
+    this.modalService.create({
+      nzTitle: '删除任务',
+      nzContent: DeleteTaskComponent,
+      nzComponentParams: {
+        rowNum: Object.keys(this.gstcState.get('config.list.rows')).length,
+      }
+    }).afterClose.subscribe((rowId) => {
+      if (rowId === undefined) {
+        return;
+      }
+      this.deleteTask(rowId.toString());
+    })
+  }
+
+  deleteTask(rowId: string) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+
+    // get element
+    const itemId = rows[rowId].itemId;
+    const item = items[itemId];
+
+    // update items
+    delete rows[rowId];
+    delete items[itemId];
+
+    // set rows and items
+    this.gstcState.update('config.list.rows', rows);
+    this.gstcState.update('config.chart.items', items);
+
+    // discard changes on the item
+    // this.modifiedList = this.modifiedList.filter(id => id !== itemId);
+
+    // record the item
+    this.deletedList.push(item.task.a_id);
     this.modified = true;
   }
 
@@ -412,24 +464,34 @@ export class TasksComponent implements OnInit {
     this.gstcState.update('config.chart.time.zoom', $event);
   }
 
+  discardChanges() {
+    this.addedList = [];
+    this.modifiedList = [];
+    this.deletedList = [];
+
+    // roll back rows and items
+    this.gstcState.update('config.list.rows', this.lastRows);
+    this.gstcState.update('config.chart.items', this.lastItems);
+
+    this.modified = false;
+  }
+
   saveChanges() {
     this.loading = true;
 
-    this.items = this.gstcState.get('config.chart.items');
+    this.lastRows = this.gstcState.get('config.list.rows');
+    this.lastItems = this.gstcState.get('config.chart.items');
 
-    // console.log(this.rows, this.items);
-
-    // this.handleModifications();
+    // async, nested
     this.handleAdditions();
-
-    setTimeout(() => {
-      this.loading = false;
-      this.modified = false;
-      this.message.success('保存成功！');
-    }, 1000);
   }
 
   handleModifications() {
+    if (this.modifiedList.length === 0) {
+      this.handleDeletions();
+      return;
+    }
+
     // generate modified tasks
     const mTasks = this.modifiedList.map((modified) => {
       const item = this.items[modified];
@@ -442,17 +504,48 @@ export class TasksComponent implements OnInit {
 
     this.taskService.modifyTasks(mTasks).subscribe((response) => {
       this.handleResponse(response);
+      this.modifiedList = [];
+
+      this.handleDeletions();
     });
   }
 
   handleAdditions() {
+    if (this.addedList.length === 0) {
+      this.handleModifications();
+      return;
+    }
     const aTasks = this.addedList.map((added) => {
       return this.items[added].task;
     });
 
     this.taskService.addTasks(aTasks).subscribe((response) => {
+      // update items with new a_id
+      response.data.a_idList.forEach((a_id, index) => {
+        this.items[this.addedList[index]].task.a_id = a_id;
+      });
+      this.gstcState.update('config.chart.items', this.items);
+
       this.handleResponse(response);
+      this.addedList = [];
+
+      this.handleModifications();
     });
+  }
+
+  handleDeletions() {
+    if (this.deletedList.length === 0) {
+      this.loading = false;
+      this.modified = false;
+      return;
+    }
+    this.taskService.deleteTasks(this.deletedList, this.p_id).subscribe((response) => {
+      this.handleResponse(response);
+      this.deletedList = [];
+
+      this.loading = false;
+      this.modified = false;
+    })
   }
 
   handleResponse(response: Response<{}>) {

@@ -35,16 +35,15 @@
     <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>任务重要程度</nz-form-label>
         <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="importanceErrorTpl">
-          <nz-input-number formControlName="importance" placeholder="1-5，1为最重要" 
-            [nzMin]="1" [nzMax]="5" [nzPrecision]="0" nzPrecisionMode="toFixed"
-            ></nz-input-number>
-          <ng-template #importanceErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              请输入任务重要程度！
-            </ng-container>
-          </ng-template>
+            <nz-input-number formControlName="importance" placeholder="1-5，1为最重要" [nzMin]="1" [nzMax]="5"
+                [nzPrecision]="0" nzPrecisionMode="toFixed"></nz-input-number>
+            <ng-template #importanceErrorTpl let-control>
+                <ng-container *ngIf="control.hasError('required')">
+                    请输入任务重要程度！
+                </ng-container>
+            </ng-template>
         </nz-form-control>
-      </nz-form-item>
+    </nz-form-item>
     <nz-form-item *nzModalFooter>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
             <button nz-button (click)="destroyModal()">取消</button>

@@ -45,7 +45,7 @@ export class TaskService {
       pbl_token: this.userService.getUser().token,
       assignments: JSON.stringify(tasks),
     }});
-    return this.http.post<Response<{}>>('/api/createAssignments', params.toString(), { headers });
+    return this.http.post<Response<{a_idList: number[]}>>('/api/createAssignments', params.toString(), { headers });
   }
 
   deleteTasks(assignmentIdList: number[], projectId: number) {
