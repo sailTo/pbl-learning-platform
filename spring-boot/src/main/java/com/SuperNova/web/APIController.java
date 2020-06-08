@@ -306,13 +306,31 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping("/createAssignments")
+    public Result createAssignments(@RequestParam String pbl_token,
+                                   @RequestParam String assignments) {
+        List<Assignment> assignmentObjs = JSON.parseArray(assignments,Assignment.class);
+        JSONObject data = new JSONObject();
+        data.put("a_idList",assignmentService.createAssignments(assignmentObjs));
+        return ResultGenerator.genSuccessResult(data).setMessage("批量创建任务成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeAssignment")
     public Result changeAssignment(@RequestParam String pbl_token,
                                    @RequestParam String assignment) {
         Assignment assignmentObj = JSON.parseObject(assignment,Assignment.class);
         assignmentService.changeAssignment(assignmentObj);
-
         return ResultGenerator.genSuccessResult().setMessage("修改任务成功");
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/changeAssignments")
+    public Result changeAssignments(@RequestParam String pbl_token,
+                                   @RequestParam String assignments) {
+        List<Assignment> assignmentObjs = JSON.parseArray(assignments,Assignment.class);
+        assignmentService.changeAssignments(assignmentObjs);
+        return ResultGenerator.genSuccessResult().setMessage("批量修改任务成功");
     }
 
     @CrossOrigin(origins = "*")
@@ -322,6 +340,33 @@ public class APIController {
                                    @RequestParam String p_id) {
         assignmentService.deleteAssignment(Integer.parseInt(p_id),Integer.parseInt(a_id));
         return ResultGenerator.genSuccessResult().setMessage("删除任务成功");
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/deleteAssignments")
+    public Result deleteAssignments(@RequestParam String pbl_token,
+                                   @RequestParam String a_idList,
+                                   @RequestParam String p_id) {
+        List<Integer> a_ids = JSON.parseArray(a_idList,Integer.class);
+        assignmentService.deleteAssignments(Integer.parseInt(p_id),a_ids);
+        return ResultGenerator.genSuccessResult().setMessage("批量删除任务成功");
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/modifyAssignments")
+    public Result modifyAssignments(@RequestParam String pbl_token,
+                                    @RequestParam String assignmentList,
+                                    @RequestParam String opList){
+        List<Assignment> assignments = JSON.parseArray(assignmentList,Assignment.class);
+        List<String> ops = JSON.parseArray(opList,String.class);
+        for (int i=0;i<assignments.size();i++) {
+            if(ops.get(i).equals("modify")){
+                assignmentService.changeAssignment(assignments.get(i));
+            }else{
+                assignmentService.deleteAssignment(assignments.get(i).getP_id(),assignments.get(i).getA_id());
+            }
+        }
+        return ResultGenerator.genSuccessResult().setMessage("批量修改任务成功");
     }
 
     @CrossOrigin(origins = "*")

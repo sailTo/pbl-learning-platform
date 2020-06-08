@@ -17,10 +17,23 @@ public interface AssignmentService extends Service<Assignment> {
     int createAssignment(Assignment assignment);
 
     /**
+     * 创建多个项目
+     * @param assignments
+     * @return
+     */
+    List<Integer> createAssignments(List<Assignment> assignments);
+
+    /**
      * 修改任务状态
      * @param assignment
      */
     void changeAssignment(Assignment assignment);
+
+    /**
+     * 一次修改多个任务
+     * @param assignments
+     */
+    void changeAssignments(List<Assignment> assignments);
 
     /**
      * 删除任务
@@ -28,6 +41,13 @@ public interface AssignmentService extends Service<Assignment> {
      * @param a_id
      */
     void deleteAssignment(int p_id,int a_id);
+
+    /**
+     * 一次删除多个任务
+     * @param p_id
+     * @param a_idList
+     */
+    void deleteAssignments(int p_id,List<Integer> a_idList);
 
     /**
      * 催促未完成的同学完成任务

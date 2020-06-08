@@ -39,25 +39,39 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         StudentProject tmp = new StudentProject();
         tmp.setP_id(assignment.getP_id());
         List<StudentProject> sList = studentProjectMapper.select(tmp);
-        List<StudentAssignment> stuAssigmentList = new ArrayList<>();
 
         for (StudentProject s:sList) {
             StudentAssignment studentAssignment = new StudentAssignment();
             studentAssignment.setA_id(assignment.getA_id());
             studentAssignment.setP_id(assignment.getP_id());
             studentAssignment.setU_id(s.getU_id());
-            studentAssignment.setStatus(false);
             studentAssignment.setUrge(false);
-            stuAssigmentList.add(studentAssignment);
+            studentAssignment.setStatus(false);
+            studentAssignmentMapper.insert(studentAssignment);
         }
-        studentAssignmentMapper.insertList(stuAssigmentList);
 
         return assignment.getA_id();
     }
 
     @Override
+    public List<Integer> createAssignments(List<Assignment> assignments) {
+        List<Integer> res = new ArrayList<>();
+        for (Assignment a: assignments) {
+            res.add(createAssignment(a));
+        }
+        return res;
+    }
+
+    @Override
     public void changeAssignment(Assignment assignment) {
         assignmentMapper.updateByPrimaryKeySelective(assignment);
+    }
+
+    @Override
+    public void changeAssignments(List<Assignment> assignments) {
+        for (Assignment a:assignments) {
+            changeAssignment(a);
+        }
     }
 
     @Override
@@ -71,6 +85,13 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         studentAssignment.setP_id(p_id);
         studentAssignment.setA_id(a_id);
         studentAssignmentMapper.delete(studentAssignment);
+    }
+
+    @Override
+    public void deleteAssignments(int p_id, List<Integer> a_idList) {
+        for (Integer i:a_idList) {
+            deleteAssignment(p_id,i);
+        }
     }
 
     @Override

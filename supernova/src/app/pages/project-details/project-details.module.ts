@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -21,6 +22,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzDatePickerModule } from "ng-zorro-antd/date-picker";
 
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
 
@@ -33,6 +35,8 @@ import { FilesComponent } from './components/files/files.component';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { AddTaskComponent } from './components/add-task/add-task.component';
+import { DeleteTaskComponent } from './components/delete-task/delete-task.component';
 
 @NgModule({
   declarations: [
@@ -41,13 +45,14 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     MembersComponent,
     DiscussionsComponent,
     FilesComponent,
+    AddTaskComponent,
+    DeleteTaskComponent,
   ],
   imports: [
-    NzPopconfirmModule,
-    NzAffixModule,
     CommonModule,
-    FormsModule,
     ProjectDetailsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule, 
     NzAvatarModule,
     NzCardModule,
     NzEmptyModule,
@@ -67,9 +72,12 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     NzSwitchModule,
     NzInputNumberModule,
     NzUploadModule,
-    AngularGanttScheduleTimelineCalendarModule,
+    NzPopconfirmModule,
+    NzAffixModule,
     NzUploadModule,
-    NzSpinModule
+    NzSpinModule, 
+    NzDatePickerModule, 
+    AngularGanttScheduleTimelineCalendarModule,
   ]
 })
 export class ProjectDetailsModule { }

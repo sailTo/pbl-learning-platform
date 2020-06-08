@@ -8,10 +8,15 @@ import WeekendHighlight from "gantt-schedule-timeline-calendar/dist/WeekendHighl
 
 import { Task } from 'src/app/models/task';
 import { User } from 'src/app/models/user';
+import { Response } from 'src/app/models/generic-response';
+
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
-import { NzMessageService } from 'ng-zorro-antd';
+
+import { AddTaskComponent } from '../add-task/add-task.component';
+import { DeleteTaskComponent } from '../delete-task/delete-task.component';
 
 @Component({
   selector: 'app-tasks',
@@ -21,6 +26,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class TasksComponent implements OnInit {
   p_id: number;
   groupers: User[];
+  leaderId: string;
 
   currentUser: User = this.userService.getUser();
 
@@ -31,9 +37,18 @@ export class TasksComponent implements OnInit {
   totalNum: number; // 项目总人数
 
   zoom: number = 20; // 日期缩放级别
+  daysOffset: number = 3; // 前后日期冗余显示天数
 
+  modifiable: boolean; // 甘特图中内容是否可修改
   modified: boolean = false; // 甘特图中内容是否被修改过
   loading: boolean = false; // 保存按键是否正在提交
+
+  // modifiedList: string[] = []; // 存储被修改过的item id
+  // addedList: string[] = []; // 存储新建的item id
+  // deletedList: number[] = []; // 存储删除的a_id
+
+  modifiedAssignmentList: Task[] = [];
+  opList: string[] = [];
 
   pallete = [
     '#E74C3C',
@@ -55,7 +70,8 @@ export class TasksComponent implements OnInit {
       id: string,
       label: string,
       progress?: number,
-      expanded?: boolean, 
+      expanded?: boolean,
+      itemId: string,
     }
   } = {};
 
@@ -67,71 +83,38 @@ export class TasksComponent implements OnInit {
         start: number,
         end: number,
       },
-      progress?: number,
+      // progress?: number,
+      resizable: boolean,
       rowId: string,
-      lines?: string[], 
       style: {
         background: string,
-      }
+      },
+      task: Task,
     }
   } = {};
 
+  lastRows: {};
+  lastItems: {};
+
   constructor(
     private route: ActivatedRoute,
-    private message: NzMessageService, 
+    private message: NzMessageService,
+    private modalService: NzModalService,
     private taskService: TaskService,
     private userService: UserService,
   ) { }
 
   ngOnInit() {
-    // const iterations = 10;
-
-    // const rows = {}; // 决定每行左边的行名，ID，%
-    // for (let i = 0; i < iterations; i++) {
-    //   const withParent = i > 0 && i % 2 === 0;
-    //   const id = i.toString();
-    //   rows[id] = {
-    //     id,
-    //     label: `row id: ${id}`,
-    //     progress: 50,
-    //     parentId: withParent ? (i - 1).toString() : undefined,
-    //     expanded: false
-    //   };
-    // }
-
-    // const startDate = new Date();
-
-    // const items = {}; // 决定每行彩色的item
-    // for (let i = 0; i < iterations; i++) {
-    //   let rowId;
-    //   let id = (rowId = i.toString());
-    //   let startDayjs = new Date();
-    //   // GSTC.api
-    //   //   .date(startDate)
-    //   //   .startOf('day')
-    //   //   .add(Math.floor(Math.random() * 90), 'days');
-    //   items[id] = {
-    //     id,
-    //     label: 'item id ' + id,
-    //     time: {
-    //       start: startDayjs.valueOf(),
-    //       end: startDayjs.setDate(startDate.getDate() + 3),
-    //       // .clone()
-    //       // .add(Math.floor(Math.random() * 10) + 4, 'days')
-    //       // .valueOf()
-    //     },
-    //     progress: 50,
-    //     rowId,
-    //     lines: i > 0 && i % 2 === 0 ? [(i + 1).toString()] : [],
-    //     style: { background: this.pallete[Math.floor(Math.random() * this.pallete.length)] }
-    //   };
-    // }
-
     // get param p_name, groupers
     this.route.queryParams.subscribe(
-      (params: { p_id: string, p_name: string, groupers: string }) => {
+      (params: { p_id: string, p_name: string, leaderId: string, groupers: string }) => {
         this.p_id = Number(params.p_id);
         this.groupers = JSON.parse(params.groupers);
+        this.leaderId = params.leaderId;
+
+        // 仅当是学生、且不是leader的时候不能修改
+        this.modifiable =
+          !(this.currentUser.type === 'student' && this.currentUser.u_id !== this.leaderId);
 
         // request tasks
         this.getTasks();
@@ -140,6 +123,10 @@ export class TasksComponent implements OnInit {
 
     this.generateGantt();
   }
+
+  // get days offset
+  offset = (days: number) =>
+    new Date().setDate(new Date().getDate() + days).valueOf() - new Date().valueOf();
 
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
@@ -151,10 +138,6 @@ export class TasksComponent implements OnInit {
 
       let from = this.gstcState.get('config.chart.time.from');
       let to = this.gstcState.get('config.chart.time.to');
-      
-      // get days offset
-      let offset = (days: number) => 
-        new Date().setDate(new Date().getDate() + days).valueOf() - new Date().valueOf();
 
       this.tasks.forEach((task, index) => {
         // generate fields for tasks
@@ -167,44 +150,46 @@ export class TasksComponent implements OnInit {
 
         // generate fields for rows and items
         this.rows[(index + 1).toString()] = {
-          id: (index + 1).toString(), 
-          label: task.a_name, 
-          progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)), 
-          expanded: false, 
+          id: (index + 1).toString(),
+          label: task.a_name,
+          progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
+          expanded: false,
+          itemId: (index + 1).toString(),
         };
         this.items[(index + 1).toString()] = {
-          id: (index + 1).toString(), 
-          label: task.a_description, 
+          id: (index + 1).toString(),
+          label: task.a_description,
           time: {
-            start: task.a_start_date, 
-            end: task.a_end_date, 
-          }, 
-          rowId: (index + 1).toString(), 
-          lines: [(index + 1).toString()], 
+            start: task.a_start_date,
+            end: task.a_end_date,
+          },
+          resizable: this.modifiable,
+          rowId: (index + 1).toString(),
           style: {
-            background: this.pallete[index], 
-          }
-        }
+            background: this.pallete[index],
+          },
+          task: task,
+        };
 
         // get dynamic from, to
         if (from > task.a_start_date) {
           from = task.a_start_date;
-        } 
+        }
         if (to < task.a_end_date) {
           to = task.a_end_date;
         }
       });
 
       // adjust from, to date
-      this.gstcState.update('config.chart.time.from', from - offset(7));
-      this.gstcState.update('config.chart.time.to', to + offset(7));
+      this.gstcState.update('config.chart.time.from', from - this.offset(this.daysOffset));
+      this.gstcState.update('config.chart.time.to', to + this.offset(this.daysOffset));
 
       // set rows and items
       this.gstcState.update('config.list.rows', this.rows);
       this.gstcState.update('config.chart.items', this.items);
 
-      console.log(this.gstcState.get('config.chart.time.zoom'));
-
+      this.lastRows = JSON.parse(JSON.stringify(this.rows));
+      this.lastItems = JSON.parse(JSON.stringify(this.items));
     });
   }
 
@@ -258,8 +243,8 @@ export class TasksComponent implements OnInit {
     this.config = {
       plugins: [
         ItemMovement({
-          moveable: 'x', // 只允许在本行移动（x轴）
-          resizeable: true,
+          moveable: this.modifiable ? 'x' : false, // 只允许在本行移动（x轴）
+          resizeable: this.modifiable,
           collisionDetection: true
         }),
         // Selection({
@@ -271,7 +256,7 @@ export class TasksComponent implements OnInit {
         WeekendHighlight()
       ],
       height: 623,
-      headerHeight: 100, 
+      headerHeight: 100,
       list: {
         rows: this.rows,
         columns
@@ -279,7 +264,7 @@ export class TasksComponent implements OnInit {
       chart: {
         items: this.items,
         time: {
-          from: new Date().valueOf(), 
+          from: new Date().valueOf(),
           to: new Date().setDate(new Date().getDate() + 120).valueOf(),
           period: 'day'
         }
@@ -298,66 +283,163 @@ export class TasksComponent implements OnInit {
 
     // YOU CAN SUBSCRIBE TO CHANGES
 
-    this.gstcState.subscribe("config.list.rows", rows => {
-      console.log("rows changed", rows);
-    });
+    // this.gstcState.subscribe("config.list.rows", rows => {
+    //   console.log("rows changed", rows);
+    // });
 
     this.gstcState.subscribe(
       "config.chart.items.:id",
       (bulk, eventInfo) => {
         if (eventInfo.type === "update" && eventInfo.params.id) {
-          this.modified = true;
           const itemId = eventInfo.params.id;
-          console.log(
-            `item ${itemId} changed`,
-            this.gstcState.get("config.chart.items." + itemId)
-          );
+          const thisModifiedItem = this.items[itemId];
+          const thisModifiedTask = thisModifiedItem.task;
+
+          this.modified = true;
+          // if (!this.modifiedList.includes(itemId)
+          //   && !this.deletedList.includes(itemId)) {
+          //   this.modifiedList.push(itemId);
+          // }
+
+          let lastElementOf = (list: any[]) => list[list.length - 1];
+
+          if (this.modifiedAssignmentList.length !== 0) {
+            const lastModifiedItem = lastElementOf(this.modifiedAssignmentList);
+            const lastOp = lastElementOf(this.opList);
+
+            if (lastOp === 'modify' && lastModifiedItem.a_id === thisModifiedItem.task.a_id) {
+              this.modifiedAssignmentList[this.modifiedAssignmentList.length - 1].a_start_date = thisModifiedItem.time.start;
+              this.modifiedAssignmentList[this.modifiedAssignmentList.length - 1].a_end_date = thisModifiedItem.time.end;
+              return;
+            }
+          }
+
+          [thisModifiedTask.a_start_date, thisModifiedTask.a_end_date] = [thisModifiedItem.time.start, thisModifiedItem.time.end];
+          
+          this.modifiedAssignmentList.push(thisModifiedTask);
+          this.opList.push('modify');
+
+          console.log(this.items, this.lastItems);
+
+          // console.log(
+          //   `item ${itemId} changed`,
+          //   this.gstcState.get("config.chart.items." + itemId)
+          // );
         }
       },
       { bulk: true }
     );
   }
 
-  deleteRow() {
-    const random = r => r[Math.floor(Math.random() * r.length)];
-    this.gstcState.update('config.list.rows', rows => {
-      const rando = random(Object.keys(rows));
-      // @ts-ignore
-      const child = Object.values(rows).find(row => row.parentId === rando);
-      if (rows[rando] && !child) {
-        console.log('deleting', rando, Object.keys(rows), rows[rando]);
-        delete rows[rando];
+  showAddModal() {
+    this.modalService.create({
+      nzTitle: '新增任务',
+      nzContent: AddTaskComponent,
+      nzComponentParams: {
+        p_id: this.p_id,
       }
-      return rows;
-    });
-  }
-
-  deleteItem() {
-    const random = r => r[Math.floor(Math.random() * r.length)];
-    this.gstcState.update('config.chart.items', items => {
-      const rando = random(Object.keys(items));
-      if (items[rando]) {
-        console.log('deleting', rando, Object.keys(items), items[rando]);
-        delete items[rando];
+    }).afterClose.subscribe((task: Task) => {
+      if (task === undefined) {
+        return;
       }
-      return items;
-    });
+      this.handleAddition(task);
+    })
   }
 
-  clearAll() {
-    this.gstcState.update('config.list.rows', {});
+  addTask(task: Task) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+    let from = this.gstcState.get('config.chart.time.from');
+    let to = this.gstcState.get('config.chart.time.to');
+
+    // obtain maxium id
+    const rowId = String(Number(Object.keys(rows).sort((a, b) => Number(b) - Number(a))[0]) + 1);
+    const itemId = String(Number(Object.keys(items).sort((a, b) => Number(b) - Number(a))[0]) + 1);
+
+    console.log(itemId);
+
+    rows[rowId] = {
+      id: rowId,
+      label: task.a_name,
+      progress: 0,
+      expanded: false,
+      itemId: itemId,
+    };
+    items[itemId] = {
+      id: itemId,
+      label: task.a_description,
+      time: {
+        start: task.a_start_date,
+        end: task.a_end_date,
+      },
+      resizable: this.modifiable,
+      rowId: rowId,
+      style: {
+        background: this.pallete[0],
+      },
+      task: task,
+    };
+
+    // set rows and items
+    this.gstcState.update('config.list.rows', rows);
+    this.gstcState.update('config.chart.items', items);
+
+    // get dynamic from, to
+    if (from > task.a_start_date) {
+      from = task.a_start_date;
+      this.gstcState.update('config.chart.time.from', from - this.offset(this.daysOffset));
+    }
+    if (to < task.a_end_date) {
+      to = task.a_end_date;
+      this.gstcState.update('config.chart.time.to', to + this.offset(this.daysOffset));
+    }
+
+    // this.addedList.push(itemId);
+    // this.modified = true;
   }
 
-  randomizeItems() {
-    const rows = Object.keys(this.gstcState.get('config.list.rows'));
+  showDeleteModal() {
+    this.modalService.create({
+      nzTitle: '删除任务',
+      nzContent: DeleteTaskComponent,
+      nzComponentParams: {
+        // rowNum: Object.keys(this.gstcState.get('config.list.rows')).length,
+        rows: this.rows, 
+      }
+    }).afterClose.subscribe((rowId) => {
+      if (rowId === undefined) {
+        return;
+      }
+      this.deleteTask(rowId.toString());
+    })
+  }
+
+  deleteTask(rowId: string) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+
     console.log(rows);
-    this.gstcState.update('config.chart.items', items => {
-      Object.values(items).forEach(item => {
-        // @ts-ignore
-        item.rowId = rows[Math.floor(Math.random() * rows.length)];
-      });
-      return items;
-    });
+    // get element
+    const itemId = rows[rowId].itemId;
+    const item = items[itemId];
+
+    // update view
+    delete rows[rowId];
+    // delete items[itemId];
+    items[itemId].rowId = "-1";
+
+    // set rows and items
+    this.gstcState.update('config.list.rows', rows);
+    this.gstcState.update('config.chart.items', items);
+
+    // discard changes on the item
+    // this.modifiedList = this.modifiedList.filter(id => id !== itemId);
+
+    // record the item
+    // this.deletedList.push(item.task.a_id);
+    this.modifiedAssignmentList.push(item.task);
+    this.opList.push('delete');
+    this.modified = true;
   }
 
   onPercent($event) {
@@ -368,13 +450,129 @@ export class TasksComponent implements OnInit {
     this.gstcState.update('config.chart.time.zoom', $event);
   }
 
+  discardChanges() {
+    // this.addedList = [];
+    this.modifiedAssignmentList = [];
+    // this.deletedList = [];
+    this.opList = [];
+
+    console.log(this.items, this.lastItems);
+
+    // roll back rows and items
+    this.gstcState.update('config.list.rows', this.lastRows);
+    this.gstcState.update('config.chart.items', this.lastItems);
+
+    this.modified = false;
+  }
+
   saveChanges() {
     this.loading = true;
-    setTimeout(() => {
+
+    // // async, nested
+    // this.handleAdditions();
+
+    console.log(this.modifiedAssignmentList, this.opList);
+
+    this.handleModifications();
+  }
+
+  handleAddition(task: Task) {
+    this.taskService.addTask(task).subscribe((response) => {
+      this.handleResponse(response);
+
+      if (response.code === 200) {
+        task.a_id = response.data.a_id;
+        this.addTask(task);
+      }
+    })
+  }
+
+  handleModifications() {
+    this.taskService.modifyAndDeleteAssignments(this.modifiedAssignmentList, this.opList).subscribe((response) => {
+      // if succeeded, empty lists 
+      if (response.code === 200) {
+        this.modifiedAssignmentList = [];
+        this.opList = [];
+        this.modified = false;
+
+        this.lastRows = JSON.parse(JSON.stringify(this.rows));
+        this.lastItems = JSON.parse(JSON.stringify(this.items));
+      }
       this.loading = false;
-      this.modified = false;
-      this.message.success('保存成功！');
-    }, 1000);
+      this.handleResponse(response);
+    })
+  }
+
+  // handleModifications() {
+  //   if (this.modifiedList.length === 0) {
+  //     this.handleDeletions();
+  //     return;
+  //   }
+
+  //   // generate modified tasks
+  //   const mTasks = this.modifiedList.map((modified) => {
+  //     const item = this.items[modified];
+
+  //     const mTask = item.task;
+  //     [mTask.a_start_date, mTask.a_end_date] = [item.time.start, item.time.end];
+
+  //     return mTask;
+  //   });
+
+  //   this.taskService.modifyTasks(mTasks).subscribe((response) => {
+  //     this.handleResponse(response);
+  //     this.modifiedList = [];
+
+  //     this.handleDeletions();
+  //   });
+  // }
+
+  // handleAdditions() {
+  //   if (this.addedList.length === 0) {
+  //     this.handleModifications();
+  //     return;
+  //   }
+  //   const aTasks = this.addedList.map((added) => {
+  //     return this.items[added].task;
+  //   });
+
+  //   this.taskService.addTasks(aTasks).subscribe((response) => {
+  //     // update items with new a_id
+  //     response.data.a_idList.forEach((a_id, index) => {
+  //       this.items[this.addedList[index]].task.a_id = a_id;
+  //     });
+  //     this.gstcState.update('config.chart.items', this.items);
+
+  //     this.handleResponse(response);
+  //     this.addedList = [];
+
+  //     this.handleModifications();
+  //   });
+  // }
+
+  // handleDeletions() {
+  //   if (this.deletedList.length === 0) {
+  //     this.loading = false;
+  //     this.modified = false;
+  //     return;
+  //   }
+  //   this.taskService.deleteTasks(this.deletedList, this.p_id).subscribe((response) => {
+  //     this.handleResponse(response);
+  //     this.deletedList = [];
+
+  //     this.loading = false;
+  //     this.modified = false;
+  //   })
+  // }
+
+  handleResponse(response: Response<{}>) {
+    if (response.code === 200) {
+      this.message.success(response.message);
+    } else if (response.code === 208) {
+      this.message.error(response.message);
+    } else if (response.code === 209) {
+      this.message.error(response.message);
+    }
   }
 
 }

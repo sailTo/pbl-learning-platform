@@ -1,11 +1,12 @@
 import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd';
 
 import { CourseService } from 'src/app/services/course.service';
 
 import { Course } from 'src/app/models/course';
-import { NzMessageService } from 'ng-zorro-antd';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class CourseCardComponent implements AfterViewInit, OnChanges {
     @Input() course: Course;
     @Input() type: string;
+    @Input() currentUser?: User;
 
     @Output() change = new EventEmitter();
 
@@ -93,7 +95,7 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
             }
         };
 
-        this.actions = PANEL_TYPE_USER[this.type]['teacher'];
+        this.actions = PANEL_TYPE_USER[this.type][this.currentUser.type];
     }
 
     showJoinConfirm(): void {
