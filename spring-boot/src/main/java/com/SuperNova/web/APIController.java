@@ -351,6 +351,23 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PutMapping("/modifyAssignments")
+    public Result modifyAssignments(@RequestParam String pbl_token,
+                                    @RequestParam String assignmentList,
+                                    @RequestParam String opList){
+        List<Assignment> assignments = JSON.parseArray(assignmentList,Assignment.class);
+        List<String> ops = JSON.parseArray(opList,String.class);
+        for (int i=0;i<assignments.size();i++) {
+            if(ops.get(i).equals("modify")){
+                assignmentService.changeAssignment(assignments.get(i));
+            }else{
+                assignmentService.deleteAssignment(assignments.get(i).getP_id(),assignments.get(i).getA_id());
+            }
+        }
+        return ResultGenerator.genSuccessResult().setMessage("批量修改任务成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @PutMapping("/urgeAssignment")
     public Result urgeAssignment(@RequestParam String pbl_token,
                                  @RequestParam String a_id,
