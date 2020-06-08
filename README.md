@@ -925,7 +925,7 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
-接口URL：/api/createAssignment
+接口URL：/api/createAssignments
 
 请求方法：POST
 
@@ -1007,7 +1007,7 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
-接口URL：/api/deleteAssignment
+接口URL：/api/deleteAssignments
 
 请求方法：DELETE
 
@@ -1025,6 +1025,27 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :----------------------------------------------------------- | :----: | :--: |
 |  code   | 200：批量删除任务成功<br/>208：登录超时<br/>209：批量删除任务失败 |  int   |  -   |
 | message | 200：批量删除任务成功<br/>208：登录超时，请重新登录<br/>209：批量删除任务失败 | String |  -   |
+
+
+
+接口URL：/api/modifyAssignments
+
+请求方法：PUT
+
+请求参数：
+
+|  字段名   |        说明        |  类型  | 是否必填 |     备注     |
+| :-------: | :----------------: | :----: | :------: | :----------: |
+| pbl_token |         -          | String |    是    | 用于验证身份 |
+| assignmentList  | 序列化的 assignment 列表 | String |    是    |      -       |
+|   opList    |     序列化的操作列表（按assignment的list排序）     | String |    是    |      操作包含modify，delete两种       |
+
+返回参数：
+
+| 字段名  | 说明                                                         |  类型  | 备注 |
+| :-----: | :----------------------------------------------------------- | :----: | :--: |
+|  code   | 200：批量修改任务成功<br/>208：登录超时<br/>209：批量修改任务失败 |  int   |  -   |
+| message | 200：批量修改任务成功<br/>208：登录超时，请重新登录<br/>209：批量修改任务失败 | String |  -   |
 
 
 
