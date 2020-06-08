@@ -28,4 +28,12 @@ export class TaskService {
       urgeStatus: boolean[], // 每个assignment是否被催促，教师返回空数组
     }>>('/api/searchAssignment', { params });
   }
+
+  modifyTask(task: Task) {
+    const params = new HttpParams({ fromObject: {
+      pbl_token: this.userService.getUser().token,
+      assignment: JSON.stringify(task),
+    }});
+    return this.http.put<Response<{}>>('/api/changeAssignment', params);
+  }
 }

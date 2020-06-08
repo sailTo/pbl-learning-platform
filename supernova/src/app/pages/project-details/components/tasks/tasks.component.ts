@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import ItemMovement from "gantt-schedule-timeline-calendar/dist/ItemMovement.plugin.js";
@@ -11,7 +11,7 @@ import { User } from 'src/app/models/user';
 
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-tasks',
@@ -21,6 +21,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class TasksComponent implements OnInit {
   p_id: number;
   groupers: User[];
+  leaderId: string;
 
   currentUser: User = this.userService.getUser();
 
@@ -32,8 +33,13 @@ export class TasksComponent implements OnInit {
 
   zoom: number = 20; // 日期缩放级别
 
+  modifiable: boolean; // 甘特图中内容是否可修改
   modified: boolean = false; // 甘特图中内容是否被修改过
   loading: boolean = false; // 保存按键是否正在提交
+
+  modifiedList: string[] = []; // 存储被修改过的item id
+  addedList: string[] = [];
+  deletedList: string[] = [];
 
   pallete = [
     '#E74C3C',
@@ -55,7 +61,7 @@ export class TasksComponent implements OnInit {
       id: string,
       label: string,
       progress?: number,
-      expanded?: boolean, 
+      expanded?: boolean,
     }
   } = {};
 
@@ -67,71 +73,35 @@ export class TasksComponent implements OnInit {
         start: number,
         end: number,
       },
-      progress?: number,
+      // progress?: number,
+      resizable: boolean,
       rowId: string,
-      lines?: string[], 
       style: {
         background: string,
-      }
+      },
+      task: Task,
     }
   } = {};
 
   constructor(
     private route: ActivatedRoute,
-    private message: NzMessageService, 
+    private message: NzMessageService,
+    private modal: NzModalService,
     private taskService: TaskService,
     private userService: UserService,
   ) { }
 
   ngOnInit() {
-    // const iterations = 10;
-
-    // const rows = {}; // 决定每行左边的行名，ID，%
-    // for (let i = 0; i < iterations; i++) {
-    //   const withParent = i > 0 && i % 2 === 0;
-    //   const id = i.toString();
-    //   rows[id] = {
-    //     id,
-    //     label: `row id: ${id}`,
-    //     progress: 50,
-    //     parentId: withParent ? (i - 1).toString() : undefined,
-    //     expanded: false
-    //   };
-    // }
-
-    // const startDate = new Date();
-
-    // const items = {}; // 决定每行彩色的item
-    // for (let i = 0; i < iterations; i++) {
-    //   let rowId;
-    //   let id = (rowId = i.toString());
-    //   let startDayjs = new Date();
-    //   // GSTC.api
-    //   //   .date(startDate)
-    //   //   .startOf('day')
-    //   //   .add(Math.floor(Math.random() * 90), 'days');
-    //   items[id] = {
-    //     id,
-    //     label: 'item id ' + id,
-    //     time: {
-    //       start: startDayjs.valueOf(),
-    //       end: startDayjs.setDate(startDate.getDate() + 3),
-    //       // .clone()
-    //       // .add(Math.floor(Math.random() * 10) + 4, 'days')
-    //       // .valueOf()
-    //     },
-    //     progress: 50,
-    //     rowId,
-    //     lines: i > 0 && i % 2 === 0 ? [(i + 1).toString()] : [],
-    //     style: { background: this.pallete[Math.floor(Math.random() * this.pallete.length)] }
-    //   };
-    // }
-
     // get param p_name, groupers
     this.route.queryParams.subscribe(
-      (params: { p_id: string, p_name: string, groupers: string }) => {
+      (params: { p_id: string, p_name: string, leaderId: string, groupers: string }) => {
         this.p_id = Number(params.p_id);
         this.groupers = JSON.parse(params.groupers);
+        this.leaderId = params.leaderId;
+
+        // 仅当是学生、且不是leader的时候不能修改
+        this.modifiable =
+          !(this.currentUser.type === 'student' && this.currentUser.u_id !== this.leaderId);
 
         // request tasks
         this.getTasks();
@@ -151,9 +121,9 @@ export class TasksComponent implements OnInit {
 
       let from = this.gstcState.get('config.chart.time.from');
       let to = this.gstcState.get('config.chart.time.to');
-      
+
       // get days offset
-      let offset = (days: number) => 
+      let offset = (days: number) =>
         new Date().setDate(new Date().getDate() + days).valueOf() - new Date().valueOf();
 
       this.tasks.forEach((task, index) => {
@@ -167,29 +137,30 @@ export class TasksComponent implements OnInit {
 
         // generate fields for rows and items
         this.rows[(index + 1).toString()] = {
-          id: (index + 1).toString(), 
-          label: task.a_name, 
-          progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)), 
-          expanded: false, 
+          id: (index + 1).toString(),
+          label: task.a_name,
+          progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
+          expanded: false,
         };
         this.items[(index + 1).toString()] = {
-          id: (index + 1).toString(), 
-          label: task.a_description, 
+          id: (index + 1).toString(),
+          label: task.a_description,
           time: {
-            start: task.a_start_date, 
-            end: task.a_end_date, 
-          }, 
-          rowId: (index + 1).toString(), 
-          lines: [(index + 1).toString()], 
+            start: task.a_start_date,
+            end: task.a_end_date,
+          },
+          resizable: this.modifiable,
+          rowId: (index + 1).toString(),
           style: {
-            background: this.pallete[index], 
-          }
-        }
+            background: this.pallete[index],
+          },
+          task: task,
+        };
 
         // get dynamic from, to
         if (from > task.a_start_date) {
           from = task.a_start_date;
-        } 
+        }
         if (to < task.a_end_date) {
           to = task.a_end_date;
         }
@@ -202,9 +173,6 @@ export class TasksComponent implements OnInit {
       // set rows and items
       this.gstcState.update('config.list.rows', this.rows);
       this.gstcState.update('config.chart.items', this.items);
-
-      console.log(this.gstcState.get('config.chart.time.zoom'));
-
     });
   }
 
@@ -255,11 +223,13 @@ export class TasksComponent implements OnInit {
       }
     }
 
+    console.log(this.modifiable);
+
     this.config = {
       plugins: [
         ItemMovement({
-          moveable: 'x', // 只允许在本行移动（x轴）
-          resizeable: true,
+          moveable: this.modifiable ? 'x' : false, // 只允许在本行移动（x轴）
+          resizeable: this.modifiable,
           collisionDetection: true
         }),
         // Selection({
@@ -271,7 +241,7 @@ export class TasksComponent implements OnInit {
         WeekendHighlight()
       ],
       height: 623,
-      headerHeight: 100, 
+      headerHeight: 100,
       list: {
         rows: this.rows,
         columns
@@ -279,7 +249,7 @@ export class TasksComponent implements OnInit {
       chart: {
         items: this.items,
         time: {
-          from: new Date().valueOf(), 
+          from: new Date().valueOf(),
           to: new Date().setDate(new Date().getDate() + 120).valueOf(),
           period: 'day'
         }
@@ -306,8 +276,15 @@ export class TasksComponent implements OnInit {
       "config.chart.items.:id",
       (bulk, eventInfo) => {
         if (eventInfo.type === "update" && eventInfo.params.id) {
-          this.modified = true;
           const itemId = eventInfo.params.id;
+
+          this.modified = true;
+          if (!this.modifiedList.includes(itemId)
+            && !this.addedList.includes(itemId)
+            && !this.deletedList.includes(itemId)) {
+            this.modifiedList.push(itemId);
+          }
+
           console.log(
             `item ${itemId} changed`,
             this.gstcState.get("config.chart.items." + itemId)
@@ -318,7 +295,31 @@ export class TasksComponent implements OnInit {
     );
   }
 
+  addRow(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>) {
+    this.modal.create({
+      nzTitle: '新增任务',
+      nzContent: tplContent,
+      nzFooter: tplFooter,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzComponentParams: {
+        value: 'Template Context'
+      },
+      nzOnOk: () => console.log('Click ok')
+    });
+    this.gstcState.update('config.list.rows', rows => {
+      const id = String(rows.length);
+      rows[id] = {
+        id: id,
+        // label: task.a_name,
+        // progress: Number((task.doneNum / this.totalNum * 100).toFixed(1)),
+        expanded: false,
+      };
+    })
+  }
+
   deleteRow() {
+    // 删除行的同时要把item删除
     const random = r => r[Math.floor(Math.random() * r.length)];
     this.gstcState.update('config.list.rows', rows => {
       const rando = random(Object.keys(rows));
@@ -370,11 +371,41 @@ export class TasksComponent implements OnInit {
 
   saveChanges() {
     this.loading = true;
+
+    this.items = this.gstcState.get('config.chart.items');
+
+    // console.log(this.rows, this.items);
+    // this.handleModifications();
+
+
     setTimeout(() => {
       this.loading = false;
       this.modified = false;
       this.message.success('保存成功！');
     }, 1000);
+  }
+
+  handleModifications() {
+    this.modifiedList.forEach((modified) => {
+      const item = this.items[modified];
+
+      const mTask = item.task;
+      [mTask.a_start_date, mTask.a_end_date] = [item.time.start, item.time.end];
+
+      this.taskService.modifyTask(mTask).subscribe((response) => {
+        if (response.code === 200) {
+          this.message.success(response.message);
+        } else if (response.code === 208) {
+          this.message.error(response.message);
+        } else if (response.code === 209) {
+          this.message.error(response.message);
+        }
+      });
+    });
+  }
+
+  handleAdditions() {
+
   }
 
 }

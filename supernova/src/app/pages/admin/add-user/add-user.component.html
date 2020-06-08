@@ -1,0 +1,85 @@
+<button nz-button  nzType="default"  (click)="showModal()">
+  <i nz-icon nzType="plus" nzTheme="outline"></i>
+  <span>添加</span>
+  </button>
+  <nz-modal
+      [(nzVisible)]="isVisible"
+      [nzTitle]="modalTitle"
+      [nzContent]="modalContent"
+      [nzFooter]="modalFooter"
+      (nzOnCancel)="handleCancel()"
+    >
+      <ng-template #modalTitle>
+          添加用户
+      </ng-template>
+
+      <ng-template #modalContent>
+        <nz-spin [nzSpinning]="loading">
+            <form nz-form [formGroup]="validateForm">
+            
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">工号</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="工号输入有误!工号只能为数字！">
+                    <input nz-input formControlName="id" id="id"/>
+                    <div *ngIf="idError" class="">{{idError}}</div>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"> 姓名 </nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="姓名输入有误!长度不能超过六位,且不能包含数字">
+                    <input nz-input formControlName="name" id="name" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="gender"> 性别 </nz-form-label>
+                   <nz-radio-group  formControlName="gender" id="gender">
+                  <nz-form-control nzErrorTip="请选择你的性别">
+                    <label nz-radio nzValue="男">男</label>
+                    <label nz-radio nzValue="女">女</label>
+                    <label nz-radio nzValue="不愿透露">不愿透露</label>
+                  </nz-form-control>
+                </nz-radio-group>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type"> 身份</nz-form-label>
+                   <nz-radio-group  formControlName="type" id="type">
+                  <nz-form-control nzErrorTip="请选择你的身份">
+                    <label nz-radio nzValue="student">学生</label>
+                    <label nz-radio nzValue="teacher">教师</label>
+                    <label nz-radio nzValue="admin">管理员</label>
+                  </nz-form-control>
+                </nz-radio-group>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入的密码!密码长度应在8-16位之间！">
+                    <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+                  <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+                    <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+                    <ng-template #errorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">
+                        请输入确认密码！
+                      </ng-container>
+                      <ng-container *ngIf="control.hasError('confirm')">
+                        两次输入的密码应当相同！
+                      </ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+              <div *ngIf="error" class="">{{error}}</div>
+            </nz-spin>
+
+
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <!-- <span>Modal Footer: </span> -->
+        <button nz-button nzType="default" (click)="handleCancel()">放弃添加</button>
+        <button nz-button nzType="primary" (click)="handleOk()">确认添加</button>
+      </ng-template>
+    </nz-modal>

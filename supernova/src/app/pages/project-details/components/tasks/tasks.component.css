@@ -1,4 +1,8 @@
 div {
     margin-bottom: 16px;
-    text-align: right;
+    /* text-align: right; */
+}
+
+div button {
+    margin-left: 16px;
 }
