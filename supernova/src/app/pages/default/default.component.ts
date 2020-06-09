@@ -12,6 +12,7 @@ export class DefaultComponent implements OnInit {
   isCollapsed = false;
 
   currentUser: User;
+  isAdmin: boolean;
 
   constructor(
     private userService: UserService,
@@ -19,6 +20,7 @@ export class DefaultComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.userService.getUser();
+    this.isAdmin = this.currentUser.type === 'admin';
   }
 
   logout(): void {

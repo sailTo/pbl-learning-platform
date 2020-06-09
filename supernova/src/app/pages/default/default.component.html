@@ -9,26 +9,7 @@
             </a>
         </div>
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-            <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-                <ul>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/welcome">Welcome</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/passport">登录测试</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/login">Login</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/signup">Signup</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/home">home</a>
-                    </li>
-                </ul>
-            </li>
-            <li nz-submenu nzOpen nzTitle="学习管理" nzIcon="folder">
+            <li *ngIf="!isAdmin" nz-submenu nzOpen nzTitle="学习管理" nzIcon="folder">
                 <ul>
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/courses">课程列表</a>
@@ -41,7 +22,7 @@
                     </li>
                 </ul>
             </li>
-            <li nz-submenu nzOpen nzTitle="后台管理" nzIcon="home">
+            <li *ngIf="isAdmin" nz-submenu nzOpen nzTitle="后台管理" nzIcon="home">
                 <ul>
                     <!-- 只有管理员可见 -->
                     <li nz-menu-item nzMatchRouter>

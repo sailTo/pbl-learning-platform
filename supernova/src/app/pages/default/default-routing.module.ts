@@ -7,12 +7,7 @@ const routes: Routes = [
     path: '',
     component: DefaultComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'courses' },
-      {
-        path: 'welcome',
-        loadChildren: () =>
-          import('../welcome/welcome.module').then((m) => m.WelcomeModule),
-      },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home',
         loadChildren: () =>
@@ -27,11 +22,6 @@ const routes: Routes = [
         path: 'score',
         loadChildren: () =>
           import('../score/score.module').then((m) => m.ScoreModule),
-      },
-      {
-        path: 'signup',
-        loadChildren: () =>
-          import('../signup/signup.module').then((m) => m.SignupModule),
       },
       {
         path: 'projects',
