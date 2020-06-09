@@ -3,13 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FileService } from 'src/app/services/file.service';
+import { UserService } from 'src/app/services/user.service';
 
 import { File } from "src/app/models/file";
 import { User } from 'src/app/models/user';
-import { UploadChangeParam } from 'ng-zorro-antd/upload';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { UploadFile } from 'ng-zorro-antd/upload';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-files',
@@ -21,6 +20,7 @@ export class FilesComponent implements OnInit {
   p_id: number;
   groupers: User[];
   files: File[];
+  currentUser: User = this.userService.getUser();
 
   isVisible = false;
   isOkLoading = false;
@@ -47,19 +47,12 @@ export class FilesComponent implements OnInit {
     private route: ActivatedRoute, 
     private message: NzMessageService, 
     private fileService: FileService,
+    private userService: UserService,
     private http: HttpClient, 
     private msg: NzMessageService
   ) { }
 
   ngOnInit(): void {
-    
-
-    // get files
-    // this.getFiles();
-    // this.fileService.getFilesByProjectId(this.p_id).subscribe((response) => {
-    //   this.files = response.data.files;
-    // });
-    
     // get param p_name, groupers
     this.route.queryParams.subscribe(
       (params: {p_id: string, p_name: string, groupers: string}) => {
@@ -103,26 +96,9 @@ export class FilesComponent implements OnInit {
 
   downLoadFile(file: File): void {
     console.log("downfile!");
-
     // TODO: download logic
-    this.fileService.getFileString(file.p_id, file.f_id).subscribe((response) => {
-      const blob = new Blob([response.data.file_str]);
-      const link = document.createElement('a');
-
-      if (link.download !== undefined) {
-        const url = URL.createObjectURL(blob);
-
-        link.setAttribute('href', url);
-        link.setAttribute('download', file.f_name);
-        link.style.visibility = 'hidden';
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        console.log('HTML 5 download feature not supported. ');
-      }
-    })
+    const link = 'http://123.56.219.88:8081/api/downloadFile?pbl_token='+String(this.userService.getUser().token)+'&p_id='+file.p_id+'&f_id='+file.f_id;
+    window.open(link, '_blank');
   }
 
   deleteFile(file: File): void {
@@ -130,11 +106,14 @@ export class FilesComponent implements OnInit {
     // this.files = this.files.filter((file) => file.f_id !== file.f_id);
     this.fileService.deleteFile(file.p_id, file.f_id).subscribe((response) => {
       if (response.code === 200) {
+        this.files = this.files.filter(item => item !== file);
         this.message.success(`${file.f_name}已成功删除`);
       } else {
         this.message.error(`${file.f_name}删除失败，请稍后重试！`);
       }
     });
+
+    
   }
 
   showUploadModel(): void {
@@ -145,8 +124,13 @@ export class FilesComponent implements OnInit {
   beforeUpload = (file: UploadFile): boolean => {
     console.log("beforeUpload");
     console.log(file);
+    //如果文件大小大于10M则不允许上传
+    if(file.size>10000000){
+      this.message.create('error',file.name+'上传失败,文件大小超过10M');
+    }else{
+      this.fileList = this.fileList.concat(file);
+    }
     // this.buttonVis = false;
-    this.fileList = this.fileList.concat(file);
     return false;
   };
 
@@ -155,15 +139,19 @@ export class FilesComponent implements OnInit {
     this.isLoadingOne = true;
     setTimeout(() => {
       this.fileList.forEach((fileUpload: any) => {
-        let ret = this.fileService.upLoadFile(fileUpload,fileUpload.name,this.description,this.p_id);
-        console.log("Out");
-        console.log(ret);
-        if(ret!=null){
-          this.files.push(JSON.parse(JSON.stringify(ret)));
-          console.log(this.files);
-
-          this.processFiles();
-        }
+        this.fileService.upLoadFile(fileUpload,fileUpload.name,this.description,this.p_id).subscribe(
+          (test:any) => {
+            console.log("upload success!");
+            this.message.create('success',fileUpload.name+'上传成功');
+            // console.log(test.body.data);
+            this.files = this.files.concat(JSON.parse(JSON.stringify(test.body.data["file"])));
+            this.processFiles();
+          },
+          () => {
+            console.log("upload fail!");
+            this.message.create('error',fileUpload.name+'上传失败');
+          }
+        );
       });
       this.fileList = []
       this.isLoadingOne = false;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpRequest, HttpParams ,HttpResponse, HttpEvent} from '@angular/common/http';
+import { HttpClient,HttpRequest, HttpParams ,HttpResponse,HttpHeaders} from '@angular/common/http';
+import { User } from 'src/app/models/user';
 
 import { File } from "../models/file";
 import { Response } from "../models/generic-response"; 
@@ -26,14 +27,6 @@ export class FileService {
     return this.http.get<Response<File[]>>('/api/searchAllFiles', { params });
   }
 
-  getFileString(projectId: number, fileId: number) {
-    const params = new HttpParams({ fromObject: {
-      f_id: String(fileId), 
-      p_id: String(projectId), 
-    }});
-    return this.http.get<Response<{file_str: string}>>('/api/downloadFile', { params });
-  }
-
   upLoadFile(file:any,fileName:string,descriptionStr:string,projectId:number):any{
     const params = new HttpParams({
       fromObject: {
@@ -48,31 +41,20 @@ export class FileService {
     formData.append('file',file);
 
     const req = new HttpRequest('POST', 'http://123.56.219.88:8081/api/uploadFile', formData, {
-      params
+    // const req = new HttpRequest('POST', 'http://127.0.0.1:8081/api/uploadFile', formData, {
+      headers: new HttpHeaders({'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Methods':'POST,GET',
+                                'Access-Control-Max-Age':'1728000',
+                                'Access-Control-Allow-Headers':'Content-Type,Access-Token,Authorization,ybg'}),
+      params:params
     });
     
-    this.http
-    .request(req)
-    .pipe(filter(e => e instanceof HttpResponse))
-    .subscribe(
-      (test:any) => {
-        console.log("upload success!");
-        console.log(test.body.data["file"]);
-        console.log(test.body.data);
-        
-        return test.body.data["file"];        
-      },
-      () => {
-        console.log("upload fail!");
-        return null;
-      }
-    );
-
-    // return this.http.post<Response<{file_str: string}>>('/api/uploadFile',formData,{ params });
+    return this.http.request(req).pipe(filter(e => e instanceof HttpResponse));
   }
 
   deleteFile(projectId: number, fileId: number) {
     const params = new HttpParams({ fromObject: {
+      pbl_token: String(this.userService.getUser().token),
       f_id: String(fileId), 
       p_id: String(projectId), 
     }});

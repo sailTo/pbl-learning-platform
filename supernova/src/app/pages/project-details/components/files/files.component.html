@@ -18,7 +18,7 @@
             <td>{{ data.u_name }}</td>
             <td>
                 <a nz-button nzType="link" (click)="downLoadFile(data)">下载</a>
-                <ng-container *ngIf="data.u_id === data.u_id"> <!--TODO：判断为自己上传的文件才能删除-->
+                <ng-container *ngIf="data.u_id === currentUser.u_id"> <!--TODO：判断为自己上传的文件才能删除-->
                     <nz-divider nzType="vertical"></nz-divider>
                     <a nz-button nzType="link" (click)="deleteFile(data)">删除</a>
                 </ng-container>
@@ -33,8 +33,8 @@
     nzTitle="上传文件面板" 
     >
     <ng-container *ngIf="buttonVis">
-        <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" id="forCenter">
-            <button nz-button><i nz-icon nzType="upload"></i>选择文件</button>
+        <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" id="forCenter" >
+            <button nz-button [disabled]="fileList.length == 1"><i nz-icon nzType="upload"></i>选择文件</button>
         </nz-upload>
     </ng-container>
     
