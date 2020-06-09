@@ -112,7 +112,6 @@ export class ScoreTableComponent implements OnInit {
                       this.listOfData = discussionData.data.discussInformations;
                       this.getAssignmentDone();
                       this.getSelfAndMutualScore();
-                      this.
               }else{
                 this.msgService.error("获取讨论数信息失败！");
               }
@@ -124,8 +123,8 @@ export class ScoreTableComponent implements OnInit {
       }
     )
 
-    this.listOfData = data;
-    this.listOfDisplayData = [...this.listOfData];
+    // this.listOfData = data;
+    // this.listOfDisplayData = [...this.listOfData];
   }
 
   getAssignmentDone(){
@@ -189,7 +188,7 @@ export class ScoreTableComponent implements OnInit {
 
   search(): void {
     this.visible = false;
-    this.listOfDisplayData = this.listOfData.filter((item: ItemData) => item.name.indexOf(this.searchValue) !== -1);
+    this.listOfDisplayData = this.listOfData.filter((item: ItemData) => item.s_name.indexOf(this.searchValue) !== -1);
   }
   confirm():void{
     this.canEdit = false; 
