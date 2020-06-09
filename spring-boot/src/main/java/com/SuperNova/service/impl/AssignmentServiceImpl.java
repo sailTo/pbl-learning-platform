@@ -3,9 +3,8 @@ package com.SuperNova.service.impl;
 import com.SuperNova.dao.AssignmentMapper;
 import com.SuperNova.dao.StudentAssignmentMapper;
 import com.SuperNova.dao.StudentProjectMapper;
-import com.SuperNova.model.Assignment;
-import com.SuperNova.model.StudentAssignment;
-import com.SuperNova.model.StudentProject;
+import com.SuperNova.dao.UserMapper;
+import com.SuperNova.model.*;
 import com.SuperNova.service.AssignmentService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -29,7 +28,8 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Resource
     private StudentAssignmentMapper studentAssignmentMapper;
-
+    @Resource
+    private UserMapper userMapper;
     @Resource
     private StudentProjectMapper studentProjectMapper;
 
@@ -130,8 +130,26 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     }
 
     @Override
-    public String countAssignmentDone(int p_id) {
-        return JSON.toJSONString(assignmentMapper.countAssignmentDone(p_id));
+    public List<DoneInformation> countAssignmentDone(int p_id) {
+        List<DoneInformation> ret = assignmentMapper.countAssignmentDone(p_id);
+        StudentAssignment studentAssignment = new StudentAssignment();
+        studentAssignment.setP_id(p_id);
+        List<StudentAssignment> studentAssignments = studentAssignmentMapper.select(studentAssignment);
+        for (StudentAssignment s : studentAssignments){
+            boolean flag = true;
+            for (DoneInformation d : ret){
+                if (s.getU_id().equals(d.getS_id())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                User u = userMapper.selectByPrimaryKey(s.getU_id());
+                DoneInformation tmp = new DoneInformation(u.getU_id(),u.getU_name(),0);
+                ret.add(tmp);
+            }
+        }
+        return ret;
     }
 
     @Override

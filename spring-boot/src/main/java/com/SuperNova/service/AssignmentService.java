@@ -1,6 +1,7 @@
 package com.SuperNova.service;
 import com.SuperNova.model.Assignment;
 import com.SuperNova.core.Service;
+import com.SuperNova.model.DoneInformation;
 
 import java.util.List;
 
@@ -82,7 +83,7 @@ public interface AssignmentService extends Service<Assignment> {
      * @param p_id
      * @return
      */
-    String countAssignmentDone(int p_id);
+    List<DoneInformation> countAssignmentDone(int p_id);
 
     /**
      * 搜索该生在每个项目中被urge的情况(按s_id排序)
