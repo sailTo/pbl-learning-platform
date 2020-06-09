@@ -1,4 +1,14 @@
-import { Component, Input, TemplateRef, ViewChild, AfterViewInit, OnInit, OnChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+  AfterViewInit,
+  OnInit,
+  OnChanges,
+  ChangeDetectorRef,
+  Output, EventEmitter
+} from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
 
@@ -6,6 +16,10 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Project } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
+import {ProjectService} from "../../../../services/project.service";
+import {NzModalService} from "ng-zorro-antd";
+import {CreateProjectComponent} from "../create-project/create-project.component";
+import {Course} from "../../../../models/course";
 
 @Component({
   selector: 'app-project-card',
@@ -16,6 +30,8 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input() project: Project;
   @Input() taken: boolean;
   @Input() canTake: boolean;
+  @Input() c_name: string;
+  @Output() change = new EventEmitter();
 
   @ViewChild('actionJoin') join: TemplateRef<void>;
   @ViewChild('actionInfo') info: TemplateRef<void>;
@@ -51,7 +67,9 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     private message: NzMessageService,
     private userService: UserService,
     private changeDectect: ChangeDetectorRef,
-  ) { }
+    private modalService: NzModalService,
+    private projectService:ProjectService
+    ) { }
 
   ngOnInit():void {
     // get groupers
@@ -99,4 +117,30 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     return JSON.stringify(this.groupers);
   }
 
+  showModal(type: string, p_id:number): void {
+    // let course_name =
+    // this.isVisible = true;
+    this.modalService.create({
+      nzTitle: "项目详情",
+      nzContent: CreateProjectComponent,
+      nzComponentParams:{
+        type: type,
+        p_id: p_id,
+        course_id: this.project.c_id,
+        course_name: this.c_name,
+      }
+    })
+  }
+
+  deleteProject(p_id:number):void{
+    this.projectService.deleteProject(p_id).subscribe((response)=>{
+      if (response.code === 200) {
+        this.message.success(`删除项目成功！`);
+        this.change.emit();
+      } else {
+        this.message.error(`删除项目失败，请稍后重试！`);
+      }
+      // this.change.emit();
+    })
+  }
 }

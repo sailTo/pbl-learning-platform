@@ -6,6 +6,9 @@ import { ProjectService } from "../../services/project.service";
 import { Project } from 'src/app/models/project';
 import {CreateCourseComponent} from "../courses/components/create-course/create-course.component";
 import {CreateProjectComponent} from "./components/create-project/create-project.component";
+import {User} from "../../models/user";
+import {UserService} from "../../services/user.service";
+import {Task} from "../../models/task";
 
 @Component({
   selector: 'app-projects',
@@ -21,17 +24,20 @@ export class ProjectsComponent implements OnInit {
   selectLoading: boolean = false;
   current_c_id:number;
   current_c_name:string;
+  current_user:User;
 
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
     private projectService: ProjectService,
     private modalService: NzModalService,
+    private userService:UserService
   ) { }
 
   ngOnInit(): void {
     this.getOptionList();
     this.projects = [];
+    this.current_user = this.userService.getUser();
   }
 
   getOptionList(): void {
@@ -81,15 +87,30 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  showModal(): void {
+  getProject():void{
+    console.log(this.current_c_id);
+    this.projectService.findProjectsByCourseId(this.current_c_id).subscribe((response) => {
+      this.projectTaking = response.data.project_take;
+      this.projects = response.data.projects;
+    });
+  }
+
+  showModal(p_id:number): void {
     // this.isVisible = true;
     this.modalService.create({
       nzTitle: '新建项目',
       nzContent: CreateProjectComponent,
       nzComponentParams:{
+        type:'create',
+        // p_id: p_id,
         course_id: this.current_c_id,
         course_name: this.current_c_name,
       }
-    })
+    }).afterClose.subscribe((flag: number) => {
+      if (flag === undefined) {
+        return;
+      }
+      this.getProject();
+    });
   }
 }

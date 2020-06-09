@@ -102,8 +102,41 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Override
     public void changeProject(Project project, List<GradeSystem> grades) {
         projectMapper.updateByPrimaryKey(project);
+        GradeSystem gradeSystem = new GradeSystem();
+        gradeSystem.setP_id(project.getP_id());
+        List<GradeSystem> preGradeSystems = gradeSystemMapper.select(gradeSystem);
+
+        int index = gradeSystemMapper.getMaxItemId(project.getP_id());
+        int deleteItemId = 0;
+        for (GradeSystem preGrade: preGradeSystems) {
+            deleteItemId = preGrade.getItem_id();
+            boolean flag = true;
+            for (GradeSystem grade : grades) {
+                if (preGrade.getItem_id().equals(grade.getItem_id())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {//遍历结束没找到，说明被删
+                GradeSystem deleteTmp = new GradeSystem();
+                deleteTmp.setP_id(project.getP_id());
+                deleteTmp.setItem_id(deleteItemId);
+                gradeSystemMapper.delete(deleteTmp);
+            }else {//遍历结束找到了，说明被更新
+                for (GradeSystem grade : grades) {
+                    if (preGrade.getItem_id().equals(grade.getItem_id())) {
+                        gradeSystemMapper.updateByPrimaryKey(grade);
+                        break;
+                    }
+                }
+            }
+        }
         for (GradeSystem grade:grades) {
-            gradeSystemMapper.updateByPrimaryKey(grade);
+            if (grade.getItem_id() == -1){//新增的
+                grade.setItem_id(++index);
+                gradeSystemMapper.insert(grade);
+                break;
+            }
         }
     }
 
@@ -174,5 +207,18 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
             t.setUrge(false);
             studentAssignmentMapper.insert(t);
         }
+    }
+
+    @Override
+    public void updateGradeItem(GradeSystem gradeSystem) {
+        gradeSystemMapper.updateByPrimaryKeySelective(gradeSystem);
+    }
+
+    @Override
+    public void deleteGradeItem(int p_id, int item_id) {
+        GradeSystem gradeSystem = new GradeSystem();
+        gradeSystem.setP_id(p_id);
+        gradeSystem.setItem_id(item_id);
+        gradeSystemMapper.delete(gradeSystem);
     }
 }

@@ -1,5 +1,6 @@
 export interface GradeItem{
-    item_id: string,
+    p_id:number,
+    item_id: number,
     description:string,
     max_grade: string
 }

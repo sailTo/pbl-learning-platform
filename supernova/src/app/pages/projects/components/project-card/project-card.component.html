@@ -29,8 +29,8 @@
   ></a>
 </ng-template>
 
-<ng-template #actionEdit>
-  <a nz-icon nzType="edit"></a>
+<ng-template #actionEdit [hidden]="project.grading_status">
+  <a nz-icon nzType="edit" (click)="showModal('edit',project.p_id)"></a>
 </ng-template>
 
 <ng-template #actionMember>
@@ -52,7 +52,7 @@
 </ng-template>
 
 <ng-template #actionDelete>
-  <a nz-icon nzType="delete"></a>
+  <a nz-icon nzType="delete" (click)="deleteProject(project.p_id)"></a>
 </ng-template>
 
 <ng-template #actionFileMgmt>

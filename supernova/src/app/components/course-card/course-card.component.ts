@@ -32,7 +32,7 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
         1: 'default',
         2: 'success',
         0: 'error',
-    }
+    };
 
     // 课程card下的控制按键列表
     actions: TemplateRef<void>[] = [];

@@ -131,7 +131,7 @@ export class ScoreTableComponent implements OnInit,OnChanges {
           this.msgService.error("无法获得教师的评分细则！");
         }
       }
-    )
+    );
 
     // this.listOfData = data;
     

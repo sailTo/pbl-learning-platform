@@ -23,8 +23,13 @@ nz-upload button {
 }
 
 .passenger-input {
-  width: 60%;
-  margin-right: 8px;
+  width: 100px;
+  margin-left: 8px;
+}
+
+.value-input{
+  width: 100px;
+  margin-left: 8px;
 }
 
 .add-button {
