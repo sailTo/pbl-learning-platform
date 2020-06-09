@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -8,7 +8,6 @@ import { Md5 } from 'ts-md5/dist/md5';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  //
 })
 export class LoginComponent implements OnInit {
   validateForm: FormGroup;

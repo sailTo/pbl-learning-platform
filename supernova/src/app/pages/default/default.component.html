@@ -1,0 +1,91 @@
+<nz-layout class="app-layout">
+    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+        [nzTrigger]="null">
+        <div class="sidebar-logo">
+            <a href="https://ng.ant.design/" target="_blank">
+                <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+                <!--         /assets/supernova-logo.png-->
+                <h1>Supernova PBL System</h1>
+            </a>
+        </div>
+        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+            <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/welcome">Welcome</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/passport">登录测试</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/login">Login</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/signup">Signup</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/home">home</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a>Monitor</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a>Workplace</a>
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu nzOpen nzTitle="学习管理" nzIcon="folder">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/courses">课程列表</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/projects">项目列表</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a>评分查询</a>
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu nzOpen nzTitle="课程管理" nzIcon="folder">
+                <ul>
+                    <!-- 这个可以之后并在学习管理一起，通过权限控制，使得只有教师和管理员可见 -->
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/score">评分页面</a>
+                    </li>
+                </ul>
+            </li>
+            <li nz-submenu nzOpen nzTitle="后台管理" nzIcon="folder">
+                <ul>
+                    <!-- 只有管理员可见 -->
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/admin">用户管理</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- <li nz-menu-item nz-tooltip nzTooltipPlacement="right" nzMatchRouter>
+          <i nz-icon nzType="home"></i>
+          <span><a>课程管理</a></span>
+        </li> -->
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header">
+                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+                </span>
+            </div>
+        </nz-header>
+        <nz-content>
+            <!-- <div class="inner-content"> -->
+            <router-outlet></router-outlet>
+            <!-- </div> -->
+        </nz-content>
+        <nz-footer style="text-align: center;">
+            <nz-typography><strong>Group #3 @ Advanced Web Technology, FDU</strong></nz-typography>
+            <br />
+            <nz-typography><strong>Spring 2020</strong></nz-typography>
+        </nz-footer>
+    </nz-layout>
+</nz-layout>

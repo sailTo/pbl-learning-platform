@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PassportComponent } from './passport.component';
 import { UserLoginComponent } from './login/login.component';
+import { UserRegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,8 @@ const routes: Routes = [
     component: PassportComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: UserLoginComponent }
+      { path: 'login', component: UserLoginComponent },
+      { path: 'register', component: UserRegisterComponent },
     ]
   },
 ];

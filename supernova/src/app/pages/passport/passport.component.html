@@ -1,23 +1,16 @@
 <div class="container">
-    <div class="wrap">
-      <div class="top">
-        <div class="head">
-          <img class="logo" src="./assets/logo-color.svg" />
-          <span class="title">ng-alain</span>
-        </div>
+  <nz-layout class="wrap">
+    <div class="top">
+      <div class="head">
+        <img class="logo" src="./assets/logo-color.svg" />
+        <span class="title">Supernova PBL System</span>
       </div>
-      <router-outlet></router-outlet>
-      <!-- <nz-footer style="text-align: center;">
-        <nz-typography><strong>Group #3 @ Advanced Web Technology, FDU</strong></nz-typography>
-        <br />
-        <nz-typography><strong>Spring 2020</strong></nz-typography>
-      </nz-footer> -->
-      <!-- <global-footer> -->
-        Copyright
-        <i nz-icon nzType="copyright"></i> 
-        <nz-typography><strong>Group #3 @ Advanced Web Technology, FDU</strong></nz-typography>
-        <br />
-        <nz-typography><strong>Spring 2020</strong></nz-typography>
-      <!-- </global-footer> -->
     </div>
-  </div>
+    <router-outlet></router-outlet>
+    <nz-footer style="text-align: center;">
+      <nz-typography><strong>Group #3 @ Advanced Web Technology, FDU</strong></nz-typography>
+      <br />
+      <nz-typography><strong>Spring 2020</strong></nz-typography>
+    </nz-footer>
+  </nz-layout>
+</div>

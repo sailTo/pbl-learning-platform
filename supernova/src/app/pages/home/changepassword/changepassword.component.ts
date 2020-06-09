@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {ChangePasswordService} from '../../../services/change-password.service';
-import {AuthService} from '../../../auth/auth.service';
+import {AuthService} from '../../../services/auth.service';
 import {HomeService} from '../../../services/home.service';
 import { Md5 } from 'ts-md5/dist/md5';
 @Component({

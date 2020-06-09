@@ -9,13 +9,16 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard
-  implements CanActivate, CanActivateChild, CanDeactivate<unknown> {
-  constructor(private authService: AuthService, private router: Router) { }
+export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown> {
+  constructor(
+    private authService: AuthService, 
+    private router: Router
+  ) { }
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -28,9 +31,10 @@ export class AuthGuard
     if (currentUser) {
       return true;
     }
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/passport/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
+
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -39,8 +43,9 @@ export class AuthGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return true;
+    return this.canActivate(next, state);
   }
+
   canDeactivate(
     component: unknown,
     currentRoute: ActivatedRouteSnapshot,
@@ -53,12 +58,4 @@ export class AuthGuard
     | UrlTree {
     return true;
   }
-
-  // checkLogin(url:string):boolean{
-  //   if (this.authService.isLogin) { return true; }
-  //   //没登录情况下
-  //   this.authService.redirectUrl = url;
-  //   this.router.navigate(['/login']);
-  //   return false;
-  // }
 }

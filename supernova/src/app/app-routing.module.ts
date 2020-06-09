@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/login' },
-  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
-  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
-  { path: 'courses', loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesModule) },
-  { path: 'score', loadChildren: () => import('./pages/score/score.module').then(m => m.ScoreModule) },
-  { path: 'signup', loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupModule) },
-  { path: 'projects', loadChildren: () => import('./pages/projects/projects.module').then(m => m.ProjectsModule) },
-  { path: 'project', loadChildren: () => import('./pages/project-details/project-details.module').then(m => m.ProjectDetailsModule) },
-  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
+  {
+    path: '',
+    // canActivate: [AuthGuard],
+    // canActivateChild: [AuthGuard],
+    loadChildren: () => import('./pages/default/default.module').then(m => m.DefaultModule),
+  },
   { path: 'passport', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },
 ];
 

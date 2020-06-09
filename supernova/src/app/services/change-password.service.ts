@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
 import { HttpParams } from '@angular/common/http';
-import {AuthService} from '../auth/auth.service';
+import {AuthService} from './auth.service';
 @Injectable({
   providedIn: 'root'
 })

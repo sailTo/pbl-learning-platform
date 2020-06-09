@@ -11,14 +11,17 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPopoverModule, NzProgressModule, NzLayoutModule } from 'ng-zorro-antd';
 
 import { PassportRoutingModule } from './passport-routing.module';
 import { PassportComponent } from './passport.component';
 import { UserLoginComponent } from './login/login.component';
-
+import { UserRegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [PassportComponent, UserLoginComponent],
+  declarations: [PassportComponent, UserLoginComponent, UserRegisterComponent],
   imports: [
     CommonModule,
     PassportRoutingModule,
@@ -32,6 +35,11 @@ import { UserLoginComponent } from './login/login.component';
     NzAlertModule,
     NzModalModule,
     NzTypographyModule,
-  ]
+    NzMessageModule,
+    NzSelectModule,
+    NzPopoverModule,
+    NzProgressModule,
+    NzLayoutModule,
+  ],
 })
-export class PassportModule { }
+export class PassportModule {}
