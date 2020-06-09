@@ -625,7 +625,7 @@ public class APIController {
                                   @RequestParam String p_id) {
         JSONObject data = new JSONObject();
         data.put("maxDiscussNum",discussionService.getMaxDiscussionNum(Integer.parseInt(p_id)));
-        data.put("discussInformations",discussionService.searchDiscussions(Integer.parseInt(p_id)));
+        data.put("discussInformations",discussionService.countDiscussion(Integer.parseInt(p_id)));
         return ResultGenerator.genSuccessResult(data).setMessage("查询成功");
     }
 

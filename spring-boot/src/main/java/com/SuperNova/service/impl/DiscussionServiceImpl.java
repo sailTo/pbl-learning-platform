@@ -1,7 +1,12 @@
 package com.SuperNova.service.impl;
 
 import com.SuperNova.dao.DiscussionMapper;
+import com.SuperNova.dao.StudentProjectMapper;
+import com.SuperNova.dao.UserMapper;
+import com.SuperNova.model.DiscussInformation;
 import com.SuperNova.model.Discussion;
+import com.SuperNova.model.StudentProject;
+import com.SuperNova.model.User;
 import com.SuperNova.service.DiscussionService;
 import com.SuperNova.core.AbstractService;
 import com.alibaba.fastjson.JSON;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,6 +26,10 @@ import java.util.List;
 public class DiscussionServiceImpl extends AbstractService<Discussion> implements DiscussionService {
     @Resource
     private DiscussionMapper discussionMapper;
+    @Resource
+    private StudentProjectMapper studentProjectMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public List<Discussion> searchDiscussions(int p_id) {
@@ -51,8 +61,27 @@ public class DiscussionServiceImpl extends AbstractService<Discussion> implement
     }
 
     @Override
-    public String countDiscussion(int p_id) {
-        return JSON.toJSONString(discussionMapper.countDiscussion(p_id));
+    public List<DiscussInformation> countDiscussion(int p_id) {
+        List<DiscussInformation> ret = discussionMapper.countDiscussion(p_id);
+        StudentProject studentProject = new StudentProject();
+        studentProject.setP_id(p_id);
+        List<StudentProject> studentProjects = studentProjectMapper.select(studentProject);
+        for (StudentProject s : studentProjects){
+            String u_id = s.getU_id();
+            boolean flag = true;
+            for (DiscussInformation i : ret){
+                if (u_id.equals(i.getS_id())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                User u = userMapper.selectByPrimaryKey(u_id);
+                DiscussInformation join = new DiscussInformation(u_id,u.getU_name(),0);
+                ret.add(join);
+            }
+        }
+        return ret;
     }
 
     @Override
