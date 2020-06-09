@@ -26,12 +26,6 @@
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/home">home</a>
                     </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a>Monitor</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a>Workplace</a>
-                    </li>
                 </ul>
             </li>
             <li nz-submenu nzOpen nzTitle="学习管理" nzIcon="folder">
@@ -43,15 +37,7 @@
                         <a routerLink="/projects">项目列表</a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a>评分查询</a>
-                    </li>
-                </ul>
-            </li>
-            <li nz-submenu nzOpen nzTitle="课程管理" nzIcon="folder">
-                <ul>
-                    <!-- 这个可以之后并在学习管理一起，通过权限控制，使得只有教师和管理员可见 -->
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/score">评分页面</a>
+                        <a routerLink="/score">课程评分</a>
                     </li>
                 </ul>
             </li>
@@ -60,6 +46,12 @@
                     <!-- 只有管理员可见 -->
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/admin">用户管理</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/admin_course">课程管理</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/admin_project">项目管理</a>
                     </li>
                 </ul>
             </li>
