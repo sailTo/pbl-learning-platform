@@ -10,8 +10,9 @@ const routes: Routes = [
   { path: 'signup', loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupModule) },
   { path: 'projects', loadChildren: () => import('./pages/projects/projects.module').then(m => m.ProjectsModule) },
   { path: 'project', loadChildren: () => import('./pages/project-details/project-details.module').then(m => m.ProjectDetailsModule) },
-  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) }
-  ];
+  { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
+  { path: 'passport', loadChildren: () => import('./pages/passport/passport.module').then(m => m.PassportModule) },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
