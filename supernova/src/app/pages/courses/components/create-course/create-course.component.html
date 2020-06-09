@@ -10,6 +10,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程简介</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="descriptionErrorTpl">
@@ -21,6 +22,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程教师</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzValidateStatus]="'success'">
@@ -28,6 +30,7 @@
       <input type="hidden" nz-input formControlName="t_id" [value]="currentUser.u_id" />
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程学分数</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="pointErrorTpl">
@@ -41,6 +44,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程封面</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="imgErrorTpl">
@@ -59,6 +63,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item *nzModalFooter>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="destroyModal()">取消</button>

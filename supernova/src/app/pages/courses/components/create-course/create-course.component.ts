@@ -74,6 +74,6 @@ export class CreateCourseComponent {
     if (this.fileList.length < 1) {
       return { error:true, required: true };
     } 
-    return {};
+    return { };
   }
 }

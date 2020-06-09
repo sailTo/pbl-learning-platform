@@ -1,0 +1,32 @@
+[nz-form] {
+  max-width: 600px;
+}
+
+button {
+  margin-left: 8px;
+}
+
+nz-upload button {
+  margin-left: 0;
+}
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+  color: #777;
+}
+
+.passenger-input {
+  width: 60%;
+  margin-right: 8px;
+}
+
+.add-button {
+  width: 60%;
+}

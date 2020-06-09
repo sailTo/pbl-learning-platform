@@ -1,0 +1,124 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired nzFor="p_name">项目名称</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="项目名称">
+      <input nz-input formControlName="p_name" placeholder="Project Name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired nzFor="description">项目描述</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入项目描述">
+      <textarea nz-input rows="3" formControlName="description" placeholder="Description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired nzFor="c_id">课程名称</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback [nzValidateStatus]="'success'">
+      <input nz-input [value]="course_name" disabled/>
+      <input type="hidden" nz-input formControlName="c_id" [value]="course_id" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzRequired nzFor="teacher_point">教师评分</nz-form-label>
+    <nz-form-control [nzSpan]="18" nzHasFeedback [nzErrorTip]="teacherGrading">
+      <nz-input-number formControlName="teacher_point" nzPlaceHolder="请输入教师评分"
+                       [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzPrecisionMode="toFixed"
+      ></nz-input-number>
+      <ng-template #teacherGrading let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入教师评分
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notEqual')">
+          教师评分与评分细则总分不相等
+        </ng-container>
+        <ng-container *ngIf="control.hasError('notOneHundred')">
+          评分总和不为100
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+    <!--<nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [nzCheckedChildren] (click)="check_teacher = !check_teacher"></nz-switch>-->
+  </nz-form-item>
+
+  <div nz-row [nzGutter]="24">
+    <!--<div nz-col [nzSpan]="10">-->
+      <nz-form-item>
+        <nz-form-label nzRequired>自评互评</nz-form-label>
+        <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplSelf">
+          <nz-input-number formControlName="student_point_self" nzPlaceHolder="自评占比"
+                           [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzPrecisionMode="toFixed"
+          ></nz-input-number>
+        </nz-form-control>
+        <ng-template #pointErrorTplSelf let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            请输入自评得分
+          </ng-container>
+        </ng-template>
+      </nz-form-item>
+
+    <!--</div>-->
+    <!--<div nz-col [nzSpan]="8" >-->
+      <nz-form-item>
+        <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplMut">
+          <nz-input-number formControlName="student_point_mutual" nzPlaceHolder="互评占比"
+                           [nzMin]="0" [nzMax]="100" [nzStep]="0.1" nzPrecisionMode="toFixed"
+          ></nz-input-number>
+        </nz-form-control>
+        <ng-template #pointErrorTplMut let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            请输入互评得分
+          </ng-container>
+        </ng-template>
+      </nz-form-item>
+    <!--</div>-->
+    <!--<div nz-col>-->
+
+    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" (click)="check_student =! check_student"></nz-switch>
+    <!--</div>-->
+  </div>
+
+  <nz-form-item *ngFor="let control of listOfControl; let i = index">
+    <nz-form-label [nzOffset]="2" [nzXs]="24" [nzSm]="4" *ngIf="i == 0">细化评分项 </nz-form-label>
+
+    <nz-form-control
+      [nzXs]="24"
+      [nzSm]="20"
+      [nzOffset]="i == 0 ? 0 : 4"
+      [nzSpan]="10"
+      nzErrorTip="请输入描述或者删除"
+    >
+      <input
+        class="passenger-input"
+        nz-input
+        placeholder="placeholder"
+        [attr.id]="control.id"
+        [formControlName]="control.controlInstance"
+      />
+    </nz-form-control>
+
+    <nz-form-control [nzSpan]="8" nzErrorTip="该项不能为空">
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="0.1" [attr.id]="control.id"
+                       [formControlName]="control.controlInstance+'_value'">
+      </nz-input-number>
+    </nz-form-control><i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+      <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+        <i nz-icon nzType="plus"></i>
+        添加评分项
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *nzModalFooter>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button (click)="destroyModal()">取消</button>
+      <button nz-button (click)="resetForm($event)">重置</button>
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="submitForm(validateForm.value)">新建</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
