@@ -1,0 +1,27 @@
+<nz-card>
+    <nz-card-tab>
+      <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
+        <nz-tab [nzTitle]="coursesTabTitle"></nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+    <!-- <p>{{courses}}</p> -->
+    <!-- <nz-row [nzGutter]="[24, 24]">
+      <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let course of courses">
+        <app-course-card [course]=course [type]=type [currentUser]=currentUser (change)="getCourses()"> </app-course-card>
+      </nz-col>
+    </nz-row> -->
+    <app-pagination
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [total]="total"
+      (pageIndexChange)="onPageIndexChange($event)"
+      >
+    </app-pagination>
+  </nz-card>
+  
+  <ng-template #extraTemplate>
+    <button nz-button nzType="primary" (click)="showModal()">
+      <span>新建课程</span>
+    </button>
+  </ng-template>
+  
