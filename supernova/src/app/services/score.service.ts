@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
+
 import { Project } from '../models/project'
 import { Response } from "../models/generic-response";
 import { Rating } from "../models/rating";
 import { UserService } from "./user.service";
 import { Course } from '../models/course'
 import { GradeItem } from '../models/GradeItem';
+import {ItemData} from '../models/ItemData';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class ScoreService {
       }
     });
     var ret_data;
-    return this.http.get<Response<{ courses: Course[] }>>(`${environment.apiUrl}/api/searchAllMyCourses`, { params });
+    return this.http.get<Response<{ courses: Course[] }>>(`/api/searchAllMyCourses`, { params });
 
   }
 
@@ -49,7 +50,7 @@ export class ScoreService {
       }
     });
 
-    return this.http.get<Response<{ projects: Project[] }>>(`${environment.apiUrl}/api/searchProject`, { params });
+    return this.http.get<Response<{ projects: Project[] }>>(`/api/searchProject`, { params });
   }
 
   getColumnItems(p_id: string) {
@@ -59,7 +60,7 @@ export class ScoreService {
         p_id: p_id,
       }
     });
-    return this.http.get<Response<{ grades: GradeItem[] }>>(`${environment.apiUrl}/api/searchEvaluateByTeacher`, { params });
+    return this.http.get<Response<{ grades: GradeItem[] }>>(`/api/getGradeItems`, { params });
   }
   getAssignmentDone(p_id: string) {
     const params = new HttpParams({
@@ -68,7 +69,7 @@ export class ScoreService {
         p_id: p_id,
       }
     });
-    return this.http.get<Response<{ totalAssignmentNum: number, doneInformations: { s_id: string, s_name: string, doneNum: number }[] }>>(`${environment.apiUrl}/api/countAssignmentDone`, { params });
+    return this.http.get<Response<{ totalAssignmentNum: number, doneInformations: { s_id: string, s_name: string, doneNum: number }[] }>>(`/api/countAssignmentDone`, { params });
   }
   getCountDiscussion(p_id: string) {
     const params = new HttpParams({
@@ -77,7 +78,7 @@ export class ScoreService {
         p_id: p_id,
       }
     });
-    return this.http.get<Response<{ maxDiscussNum: number, discussInformations: { s_id: string, s_name: string, discussNum: number }[] }>>(`${environment.apiUrl}/api/countDiscussion`, { params });
+    return this.http.get<Response<{ maxDiscussNum: number, discussInformations: ItemData[] }>>(`/api/countDiscussion`, { params });
   }
   getSelfAndMutualScore(p_id: string) {
     const params = new HttpParams({
@@ -86,7 +87,7 @@ export class ScoreService {
         p_id: p_id,
       }
     });
-    return this.http.get<Response<{ selfAndMutualInformations: { s_id: string, s_name: string, selfScore: number, mutualScore: number }[] }>>(`${environment.apiUrl}/api/SelfAndMutualeValuateScore`, { params });
+    return this.http.get<Response<{ selfAndMutualInformations: { s_id: string, s_name: string, selfScore: number, mutualScore: number }[] }>>(`/api/SelfAndMutualevaluateScore`, { params });
   }
   getGradeItemScore(p_id: string) {
     const params = new HttpParams({
@@ -96,8 +97,36 @@ export class ScoreService {
       }
     });
     // return this.http.get<Response<{selfAndMutualInformations:{s_id:string,s_name:string,selfScore:number,mutualScore:number}[]}>>(`${environment.apiUrl}/api/SelfAndMutualevaluateScore`,{params});
-    return this.http.get<Response<{ allitems: { s_id: string, s_name: string, itemsList: { item_id: string, item_name: string, grade: number }[] }[] }>>(`${environment.apiUrl}/api/getItemsByPid`, { params });
+    return this.http.get<Response<{ allItems: { s_id: string, s_name: string, itemsList: { item_id: string, item_name: string, grade: number }[] }[] }>>(`/api/getItemsByPid`, { params });
   }
+
+  postGradeItemScore(p_id:string,itemData:ItemData){
+    var insertData = [];
+    itemData.dynamicScore.forEach(
+      (dynamicScore)=>{
+            var temp = {
+              item_id: dynamicScore.item_id,
+              p_id : p_id,
+              u_id : itemData.s_id,
+              grade: dynamicScore.grade
+            }
+            insertData.push(temp); 
+      }
+    )
+    
+    const params = {
+      pbl_token: String(this.userService.getUser().token),
+      grades: JSON.stringify(insertData)
+    };
+    return this.http.post<Response<{}>>(`/api/evaluateByTeacher`,
+      this.transformRequest(params),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded'
+        })
+      });
+  }
+
 
   getRating(projectId: number) {
     const params = new HttpParams({
@@ -121,7 +150,7 @@ export class ScoreService {
       u_id: u_Id,
       grade: grade
     };
-    return this.http.post<any>(`${environment.apiUrl}/api/evaluateOther`,
+    return this.http.post<any>(`/api/evaluateOther`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({

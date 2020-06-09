@@ -3,12 +3,12 @@ package com.SuperNova.model;
 public class DiscussInformation {
     private String s_id;
     private String s_name;
-    private int dicussNum;
+    private int discussNum;
 
-    public DiscussInformation(String s_id,String s_name,long dicussNum){
+    public DiscussInformation(String s_id,String s_name,long discussNum){
         this.s_id = s_id;
         this.s_name = s_name;
-        this.dicussNum = (int) dicussNum;
+        this.discussNum = (int) discussNum;
     }
 
     public String getS_id() {
@@ -27,11 +27,11 @@ public class DiscussInformation {
         this.s_name = s_name;
     }
 
-    public int getDicussNum() {
-        return dicussNum;
+    public int getDiscussNum() {
+        return discussNum;
     }
 
-    public void setDicussNum(int dicussNum) {
-        this.dicussNum = dicussNum;
+    public void setDiscussNum(int discussNum) {
+        this.discussNum = discussNum;
     }
 }

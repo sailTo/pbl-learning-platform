@@ -131,6 +131,8 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
 
     @Override
     public void evaluateByTeacher(List<StudentGrade> studentGrades) {
-        studentGradeMapper.insertList(studentGrades);
+        for (StudentGrade s:studentGrades){
+            studentGradeMapper.insert(s);
+        }
     }
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { HttpClient,HttpParams,HttpHeaders,HttpRequest,HttpResponse } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {User} from '../models/user';
 import {Response} from  '../models/generic-response';
+import { filter } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +20,7 @@ export class HomeService {
       pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
       u_id : u_id2
     }})
-    return this.http.get<Response<{content:User}>>(`${environment.apiUrl}/api/searchMyInformation`,{params});
+    return this.http.get<Response<{content:User}>>(`/api/searchMyInformation`,{params});
           
   }
   changeInformation(user:User,changeImage:string){
@@ -35,6 +35,26 @@ export class HomeService {
     //   "image" : changeImage
     // }
     
-    return this.http.put<any>(`${environment.apiUrl}/api/changeMyInformation`,params);
+    return this.http.put<any>(`/api/changeMyInformation`,params);
+  }
+  uploadImg(img:any,u_id:string){
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
+        u_id:u_id        
+      }
+    });
+    const formData = new FormData();
+    formData.append('image',img);
+    const headers= new HttpHeaders({'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Methods':'POST,GET,PUT',
+                                'Access-Control-Max-Age':'1728000',
+                                'Access-Control-Allow-Headers':'Content-Type,Access-Token,Authorization,ybg'})
+    // return this.http.put<Response<{img:string}>>(`${environment.apiUrl}/api/changeMyImage`,params,headers);
+    const req = new HttpRequest('PUT', `http://123.56.219.88:8081/api/changeMyImage`, formData, {
+      headers:headers,
+      params:params}
+    );
+    return this.http.request(req).pipe(filter(e => e instanceof HttpResponse));
   }
 }

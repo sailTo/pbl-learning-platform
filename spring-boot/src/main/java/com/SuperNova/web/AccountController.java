@@ -66,10 +66,10 @@ public class AccountController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/register")
-    public Result register(@RequestParam String u_id,
-                           @RequestParam String u_name,
-                           @RequestParam String gender,
-                           @RequestParam String password,
+    public Result register(@RequestParam(name = "u_id") String u_id,
+                           @RequestParam(name = "u_name") String u_name,
+                           @RequestParam(name = "gender") String gender,
+                           @RequestParam(name = "password") String password,
                            @RequestParam(required = false) String description,
                            @RequestParam(required = false) MultipartFile image){
         //检查用户名是否存在

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {ChangePasswordService} from '../../../services/change-password.service';
 import {AuthService} from '../../../services/auth.service';
 import {HomeService} from '../../../services/home.service';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -17,7 +16,6 @@ export class ChangepasswordComponent {
   error= "";
   constructor(
     private messageservice:NzMessageService,
-    private changepasswordService: ChangePasswordService,
     private authService:AuthService,
     private homeService:HomeService
      ) {}

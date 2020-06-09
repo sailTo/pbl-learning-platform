@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 import { UploadFile } from 'ng-zorro-antd/upload';
@@ -34,9 +34,11 @@ export class DescriptionBorderComponent implements OnInit {
 
   loading = false;
   avatarUrl: string;
+  imgValid = false;
   constructor(
     private msg: NzMessageService,
-    private homeServicce: HomeService
+    private homeServicce: HomeService,
+    private changeDetect : ChangeDetectorRef
   ){
     
   }
@@ -64,13 +66,15 @@ export class DescriptionBorderComponent implements OnInit {
     this.homeServicce.changeInformation(this.datas,this.datas.image).subscribe(
       (data) =>{
         if(data.code==200){
-          alert("保存成功!");
+          this.msg.success("保存成功!");
           this.copydata = JSON.parse(JSON.stringify(this.datas));
-          
+          var temp = this.datas;
+          temp.token = JSON.parse(localStorage.getItem("User")).token;
+          localStorage.setItem("User",JSON.stringify(temp));
         }else{
           //error
           this.datas = JSON.parse(JSON.stringify(this.copydata));
-          alert("登录超时！");
+          this.msg.error("保存失败！");
         }
       }
     )
@@ -78,49 +82,53 @@ export class DescriptionBorderComponent implements OnInit {
     
     
   }
-  beforeUpload = (file: File) => {
-    return new Observable((observer: Observer<boolean>) => {
+  beforeUpload = (file: UploadFile) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
         this.msg.error('You can only upload JPG file!');
-        observer.complete();
-        return;
+        this.imgValid = false;
+        return false;
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.msg.error('Image must smaller than 2MB!');
-        observer.complete();
-        return;
+        this.imgValid = false;
+        return false;
       }
-      observer.next(isJpgOrPng && isLt2M);
-      observer.complete();
-    });
+        this.imgValid = true;
+       this.handleChange(file);
+        return false;
   };
 
-  private getBase64(img: File, callback: (img: string) => void): void {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result!.toString()));
-    reader.readAsDataURL(img);
-  }
+  // private getBase64(img: File, callback: (img: string) => void): void {
+  //   const reader = new FileReader();
+  //   reader.addEventListener('load', () => callback(reader.result!.toString()));
+  //   reader.readAsDataURL(img);
+  // }
 
-  handleChange(info: { file: UploadFile }): void {
-    switch (info.file.status) {
-      case 'uploading':
-        this.loading = true;
-        break;
-      case 'done':
-        // Get this url from response in real world.
-        this.getBase64(info.file!.originFileObj!, (img: string) => {
-          this.loading = false;
-          this.avatarUrl = img;
-        });
-        break;
-      case 'error':
-        this.msg.error('Network error');
-        this.loading = false;
-        break;
+  handleChange( file: UploadFile ): void {
+    // alert(1);
+    if(!this.imgValid){
+        return;
     }
-  }
+    this.loading = true;
+        // Get this url from response in real world.
+        this.homeServicce.uploadImg(file,this.datas.u_id).subscribe(
+          (data:any) =>{
+                if(data.body.code==200){
+                      
+                      this.datas.image = data.body.data.img;
+                      var temp = this.datas;
+                      temp.token = JSON.parse(localStorage.getItem("User")).token;
+                      localStorage.setItem("User",JSON.stringify(temp));
+                      this.msg.success("上传头像成功！");
+                }else{
+                  this.msg.error("上传头像失败!");
+                }
+                this.loading = false;
+              }
+        );
+    }
   getUser(u_id:string){
       // alert(u_id);
      this.homeServicce.getUser(u_id).subscribe(
@@ -152,7 +160,21 @@ export class DescriptionBorderComponent implements OnInit {
   resetAvatar(){
     //将头像恢复为默认的头像
     this.datas.image = this.defaultImg;
-    this.homeServicce.changeInformation(this.datas,null);
+    this.homeServicce.uploadImg(null,this.datas.u_id).subscribe(
+      (data:any) =>{
+        if(data.body.code==200){
+          this.msg.success("恢复成功!");
+          this.datas.image = data.body.image;
+          this.copydata = JSON.parse(JSON.stringify(this.datas));
+          var temp = this.datas;
+          temp.token = JSON.parse(localStorage.getItem("User")).token;
+          localStorage.setItem("User",JSON.stringify(temp));
+        }else{
+          //error
+          this.msg.error("恢复失败！");
+      }
+    }
+    );
   }
 
   // changePassword(){
