@@ -70,6 +70,15 @@ nz-header {
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 
+.user {
+  float: right;
+  margin-right: 24px;
+}
+
+.user span {
+  margin-left: 8px;
+}
+
 nz-content {
   margin: 24px;
 }

@@ -13,11 +13,9 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<unknown> {
-  constructor(
-    private authService: AuthService, 
-    private router: Router
-  ) { }
+export class AuthGuard
+  implements CanActivate, CanActivateChild, CanDeactivate<unknown> {
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -31,7 +29,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
     if (currentUser) {
       return true;
     }
-    this.router.navigate(['/passport/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/passport/login'], {
+      queryParams: { returnUrl: state.url },
+    });
     return false;
   }
 

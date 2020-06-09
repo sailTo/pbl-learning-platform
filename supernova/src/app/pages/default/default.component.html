@@ -67,6 +67,22 @@
                 <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
                     <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
                 </span>
+                <span class="user" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="userMenu">
+                    <nz-avatar [nzSrc]="currentUser.image" nzSize="small" class="mr-sm"></nz-avatar>
+                    <span><b>{{ currentUser.u_name }}</b>，欢迎您</span>
+                </span>
+                <nz-dropdown-menu #userMenu="nzDropdownMenu">
+                    <div nz-menu class="width-sm">
+                        <div nz-menu-item routerLink="/home">
+                            <i nz-icon nzType="user" class="mr-sm"></i>
+                            个人中心
+                        </div>
+                        <div nz-menu-item (click)="logout()">
+                            <i nz-icon nzType="logout" class="mr-sm"></i>
+                            退出登录
+                        </div>
+                    </div>
+                </nz-dropdown-menu>
             </div>
         </nz-header>
         <nz-content>

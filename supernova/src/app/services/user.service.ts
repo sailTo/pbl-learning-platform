@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { User } from '../models/user';
 import { Response } from '../models/generic-response';
@@ -8,7 +9,10 @@ import { Response } from '../models/generic-response';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   getUser(): User {
     if (localStorage.getItem('User')) {
@@ -61,5 +65,10 @@ export class UserService {
       '/api/searchGroupers',
       { params }
     );
+  }
+
+  logout(): void {
+    localStorage.removeItem("User");
+    this.router.navigate(['/passport/login']);
   }
 }
