@@ -2,7 +2,7 @@
     "/api": {
         "target": "http://localhost:8081"
     },
-    "/image": {
+    "/account": {
         "target": "http://localhost:8081"
     }
 }

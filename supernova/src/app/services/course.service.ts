@@ -7,63 +7,80 @@ import { User } from '../models/user';
 import { UserService } from './user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
   requestURL = {
-    'my': '/api/searchMyCourses',
-    'other': '/api/searchOtherCourses',
-    'all': '/api/searchAllCourses',
-    'all_my': '/api/searchAllMyCourses',
+    my: '/api/searchMyCourses',
+    other: '/api/searchOtherCourses',
+    all: '/api/searchAllCourses',
+    all_my: '/api/searchAllMyCourses',
   };
 
-  constructor(
-    private http: HttpClient,
-    private userService: UserService,
-  ) { }
+  constructor(private http: HttpClient, private userService: UserService) {}
 
-  getCourses(type: string, userId: string, pageIndex: number, pageSize: number) {
-    const params = new HttpParams({ fromObject: {
-      pbl_token: String(this.userService.getUser().token),
-      u_id: userId,
-      pageIndex: String(pageIndex),
-      pageSize: String(pageSize)
-    }});
-    return this.http.get<Response<{
-      courses: {
-        list: Course[],
+  getCourses(
+    type: string,
+    userId: string,
+    pageIndex: number,
+    pageSize: number
+  ) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.userService.getUser().token),
+        u_id: userId,
+        pageIndex: String(pageIndex),
+        pageSize: String(pageSize),
       },
-      teachers: {
-        list: User[],
-      }
-      total: number
-    }>>(this.requestURL[type], { params });
+    });
+    return this.http.get<
+      Response<{
+        courses: {
+          list: Course[];
+        };
+        teachers: {
+          list: User[];
+        };
+        total: number;
+      }>
+    >(this.requestURL[type], { params });
   }
 
   getMyCourseNames() {
-    const params = new HttpParams({ fromObject: {
-      pbl_token: String(this.userService.getUser().token),
-    }});
-    return this.http.get<Response<{courses: Course[], type: string}>>(this.requestURL['all_my'], { params });
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.userService.getUser().token),
+      },
+    });
+    return this.http.get<Response<{ courses: Course[]; type: string }>>(
+      this.requestURL['all_my'],
+      { params }
+    );
   }
 
   joinCourse(courseId: number) {
     const headers = new HttpHeaders({
-      'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     });
-    const params = new HttpParams({ fromObject: {
-      pbl_token: String(this.userService.getUser().token),
-      s_id: String(this.userService.getUser().u_id),
-      c_id: String(courseId),
-    }});
-    return this.http.post<Response<{}>>('/api/joinCourse', params.toString(), { headers });
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.userService.getUser().token),
+        s_id: String(this.userService.getUser().u_id),
+        c_id: String(courseId),
+      },
+    });
+    return this.http.post<Response<{}>>('/api/joinCourse', params.toString(), {
+      headers,
+    });
   }
 
   changeCourse(course: Course) {
-    const params = new HttpParams({ fromObject: {
-      pbl_token: String(this.userService.getUser().token),
-      course: JSON.stringify(course),
-    }})
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.userService.getUser().token),
+        course: JSON.stringify(course),
+      },
+    });
     return this.http.put<Response<{}>>('/api/changeCourse', params);
   }
 

@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.persistence.OrderBy;
 import java.util.List;
 
 
@@ -147,7 +146,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public String login(String uId, String Password) {
+    public Object login(String uId, String Password) {
         if(!userMapper.idExist(uId)){
             return "-1";
         }
@@ -158,7 +157,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             JSONObject data = new JSONObject();
             data.put("user",user);
             data.put("image",getImageURL(uId));
-            return data.toJSONString();
+            return JSON.toJSON(data);
         }
 
         return "-1";

@@ -38,7 +38,7 @@ public interface UserService extends Service<User> {
      * @param Password
      * @return
      */
-    String login(String uId,String Password);
+    Object login(String uId, String Password);
 
     /**
      * 查询id是否存在

@@ -10,12 +10,13 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard
   implements CanActivate, CanActivateChild, CanDeactivate<unknown> {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -25,7 +26,7 @@ export class AuthGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const currentUser = this.authService.currentUserValue;
+    const currentUser = this.userService.getUser();
     if (currentUser) {
       return true;
     }

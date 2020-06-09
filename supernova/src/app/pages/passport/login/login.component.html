@@ -1,74 +1,30 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
-  <nz-tabset [nzAnimated]="false" class="tabs" (nzSelectChange)="switch($event)">
-    <nz-tab [nzTitle]="'app.login.tab-login-credentials'">
+  <nz-tabset [nzAnimated]="false" class="tabs">
+    <nz-tab [nzTitle]="'账号密码登录'">
       <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please enter mobile number, muse be: admin or user">
+        <nz-form-control nzErrorTip="请输入用户ID，例如S001">
           <nz-input-group nzSize="large" nzPrefixIcon="user">
-            <input nz-input formControlName="userName" placeholder="username: admin or user" />
+            <input nz-input formControlName="userName" placeholder="请输入用户ID，例如S001" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please enter password, muse be: ng-alain.com">
+        <nz-form-control nzErrorTip="请输入用户密码">
           <nz-input-group nzSize="large" nzPrefixIcon="lock">
-            <input nz-input type="password" formControlName="password" placeholder="password: ng-alain.com" />
+            <input nz-input type="password" formControlName="password" placeholder="请输入用户密码" />
           </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-tab>
-    <nz-tab [nzTitle]="'app.login.tab-login-mobile'">
-      <nz-form-item>
-        <nz-form-control [nzErrorTip]="mobileErrorTip">
-          <nz-input-group nzSize="large" nzPrefixIcon="user">
-            <input nz-input formControlName="mobile" placeholder="mobile number" />
-          </nz-input-group>
-          <ng-template #mobileErrorTip let-i>
-            <ng-container *ngIf="i.errors.required">
-              {{ 'validation.phone-number.required' }}
-            </ng-container>
-            <ng-container *ngIf="i.errors.pattern">
-              {{ 'validation.phone-number.wrong-format' }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control [nzErrorTip]="'validation.verification-code.required'">
-          <nz-row [nzGutter]="8">
-            <nz-col [nzSpan]="16">
-              <nz-input-group nzSize="large" nzPrefixIcon="mail">
-                <input nz-input formControlName="captcha" placeholder="captcha" />
-              </nz-input-group>
-            </nz-col>
-            <nz-col [nzSpan]="8">
-              <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count" nzBlock [nzLoading]="false">
-                {{ count ? count + 's' : ('app.register.get-verification-code') }}
-              </button>
-            </nz-col>
-          </nz-row>
         </nz-form-control>
       </nz-form-item>
     </nz-tab>
   </nz-tabset>
   <nz-form-item>
-    <nz-col [nzSpan]="12">
-      <label nz-checkbox formControlName="remember">{{ 'app.login.remember-me' }}</label>
-    </nz-col>
-    <nz-col [nzSpan]="12" class="text-right">
-      <a class="forgot" (click)="msg.error('请找欧阳锋')">{{ 'app.login.forgot-password' }}</a>
-    </nz-col>
-  </nz-form-item>
-  <nz-form-item>
-    <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="false" nzBlock>
-      {{ 'app.login.login' }}
+    <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
+      立即登录
     </button>
   </nz-form-item>
 </form>
 <div class="other">
-  {{ 'app.login.sign-in-with' }}
-  <i nz-tooltip nzTooltipTitle="in fact Auth0 via window" nz-icon nzType="alipay-circle" class="icon"></i>
-  <i nz-tooltip nzTooltipTitle="in fact Github via redirect" nz-icon nzType="taobao-circle" class="icon"></i>
-  <i nz-icon nzType="weibo-circle" class="icon"></i>
-  <a class="register" routerLink="/passport/register">{{ 'app.login.signup' }}</a>
+  <a class="forgot" (click)="msg.error('请找管理员')">忘记密码</a>
+  <a class="register" routerLink="/passport/register">还没有账户？现在注册</a>
 </div>

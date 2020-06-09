@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Project } from '../models/project';
-import {Response} from "../models/generic-response";
-import {Discussion} from "../models/discussion";
-import {environment} from "../../environments/environment";
-import {Reply} from "../models/reply";
-import {UserService} from "./user.service";
-import {GradeItem} from "../models/GradeItem";
-import {stringify} from "querystring";
+import { Response } from '../models/generic-response';
+import { Discussion } from '../models/discussion';
+import { environment } from '../../environments/environment';
+import { Reply } from '../models/reply';
+import { UserService } from './user.service';
+import { GradeItem } from '../models/GradeItem';
+import { stringify } from 'querystring';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectService {
+  constructor(private http: HttpClient, private userService: UserService) {}
 
-  constructor(
-    private http: HttpClient,
-    private userService: UserService,
-  ) { }
-
-  findGradeItemsByPid(p_id : number){
+  findGradeItemsByPid(p_id: number) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: this.userService.getUser().token,
-        p_id: String(p_id)
-      }
+        p_id: String(p_id),
+      },
     });
-    return this.http.get<Response<{ grades: GradeItem[] }>>('/api/getGradeItems', { params });
+    return this.http.get<Response<{ grades: GradeItem[] }>>(
+      '/api/getGradeItems',
+      { params }
+    );
   }
 
-  findProjectsByCourseId(courseId: number,
+  findProjectsByCourseId(
+    courseId: number
     // pageIndex: number, pageSize: number
   ) {
     const params = new HttpParams({
@@ -38,22 +38,29 @@ export class ProjectService {
         // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
         pbl_token: this.userService.getUser().token,
         c_id: String(courseId),
-        // pageIndex: String(pageIndex), 
+        // pageIndex: String(pageIndex),
         // pageSize: String(pageSize)
-      }
+      },
     });
-    return this.http.get<Response<{ projects: Project[], project_take: number, type: string }>>('/api/searchProject', { params });
+    return this.http.get<
+      Response<{ projects: Project[]; project_take: number; type: string }>
+    >('/api/searchProject', { params });
   }
 
-  getProject(projectId: number){
-    const params = new HttpParams({ fromObject: {
+  getProject(projectId: number) {
+    const params = new HttpParams({
+      fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: String(projectId),
-      }});
-    return this.http.get<Response<{project: Project}>>(`${environment.apiUrl}/api/getProjectByPid`, { params });
+      },
+    });
+    return this.http.get<Response<{ project: Project }>>(
+      `${environment.apiUrl}/api/getProjectByPid`,
+      { params }
+    );
   }
 
-  deleteProject(projectId:number){
+  deleteProject(projectId: number) {
     const params = {
       pbl_token: String(this.userService.getUser().token),
       p_id: String(projectId),
@@ -61,47 +68,57 @@ export class ProjectService {
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      }), params
+      }),
+      params,
     };
-    return this.http.delete<Response<any>>(`${environment.apiUrl}/api/deleteProject`, options);
+    return this.http.delete<Response<any>>(
+      `${environment.apiUrl}/api/deleteProject`,
+      options
+    );
   }
 
-  addProject(project: Project,items: GradeItem[]){
+  addProject(project: Project, items: GradeItem[]) {
     let headers = {
       headers: new HttpHeaders({
-        'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
-      })
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      }),
     };
     const params = {
       pbl_token: String(this.userService.getUser().token),
       project: JSON.stringify(project),
-      grades: JSON.stringify(items)
+      grades: JSON.stringify(items),
     };
-    return this.http.post<Response<{p_id: number}>>(`${environment.apiUrl}/api/createProject`,
+    return this.http.post<Response<{ p_id: number }>>(
+      `${environment.apiUrl}/api/createProject`,
       this.transformRequest(params),
-      {headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        })
-      });
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+      }
+    );
   }
 
-  changeProject(project: Project,items: GradeItem[]){
+  changeProject(project: Project, items: GradeItem[]) {
     let headers = {
       headers: new HttpHeaders({
-        'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8"
-      })
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      }),
     };
     const params = {
       pbl_token: String(this.userService.getUser().token),
       project: JSON.stringify(project),
-      grades: JSON.stringify(items)
+      grades: JSON.stringify(items),
     };
-    return this.http.post<Response<any>>(`${environment.apiUrl}/api/changeProject`,
+    return this.http.post<Response<any>>(
+      `${environment.apiUrl}/api/changeProject`,
       this.transformRequest(params),
-      {headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        })
-      });
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+      }
+    );
   }
 
   transformRequest(data) {
@@ -111,5 +128,5 @@ export class ProjectService {
     }
     str.substring(0, str.length - 1);
     return str;
-  };
+  }
 }

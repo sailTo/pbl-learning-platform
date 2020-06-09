@@ -69,30 +69,3 @@
     font-size: @font-size-base;
   }
 }
-
-[data-theme='dark'] {
-  :host ::ng-deep {
-    .container {
-      background: #141414;
-    }
-    .title {
-      color: fade(@white, 85%);
-    }
-    .desc {
-      color: fade(@white, 45%);
-    }
-    @media (min-width: @screen-md-min) {
-      .container {
-        background-image: none;
-      }
-    }
-  }
-}
-
-[data-theme='compact'] {
-  :host ::ng-deep {
-    .ant-form-item {
-      margin-bottom: 16px;
-    }
-  }
-}

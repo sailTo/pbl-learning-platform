@@ -12,15 +12,15 @@ import { CreateCourseComponent } from './components/create-course/create-course.
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  styleUrls: ['./courses.component.css'],
 })
 export class CoursesComponent implements OnInit {
   currentUser: User = this.userService.getUser();
   courses: Course[];
 
   myTabTitle = {
-    'student': '我学的课',
-    'teacher': '我教的课',
+    student: '我学的课',
+    teacher: '我教的课',
   };
 
   type: string = 'my';
@@ -36,24 +36,31 @@ export class CoursesComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private userService: UserService,
-    private modalService: NzModalService,
-  ) { }
+    private modalService: NzModalService
+  ) {}
 
   ngOnInit(): void {
     this.getCourses();
   }
 
   getCourses(): void {
-    this.courseService.getCourses(this.type, this.currentUser.u_id, this.pageIndex, this.pageSize).subscribe((response) => {
-      this.courses = response.data.courses.list;
-      const teachers = response.data.teachers.list;
-      this.total = response.data.total;
+    this.courseService
+      .getCourses(
+        this.type,
+        this.currentUser.u_id,
+        this.pageIndex,
+        this.pageSize
+      )
+      .subscribe((response) => {
+        this.courses = response.data.courses.list;
+        const teachers = response.data.teachers.list;
+        this.total = response.data.total;
 
-      // assign teacher to course
-      this.courses.forEach((course, index) => {
-        course.teacher = teachers[index];
-      })
-    });
+        // assign teacher to course
+        this.courses.forEach((course, index) => {
+          course.teacher = teachers[index];
+        });
+      });
   }
 
   changeTab(selectedTitle: string): void {
@@ -80,7 +87,6 @@ export class CoursesComponent implements OnInit {
     this.modalService.create({
       nzTitle: '新建课程',
       nzContent: CreateCourseComponent,
-    })
+    });
   }
-
 }

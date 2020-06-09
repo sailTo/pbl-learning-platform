@@ -40,7 +40,7 @@ public class AccountController {
         if (!userService.idLogin(u_id))
             return ResultGenerator.genFailResult("禁止登录");
 
-        String data = userService.login(u_id,password);
+        Object data = userService.login(u_id,password);
 
         if(data.equals("-1")){
             return ResultGenerator.genFailResult("密码错误");
