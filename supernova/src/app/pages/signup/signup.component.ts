@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators,ValidatorFn,AbstractControl } from '@angular/forms';
-import {SignupService} from '../../services/signup.service';
+import {UserService} from '../../services/user.service';
 import {AuthService} from '../../services/auth.service';
 import { Router,ActivatedRoute }      from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   idValid = false;
   constructor(
     private fb: FormBuilder,
-    private signupService: SignupService,
+    private userService: UserService,
     private authService:AuthService,
     public router: Router,) {}
   submitForm(): void {
@@ -30,42 +30,6 @@ export class SignupComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     } 
       this.register();
-      // alert(this.idValid);
-
-        // if(this.idValid){
-        // //合法 
-        // this.signupService.register(this.validateForm).subscribe(
-        //   (data) =>{
-        //     if(data.code==200){
-        //       var ret_user;
-        //       ret_user = JSON.parse(data.user);
-        //       ret_user.token = JSON.parse(data.message).token;
-        //       ret_user.image = data.image;
-        //       localStorage.setItem('User', JSON.stringify(ret_user));
-        //       this.router.navigate(["/home"]);
-        //     }else{
-        //       this.error = "注册失败！"
-        //     }
-            
-        //   }
-        // )
-        // }else{
-        //   this.idError = "用户ID已经存在！换一个试试？"
-        // }
-          
-         
-     
-      //执行登陆操作，在这之前要保证后端已经将数据库更新
-        
-          // this.authService.login(this.validateForm.controls.id.value,this.validateForm.controls.password.value)
-          // .pipe(first())
-          // .subscribe(
-          //   data => {
-          //     this.router.navigate(["/home"]);
-          // }
-          // )
-   
-    // alert(this.validateForm.controls.gender.value);
   }
 
   updateConfirmValidator(): void {
@@ -117,11 +81,11 @@ export class SignupComponent implements OnInit {
   register(){
     // alert(1);
     this.loading = true;
-    this.signupService.checkValidId(this.validateForm.controls.id.value).subscribe(
+    this.userService.checkValidId(this.validateForm.controls.id.value).subscribe(
       (data) => {
        if(data.code==200){
           this.idValid = true;
-          this.signupService.register(this.validateForm).subscribe(
+          this.userService.register(this.validateForm).subscribe(
             (data2) =>{
               // alert(data2.code==200);
               if(data2.code==200){
@@ -148,10 +112,4 @@ export class SignupComponent implements OnInit {
     );
    
     }
-//    isIdValidValidator(nameRe: RegExp): ValidatorFn {
-//       return (control: AbstractControl): {[id: string]: any} | null => {
-//         const isValid = this.checkValidId();
-//         return null;
-//       };
-//     }
 }

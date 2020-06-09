@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from '../models/user';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {Response} from '../models/generic-response';
 import {FormGroup} from '@angular/forms';
 @Injectable({
@@ -16,7 +15,7 @@ export class AdminService {
     const params = new HttpParams({fromObject:{
       pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
     }})
-    return this.http.get<Response<{users: User[],images:string[]}>>(`${environment.apiUrl}/api/searchAllUsers`,{params});
+    return this.http.get<Response<{users: User[],images:string[]}>>(`/api/searchAllUsers`,{params});
   }
 
   updateInformation(user:User){
@@ -25,7 +24,7 @@ export class AdminService {
       user: JSON.stringify(user),
       
     }})
-    return this.http.put<Response<{}>>(`${environment.apiUrl}/api/changeInformation`,params);
+    return this.http.put<Response<{}>>(`/api/changeInformation`,params);
   }
   addNewUser(user:User){
     let headers = {
@@ -37,7 +36,7 @@ export class AdminService {
       pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
       user:JSON.stringify(user),
     };
-    return this.http.post<Response<{}>>(`${environment.apiUrl}/api/addUser`,this.transformRequest(params),headers) 
+    return this.http.post<Response<{}>>(`/api/addUser`,this.transformRequest(params),headers) 
   }
   transformRequest(data) {
 
