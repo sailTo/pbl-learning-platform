@@ -1,4 +1,5 @@
 package com.SuperNova.service;
+import com.SuperNova.model.DiscussInformation;
 import com.SuperNova.model.Discussion;
 import com.SuperNova.core.Service;
 
@@ -43,7 +44,7 @@ public interface DiscussionService extends Service<Discussion> {
      * @param p_id
      * @return
      */
-    String countDiscussion(int p_id);
+    List<DiscussInformation> countDiscussion(int p_id);
 
     /**
      * 统计该课程讨论情况
