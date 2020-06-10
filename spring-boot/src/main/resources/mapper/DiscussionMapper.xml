@@ -11,7 +11,7 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
-    <select id="maxDiscussionNum" parameterType="int" resultType="int">
+    <select id="maxDiscussionNum" parameterType="int" resultType="Integer">
         select max(dis_count)
         from (
                  select tmp.u_id,count(tmp.u_id) as dis_count
