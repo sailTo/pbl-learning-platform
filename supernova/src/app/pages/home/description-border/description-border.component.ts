@@ -6,6 +6,7 @@ import { User } from '../../../models/user';
 import { HomeService } from '../../../services/home.service'
 import { HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'
+import { UserService } from 'src/app/services/user.service';
 // interface data{
 //   id: string;
 //   name: string;
@@ -38,6 +39,7 @@ export class DescriptionBorderComponent implements OnInit {
   constructor(
     private msg: NzMessageService,
     private homeServicce: HomeService,
+    private userService: UserService,
     private changeDetect: ChangeDetectorRef
   ) {
 
@@ -136,6 +138,7 @@ export class DescriptionBorderComponent implements OnInit {
 
         } else {
           this.msg.error("获取用户失败！");
+          this.userService.logout();
           //error
         }
 
