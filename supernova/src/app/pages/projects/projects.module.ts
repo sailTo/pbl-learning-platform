@@ -26,13 +26,15 @@ import {
 } from "ng-zorro-antd";
 import {CreateProjectComponent} from "./components/create-project/create-project.component";
 import {PaginationComponent} from "../../components/pagination/pagination.component";
+import { ShowProjectComponent } from './components/show-project/show-project.component';
 
 
 @NgModule({
   declarations: [
     ProjectsComponent,
     ProjectCardComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    ShowProjectComponent
   ],
   imports: [
     NzSwitchModule,
