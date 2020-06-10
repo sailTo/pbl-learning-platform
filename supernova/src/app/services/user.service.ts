@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { Response } from '../models/generic-response';
 import { Md5 } from 'ts-md5/dist/md5';
 import { environment } from 'src/environments/environment';
+import {Course} from "../models/course";
 @Injectable({
   providedIn: 'root',
 })
@@ -115,5 +116,18 @@ export class UserService {
       params.toString(),
       { headers }
     );
+  }
+
+  getCourseById(
+    u_id: string,
+  ) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.getUser().token),
+        u_id: u_id
+      },
+    });
+    return this.http.get<
+      Response<{ user: User }>>(`${environment.apiUrl}/api/getUserByUid`, { params });
   }
 }

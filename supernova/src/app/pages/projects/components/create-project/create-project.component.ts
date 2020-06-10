@@ -113,7 +113,9 @@ export class CreateProjectComponent {
         for (const key in this.validateForm.controls)
           this.validateForm.controls[key].updateValueAndValidity();
       });
-    } else this.addField();
+    }
+    else
+      this.addField();
   }
 
   judgeIfUse = (control: FormControl): { [s: string]: boolean } => {

@@ -27,7 +27,7 @@
     <nz-form-label [nzSpan]="7" nzRequired>课程教师</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzValidateStatus]="'success'">
       <input nz-input [value]="currentUser.u_name" disabled/>
-      <input type="hidden" nz-input formControlName="t_id" [value]="currentUser.u_id" />
+      <input type="hidden" nz-input formControlName="t_id" />
     </nz-form-control>
   </nz-form-item>
 
@@ -48,7 +48,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程封面</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="imgErrorTpl">
-      <input nz-input formControlName="image" [hidden]="true" type="file" />
+      <input nz-input [hidden]="true" type="file"/>
       <nz-upload 
         [(nzFileList)]="fileList" 
         [nzBeforeUpload]="beforeUpload"
@@ -64,7 +64,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *nzModalFooter>
+  <nz-form-item *nzModalFooter [hidden]="setType=='detail'">
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="destroyModal()">取消</button>
       <button nz-button (click)="resetForm($event)">重置</button>

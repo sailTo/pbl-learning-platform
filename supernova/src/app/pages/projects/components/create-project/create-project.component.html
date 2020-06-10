@@ -3,14 +3,14 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="p_name">项目名称</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="项目名称">
-      <input nz-input formControlName="p_name" placeholder="Project Name" />
+      <input nz-input formControlName="p_name" placeholder="Project Name" [disabled]="type=='detail'"/>
     </nz-form-control>
-  </nz-form-item>
+  </nz-form-item>f
 
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="description">项目描述</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入项目描述">
-      <textarea nz-input rows="3" formControlName="description" placeholder="Description"></textarea>
+      <textarea nz-input rows="3" formControlName="description" placeholder="Description" [disabled]="type=='detail'"></textarea>
     </nz-form-control>
   </nz-form-item>
 
@@ -25,7 +25,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="teacher_point">教师评分</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback [nzErrorTip]="teacherGrading">
-      <nz-input-number formControlName="teacher_point" nzPlaceHolder="请输入教师评分"
+      <nz-input-number formControlName="teacher_point" nzPlaceHolder="请输入教师评分" [disabled]="type=='detail'"
                        [nzMin]="0" [nzMax]="100" [nzStep]="1" nzPrecisionMode="toFixed"
       ></nz-input-number>
       <ng-template #teacherGrading let-control>
@@ -48,7 +48,7 @@
       <nz-form-item>
         <nz-form-label nzRequired [nzSpan]="6">自评互评</nz-form-label>
         <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplSelf" [nzSpan]="8">
-          <nz-input-number formControlName="student_point_self" nzPlaceHolder="自评占比"
+          <nz-input-number formControlName="student_point_self" nzPlaceHolder="自评占比" [disabled]="type=='detail'"
                            [nzMin]="0" [nzMax]="100" [nzStep]="1"  (ngModelChange)="updateConfirmValidator()"
           ></nz-input-number>
           <ng-template #pointErrorTplSelf let-control>
@@ -65,7 +65,7 @@
     <!--<div nz-col [nzSpan]="8" >-->
       <!--<nz-form-item>-->
         <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplMut" [nzSpan]="10">
-          <nz-input-number formControlName="student_point_mutual" nzPlaceHolder="互评占比"
+          <nz-input-number formControlName="student_point_mutual" nzPlaceHolder="互评占比" [disabled]="type=='detail'"
                            [nzMin]="0" [nzMax]="100" [nzStep]="1" (ngModelChange)="updateConfirmValidator()"
           ></nz-input-number>
           <ng-template #pointErrorTplMut let-control>
@@ -98,6 +98,7 @@
         placeholder="请输入细化评分项描述"
         [attr.id]="control.id"
         [formControlName]="control.controlInstance"
+        [disabled]="type=='detail'"
       />
     </nz-form-control>
 
@@ -107,14 +108,14 @@
     </nz-form-control>
 
     <nz-form-control [nzSpan]="8" nzErrorTip="该项不能为空">
-      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" [attr.id]="control.id"
+      <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" [attr.id]="control.id" [disabled]="type=='detail'"
                        [formControlName]="control.controlInstance+'_value'" (ngModelChange)="updateConfirmValidator()">
       </nz-input-number>
     </nz-form-control>
-    <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+    <i nz-icon [hidden]="type=='detail'" nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item [hidden]="type=='detail'">
     <nz-form-control [nzXs]="{ span: 24, offset: 2 }" [nzSm]="{ span: 20, offset: 6 }">
       <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
         <i nz-icon nzType="plus"></i>
@@ -123,7 +124,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item *nzModalFooter>
+  <nz-form-item *nzModalFooter [hidden]="type=='detail'">
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="destroyModal()">取消</button>
       <button nz-button (click)="resetForm($event)">重置</button>

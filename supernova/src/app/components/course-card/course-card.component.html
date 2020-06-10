@@ -1,21 +1,24 @@
-<nz-card [nzCover]="coverTemplate" [nzActions]=actions nzHoverable>
+<nz-card
+  [nzCover]="coverTemplate"
+  [nzActions]=actions nzHoverable>
   <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
-  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=course.description [nzAvatar]="avatarTemplate"></nz-card-meta>
+  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=course.description (click)="showModal('detail',course.c_id)"
+                [nzAvatar]="avatarTemplate"></nz-card-meta>
 </nz-card>
 
 <ng-template #titleTemplate>
   <span>{{course.c_name}}</span>&nbsp;
-  <nz-tag>{{(course.point | number: '1.1-1')!}}</nz-tag>
+  <nz-tag>{{course.point | number: '1.1-1'}}!</nz-tag>
   <nz-badge [nzStatus]="BADGE_STATUS[course.status]"></nz-badge>
 </ng-template>
 
 <ng-template #avatarTemplate>
   <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]">
-  </nz-avatar><br />
+  </nz-avatar><br/>
 </ng-template>
 
 <ng-template #coverTemplate>
-  <img [alt]=course.c_name [src]=course.image_URL/>
+  <img [alt]=course.c_name [src]="course.image_URL"/>
 </ng-template>
 
 <ng-template #actionJoin>
@@ -24,11 +27,11 @@
 
 <!-- 进入项目详情页 -->
 <ng-template #actionInfo>
-  <a nz-icon nzType="info" [routerLink]="['/projects', course.c_id]"></a>
+  <a nz-icon nzType="info" [routerLink]="['/projects', course.c_id]" ></a>
 </ng-template>
 
 <ng-template #actionEdit>
-  <a nz-icon nzType="edit"></a>
+  <a nz-icon nzType="edit" (click)="showModal('edit',course.c_id)"></a>
 </ng-template>
 
 <ng-template #actionPublish>
