@@ -17,6 +17,7 @@
     (pageIndexChange)="onPageIndexChange($event)"
     >
   </app-pagination>
+  <nz-empty *ngIf="courses.length === 0"></nz-empty>
 </nz-card>
 
 <ng-template #extraTemplate>

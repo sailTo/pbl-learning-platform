@@ -19,6 +19,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
@@ -56,6 +57,7 @@ import { ShowCourseComponent } from './components/show-course/show-course.compon
     NzInputModule,
     NzInputNumberModule,
     NzUploadModule,
+    NzEmptyModule,
   ],
   exports: [CourseCardComponent, PaginationComponent],
 })

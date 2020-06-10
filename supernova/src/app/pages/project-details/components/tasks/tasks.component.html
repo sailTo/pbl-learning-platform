@@ -11,11 +11,17 @@
     </ng-container>
 </div>
 
-<div>
-    <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="percent" (ngModelChange)="onPercent($event)"
-        [nzTipFormatter]="percentFormatter"></nz-slider>
-    <nz-slider [nzMin]="12" [nzMax]="23" [(ngModel)]="zoom" [nzStep]="0.1" (ngModelChange)="onZoom($event)"
-        [nzTipFormatter]="zoomFormatter"></nz-slider>
-</div>
+<ng-container *ngIf="!isEmpty">
+    <div>
+        <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="percent" (ngModelChange)="onPercent($event)"
+            [nzTipFormatter]="percentFormatter"></nz-slider>
+        <nz-slider [nzMin]="12" [nzMax]="23" [(ngModel)]="zoom" [nzStep]="0.1" (ngModelChange)="onZoom($event)"
+            [nzTipFormatter]="zoomFormatter"></nz-slider>
+    </div>
+</ng-container>
 
-<gstc [config]="config" (onState)="onState($event)"></gstc>
+<gstc [config]="config" (onState)="onState($event)" [hidden]="isEmpty"></gstc>
+
+<ng-container *ngIf="isEmpty">
+    <nz-empty></nz-empty>
+</ng-container>

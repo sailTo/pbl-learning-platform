@@ -36,6 +36,8 @@ export class TasksComponent implements OnInit {
   tasks: Task[];
   totalNum: number; // 项目总人数
 
+  isEmpty = true; // 任务是否为空
+
   percent = 100; // 行头显示比例
   zoom = 20; // 日期缩放级别
 
@@ -47,21 +49,6 @@ export class TasksComponent implements OnInit {
 
   modifiedAssignmentList: Task[] = []; // 删改过的task列表
   opList: string[] = []; // task列表对应的操作：modify or delete
-
-  // pallete = [
-  //   '#E74C3C',
-  //   '#DA3C78',
-  //   '#7E349D',
-  //   '#0077C0',
-  //   '#07ABA0',
-  //   '#0EAC51',
-  //   '#F1892D',
-  //   '#E3724B',
-  //   '#AE7C5B',
-  //   '#6C7A89',
-  //   '#758586',
-  //   '#707070'
-  // ];
 
   colorMapping = {
     1: '#f5222d', // red
@@ -155,6 +142,8 @@ export class TasksComponent implements OnInit {
       const finished = response.data.studentStatus;
       const urged = response.data.urgeStatus;
       const doneNum = response.data.doneNum;
+
+      this.isEmpty = this.tasks.length === 0;
 
       let from = this.gstcState.get('config.chart.time.from');
       let to = this.gstcState.get('config.chart.time.to');
@@ -454,6 +443,8 @@ export class TasksComponent implements OnInit {
     this.gstcState.update('config.list.rows', rows);
     this.gstcState.update('config.chart.items', items);
 
+    this.isEmpty = false;
+
     // get dynamic from, to
     if (from > task.a_start_date) {
       from = task.a_start_date;
@@ -502,6 +493,8 @@ export class TasksComponent implements OnInit {
     // delete items[itemId];
     items[itemId].rowId = '-1';
 
+    this.isEmpty = Object.keys(rows).length === 0;
+
     // set rows and items
     this.gstcState.update('config.list.rows', rows);
     this.gstcState.update('config.chart.items', items);
@@ -525,6 +518,8 @@ export class TasksComponent implements OnInit {
     this.opList = [];
 
     // console.log(this.items, this.lastItems);
+
+    this.isEmpty = Object.keys(this.lastRows).length === 0;
 
     // roll back rows and items
     this.gstcState.update('config.list.rows', this.lastRows);
