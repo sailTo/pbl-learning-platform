@@ -1,6 +1,7 @@
 package com.SuperNova.service;
 import com.SuperNova.model.Evaluation;
 import com.SuperNova.core.Service;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface EvaluationService extends Service<Evaluation> {
      * @param s_id
      * @return
      */
-    String searchEvaluateByOther(int p_id,String s_id);
+    JSONObject searchEvaluateByOther(int p_id, String s_id);
 
     /**
      * 获取学生自评分
