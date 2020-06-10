@@ -25,6 +25,7 @@ import { CoursesComponent } from './courses.component';
 import { CourseCardComponent } from '../../components/course-card/course-card.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { CreateCourseComponent } from './components/create-course/create-course.component';
+import { ShowCourseComponent } from './components/show-course/show-course.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CreateCourseComponent } from './components/create-course/create-course.
     CourseCardComponent,
     PaginationComponent,
     CreateCourseComponent,
+    ShowCourseComponent,
   ],
   imports: [
     CommonModule,
