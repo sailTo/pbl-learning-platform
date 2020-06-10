@@ -43,7 +43,7 @@ public interface DiscussionMapper extends Mapper<Discussion> {
      * @param p_id
      * @return
      */
-    int maxDiscussionNum(int p_id);
+    Integer maxDiscussionNum(int p_id);
 
     /**
      * 统计讨论情况
