@@ -210,15 +210,12 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
-    public void updateGradeItem(GradeSystem gradeSystem) {
-        gradeSystemMapper.updateByPrimaryKeySelective(gradeSystem);
-    }
-
-    @Override
-    public void deleteGradeItem(int p_id, int item_id) {
-        GradeSystem gradeSystem = new GradeSystem();
-        gradeSystem.setP_id(p_id);
-        gradeSystem.setItem_id(item_id);
-        gradeSystemMapper.delete(gradeSystem);
+    public void updateTeacherGrade(String u_id, int p_id, double teacher_grade) {
+        StudentProject studentProject = new StudentProject();
+        studentProject.setP_id(p_id);
+        studentProject.setU_id(u_id);
+        studentProject = studentProjectMapper.selectOne(studentProject);
+        studentProject.setTeacher_grade(teacher_grade);
+        studentProjectMapper.updateByPrimaryKeySelective(studentProject);
     }
 }

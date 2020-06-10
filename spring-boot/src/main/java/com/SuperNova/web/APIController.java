@@ -769,4 +769,20 @@ public class APIController {
         data.put("selfAndMutualInformations",ret);
         return ResultGenerator.genSuccessResult(data);
     }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/updateTeacherGrade")
+    public Result updateTeacherGrade(@RequestParam String pbl_token,
+                                    @RequestParam String student_project_list){
+        String a_id = userService.getUIdByToken(pbl_token);
+        User teacher = userService.searchUser(a_id);
+        if(!teacher.getType().equals("teacher")){
+            return ResultGenerator.genFailResult("权限不够，修改教师评分失败");
+        }
+        List<StudentProject> studentProjectsObj = JSON.parseArray(student_project_list,StudentProject.class);
+        for (StudentProject s : studentProjectsObj){
+            projectService.updateTeacherGrade(s.getU_id(),s.getP_id(),s.getTeacher_grade());
+        }
+        return ResultGenerator.genSuccessResult().setMessage("修改教师评分成功");
+    }
 }
