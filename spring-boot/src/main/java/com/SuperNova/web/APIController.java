@@ -785,4 +785,17 @@ public class APIController {
         }
         return ResultGenerator.genSuccessResult().setMessage("修改教师评分成功");
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getStudentDiscussonAndAssignmentCountByPid")
+    public Result getStudentDiscussonCountByPid(@RequestParam String pbl_token,
+                                @RequestParam String p_id) {
+        String s_id = userService.getUIdByToken(pbl_token);
+        int discussionCount = discussionService.getDiscussionAndReplyCount(Integer.parseInt(p_id),s_id);
+        int assignmentDoneCount = assignmentService.countAssignmentDoneByUidAndPid(Integer.parseInt(p_id),s_id);
+        JSONObject data = new JSONObject();
+        data.put("discussionCount",discussionCount);
+        data.put("assignmentDoneCount",assignmentDoneCount);
+        return ResultGenerator.genSuccessResult(data);
+    }
 }

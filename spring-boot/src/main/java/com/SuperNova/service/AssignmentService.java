@@ -131,4 +131,12 @@ public interface AssignmentService extends Service<Assignment> {
      * @return
      */
     List<Integer> searchAllAssignmentsDoneNum(int p_id);
+
+    /**
+     * 搜索项目中指定学生的任务的完成情况
+     * @param p_id
+     * @param u_id
+     * @return
+     */
+     int countAssignmentDoneByUidAndPid(int p_id, String u_id);
 }

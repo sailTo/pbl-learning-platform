@@ -196,4 +196,14 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
     public List<Integer> searchAllAssignmentsDoneNum(int p_id) {
         return assignmentMapper.searchAllAssignmentsDoneNum(p_id);
     }
+
+    @Override
+    public int countAssignmentDoneByUidAndPid(int p_id, String u_id) {
+        StudentAssignment assignment = new StudentAssignment();
+        assignment.setP_id(p_id);
+        assignment.setU_id(u_id);
+        assignment.setStatus(true);
+        int ret = studentAssignmentMapper.selectCount(assignment);
+        return ret;
+    }
 }

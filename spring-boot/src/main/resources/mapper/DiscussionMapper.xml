@@ -43,6 +43,21 @@
       )as tmp
     group by tmp.u_id
   </select>
+
+    <select id="countDiscussionByUidAndPid" resultType="Integer">
+        select count(tmp.u_id)
+        from (
+                 select u_id
+                 from discussion natural join user
+                 where p_id = #{p_id}
+                 union all
+                 select u_id
+                 from reply natural join user natural join (select d_id,p_id from discussion) as dis2pj
+                 where p_id = #{p_id}
+             )as tmp
+        where tmp.u_id = #{u_id}
+    </select>
+
     <insert id="addDiscussion">
         <selectKey keyProperty="d_id" resultType="java.lang.Integer" order="AFTER">
             SELECT LAST_INSERT_ID()

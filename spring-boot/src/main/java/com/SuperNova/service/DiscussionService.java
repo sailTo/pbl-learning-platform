@@ -52,4 +52,11 @@ public interface DiscussionService extends Service<Discussion> {
      * @return
      */
     String getMaxDiscussionNum(int p_id);
+
+    /**
+     * 获取该角色在该项目中的讨论数，没有就为0
+     * @param p_id
+     * @param u_id
+     */
+    int getDiscussionAndReplyCount(int p_id, String u_id);
 }

@@ -3,6 +3,7 @@ package com.SuperNova.dao;
 import com.SuperNova.core.Mapper;
 import com.SuperNova.model.DiscussInformation;
 import com.SuperNova.model.Discussion;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -50,4 +51,11 @@ public interface DiscussionMapper extends Mapper<Discussion> {
      * @return
      */
     List<DiscussInformation> countDiscussion(int p_id);
+
+    /**
+     * 统计个人讨论情况
+     * @param p_id
+     * @return
+     */
+    Integer countDiscussionByUidAndPid(@Param(value = "p_id")int p_id, @Param(value = "u_id")String u_id);
 }
