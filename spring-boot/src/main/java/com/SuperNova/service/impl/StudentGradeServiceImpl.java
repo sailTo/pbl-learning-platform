@@ -135,4 +135,17 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
             studentGradeMapper.insert(s);
         }
     }
+
+    @Override
+    public Map<Integer, Object> getAllGradeItems() {
+        List<Project> list = projectMapper.selectAll();
+        Map<Integer, Object> tmp_map = new HashMap<>();
+        for (Project p:list){
+            GradeSystem gradeSystem = new GradeSystem();
+            gradeSystem.setP_id(p.getP_id());
+            List<GradeSystem> arrayList = gradeSystemMapper.select(gradeSystem);
+            tmp_map.put(p.getP_id(),arrayList);
+        }
+        return tmp_map;
+    }
 }
