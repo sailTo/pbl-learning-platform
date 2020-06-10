@@ -21,7 +21,7 @@ export class DiscussionService {
       },
     });
     return this.http.get<Response<{ discussions: Discussion[] }>>(
-      `'${environment.apiUrl}/api/searchDiscussions'`,
+      `${environment.apiUrl}/api/searchDiscussions`,
       { params }
     );
   }
@@ -33,7 +33,7 @@ export class DiscussionService {
         pbl_token: String(this.userService.getUser().token),
       },
     });
-    return this.http.get<Response<{ replies: Reply[] }>>(`'${environment.apiUrl}/api/searchReply'`, {
+    return this.http.get<Response<{ replies: Reply[] }>>(`${environment.apiUrl}/api/searchReply`, {
       params,
     });
   }

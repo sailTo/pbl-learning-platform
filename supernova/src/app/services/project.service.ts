@@ -24,7 +24,7 @@ export class ProjectService {
       },
     });
     return this.http.get<Response<{ grades: GradeItem[] }>>(
-      `'${environment.apiUrl}/api/getGradeItems'`,
+      `${environment.apiUrl}/api/getGradeItems`,
       { params }
     );
   }
@@ -44,7 +44,7 @@ export class ProjectService {
     });
     return this.http.get<
       Response<{ projects: Project[]; project_take: number; type: string }>
-    >(`'${environment.apiUrl}/api/searchProject'`, { params });
+    >(`${environment.apiUrl}/api/searchProject`, { params });
   }
 
   getProject(projectId: number) {

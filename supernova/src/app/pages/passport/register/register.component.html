@@ -13,7 +13,6 @@
             <ng-container *ngIf="i.errors?.minlength"> 用户ID应在3至10位之间 </ng-container>
             <ng-container *ngIf="i.errors?.maxlength"> 用户ID应在3至10位之间 </ng-container>
             <ng-container *ngIf="i.errors?.hasExist"> 用户已存在！换一个试试？ </ng-container>
-            
           </ng-template>
         </nz-form-control>
       </nz-form-item>
@@ -22,18 +21,15 @@
         <!-- <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"> 姓名 </nz-form-label> -->
         <nz-form-control [nzErrorTip]="idErrorTip2">
           <nz-input-group nzSize="large" nzAddonBeforeIcon="user">
-          <input nz-input formControlName="u_name" id="u_name" placeholder="请输入用户姓名" />
+            <input nz-input formControlName="u_name" id="u_name" placeholder="请输入用户姓名" />
           </nz-input-group>
           <ng-template #idErrorTip2 let-i>
             <ng-container *ngIf="i.errors?.required">请输入用户姓名</ng-container>
             <ng-container *ngIf="i.errors?.pattern"> 用户姓名不应包含数字 </ng-container>
             <ng-container *ngIf="i.errors?.maxlength"> 用户姓名不应大于6位 </ng-container>
-
           </ng-template>
-
         </nz-form-control>
       </nz-form-item>
-
 
       <nz-form-item>
         <nz-form-control [nzErrorTip]="'请输入用户密码'">
@@ -58,6 +54,7 @@
           </ng-template>
         </nz-form-control>
       </nz-form-item>
+
       <nz-form-item>
         <nz-form-control [nzErrorTip]="confirmErrorTip">
           <nz-input-group nzSize="large" nzAddonBeforeIcon="lock">
@@ -69,25 +66,23 @@
           </ng-template>
         </nz-form-control>
       </nz-form-item>
-      
+
       <nz-form-item>
         <!-- <nz-form-label nzRequired nzFor="gender"> 性别 </nz-form-label> -->
-         
         <nz-form-control nzErrorTip="请选择你的性别">
-           <!-- <nz-input-group nzSize="large" nzAddonBeforeIcon="user"> -->
-          <nz-radio-group  nzSize="large"  formControlName="gender" id="gender">
-          <label nz-radio nzValue="男" >男</label>
-          <label nz-radio nzValue="女" >女</label>
-          <label nz-radio nzValue="不愿透露">不愿透露</label>
+          <!-- <nz-input-group nzSize="large" nzAddonBeforeIcon="user"> -->
+          <nz-radio-group nzSize="large" formControlName="gender" id="gender">
+            <label nz-radio nzValue="男">男</label>
+            <label nz-radio nzValue="女">女</label>
+            <label nz-radio nzValue="不愿透露">不愿透露</label>
           </nz-radio-group>
           <!-- </nz-input-group> -->
         </nz-form-control>
-     
       </nz-form-item>
 
       <nz-form-item nz-row class="register-area">
-        <nz-form-control >
-          <label nz-checkbox formControlName="agree" id="agree" >
+        <nz-form-control>
+          <label nz-checkbox formControlName="agree" id="agree">
             <span>我已经阅读并同意了 <a>超新星协议</a></span>
           </label>
         </nz-form-control>

@@ -1,8 +1,8 @@
 {
     "/api": {
-        "target": "http://localhost:8081"
+        "target": "http://123.56.219.88:8081"
     },
     "/account": {
-        "target": "http://localhost:8081"
+        "target": "http://123.56.219.88:8081"
     }
 }

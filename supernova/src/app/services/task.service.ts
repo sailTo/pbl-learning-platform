@@ -27,7 +27,7 @@ export class TaskService {
         studentStatus: boolean[]; // 当前学生每个assignment的完成情况，教师返回空数组
         urgeStatus: boolean[]; // 每个assignment是否被催促，教师返回空数组
       }>
-    >(`'${environment.apiUrl}/api/searchAssignment'`, { params });
+    >(`${environment.apiUrl}/api/searchAssignment`, { params });
   }
 
   modifyTasks(tasks: Task[]) {
@@ -51,7 +51,7 @@ export class TaskService {
       },
     });
     return this.http.post<Response<{ a_idList: number[] }>>(
-      `'${environment.apiUrl}/api/createAssignments'`,
+      `${environment.apiUrl}/api/createAssignments`,
       params.toString(),
       { headers }
     );
@@ -68,7 +68,7 @@ export class TaskService {
       },
     });
     return this.http.post<Response<{ a_id: number }>>(
-      `'${environment.apiUrl}/api/createAssignment'`,
+      `${environment.apiUrl}/api/createAssignment`,
       params.toString(),
       { headers }
     );
@@ -83,7 +83,7 @@ export class TaskService {
       },
     });
     return this.http.delete<Response<{}>>(
-      `'${environment.apiUrl}/api/deleteAssignments'`,
+      `${environment.apiUrl}/api/deleteAssignments`,
       { params }
     );
   }
@@ -97,7 +97,7 @@ export class TaskService {
       },
     });
     return this.http.put<Response<{}>>(
-      `'${environment.apiUrl}/api/modifyAssignments'`,
+      `${environment.apiUrl}/api/modifyAssignments`,
       params
     );
   }

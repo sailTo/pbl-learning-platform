@@ -164,7 +164,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ rateMapping: Rating[] }>>(
-      `'${environment.apiUrl}/api/getMyEvaluation'`,
+      `${environment.apiUrl}/api/getMyEvaluation`,
       { params }
     );
   }

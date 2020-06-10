@@ -12,10 +12,10 @@ import { environment } from 'src/environments/environment';
 })
 export class CourseService {
   requestURL = {
-    my: `'${environment.apiUrl}/api/searchMyCourses'`,
-    other: `'${environment.apiUrl}/api/searchOtherCourses'`,
-    all: `'${environment.apiUrl}/api/searchAllCourses'`,
-    all_my: `'${environment.apiUrl}/api/searchAllMyCourses'`,
+    my: `${environment.apiUrl}/api/searchMyCourses`,
+    other: `${environment.apiUrl}/api/searchOtherCourses`,
+    all: `${environment.apiUrl}/api/searchAllCourses`,
+    all_my: `${environment.apiUrl}/api/searchAllMyCourses`,
   };
 
   constructor(private http: HttpClient, private userService: UserService) {}
@@ -54,7 +54,7 @@ export class CourseService {
       },
     });
     return this.http.get<Response<{ courses: Course[]; type: string }>>(
-      this.requestURL['all_my'],
+      this.requestURL.all_my,
       { params }
     );
   }
@@ -71,7 +71,7 @@ export class CourseService {
       },
     });
     return this.http.post<Response<{}>>(
-      `'${environment.apiUrl}/api/joinCourse'`,
+      `${environment.apiUrl}/api/joinCourse`,
       params.toString(),
       {
         headers,
@@ -87,18 +87,18 @@ export class CourseService {
       },
     });
     return this.http.put<Response<{}>>(
-      `'${environment.apiUrl}/api/changeCourse'`,
+      `${environment.apiUrl}/api/changeCourse`,
       params
     );
   }
 
   deleteCourse(course: Course) {
-    course['status'] = 0;
+    course.status = 0;
     return this.changeCourse(course);
   }
 
   publishCourse(course: Course) {
-    course['status'] = 2;
+    course.status = 2;
     return this.changeCourse(course);
   }
 
