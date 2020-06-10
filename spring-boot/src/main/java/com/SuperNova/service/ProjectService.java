@@ -100,15 +100,10 @@ public interface ProjectService extends Service<Project> {
     ArrayList<Map<String,Object>> getSelfAndMutualGradeByPid(int p_id);
 
     /**
-     * 更新单条评分细则
-     * @param gradeSystem
-     */
-    void updateGradeItem(GradeSystem gradeSystem);
-
-    /**
-     * 删除单条评分细则
+     * 更新student_project中的教师评分
+     * @param u_id
      * @param p_id
-     * @param item_id
+     * @param teacher_grade
      */
-    void deleteGradeItem(int p_id, int item_id);
+    void updateTeacherGrade(String u_id, int p_id, double teacher_grade);
 }

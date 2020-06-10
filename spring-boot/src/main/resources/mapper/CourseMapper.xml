@@ -24,7 +24,7 @@
   </select>
 
   <select id="searchOtherCourses" resultType="com.SuperNova.model.Course" parameterType="String">
-    select * from course where status = 1
+    select * from course where status = 2
     <if test="_parameter.indexOf('T') == 0">
       and t_id != #{u_id}
     </if>
