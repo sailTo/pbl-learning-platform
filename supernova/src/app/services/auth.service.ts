@@ -27,35 +27,4 @@ export class AuthService {
   public setCurrentUserValue(user: User) {
     this.currentUserSubject.next(user);
   }
-
-  login(id: string, apassword: string) {
-    const params = {
-      u_id: id,
-      password: apassword,
-    };
-    return this.http.post<any>(
-      `${environment.apiUrl}/account/login`,
-      this.transformRequest(params),
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded',
-        }),
-      }
-    );
-  }
-  logout(): void {
-    localStorage.removeItem('User');
-    this.currentUserSubject.next(null);
-  }
-  transformRequest(data) {
-    var str = '';
-
-    for (var i in data) {
-      str += i + '=' + data[i] + '&';
-    }
-
-    str.substring(0, str.length - 1);
-
-    return str;
-  }
 }

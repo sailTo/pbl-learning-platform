@@ -32,7 +32,7 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     private modalService: NzModalService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getOptionList();

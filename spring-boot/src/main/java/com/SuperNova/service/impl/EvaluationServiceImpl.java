@@ -30,7 +30,7 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
     private ProjectMapper projectMapper;
 
     @Override
-    public String searchEvaluateByOther(int p_id, String s_id) {
+    public JSONObject searchEvaluateByOther(int p_id, String s_id) {
 
         JSONObject data = new JSONObject();
 
@@ -43,12 +43,12 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
         evaluation.setPassive_s_id(s_id);
         int num = evaluationMapper.selectCount(evaluation);
         if(num==0){
-            return data.toJSONString();
+            return data;
         }
 
         data.put("doneNum",num);
         data.put("grade",evaluationMapper.searchEvaluateByOther(p_id, s_id));
-        return data.toJSONString();
+        return data;
     }
 
     @Override

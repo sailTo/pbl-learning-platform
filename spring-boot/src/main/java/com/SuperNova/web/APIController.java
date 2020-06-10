@@ -137,6 +137,16 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/searchCourseByCid")
+    public Result searchCourseByCid(@RequestParam String pbl_token,
+                                     @RequestParam String c_id) {
+        Course course = courseService.searchCourseByCid(Integer.parseInt(c_id));
+        JSONObject data = new JSONObject();
+        data.put("course",course);
+        return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/addCourse")
     public Result addCourse(@RequestParam String pbl_token,
                             @RequestParam String course,
@@ -472,7 +482,7 @@ public class APIController {
     public Result searchEvaluateByTeacher(@RequestParam String pbl_token,
                                           @RequestParam String p_id) {
         String s_id = userService.getUIdByToken(pbl_token);
-        String res = studentGradeService.searchEvaluateByTeacher(Integer.parseInt(p_id),s_id);
+        List<StudentGrade> res = studentGradeService.searchEvaluateByTeacher(Integer.parseInt(p_id),s_id);
         if(res==null){
             return ResultGenerator.genFailResult("教师未评分").setCode(ResultCode.DENY);
         }
@@ -797,6 +807,15 @@ public class APIController {
         JSONObject data = new JSONObject();
         data.put("discussionCount",discussionCount);
         data.put("assignmentDoneCount",assignmentDoneCount);
+        return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getUserByUid")
+    public Result getUserByUid(@RequestParam String pbl_token,
+                               @RequestParam String u_id) {
+        JSONObject data = new JSONObject();
+        data.put("user",userService.findById(u_id));
         return ResultGenerator.genSuccessResult(data);
     }
 }

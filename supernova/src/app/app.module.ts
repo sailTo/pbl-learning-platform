@@ -10,11 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IconsProviderModule } from './icons-provider.module';
 
+import { NzMessageModule } from 'ng-zorro-antd';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 
-import { AuthModule } from './auth/auth.module';
-
+import { GenericInterceptor } from './interceptors/generic.interceptor';
 
 registerLocaleData(zh);
 
@@ -28,10 +28,11 @@ registerLocaleData(zh);
     IconsProviderModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AuthModule,
+    NzMessageModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
+    // { provide: HTTP_INTERCEPTORS, useClass: GenericInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

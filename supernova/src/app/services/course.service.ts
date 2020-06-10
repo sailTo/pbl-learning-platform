@@ -6,6 +6,7 @@ import { Course } from '../models/course';
 import { User } from '../models/user';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
+import {stringify} from "querystring";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,19 @@ export class CourseService {
   };
 
   constructor(private http: HttpClient, private userService: UserService) {}
+
+  getCourse(
+    c_id: number,
+  ) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(this.userService.getUser().token),
+        c_id: String(c_id),
+      },
+    });
+    return this.http.get<
+      Response<{ course: Course }>>(`${environment.apiUrl}/api/searchCourseByCid`, { params });
+  }
 
   getCourses(
     type: string,
@@ -105,4 +119,6 @@ export class CourseService {
   resumeCourse(course: Course) {
     return this.publishCourse(course);
   }
+
+
 }

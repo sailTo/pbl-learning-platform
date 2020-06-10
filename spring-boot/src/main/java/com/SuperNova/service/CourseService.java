@@ -70,4 +70,10 @@ public interface CourseService extends Service<Course> {
      * @return
      */
     boolean isTeacher(String u_id,int c_id);
+
+    /**
+     * 查询c_id对应的课程
+     * @return
+     */
+    Course searchCourseByCid(int c_id);
 }

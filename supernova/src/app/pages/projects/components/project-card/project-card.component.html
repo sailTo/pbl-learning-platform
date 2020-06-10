@@ -3,8 +3,7 @@
   [nzActions]=actions
   nzHoverable
   >
-  <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
-  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=project.description></nz-card-meta>
+  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=project.description (click)="showModal('detail',project.p_id)"></nz-card-meta>
 </nz-card>
 
 <ng-template #titleTemplate>

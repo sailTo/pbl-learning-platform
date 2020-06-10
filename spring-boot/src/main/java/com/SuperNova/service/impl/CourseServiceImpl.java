@@ -124,4 +124,12 @@ public class CourseServiceImpl extends AbstractService<Course> implements Course
 
         return JSONObject.toJSON(data);
     }
+
+    @Override
+    public Course searchCourseByCid(int c_id) {
+        Course course = new Course();
+        course.setC_id(c_id);
+
+        return courseMapper.selectOne(course);
+    }
 }

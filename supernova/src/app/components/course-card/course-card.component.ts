@@ -16,6 +16,7 @@ import { CourseService } from 'src/app/services/course.service';
 
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
+import {CreateCourseComponent} from "../../pages/courses/components/create-course/create-course.component";
 
 @Component({
   selector: 'app-course-card',
@@ -58,7 +59,8 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
   constructor(
     private modal: NzModalService,
     private message: NzMessageService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private modalService: NzModalService
   ) {}
 
   ngAfterViewInit(): void {
@@ -193,6 +195,20 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
           this.message.error('出错了，请稍后重试！');
         }
       },
+    });
+  }
+
+  showModal(type:string, c_id:number): void {
+    // this.isVisible = true;
+    this.modalService.create({
+      nzTitle: '课程详情',
+      nzContent: CreateCourseComponent,
+      nzComponentParams:{
+        setType: type,
+        // p_id: p_id,
+        course_id: c_id,
+        // course_name: this.c_name,
+      }
     });
   }
 }
