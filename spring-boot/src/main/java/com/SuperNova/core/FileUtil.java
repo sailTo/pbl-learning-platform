@@ -65,15 +65,14 @@ public class FileUtil {
     }
 
     public static boolean downloadFile(HttpServletResponse response, int p_id, String fileStorageName,String fileName){
-        File file = new File(ProjectConstant.File_BASE+p_id+"/"+fileStorageName);
+        File file = new File(ProjectConstant.File_BASE+p_id+"\\"+fileStorageName);
         if (file.exists()) {
             response.setContentType("application/force-download");// 设置强制下载不打开
-//            System.out.println(fileName);
-            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-            byte[] buffer = new byte[1024];
             FileInputStream fis = null;
             BufferedInputStream bis = null;
             try {
+                response.addHeader("Content-Disposition", "attachment;charset=UTF-8;fileName=" + java.net.URLEncoder.encode(fileName,"utf-8"));// 设置文件名
+                byte[] buffer = new byte[1024];
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 OutputStream os = response.getOutputStream();
