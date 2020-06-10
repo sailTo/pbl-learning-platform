@@ -72,7 +72,7 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
     }
 
     @Override
-    public String searchEvaluateByTeacher(int p_id, String s_id) {
+    public List<StudentGrade> searchEvaluateByTeacher(int p_id, String s_id) {
         StudentGrade tmp = new StudentGrade();
         tmp.setP_id(p_id);
         tmp.setU_id(s_id);
@@ -80,7 +80,7 @@ public class StudentGradeServiceImpl extends AbstractService<StudentGrade> imple
         if(grades.size()==0){
             return null;
         }
-        return JSON.toJSONString(grades);
+        return grades;
     }
 
     @Override

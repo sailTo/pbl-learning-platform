@@ -77,5 +77,8 @@
       </div>
     </nz-dropdown-menu>
 
-    <button nz-button nzType="primary" (click)="confirm()">提交项目评分</button>
+    
+      <button nz-button nzType="primary" [disabled]="!canEdit" (click)="confirm()">提交项目评分</button>
+    
+   
   

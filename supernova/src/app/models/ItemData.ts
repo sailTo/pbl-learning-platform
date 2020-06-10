@@ -9,7 +9,7 @@ export interface ItemData {
     dynamicScore?: DynamicScore[];
     haveScored?:boolean;
   }
-  interface DynamicScore{
+ export  interface DynamicScore{
     item_id: string,
     item_name: string,
     grade : number

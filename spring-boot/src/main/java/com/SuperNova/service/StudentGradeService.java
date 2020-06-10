@@ -17,7 +17,7 @@ public interface StudentGradeService extends Service<StudentGrade> {
      * @param s_id
      * @return
      */
-    String searchEvaluateByTeacher(int p_id, String s_id);
+    List<StudentGrade> searchEvaluateByTeacher(int p_id, String s_id);
 
     /**
      * 获取学生总分(未评分则为null)

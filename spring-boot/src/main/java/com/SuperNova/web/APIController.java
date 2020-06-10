@@ -472,7 +472,7 @@ public class APIController {
     public Result searchEvaluateByTeacher(@RequestParam String pbl_token,
                                           @RequestParam String p_id) {
         String s_id = userService.getUIdByToken(pbl_token);
-        String res = studentGradeService.searchEvaluateByTeacher(Integer.parseInt(p_id),s_id);
+        List<StudentGrade> res = studentGradeService.searchEvaluateByTeacher(Integer.parseInt(p_id),s_id);
         if(res==null){
             return ResultGenerator.genFailResult("教师未评分").setCode(ResultCode.DENY);
         }

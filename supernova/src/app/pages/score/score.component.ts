@@ -42,11 +42,11 @@ export class ScoreComponent implements OnInit {
                 if(data.code==200){
                   // alert(this.courseData[i].c_id);
                   this.projectData[String(acourse.c_id)] =  data.data.projects; 
-                  if(this.courseData.length>0){
-                    this.selectedCourse = this.courseData[0].c_id;
-                    this.courseChange(this.selectedCourse);
-                    // alert(JSON.stringify(this.selectedProject));
-                  }
+                  // if(this.courseData.length>0){
+                  //   this.selectedCourse = this.courseData[0].c_id;
+                  //   this.courseChange(this.selectedCourse);
+                  //   // alert(JSON.stringify(this.selectedProject));
+                  // }
                  
                 }else{
                   this.msgService.error("获得课程对应项目失败！");

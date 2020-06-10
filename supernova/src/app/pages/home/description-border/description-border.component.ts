@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 import { UploadFile } from 'ng-zorro-antd/upload';
-import {User} from '../../../models/user';
-import {HomeService} from  '../../../services/home.service'
+import { User } from '../../../models/user';
+import { HomeService } from '../../../services/home.service'
 import { HttpParams } from '@angular/common/http';
-import {environment} from '../../../../environments/environment'
+import { environment } from '../../../../environments/environment'
 // interface data{
 //   id: string;
 //   name: string;
@@ -14,10 +14,10 @@ import {environment} from '../../../../environments/environment'
 //   courses :courseItems[];
 // }
 
-interface courseItems{
+interface courseItems {
   name: string;
   path: string;
-  description:string;
+  description: string;
 }
 
 @Component({
@@ -25,11 +25,11 @@ interface courseItems{
   templateUrl: './description-border.component.html'
 })
 export class DescriptionBorderComponent implements OnInit {
-  @Input()  u_id :string; 
-  canEdit : boolean;//是否有权限编辑
-  editStatus:boolean;//编辑状态
-  datas:User ;
-  copydata:User;
+  @Input() u_id: string;
+  canEdit: boolean;//是否有权限编辑
+  editStatus: boolean;//编辑状态
+  datas: User;
+  copydata: User;
   defaultImg = environment.defaultImgPath;
 
   loading = false;
@@ -38,142 +38,131 @@ export class DescriptionBorderComponent implements OnInit {
   constructor(
     private msg: NzMessageService,
     private homeServicce: HomeService,
-    private changeDetect : ChangeDetectorRef
-  ){
-    
+    private changeDetect: ChangeDetectorRef
+  ) {
+
   }
-  ngOnInit(){
-    
+  ngOnInit() {
+
     this.getUser(this.u_id);
-    
-    
-   
+
+
+
   }
-  startEdit(){
+  startEdit() {
     this.editStatus = true;
   }
 
-  cancelEdit(){
+  cancelEdit() {
     this.datas = JSON.parse(JSON.stringify(this.copydata));
     // Object.assign( this.copydata,this.datas);
-  
+
     // this.datas = this.copydata;
     this.editStatus = false;
   }
 
-  saveEdit(){
+  saveEdit() {
     //向数据库发送数据
-    this.homeServicce.changeInformation(this.datas,this.datas.image).subscribe(
-      (data) =>{
-        if(data.code==200){
+    this.homeServicce.changeInformation(this.datas, this.datas.image).subscribe(
+      (data) => {
+        if (data.code == 200) {
           this.msg.success("保存成功!");
           this.copydata = JSON.parse(JSON.stringify(this.datas));
           var temp = this.datas;
           temp.token = JSON.parse(localStorage.getItem("User")).token;
-          localStorage.setItem("User",JSON.stringify(temp));
-        }else{
+          localStorage.setItem("User", JSON.stringify(temp));
+        } else {
           //error
           this.datas = JSON.parse(JSON.stringify(this.copydata));
           this.msg.error("保存失败！");
         }
       }
     )
-    this.editStatus=false;
-    
-    
+    this.editStatus = false;
+
+
   }
   beforeUpload = (file: UploadFile) => {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-      if (!isJpgOrPng) {
-        this.msg.error('You can only upload JPG file!');
-        this.imgValid = false;
-        return false;
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.msg.error('Image must smaller than 2MB!');
-        this.imgValid = false;
-        return false;
-      }
-        this.imgValid = true;
-       this.handleChange(file);
-        return false;
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      this.msg.error('You can only upload JPG file!');
+      this.imgValid = false;
+      return false;
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.msg.error('Image must smaller than 2MB!');
+      this.imgValid = false;
+      return false;
+    }
+    this.imgValid = true;
+    this.handleChange(file);
+    return false;
   };
 
-  // private getBase64(img: File, callback: (img: string) => void): void {
-  //   const reader = new FileReader();
-  //   reader.addEventListener('load', () => callback(reader.result!.toString()));
-  //   reader.readAsDataURL(img);
-  // }
-
-  handleChange( file: UploadFile ): void {
+  handleChange(file: UploadFile): void {
     // alert(1);
-    if(!this.imgValid){
-        return;
+    if (!this.imgValid) {
+      return;
     }
     this.loading = true;
-        // Get this url from response in real world.
-        this.homeServicce.uploadImg(file,this.datas.u_id).subscribe(
-          (data:any) =>{
-                if(data.body.code==200){
-                      
-                      this.datas.image = data.body.data.img;
-                      var temp = this.datas;
-                      temp.token = JSON.parse(localStorage.getItem("User")).token;
-                      localStorage.setItem("User",JSON.stringify(temp));
-                      this.msg.success("上传头像成功！");
-                }else{
-                  this.msg.error("上传头像失败!");
-                }
-                this.loading = false;
-              }
-        );
-    }
-  getUser(u_id:string){
-      // alert(u_id);
-     this.homeServicce.getUser(u_id).subscribe(
-       (data)=>{
-        // alert(JSON.stringify(data.data.content))
-      if(data.code==200){
-        // alert(data.data.content);
-        this.datas = data.data.content;
-        // alert(this.datas.u_id);
-        // this.datas.image = JSON.parse(data.data).image;
-        
-        this.copydata = JSON.parse(JSON.stringify(this.datas));
-        if(this.u_id==JSON.parse(localStorage.getItem("User")).u_id){
-          this.canEdit = true;
-        }else{
-          this.canEdit = false;
+    // Get this url from response in real world.
+    this.homeServicce.uploadImg(file, this.datas.u_id).subscribe(
+      (data: any) => {
+        if (data.body.code == 200) {
+
+          this.datas.image = data.body.data.img;
+          var temp = this.datas;
+          temp.token = JSON.parse(localStorage.getItem("User")).token;
+          localStorage.setItem("User", JSON.stringify(temp));
+          this.msg.success("上传头像成功！");
+        } else {
+          this.msg.error("上传头像失败!");
         }
-        
-        // alert(this.datas.u_id);
-      }else{
-        alert("error");
-        //error
+        this.loading = false;
       }
-      
-    });
-   
+    );
+  }
+  getUser(u_id: string) {
+    // alert(u_id);
+    this.homeServicce.getUser(u_id).subscribe(
+      (data) => {
+        if (data.code == 200) {
+          this.datas = data.data.content;
+
+          this.copydata = JSON.parse(JSON.stringify(this.datas));
+          if (this.u_id == JSON.parse(localStorage.getItem("User")).u_id) {
+            this.canEdit = true;
+          } else {
+            this.canEdit = false;
+          }
+
+        } else {
+          this.msg.error("获取用户失败！");
+          //error
+        }
+
+      });
+
   }
 
-  resetAvatar(){
+  resetAvatar() {
     //将头像恢复为默认的头像
     this.datas.image = this.defaultImg;
-    this.homeServicce.uploadImg(null,this.datas.u_id).subscribe(
-      (data:any) =>{
-        if(data.body.code==200){
+    this.homeServicce.uploadImg(null, this.datas.u_id).subscribe(
+      (data: any) => {
+        if (data.body.code == 200) {
           this.msg.success("恢复成功!");
           this.datas.image = data.body.image;
           this.copydata = JSON.parse(JSON.stringify(this.datas));
           var temp = this.datas;
           temp.token = JSON.parse(localStorage.getItem("User")).token;
-          localStorage.setItem("User",JSON.stringify(temp));
-        }else{
+          localStorage.setItem("User", JSON.stringify(temp));
+        } else {
           //error
           this.msg.error("恢复失败！");
+        }
       }
-    }
     );
   }
 
