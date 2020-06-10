@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { User } from '../models/user';
 import { Response } from '../models/generic-response';
 import { Md5 } from 'ts-md5/dist/md5';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -60,7 +61,7 @@ export class UserService {
       },
     });
     return this.http.get<Response<{ leader: string; groupers: User[] }>>(
-      '/api/searchGroupers',
+      `${environment.apiUrl}/api/searchGroupers`,
       { params }
     );
   }
@@ -76,7 +77,7 @@ export class UserService {
         u_id: String(thisu_id),
       },
     });
-    return this.http.get<any>(`/account/searchId`, { params });
+    return this.http.get<any>(`${environment.apiUrl}/account/searchId`, { params });
   }
 
   register(validateForm: FormGroup) {
@@ -93,7 +94,7 @@ export class UserService {
       },
     });
     return this.http.post<Response<{ user: User; image: string }>>(
-      `/account/register`,
+      `${environment.apiUrl}/account/register`,
       params.toString(),
       { headers }
     );
@@ -110,7 +111,7 @@ export class UserService {
       },
     });
     return this.http.post<Response<{ image: string; user: User }>>(
-      `/account/login`,
+      `${environment.apiUrl}/account/login`,
       params.toString(),
       { headers }
     );

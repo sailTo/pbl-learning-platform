@@ -34,7 +34,7 @@ export class AuthService {
       password: apassword,
     };
     return this.http.post<any>(
-      `/account/login`,
+      `${environment.apiUrl}/account/login`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
