@@ -6,6 +6,7 @@ import { User } from '../../../models/user';
 import { HomeService } from '../../../services/home.service'
 import { HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'
+import { UserService } from 'src/app/services/user.service';
 // interface data{
 //   id: string;
 //   name: string;
@@ -22,7 +23,7 @@ interface courseItems {
 
 @Component({
   selector: 'app-description-border',
-  templateUrl: './description-border.component.html'
+  templateUrl: './description-border.component.html',
 })
 export class DescriptionBorderComponent implements OnInit {
   @Input() u_id: string;
@@ -38,6 +39,7 @@ export class DescriptionBorderComponent implements OnInit {
   constructor(
     private msg: NzMessageService,
     private homeServicce: HomeService,
+    private userService: UserService,
     private changeDetect: ChangeDetectorRef
   ) {
 
@@ -45,9 +47,6 @@ export class DescriptionBorderComponent implements OnInit {
   ngOnInit() {
 
     this.getUser(this.u_id);
-
-
-
   }
   startEdit() {
     this.editStatus = true;
@@ -74,7 +73,7 @@ export class DescriptionBorderComponent implements OnInit {
         } else {
           //error
           this.datas = JSON.parse(JSON.stringify(this.copydata));
-          this.msg.error("保存失败！");
+          this.msg.error('保存失败！');
         }
       }
     )
@@ -139,6 +138,7 @@ export class DescriptionBorderComponent implements OnInit {
 
         } else {
           this.msg.error("获取用户失败！");
+          this.userService.logout();
           //error
         }
 
@@ -169,6 +169,4 @@ export class DescriptionBorderComponent implements OnInit {
   // changePassword(){
   //   //添加弹窗，弹窗中是表单
   // }
-
-
 }
