@@ -13,6 +13,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import {NzRadioModule} from 'ng-zorro-antd/radio';
+import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import { NzPopoverModule, NzProgressModule, NzLayoutModule } from 'ng-zorro-antd';
 
 import { PassportRoutingModule } from './passport-routing.module';
@@ -40,6 +42,8 @@ import { UserRegisterComponent } from './register/register.component';
     NzPopoverModule,
     NzProgressModule,
     NzLayoutModule,
+    NzRadioModule,
+    NzCheckboxModule
   ],
 })
 export class PassportModule {}

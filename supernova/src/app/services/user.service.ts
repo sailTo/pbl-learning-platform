@@ -71,13 +71,13 @@ export class UserService {
     this.router.navigate(['/passport/login']);
   }
 
-  checkValidId(thisu_id: number) {
+  checkValidId(thisu_id: string) {
     const params = new HttpParams({
       fromObject: {
-        u_id: String(thisu_id),
+        u_id: thisu_id,
       },
     });
-    return this.http.get<any>(`${environment.apiUrl}/account/searchId`, { params });
+    return this.http.get<Response<{}>>(`${environment.apiUrl}/account/searchId`, { params });
   }
 
   register(validateForm: FormGroup) {
@@ -86,8 +86,8 @@ export class UserService {
     });
     const params = new HttpParams({
       fromObject: {
-        u_id: 'S' + validateForm.controls.id.value,
-        u_name: validateForm.controls.name.value,
+        u_id: 'S' + validateForm.controls.u_id.value,
+        u_name: validateForm.controls.u_name.value,
         gender: validateForm.controls.gender.value,
         password: String(Md5.hashStr(validateForm.controls.password.value)),
         description: '',

@@ -5,7 +5,7 @@ import {AdminService} from '../../services/admin.service';
 import {HomeService} from '../../services/home.service';
 import { Md5 } from 'ts-md5';
 import {environment} from '../../../environments/environment';
-
+import {NzMessageService} from 'ng-zorro-antd'
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -17,12 +17,11 @@ export class AdminComponent implements OnInit {
   searchValue = "";
   searchVisible = false;
   storePassords:string[] = [];
-  compare = (a, b) => {return a.name.localeCompare(b.name);};
   listofColumns: columnItem[] = [
     {
       name: "工号",
       sortOrder: null,
-      sortFn: this.compare
+      sortFn:  (a:User, b:User) => {return a.u_id.localeCompare(b.u_id);}
     },
     {
       name: "姓名"
@@ -53,7 +52,8 @@ export class AdminComponent implements OnInit {
   
   constructor(
     private adminService : AdminService,
-    private homeService : HomeService
+    private homeService : HomeService,
+    private msgService : NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class AdminComponent implements OnInit {
           }
           this.listOfDisplayData = [...this.listOfData];
         }else{
-          alert("获取用户失败！");
+          this.msgService.error("获取用户失败！");
         }
        
       }
@@ -97,11 +97,11 @@ export class AdminComponent implements OnInit {
     this.adminService.updateInformation(editUser).subscribe(
       (data) =>{
         if(data.code ==200){
-          alert("修改成功！");
+          this.msgService.success("修改成功！");
           this.storePassords[index] = editUser.password;
           editUser.password = null;
         }else{
-          alert("修改失败");
+          this.msgService.error("修改失败");
         }
         
       }
@@ -138,17 +138,17 @@ export class AdminComponent implements OnInit {
             this.adminService.updateInformation(editUser).subscribe(
               (data) =>{
                 if(data.code ==200){
-                  alert("删除成功！");
+                  this.msgService.success("删除成功！");
                   this.storePassords[index] = null;
                 }else{
-                  alert("删除失败");
+                  this.msgService.error("删除失败");
                 }
                 
               }
              
             );
         }else{
-          alert("获取删除用户失败!")
+          this.msgService.error("获取删除用户失败!")
         }
       }
     )

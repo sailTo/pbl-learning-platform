@@ -75,8 +75,12 @@
           </button>
           </td>
         <td>
-          <button nz-button  nzType="default" (click) ="deleteUser()">
-            <i nz-icon nzType="close" nzTheme="outline"></i>
+          <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要删除吗?" (nzOnConfirm)="deleteUser()" nzPopconfirmPlacement="bottom">
+            <span >
+              <i nz-icon nzType="close" nzTheme="outline"></i>
+            删除
+            </span>
+            
           </button>
           </td>
 
