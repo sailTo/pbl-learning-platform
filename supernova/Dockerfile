@@ -4,7 +4,7 @@ FROM nginx:stable-alpine
 COPY dist/supernova /usr/share/nginx/html
 
 # copy reversed proxy
-#COPY nginx.site.template /etc/nginx/conf.d/
+COPY default.conf /etc/nginx/conf.d/
 
 # expose port 80
 EXPOSE 80
