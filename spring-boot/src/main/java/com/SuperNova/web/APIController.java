@@ -73,15 +73,11 @@ public class APIController {
     @CrossOrigin(origins = "*")
     @PutMapping("/changeMyInformation")
     public Result changeMyInformation(@RequestParam String pbl_token,
-                                      @RequestParam String content,
-                                      @RequestParam(required = false) MultipartFile image) {
+                                      @RequestParam String content) {
         String u_id = userService.getUIdByToken(pbl_token);
         User user = JSON.parseObject(content,User.class);
         userService.setUser(user);
-        userService.deleteImage(user);
-        String imgURL = userService.setImage(u_id,image);
         JSONObject data = new JSONObject();
-        data.put("image",imgURL);
         data.put("token",userService.getToken(u_id));
         return ResultGenerator.genSuccessResult(data).setMessage("修改个人信息成功");
     }

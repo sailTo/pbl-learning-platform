@@ -461,11 +461,10 @@ A course project for Advanced Web Technologies at FDU.
 
 请求参数：
 
-|  字段名   |         说明         |     类型      | 是否必填 |                    备注                     |
-| :-------: | :------------------: | :-----------: | :------: | :-----------------------------------------: |
-| pbl_token |          -           |    String     |    是    |                用于验证身份                 |
-|  content  | json序列化的User对象 |    String     |    是    | 属性有u_id,type, u_name, gender,description |
-|   image   |         头像         | MultipartFile |    否    |             无则修改为默认头像              |
+|  字段名   |         说明         |  类型  | 是否必填 |                    备注                     |
+| :-------: | :------------------: | :----: | :------: | :-----------------------------------------: |
+| pbl_token |          -           | String |    是    |                用于验证身份                 |
+|  content  | json序列化的User对象 | String |    是    | 属性有u_id,type, u_name, gender,description |
 
 返回参数：
 
@@ -473,7 +472,6 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :----------------------------------- | :----: | :--: |
 |  code   | 200：修改成功<br>208：登录超时       |  int   |  -   |
 | message | 200：无<br>208：登录超时，请重新登录 | String |  -   |
-|  image  | 200：image_URL<br>208：无            | String |  -   |
 |  token  | 200：新的token                       | String |  -   |
 
 
