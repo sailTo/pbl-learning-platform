@@ -101,4 +101,18 @@ export class TaskService {
       params
     );
   }
+
+  urgeTask(assignmentId: number, projectId: number) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: this.userService.getUser().token,
+        a_id: String(assignmentId),
+        p_id: String(projectId),
+      },
+    });
+    return this.http.put<Response<{}>>(
+      `${environment.apiUrl}/api/urgeAssignment`,
+      params
+    );
+  }
 }

@@ -16,7 +16,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 
 import { AddTaskComponent } from '../add-task/add-task.component';
-import { DeleteTaskComponent } from '../delete-task/delete-task.component';
+import { ChooseTaskComponent } from '../choose-task/choose-task.component';
 
 @Component({
   selector: 'app-tasks',
@@ -133,7 +133,7 @@ export class TasksComponent implements OnInit {
   // get days offset
   offset = (days: number) =>
     new Date().setDate(new Date().getDate() + days).valueOf() -
-    new Date().valueOf()
+    new Date().valueOf();
 
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
@@ -386,6 +386,39 @@ export class TasksComponent implements OnInit {
     );
   }
 
+  showUrgeModal() {
+    this.modalService
+      .create({
+        nzTitle: '催促任务',
+        nzContent: ChooseTaskComponent,
+        nzComponentParams: {
+          rows: this.rows,
+        },
+      })
+      .afterClose.subscribe((rowId) => {
+        if (rowId === undefined) {
+          return;
+        }
+        this.urgeTask(rowId.toString());
+      });
+  }
+
+  urgeTask(rowId: string) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+
+    const itemId = rows[rowId].itemId;
+    const task = items[itemId].task;
+
+    this.taskService.urgeTask(task.a_id, this.p_id).subscribe((response) => {
+      if (response.code === 200 && !task.finished) {
+        // request succeeded, if task not finished, change color
+        this.gstcState.update(`config.chart.items.${itemId}.style.background`, this.colorMapping.急迫);
+      }
+      this.handleResponse(response);
+    });
+  }
+
   showAddModal() {
     this.modalService
       .create({
@@ -466,7 +499,7 @@ export class TasksComponent implements OnInit {
     this.modalService
       .create({
         nzTitle: '删除任务',
-        nzContent: DeleteTaskComponent,
+        nzContent: ChooseTaskComponent,
         nzComponentParams: {
           rows: this.rows,
         },
