@@ -22,8 +22,17 @@
         <tr *ngFor="let data of headerTable.data" >
           <td>{{ data.s_id }}</td>
           <td>{{ data.s_name }}</td>
-          <td>{{ data.assignmentDoneNum}}/{{maxAssignmentDone}}</td>
-          <td>{{ data.discussNum }}/{{maxDiscussNum}}</td>
+          <td>{{ data.assignmentDoneNum}}
+            <ng-container *ngIf="userType!='student'">
+              /{{maxAssignmentDone}}
+            </ng-container>
+            
+          </td>
+          <td>{{ data.discussNum }}
+            <ng-container *ngIf="userType!='student'">
+              /{{maxDiscussNum}}
+            </ng-container>
+          </td>
           <td>{{ data.selfScore }}/{{selectProject.self_grade_ratio}}</td>
           <td>{{ data.mutualScore }}/{{selectProject.mutual_grade_ratio}}</td>
           <ng-container *ngIf="canEdit&&editId === data.s_id&&!data.haveScored" >

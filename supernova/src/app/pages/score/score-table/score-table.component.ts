@@ -165,7 +165,6 @@ export class ScoreTableComponent implements OnInit,OnChanges {
       (studentTeacherScoreData)=>{
           if(studentTeacherScoreData.code==200){
             var temp = [];
-            alert(studentTeacherScoreData.data.grades);
             studentTeacherScoreData.data.grades.forEach(
               (teacherItem) =>{
                 var item:DynamicScore = {
