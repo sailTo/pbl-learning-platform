@@ -16,7 +16,7 @@ import {UserService} from "../../../../services/user.service";
 export class MembersComponent implements OnInit {
   p_id: number;
   groupers: User[];
-
+  leaderId: string;
   ifOpenRating:boolean;
   ifUpdate:boolean[];
   ifEdit:boolean[];
@@ -30,6 +30,7 @@ export class MembersComponent implements OnInit {
 
   // u_id:string;
   user:User;
+
   constructor(
     private route: ActivatedRoute,
     private scoreService: ScoreService,
@@ -71,9 +72,10 @@ export class MembersComponent implements OnInit {
     this.user = this.userService.getUser();
 
     this.route.queryParams.subscribe(
-      (params: { p_id: number, p_name: string, groupers: string }) => {
+      (params: { p_id: number, p_name: string, groupers: string, leaderId: string }) => {
         this.p_id = params.p_id;
         this.groupers = JSON.parse(params.groupers);
+        this.leaderId = params.leaderId;
       }
     );
     // this.u_id = String(this.user.u_id);

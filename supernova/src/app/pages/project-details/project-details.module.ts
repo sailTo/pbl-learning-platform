@@ -26,6 +26,7 @@ import { NzDatePickerModule } from "ng-zorro-antd/date-picker";
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 import { AngularGanttScheduleTimelineCalendarModule } from "angular-gantt-schedule-timeline-calendar";
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ProjectDetailsRoutingModule } from './project-details-routing.module';
 import { ProjectDetailsComponent } from './project-details.component';
@@ -50,6 +51,7 @@ import { DeleteTaskComponent } from './components/delete-task/delete-task.compon
     DeleteTaskComponent,
   ],
   imports: [
+    NzToolTipModule,
     CommonModule,
     ProjectDetailsRoutingModule,
     FormsModule,

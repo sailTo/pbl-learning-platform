@@ -84,12 +84,22 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.changeDectect.detectChanges();
   }
 
-  onJoin(): void {
+  onJoin(p_id:number): void {
     if (!this.canTake) {
       this.message.error('您已经加入过别的项目了');
       return;
     }
+    this.canTake = false;
     // TODO: join logic
+    this.projectService.joinProject(p_id).subscribe((response)=>{
+      if (response.code === 200) {
+        this.message.success(`加入项目成功！`);
+        this.change.emit();
+      } else {
+        this.message.error(`加入项目失败，请稍后重试！`);
+      }
+      // this.change.emit();
+    });
   }
 
   initControlPanel(): void {

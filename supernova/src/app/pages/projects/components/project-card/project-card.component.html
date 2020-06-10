@@ -15,7 +15,7 @@
 </ng-template>
 
 <ng-template #actionJoin>
-  <a nz-icon nzType="plus" (click)="onJoin()"></a>
+  <a nz-icon nzType="plus" (click)="onJoin(project.p_id)"></a>
 </ng-template>
 
 <!-- 进入详情页 -->
@@ -33,11 +33,11 @@
 </ng-template>
 
 <ng-template #actionMember>
-  <a 
+  <a
     nz-icon 
     nzType="user" 
     [routerLink]="['/project/members']" 
-    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, leaderId: leaderId, groupers: stringifyGroupers() }"
   ></a>
 </ng-template>
 

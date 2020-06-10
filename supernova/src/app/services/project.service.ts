@@ -99,6 +99,27 @@ export class ProjectService {
     );
   }
 
+  joinProject(p_id: number){
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      }),
+    };
+    const params = {
+      pbl_token: String(this.userService.getUser().token),
+      p_id: p_id
+    };
+    return this.http.post<Response<any>>(
+      `${environment.apiUrl}/api/joinProject`,
+      this.transformRequest(params),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+      }
+    );
+  }
+
   changeProject(project: Project, items: GradeItem[]) {
     let headers = {
       headers: new HttpHeaders({
