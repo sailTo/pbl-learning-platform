@@ -65,7 +65,7 @@ public class FileUtil {
     }
 
     public static boolean downloadFile(HttpServletResponse response, int p_id, String fileStorageName,String fileName){
-        File file = new File(ProjectConstant.File_BASE+p_id+"\\"+fileStorageName);
+        File file = new File(ProjectConstant.File_BASE+p_id+"/"+fileStorageName);
         if (file.exists()) {
             response.setContentType("application/force-download");// 设置强制下载不打开
             FileInputStream fis = null;
