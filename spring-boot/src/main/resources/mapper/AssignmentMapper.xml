@@ -31,4 +31,5 @@
   <select id="searchAllAssignmentsDoneNum" parameterType="int" resultType="int">
   SELECT IFNULL(subTable.SubNum, 0) FROM (SELECT a_id as keyr FROM student_assignment where p_id=#{p_id} group by a_id)as MainTable natural left outer join (SELECT a_id as keyr ,COUNT(*)as SubNum FROM student_assignment where p_id = #{p_id} AND status = true group by a_id) as subTable order by MainTable.keyr
   </select>
+
 </mapper>

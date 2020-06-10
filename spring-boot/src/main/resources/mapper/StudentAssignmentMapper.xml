@@ -20,4 +20,7 @@
     where p_id = #{p_id} and u_id = #{s_id}
     order by a_id
   </select>
+  <update id="urgeAssignment" >
+    update student_assignment set urge = true where p_id = #{p_id} and a_id = #{a_id} and  status=false
+  </update>
 </mapper>

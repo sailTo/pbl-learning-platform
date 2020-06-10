@@ -39,10 +39,10 @@ public interface StudentAssignmentMapper extends Mapper<StudentAssignment> {
 //     */
 //    boolean searchStudentDone(int p_id,String s_id,int a_id);
 
-//    /**
-//     * 催促未完成的同学完成任务
-//     * @param p_id
-//     * @param a_id
-//     */
-//    void urgeAssignment(int p_id,int a_id);
+    /**
+     * 催促未完成的同学完成任务
+     * @param p_id
+     * @param a_id
+     */
+    void urgeAssignment(@Param("p_id")int p_id,@Param("a_id")int a_id);
 }

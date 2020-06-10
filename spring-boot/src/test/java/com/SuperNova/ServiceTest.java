@@ -175,4 +175,12 @@ public class ServiceTest extends Tester {
         projectService.updateTeacherGrade("S001",1,50);
 //        Assert.assertEquals(2,ret.size());
     }
+
+    @Test
+    @Rollback(false)
+    public void test13(){
+        assignmentService.urgeAssignment(19,79);
+//        projectService.updateTeacherGrade("S001",1,50);
+//        Assert.assertEquals(2,ret.size());
+    }
 }

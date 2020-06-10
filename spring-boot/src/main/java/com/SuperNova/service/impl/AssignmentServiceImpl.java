@@ -96,13 +96,7 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
 
     @Override
     public void urgeAssignment(int p_id, int a_id) {
-        StudentAssignment tmp = new StudentAssignment();
-        tmp.setP_id(p_id);
-        tmp.setA_id(a_id);
-        tmp.setUrge(true);
-        Condition condition = new Condition(StudentAssignment.class);
-        condition.createCriteria().andEqualTo("status",0);
-        studentAssignmentMapper.updateByConditionSelective(tmp,condition);
+        studentAssignmentMapper.urgeAssignment(p_id,a_id);
     }
 
     @Override

@@ -148,6 +148,8 @@ public class APIController {
                             @RequestParam String course,
                             @RequestParam MultipartFile image) {
         Course courseObj = JSON.parseObject(course,Course.class);
+        //先添加一个默认的img URL，再利用生成的course id更新img URL
+        courseObj.setImage_URL(ProjectConstant.DEAFULT_IMAGE);
         int c_id = courseService.addCourse(courseObj);
         String imgURL = fileService.getImageURL(image,""+c_id);
         FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"/");
