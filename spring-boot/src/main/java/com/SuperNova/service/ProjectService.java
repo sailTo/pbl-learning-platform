@@ -51,6 +51,12 @@ public interface ProjectService extends Service<Project> {
     void changeProject(Project project, List<GradeSystem> grades);
 
     /**
+     * 将项目的评分状态修改成true
+     * @param p_id
+     */
+    void updateProjectGradeStatus(int p_id);
+
+    /**
      * 获取项目评分细则
      * @param p_id
      * @return

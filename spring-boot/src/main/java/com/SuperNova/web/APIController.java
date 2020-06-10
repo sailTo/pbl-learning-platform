@@ -783,6 +783,7 @@ public class APIController {
         for (StudentProject s : studentProjectsObj){
             projectService.updateTeacherGrade(s.getU_id(),s.getP_id(),s.getTeacher_grade());
         }
+        projectService.updateProjectGradeStatus(studentProjectsObj.get(0).getP_id());
         return ResultGenerator.genSuccessResult().setMessage("修改教师评分成功");
     }
 
