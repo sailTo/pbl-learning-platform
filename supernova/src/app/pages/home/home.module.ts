@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { NgZorroAntdModule, NzEmptyModule } from 'ng-zorro-antd';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { DescriptionBorderComponent } from './description-border/description-border.component';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-
-import { FormsModule } from '@angular/forms';
 import { MyCourseCardComponent } from './course-card/course-card.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
+
 import { CoursesModule } from '../courses/courses.module';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CoursesModule } from '../courses/courses.module';
     HomeRoutingModule,
     NgZorroAntdModule,
     FormsModule,
+    NzEmptyModule,
     CoursesModule,
   ],
 })
