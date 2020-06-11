@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -28,6 +28,7 @@ export class CreateCourseComponent {
   course: Course;
   @Input() course_id: number;
   @Input() setType: string;
+  // @Output() change = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -40,13 +41,13 @@ export class CreateCourseComponent {
       c_name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       point: ['', [Validators.required]],
-      t_id: ['', [this.uploadValidator]],
+      t_id: [this.currentUser.u_id, [this.uploadValidator]],
       // image: ['', [this.uploadValidator]],
     });
   }
 
   ngOnInit(): void {
-    if (this.setType == 'detail' || this.setType == 'edit') {
+    if (this.setType == 'edit') {
       this.courseService.getCourse(this.course_id).subscribe((data) => {
         console.log(data.data.course);
         this.course = data.data.course;
@@ -78,19 +79,43 @@ export class CreateCourseComponent {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    console.log(value);
-    this.destroyModal();
+
+    this.course = {
+      c_id: null,
+      c_name: this.validateForm.controls.c_name.value,
+      description: this.validateForm.controls.description.value,
+      t_id: this.validateForm.controls.t_id.value,
+      point: this.validateForm.controls.point.value,
+      status: 0,
+      image_URL: null,
+    };
+    // console.log(this.course);
+    console.log(this.fileList[0]);
+    this.courseService.createCourse(this.course,this.fileList[0]).subscribe((data: any) => {
+      console.log(data.body);
+      if (data.body.code == 200) {
+
+        // var temp = this.datas;
+        // temp.token = JSON.parse(localStorage.getItem("User")).token;
+        // localStorage.setItem("User", JSON.stringify(temp));
+        this.msg.success("新建课程成功！");
+        this.modal.destroy(1);
+        // this.change.emit();
+      } else {
+        this.msg.error("新建课程失败!");
+      }
+      // this.loading = false;
+    });
   }
 
   resetForm(e: MouseEvent): void {
-    // e.preventDefault();
-    // this.validateForm.reset();
-    // for (const key in this.validateForm.controls) {
-    //   this.validateForm.controls[key].markAsPristine();
-    //   this.validateForm.controls[key].updateValueAndValidity();
-    // }
-    console.log(this.validateForm.controls);
-    console.log(this.fileList);
+    e.preventDefault();
+    this.validateForm.reset();
+    for (const key in this.validateForm.controls) {
+      this.validateForm.controls[key].markAsPristine();
+      this.validateForm.controls[key].updateValueAndValidity();
+    }
+    this.fileList = [];
   }
 
   beforeUpload = (file: UploadFile): boolean => {
@@ -112,6 +137,6 @@ export class CreateCourseComponent {
     if (this.fileList.length < 1) {
       return { error: true };
     }
-    return {};
+    return { };
   };
 }

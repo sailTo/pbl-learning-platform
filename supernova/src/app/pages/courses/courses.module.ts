@@ -26,6 +26,8 @@ import { CourseCardComponent } from '../../components/course-card/course-card.co
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { CreateCourseComponent } from './components/create-course/create-course.component';
 import { ShowCourseComponent } from './components/show-course/show-course.component';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ShowCourseComponent } from './components/show-course/show-course.compon
     ShowCourseComponent,
   ],
   imports: [
+    NzToolTipModule,
+    NzDescriptionsModule,
     CommonModule,
     CoursesRoutingModule,
     FormsModule,

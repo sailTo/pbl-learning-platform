@@ -11,6 +11,7 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzMessageModule } from "ng-zorro-antd/message";
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
@@ -27,6 +28,7 @@ import {
 import {CreateProjectComponent} from "./components/create-project/create-project.component";
 import {PaginationComponent} from "../../components/pagination/pagination.component";
 import { ShowProjectComponent } from './components/show-project/show-project.component';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { ShowProjectComponent } from './components/show-project/show-project.com
     ShowProjectComponent
   ],
   imports: [
+    NzDescriptionsModule,
+    NzToolTipModule,
     NzSwitchModule,
     NzAvatarModule,
     CommonModule,

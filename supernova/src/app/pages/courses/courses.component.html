@@ -17,11 +17,11 @@
     (pageIndexChange)="onPageIndexChange($event)"
     >
   </app-pagination>
-  <nz-empty *ngIf="courses.length === 0"></nz-empty>
+  <nz-empty *ngIf="courses != null && courses.length === 0"></nz-empty>
 </nz-card>
 
 <ng-template #extraTemplate>
-  <button *ngIf="currentUser.type === 'teacher'" nz-button nzType="primary" (click)="showModal()">
+  <button *ngIf="currentUser != null && currentUser.type === 'teacher'" nz-button nzType="primary" (click)="showModal()">
     <span>新建课程</span>
   </button>
 </ng-template>
