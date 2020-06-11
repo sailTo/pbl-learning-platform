@@ -22,7 +22,7 @@ public class VerificationAspect {
 
     //拦截条件
     @Pointcut("within(com.SuperNova.web.APIController)&&!within(com.SuperNova.web.AccountController)")
-    public void log() {}
+    public void log() { }
 
     @Around("log()")
     public Object signVerification(ProceedingJoinPoint pjp) throws Throwable{

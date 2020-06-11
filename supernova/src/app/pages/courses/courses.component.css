@@ -6,3 +6,7 @@ app-pagination {
     padding-top: 24px; 
     float: right;
 }
+
+nz-empty {
+    padding-top: 12%;
+}

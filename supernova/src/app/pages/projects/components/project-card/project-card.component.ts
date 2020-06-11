@@ -7,7 +7,8 @@ import {
   OnInit,
   OnChanges,
   ChangeDetectorRef,
-  Output, EventEmitter
+  Output,
+  EventEmitter,
 } from '@angular/core';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -16,15 +17,15 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Project } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
-import {ProjectService} from "../../../../services/project.service";
-import {NzModalService} from "ng-zorro-antd";
-import {CreateProjectComponent} from "../create-project/create-project.component";
-import {Course} from "../../../../models/course";
+import { ProjectService } from '../../../../services/project.service';
+import { NzModalService } from 'ng-zorro-antd';
+import { CreateProjectComponent } from '../create-project/create-project.component';
+import { Course } from '../../../../models/course';
 
 @Component({
   selector: 'app-project-card',
   templateUrl: './project-card.component.html',
-  styleUrls: ['./project-card.component.css']
+  styleUrls: ['./project-card.component.css'],
 })
 export class ProjectCardComponent implements OnInit, AfterViewInit {
   @Input() project: Project;
@@ -68,10 +69,10 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private changeDectect: ChangeDetectorRef,
     private modalService: NzModalService,
-    private projectService:ProjectService
-    ) { }
+    private projectService: ProjectService
+  ) {}
 
-  ngOnInit():void {
+  ngOnInit(): void {
     // get groupers
     this.getGroupers();
     this.actions = [];
@@ -83,57 +84,84 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     this.changeDectect.detectChanges();
   }
 
-  onJoin(): void {
+  onJoin(p_id:number): void {
     if (!this.canTake) {
       this.message.error('您已经加入过别的项目了');
       return;
     }
+    this.canTake = false;
     // TODO: join logic
+    this.projectService.joinProject(p_id).subscribe((response)=>{
+      if (response.code === 200) {
+        this.message.success(`加入项目成功！`);
+        this.change.emit();
+      } else {
+        this.message.error(`加入项目失败，请稍后重试！`);
+      }
+      // this.change.emit();
+    });
   }
 
   initControlPanel(): void {
     this.STUDENT_PANEL = [this.join];
     this.MY_PANEL = [this.info, this.member, this.discussion, this.fileMgmt];
-    this.TEACHER_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.delete];
-    this.ADMIN_PANEL = [this.info, this.member, this.discussion, this.fileMgmt, this.edit, this.delete];
+    this.TEACHER_PANEL = [
+      this.info,
+      this.member,
+      this.discussion,
+      this.fileMgmt,
+      this.delete,
+    ];
+    this.ADMIN_PANEL = [
+      this.info,
+      this.member,
+      this.discussion,
+      this.fileMgmt,
+      this.edit,
+      this.delete,
+    ];
 
     const PANEL_TYPE_USER = {
-      'student': this.taken ? this.MY_PANEL : this.STUDENT_PANEL,
-      'teacher': this.TEACHER_PANEL,
-      'admin': this.ADMIN_PANEL,
+      student: this.taken ? this.MY_PANEL : this.STUDENT_PANEL,
+      teacher: this.TEACHER_PANEL,
+      admin: this.project.grading_status
+        ? this.ADMIN_PANEL.filter((item) => item !== this.edit)
+        : this.ADMIN_PANEL,
     };
 
     this.actions = PANEL_TYPE_USER[this.currentUser.type];
   }
 
   getGroupers(): void {
-    this.userService.getGroupersByProjectId(this.project.p_id).subscribe((response) => {
-      this.groupers = response.data.groupers;
-      this.leaderId = response.data.leader;
-    })
+    this.userService
+      .getGroupersByProjectId(this.project.p_id)
+      .subscribe((response) => {
+        this.groupers = response.data.groupers;
+        this.leaderId = response.data.leader;
+      });
   }
 
   stringifyGroupers(): string {
     return JSON.stringify(this.groupers);
   }
 
-  showModal(type: string, p_id:number): void {
+  showModal(type: string, p_id: number): void {
     // let course_name =
     // this.isVisible = true;
     this.modalService.create({
-      nzTitle: "项目详情",
+      nzTitle: '项目详情',
       nzContent: CreateProjectComponent,
-      nzComponentParams:{
-        type: type,
-        p_id: p_id,
+      nzComponentParams: {
+        type,
+        p_id,
         course_id: this.project.c_id,
         course_name: this.c_name,
-      }
-    })
+      },
+    });
   }
 
-  deleteProject(p_id:number):void{
-    this.projectService.deleteProject(p_id).subscribe((response)=>{
+  deleteProject(p_id: number): void {
+    this.projectService.deleteProject(p_id).subscribe((response) => {
       if (response.code === 200) {
         this.message.success(`删除项目成功！`);
         this.change.emit();
@@ -141,6 +169,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
         this.message.error(`删除项目失败，请稍后重试！`);
       }
       // this.change.emit();
-    })
+    });
   }
 }

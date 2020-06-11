@@ -37,12 +37,15 @@
     <nz-divider *ngIf="item.show"></nz-divider>
   </ng-template>
 </nz-list>
-
+</div>
+<ng-template #elseBlock><br><br><nz-empty></nz-empty>
+</ng-template>
+<br>
 <nz-comment *ngIf="user.type != 'admin'">
   <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.image"></nz-avatar>
-  <nz-comment-content>
-    <nz-form-item>
-      <textarea [(ngModel)]="newDiscussion" nz-input rows="4"></textarea>
+  <nz-comment-content class="create_comment">
+    <nz-form-item >
+      <textarea [(ngModel)]="newDiscussion" nz-input rows="4" ></textarea>
     </nz-form-item>
     <nz-form-item>
       <button nz-button nzType="primary" [nzLoading]="discussion_submitting" [disabled]="!newDiscussion" (click)="handleSubmit()">
@@ -51,9 +54,6 @@
     </nz-form-item>
   </nz-comment-content>
 </nz-comment>
-</div>
-<ng-template #elseBlock><br><br><br><br><nz-empty></nz-empty></ng-template>
-
 <!--<button nz-button nzType="primary" (click)="showModal()">-->
   <!--<span>Show Modal</span>-->
 <!--</button>-->

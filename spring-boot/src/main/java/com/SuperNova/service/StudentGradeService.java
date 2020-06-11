@@ -38,4 +38,9 @@ public interface StudentGradeService extends Service<StudentGrade> {
      * @param pid
      */
     ArrayList<Map<String,Object>> searchEvaluateByPid(int pid);
+
+    /**
+     * 获取所有评分项，以p_id区分
+     */
+    Map<Integer, Object> getAllGradeItems();
 }

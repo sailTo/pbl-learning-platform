@@ -10,3 +10,7 @@ button {
 nz-badge {
     margin-left: 16px;
 }
+
+nz-empty {
+    padding-top: 12%;
+}

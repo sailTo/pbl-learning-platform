@@ -19,7 +19,7 @@
       where t_id = #{u_id}
     </if>
     <if test="_parameter.indexOf('S') == 0">
-      where c_id in (select c_id from student_course where u_id = #{u_id})
+      where status = 2 and c_id in (select c_id from student_course where u_id = #{u_id})
     </if>
   </select>
 
@@ -29,7 +29,7 @@
       and t_id != #{u_id}
     </if>
     <if test="_parameter.indexOf('S') == 0">
-      and c_id not in (select c_id from student_course where u_id = #{u_id})
+      and status = 2 and c_id not in (select c_id from student_course where u_id = #{u_id})
     </if>
   </select>
 

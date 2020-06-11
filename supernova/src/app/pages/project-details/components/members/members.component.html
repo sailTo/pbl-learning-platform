@@ -22,7 +22,8 @@
     <td><a [routerLink]="['/home',data.u_id]">
       <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="data.image"></nz-avatar></a>
     </td>
-    <td>{{ data.u_name }}</td>
+    <td  *ngIf="leaderId == data.u_id" nz-button nzTooltipTitle="Group leader!" nzTooltipPlacement="topLeft" nz-tooltip>{{ data.u_name }} <i nz-icon nzType="user" nzTheme="outline"></i></td>
+    <td  *ngIf="leaderId != data.u_id">{{ data.u_name }}</td>
     <td>{{ data.u_id }}</td>
     <td>{{ data.description }}</td>
     <td *ngIf="ifOpenRating">

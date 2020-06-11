@@ -816,4 +816,43 @@ public class APIController {
         data.put("user",userService.findById(u_id));
         return ResultGenerator.genSuccessResult(data);
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAllProjects")
+    public Result getAllProjects(@RequestParam String pbl_token) {
+        String a_id = userService.getUIdByToken(pbl_token);
+        User admin = userService.searchUser(a_id);
+        if(!admin.getType().equals("admin")){
+            return ResultGenerator.genFailResult("权限不够，获取项目失败");
+        }
+        JSONObject data = new JSONObject();
+        data.put("projectList",projectService.findAll());
+        return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAllCourses")
+    public Result getAllCourses(@RequestParam String pbl_token) {
+        String a_id = userService.getUIdByToken(pbl_token);
+        User admin = userService.searchUser(a_id);
+        if(!admin.getType().equals("admin")){
+            return ResultGenerator.genFailResult("权限不够，获取课程失败");
+        }
+        JSONObject data = new JSONObject();
+        data.put("courseList",courseService.findAll());
+        return ResultGenerator.genSuccessResult(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/getAllGradeItems")
+    public Result getAllGradeItems(@RequestParam String pbl_token) {
+        String a_id = userService.getUIdByToken(pbl_token);
+        User admin = userService.searchUser(a_id);
+        if(!admin.getType().equals("admin")){
+            return ResultGenerator.genFailResult("权限不够，获取评分细则失败");
+        }
+        JSONObject data = new JSONObject();
+        data.put("itemList",JSON.toJSON(studentGradeService.getAllGradeItems()));
+        return ResultGenerator.genSuccessResult(data);
+    }
 }

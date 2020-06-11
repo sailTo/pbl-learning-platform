@@ -1,30 +1,34 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import { NzModalRef } from 'ng-zorro-antd';
 
 @Component({
-  selector: 'app-delete-task',
-  templateUrl: './delete-task.component.html',
-  styleUrls: ['./delete-task.component.css']
+  selector: 'app-choose-task',
+  templateUrl: './choose-task.component.html',
+  styleUrls: ['./choose-task.component.css'],
 })
-export class DeleteTaskComponent implements OnInit {
+export class ChooseTaskComponent implements OnInit {
   @Input() rows: {};
   rowNum: number;
-  
+
   validateForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private modal: NzModalRef, 
-  ) {
+  constructor(private fb: FormBuilder, private modal: NzModalRef) {
     this.validateForm = this.fb.group({
       rowId: ['', [this.rowIdValidator]],
     });
   }
 
   ngOnInit(): void {
-    this.rowNum = Number(Object.keys(this.rows).sort((a, b) => Number(b) - Number(a))[0]);
+    this.rowNum = Number(
+      Object.keys(this.rows).sort((a, b) => Number(b) - Number(a))[0]
+    );
   }
 
   rowIdValidator = (control: FormControl): { [s: string]: boolean } => {
@@ -40,9 +44,7 @@ export class DeleteTaskComponent implements OnInit {
     this.modal.destroy();
   }
 
-  submitForm(value: {
-    rowId: string, 
-  }): void {
+  submitForm(value: { rowId: string }): void {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
@@ -59,5 +61,4 @@ export class DeleteTaskComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
   }
-
 }
