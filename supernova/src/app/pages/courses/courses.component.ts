@@ -87,6 +87,11 @@ export class CoursesComponent implements OnInit {
     this.modalService.create({
       nzTitle: '新建课程',
       nzContent: CreateCourseComponent,
+    }).afterClose.subscribe((flag: number) => {
+      if (flag === undefined) {
+        return;
+      }
+      this.getCourses();
     });
   }
 }

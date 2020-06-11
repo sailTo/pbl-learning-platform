@@ -95,24 +95,33 @@ export class MembersComponent implements OnInit {
   }
 
   getMyRating():void{
-    this.scoreService.getRating(this.p_id).subscribe((data) => {
-      this.ratings = data.data.rateMapping;
-      // console.log(this.ratings);
-      this.groupers.forEach((grouper) => {
-        grouper['rating'] = this.ratings.find(
-          (rating) => rating.u_id == grouper['u_id']
-        )['rating'];
-        // console.log(grouper['rating']);
-        if (this.user.type == 'admin') {
-          this.ifEdit.push(false);
-          this.ifUpdate.push(false);
-        }else {
-          this.ifEdit.push(grouper['rating'] == null);
-          this.ifUpdate.push(grouper['rating'] == null);
-        }
+    this.projectService.getProject(this.p_id).subscribe((response)=>{
+
+      this.scoreService.getRating(this.p_id).subscribe((data) => {
+        this.ratings = data.data.rateMapping;
+        // console.log(this.ratings);
+        this.groupers.forEach((grouper) => {
+          grouper['rating'] = this.ratings.find(
+            (rating) => rating.u_id == grouper['u_id']
+          )['rating'];
+          // console.log(grouper['rating']);
+          if (this.user.type == 'admin' || response.data.project.grading_status) {
+            this.ifEdit.push(false);
+            this.ifUpdate.push(false);
+          }else {
+            this.ifEdit.push(grouper['rating'] == null);
+            this.ifUpdate.push(grouper['rating'] == null);
+          }
+        });
+        // console.log(this.groupers);
       });
-      // console.log(this.groupers);
-    })
+
+      // if (!response.data.project.grading_status){
+      //
+      // }
+    });
+
+
   }
 
   startShowMessages(): void {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 
 import { Response } from '../models/generic-response';
 import { Course } from '../models/course';
@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
 import {stringify} from "querystring";
+import {filter} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +92,35 @@ export class CourseService {
         headers,
       }
     );
+  }
+
+  createCourse(course: Course,image: any) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+        course: JSON.stringify(course),
+      },
+    });
+    const formData = new FormData();
+    formData.append('image', image);
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST,GET,PUT',
+      'Access-Control-Max-Age': '1728000',
+      'Access-Control-Allow-Headers':
+        'Content-Type,Access-Token,Authorization,ybg',
+    });
+    // return this.http.put<Response<{img:string}>>(`${environment.apiUrl}/api/changeMyImage`,params,headers);
+    const req = new HttpRequest(
+      'POST',
+      `${environment.apiUrl}/api/addCourse`,
+      formData,
+      {
+        headers: headers,
+        params: params,
+      }
+    );
+    return this.http.request(req).pipe(filter((e) => e instanceof HttpResponse));
   }
 
   changeCourse(course: Course) {

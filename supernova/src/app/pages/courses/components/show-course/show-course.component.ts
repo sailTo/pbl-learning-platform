@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NzDescriptionsSize} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-show-course',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-course.component.css']
 })
 export class ShowCourseComponent implements OnInit {
+  size: NzDescriptionsSize = 'default';
 
   constructor() { }
 
