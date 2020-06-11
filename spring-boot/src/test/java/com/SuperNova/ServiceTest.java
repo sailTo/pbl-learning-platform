@@ -5,10 +5,7 @@ import com.SuperNova.dao.FileMapper;
 import com.SuperNova.dao.GradeSystemMapper;
 import com.SuperNova.dao.StudentAssignmentMapper;
 import com.SuperNova.model.*;
-import com.SuperNova.service.AssignmentService;
-import com.SuperNova.service.CourseService;
-import com.SuperNova.service.ProjectService;
-import com.SuperNova.service.StudentGradeService;
+import com.SuperNova.service.*;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,6 +36,8 @@ public class ServiceTest extends Tester {
     private StudentAssignmentMapper studentAssignmentMapper;
     @Resource
     private GradeSystemMapper gradeSystemMapper;
+    @Resource
+    private UserService userService;
 
     @Test
     public void test1(){
@@ -180,6 +179,15 @@ public class ServiceTest extends Tester {
     @Rollback(false)
     public void test13(){
         assignmentService.urgeAssignment(19,79);
+//        projectService.updateTeacherGrade("S001",1,50);
+//        Assert.assertEquals(2,ret.size());
+    }
+
+    @Test
+    public void test14(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("teachers",userService.getAllTeachers());
+        System.out.println(jsonObject);
 //        projectService.updateTeacherGrade("S001",1,50);
 //        Assert.assertEquals(2,ret.size());
     }

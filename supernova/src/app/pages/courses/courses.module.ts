@@ -20,7 +20,6 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
-
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { CourseCardComponent } from '../../components/course-card/course-card.component';

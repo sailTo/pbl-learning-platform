@@ -98,6 +98,18 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/searchAllTeachers")
+    public Result searchAllTeachers(@RequestParam String pbl_token){
+        String u_id = userService.getUIdByToken(pbl_token);
+        User user = userService.searchUser(u_id);
+        if(!user.getType().equals("admin")){
+            ResultGenerator.genFailResult("无权限获得教师列表").setCode(ResultCode.FAIL);
+        }
+
+        return ResultGenerator.genSuccessResult(userService.getAllTeachers());
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchOtherCourses")
     public Result searchOtherCourses(@RequestParam String pbl_token,
                                      @RequestParam String pageIndex,

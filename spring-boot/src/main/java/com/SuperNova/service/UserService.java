@@ -95,6 +95,12 @@ public interface UserService extends Service<User> {
     List<User> getAllUser();
 
     /**
+     * 获得所有教师信息(管理员)
+     * @return
+     */
+    List<User> getAllTeachers();
+
+    /**
      * 删除用户的旧头像(如果default.jpg则不删除)
      * @param user
      */

@@ -220,4 +220,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public List<User> getAllUser() {
         return userMapper.selectAll();
     }
+
+    @Override
+    public List<User> getAllTeachers() {
+        User tmp = new User();
+        tmp.setType("teacher");
+        tmp.setStatus(true);
+        return userMapper.select(tmp);
+    }
 }

@@ -6,7 +6,10 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
+import {AdminService} from '../../services/admin.service';
+
 import { CreateCourseComponent } from '../courses/components/create-course/create-course.component';
+import { isThisQuarter } from 'date-fns';
 
 
 @Component({
@@ -18,10 +21,12 @@ import { CreateCourseComponent } from '../courses/components/create-course/creat
 export class AdminCourseComponent implements OnInit {
   currentUser: User = this.userService.getUser();
   courses: Course[];
-
+  allTeachers: User[];
+  
   constructor(
     private courseService: CourseService,
     private userService: UserService,
+    private adminService: AdminService,
     private modalService: NzModalService,
   ) { }
 
@@ -31,9 +36,13 @@ export class AdminCourseComponent implements OnInit {
   total: number;
   coursesTabTitle: string = "所有课程";
   numOfCardsARow: number = 4;
+  editId: number = -1;
+
 
   ngOnInit(): void {
     this.getCourses();
+
+    console.log(this.allTeachers);
   }
 
   getCourses(): void {
@@ -46,6 +55,10 @@ export class AdminCourseComponent implements OnInit {
       this.courses.forEach((course, index) => {
         course.teacher = teachers[index];
       })
+    });
+
+    this.adminService.getAllTeachers().subscribe((response) =>{
+      this.allTeachers = response.data.teachers;
     });
   }
 
@@ -60,5 +73,27 @@ export class AdminCourseComponent implements OnInit {
       nzTitle: '新建课程',
       nzContent: CreateCourseComponent,
     })
+  }
+
+  edit(index:number){
+    this.editId = index;
+    console.log("编辑："+index);
+  }
+
+  upload(course:Course){
+    console.log(course);
+
+    this.editId = -1;
+  }
+
+  onChange(value:any): void {
+    if (value === null) {
+      return;
+    }
+    console.log(value);
+    this.courses[this.editId].t_id = value.u_id;
+    this.courses[this.editId].teacher = value;
+
+    // this.courses[this.editId].teacher.u_name = value.label;
   }
 }

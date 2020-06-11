@@ -486,7 +486,7 @@ A course project for Advanced Web Technologies at FDU.
 | :-------: | :------------------: | :-----------: | :------: | :-----------------------------------------: |
 | pbl_token |          -           |    String     |    是    |                用于验证身份                 |
 |  oldPassword  | 原有密码 |    String     |    是    |  |
-|  newPassword   |      修改后的密码         | Stringe |    是    |     在后端进行校验旧密码是否正确,正确后进行修改                      |
+|  newPassword   |      修改后的密码         | String |    是    |     在后端进行校验旧密码是否正确,正确后进行修改                      |
 
 返回参数：
 
@@ -501,6 +501,26 @@ A course project for Advanced Web Technologies at FDU.
 ### 课程管理页面
 
 可复用个人信息管理、展示页面的接口/api/searchMyCourses，来搜索老师教的课程或学生选择的课程
+
+
+
+接口URL：/api/searchAllTeachers
+
+请求方法：GET
+
+请求参数：
+
+|  字段名   | 说明 |  类型  | 是否必填 |     备注     |
+| :-------: | :--: | :----: | :------: | :----------: |
+| pbl_token |  -   | String |    是    | 用于验证身份 |
+
+返回参数：
+
+|  字段名  | 说明                                       |  类型  |                      备注                       |
+| :------: | :----------------------------------------- | :----: | :---------------------------------------------: |
+|   code   | 200：查询成功<br>208：登录超时             |  int   |                        -                        |
+| message  | 200：查询成功<br>208：登录超时，请重新登录 | String |                        -                        |
+| teachers | json序列化的User对象数组                   | User[] | User属性有u_id,type, u_name, gender,description |
 
 
 

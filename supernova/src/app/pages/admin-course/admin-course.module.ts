@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AdminCourseRoutingModule } from './admin-course-routing.module';
 import { AdminCourseComponent } from './admin-course.component';
@@ -20,10 +21,10 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-
-import { CourseCardComponent } from '../../components/course-card/course-card.component';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { CreateCourseComponent } from '../courses/components/create-course/create-course.component'; 
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CoursesModule } from '../courses/courses.module';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CoursesModule } from '../courses/courses.module';
   imports: [
     CommonModule,
     AdminCourseRoutingModule,
+    FormsModule,
     NzAvatarModule,
     NzCardModule,
     NzTabsModule,
@@ -49,7 +51,11 @@ import { CoursesModule } from '../courses/courses.module';
     NzInputModule,
     NzInputNumberModule,
     NzUploadModule,
-    CoursesModule
+    CoursesModule,
+    NzTableModule,
+    NzAffixModule,
+    NzDropDownModule,
+    NzSelectModule
   ]
 })
 export class AdminCourseModule { }

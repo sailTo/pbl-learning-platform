@@ -21,6 +21,18 @@ export class AdminService {
     );
   }
 
+  getAllTeachers(){
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+      },
+    });
+    return this.http.get<Response<{teachers: User[]}>>(
+      `${environment.apiUrl}/api/searchAllTeachers`,
+      { params }
+    );
+  }
+
   updateInformation(user: User) {
     const params = new HttpParams({
       fromObject: {
@@ -30,6 +42,7 @@ export class AdminService {
     });
     return this.http.put<Response<{}>>(`${environment.apiUrl}/api/changeInformation`, params);
   }
+
   addNewUser(user: User) {
     let headers = {
       headers: new HttpHeaders({
@@ -46,6 +59,7 @@ export class AdminService {
       headers
     );
   }
+
   transformRequest(data) {
     var str = '';
 
