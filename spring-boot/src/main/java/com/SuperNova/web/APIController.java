@@ -165,12 +165,12 @@ public class APIController {
         int c_id = courseService.addCourse(courseObj);
         String imgURL = fileService.getImageURL(image,""+c_id);
         FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"/");
-        courseObj.setImage_URL(imgURL);
+        courseObj.setImage_URL(ProjectConstant.WEB_IMG_BASE+c_id+"/"+imgURL);
         courseService.updateCourse(courseObj);
 
         JSONObject data = new JSONObject();
         data.put("c_id",c_id);
-        data.put("image_URL",ProjectConstant.WEB_IMG_BASE+c_id+"/"+imgURL);
+        data.put("image_URL",courseObj.getImage_URL());
         return ResultGenerator.genSuccessResult(data).setMessage("课程创建成功");
     }
 
