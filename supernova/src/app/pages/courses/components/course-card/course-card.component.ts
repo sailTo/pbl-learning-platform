@@ -16,7 +16,7 @@ import { CourseService } from 'src/app/services/course.service';
 
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
-import {CreateCourseComponent} from "../../pages/courses/components/create-course/create-course.component";
+import {CreateCourseComponent} from '../create-course/create-course.component';
 
 @Component({
   selector: 'app-course-card',

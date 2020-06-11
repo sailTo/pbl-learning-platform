@@ -3,10 +3,7 @@ import {
   Input,
   TemplateRef,
   ViewChild,
-  AfterViewInit,
   OnInit,
-  OnChanges,
-  ChangeDetectorRef,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -20,18 +17,19 @@ import { User } from 'src/app/models/user';
 import { ProjectService } from '../../../../services/project.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { CreateProjectComponent } from '../create-project/create-project.component';
-import { Course } from '../../../../models/course';
+
 
 @Component({
   selector: 'app-project-card',
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],
 })
-export class ProjectCardComponent implements OnInit, AfterViewInit {
+export class ProjectCardComponent implements OnInit {
   @Input() project: Project;
   @Input() taken: boolean;
   @Input() canTake: boolean;
   @Input() c_name: string;
+
   @Output() change = new EventEmitter();
 
   @ViewChild('actionJoin') join: TemplateRef<void>;
@@ -41,20 +39,15 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('actionDiscussion') discussion: TemplateRef<void>;
   @ViewChild('actionDelete') delete: TemplateRef<void>;
   @ViewChild('actionFileMgmt') fileMgmt: TemplateRef<void>;
+  @ViewChild('actionTaskCompletion') taskCompletion: TemplateRef<void>;
 
   groupers: User[];
   leaderId: string;
+  leader: User;
+
+  loading = true;
 
   currentUser: User = this.userService.getUser();
-
-  // user = {
-  //   u_id: "S4",
-  //   type: 'S',
-  //   u_name: '学生4',
-  //   gender: 'M',
-  //   description: '学生4简介',
-  //   image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  // };
 
   // card下的控制按键列表
   actions: TemplateRef<void>[] = [];
@@ -67,7 +60,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
   constructor(
     private message: NzMessageService,
     private userService: UserService,
-    private changeDectect: ChangeDetectorRef,
     private modalService: NzModalService,
     private projectService: ProjectService
   ) {}
@@ -76,40 +68,39 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
     // get groupers
     this.getGroupers();
     this.actions = [];
-    // this.groupers = [this.user, this.user, this.user];
   }
 
-  ngAfterViewInit(): void {
-    this.initControlPanel();
-    this.changeDectect.detectChanges();
-  }
-
-  onJoin(p_id:number): void {
+  onJoin(p_id: number): void {
     if (!this.canTake) {
       this.message.error('您已经加入过别的项目了');
       return;
     }
     this.canTake = false;
-    // TODO: join logic
-    this.projectService.joinProject(p_id).subscribe((response)=>{
+    this.projectService.joinProject(p_id).subscribe((response) => {
       if (response.code === 200) {
         this.message.success(`加入项目成功！`);
         this.change.emit();
       } else {
         this.message.error(`加入项目失败，请稍后重试！`);
       }
-      // this.change.emit();
     });
   }
 
   initControlPanel(): void {
     this.STUDENT_PANEL = [this.join];
-    this.MY_PANEL = [this.info, this.member, this.discussion, this.fileMgmt];
+    this.MY_PANEL = [
+      this.info,
+      this.member,
+      this.discussion,
+      this.fileMgmt,
+      this.taskCompletion,
+    ];
     this.TEACHER_PANEL = [
       this.info,
       this.member,
       this.discussion,
       this.fileMgmt,
+      this.taskCompletion,
       this.delete,
     ];
     this.ADMIN_PANEL = [
@@ -117,12 +108,17 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
       this.member,
       this.discussion,
       this.fileMgmt,
+      this.taskCompletion,
       this.edit,
       this.delete,
     ];
 
     const PANEL_TYPE_USER = {
-      student: this.taken ? this.MY_PANEL : this.STUDENT_PANEL,
+      student: this.taken
+        ? this.currentUser.u_id === this.leaderId
+          ? this.MY_PANEL
+          : this.MY_PANEL.filter((item) => item !== this.taskCompletion)
+        : this.STUDENT_PANEL,
       teacher: this.TEACHER_PANEL,
       admin: this.project.grading_status
         ? this.ADMIN_PANEL.filter((item) => item !== this.edit)
@@ -138,6 +134,11 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
       .subscribe((response) => {
         this.groupers = response.data.groupers;
         this.leaderId = response.data.leader;
+        this.leader = this.groupers.find(grouper => grouper.u_id === this.leaderId);
+
+        this.initControlPanel();
+
+        this.loading = false;
       });
   }
 
@@ -168,7 +169,6 @@ export class ProjectCardComponent implements OnInit, AfterViewInit {
       } else {
         this.message.error(`删除项目失败，请稍后重试！`);
       }
-      // this.change.emit();
     });
   }
 }

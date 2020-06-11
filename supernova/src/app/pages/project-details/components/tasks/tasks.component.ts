@@ -46,6 +46,10 @@ export class TasksComponent implements OnInit {
   modifiable: boolean; // 甘特图中内容是否可修改
   modified = false; // 甘特图中内容是否被修改过
   loading = false; // 保存按键是否正在提交
+  addLoading = false;
+  urgeLoading = false;
+  completeLoading = false;
+  urgeOrCompleteItemId: string = undefined; // 记录催促或完成任务导致的颜色变更
 
   modifiedAssignmentList: Task[] = []; // 删改过的task列表
   opList: string[] = []; // task列表对应的操作：modify or delete
@@ -133,7 +137,7 @@ export class TasksComponent implements OnInit {
   // get days offset
   offset = (days: number) =>
     new Date().setDate(new Date().getDate() + days).valueOf() -
-    new Date().valueOf();
+    new Date().valueOf()
 
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
@@ -342,6 +346,12 @@ export class TasksComponent implements OnInit {
           const thisModifiedItem = this.items[itemId];
           const thisModifiedTask = thisModifiedItem.task;
 
+          if (itemId === this.urgeOrCompleteItemId) {
+            // caused by urge or complete item, not modification we need to record
+            this.urgeOrCompleteItemId = undefined;
+            return;
+          }
+
           this.modified = true;
 
           const lastElementOf = (list: any[]) => list[list.length - 1];
@@ -386,6 +396,42 @@ export class TasksComponent implements OnInit {
     );
   }
 
+  showCompleteModal() {
+    this.modalService
+    .create({
+      nzTitle: '标志完成任务',
+      nzContent: ChooseTaskComponent,
+      nzComponentParams: {
+        rows: this.rows,
+      },
+    })
+    .afterClose.subscribe((rowId) => {
+      if (rowId === undefined) {
+        return;
+      }
+      this.completeLoading = true;
+      this.completeTask(rowId.toString());
+    });
+  }
+
+  completeTask(rowId: string) {
+    const rows = this.gstcState.get('config.list.rows');
+    const items = this.gstcState.get('config.chart.items');
+
+    const itemId = rows[rowId].itemId;
+    const task = items[itemId].task;
+
+    this.taskService.completeTask(task.a_id, this.p_id).subscribe((response) => {
+      if (response.code === 200 && !task.finished) {
+        // request succeeded, change color
+        this.urgeOrCompleteItemId = itemId;
+        this.gstcState.update(`config.chart.items.${itemId}.style.background`, this.colorMapping.完成);
+      }
+      this.handleResponse(response);
+      this.completeLoading = false;
+    });
+  }
+
   showUrgeModal() {
     this.modalService
       .create({
@@ -399,6 +445,7 @@ export class TasksComponent implements OnInit {
         if (rowId === undefined) {
           return;
         }
+        this.urgeLoading = true;
         this.urgeTask(rowId.toString());
       });
   }
@@ -413,9 +460,11 @@ export class TasksComponent implements OnInit {
     this.taskService.urgeTask(task.a_id, this.p_id).subscribe((response) => {
       if (response.code === 200 && !task.finished) {
         // request succeeded, if task not finished, change color
+        this.urgeOrCompleteItemId = itemId;
         this.gstcState.update(`config.chart.items.${itemId}.style.background`, this.colorMapping.急迫);
       }
       this.handleResponse(response);
+      this.urgeLoading = false;
     });
   }
 
@@ -432,6 +481,7 @@ export class TasksComponent implements OnInit {
         if (task === undefined) {
           return;
         }
+        this.addLoading = true;
         this.handleAddition(task);
       });
   }
@@ -578,6 +628,7 @@ export class TasksComponent implements OnInit {
         task.a_id = response.data.a_id;
         this.addTask(task);
       }
+      this.addLoading = false;
     });
   }
 

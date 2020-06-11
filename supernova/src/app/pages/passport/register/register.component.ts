@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {UserService} from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-passport-register',
@@ -20,7 +20,7 @@ export class UserRegisterComponent implements OnDestroy {
     fb: FormBuilder,
     private router: Router,
     public msg: NzMessageService,
-    private userService : UserService
+    private userService: UserService
   ) {
     this.form = fb.group({
       u_id: [
@@ -30,25 +30,18 @@ export class UserRegisterComponent implements OnDestroy {
           Validators.maxLength(10),
           Validators.minLength(3),
           Validators.pattern('[0-9]+'),
-          
         ],
-        [this.checkUId,]
+        [this.checkUId],
       ],
       u_name: [
-        null, 
+        null,
         [
           Validators.required,
           Validators.maxLength(6),
           Validators.pattern('[^0-9]+'),
-          
         ],
       ],
-      gender: [
-        null, 
-        [
-          Validators.required
-        ]
-      ],
+      gender: [null, [Validators.required]],
       password: [
         null,
         [
@@ -65,12 +58,7 @@ export class UserRegisterComponent implements OnDestroy {
           UserRegisterComponent.passwordEquar,
         ],
       ],
-      agree: [
-        false,
-        [
-          Validators.required,
-        ]
-      ]
+      agree: [false, [Validators.required]],
     });
   }
 
@@ -100,6 +88,8 @@ export class UserRegisterComponent implements OnDestroy {
 
   count = 0;
   interval$: any;
+
+  loading = false;
 
   static checkPassword(control: FormControl) {
     if (!control) {
@@ -131,33 +121,26 @@ export class UserRegisterComponent implements OnDestroy {
     return null;
   }
 
-
-
-   checkUId = (control:FormControl) => 
-      new Observable((observer: Observer<Record<string, boolean> |null>) => {
-        if (!control) {
-              observer.next(null)
-            }
-            this.userService.checkValidId("S"+control.value).subscribe(
-                  (data) =>{
-                    if(data.code==200){
-                      //可用
-                      observer.next(null)
-                    }else{
-                      if(data.code==208){
-                        //已有
-                        observer.next( {hasExist:true,error:true} )
-                      }else{
-                        this.msg.error("网络错误！");
-                      }
-                    }
-                    observer.complete();
-                  }
-                )
+  checkUId = (control: FormControl) =>
+    new Observable((observer: Observer<Record<string, boolean> | null>) => {
+      if (!control) {
+        observer.next(null);
       }
-      )
-
-  loading = false;
+      this.userService.checkValidId('S' + control.value).subscribe((data) => {
+        if (data.code == 200) {
+          //可用
+          observer.next(null);
+        } else {
+          if (data.code == 208) {
+            //已有
+            observer.next({ hasExist: true, error: true });
+          } else {
+            this.msg.error('网络错误！');
+          }
+        }
+        observer.complete();
+      });
+    });
   submit() {
     this.loading = true;
     this.error = '';
@@ -170,25 +153,23 @@ export class UserRegisterComponent implements OnDestroy {
     }
 
     const data = this.form.value;
-    this.userService.register(this.form).subscribe(
-      (data2) =>{
-        // alert(data2.code==200);
-        if(data2.code==200){
-          // alert(data2.user);
-          var ret_user;
-          
-          ret_user = data2.data.user;
-          ret_user.token =data2.message;
-          ret_user.image = data2.data.image;
-          localStorage.setItem('User', JSON.stringify(ret_user));
-          this.router.navigate(["/home"]);
-        }else{
-          this.msg.error("注册失败！");
-        }
-        this.loading = false;
-        
+    this.userService.register(this.form).subscribe((data2) => {
+      // alert(data2.code==200);
+      if (data2.code == 200) {
+        // alert(data2.user);
+        var ret_user;
+
+        ret_user = data2.data.user;
+        ret_user.token = data2.message;
+        ret_user.image = data2.data.image;
+        // TODO: 替换掉local storage实现
+        localStorage.setItem('User', JSON.stringify(ret_user));
+        this.router.navigate(['/home']);
+      } else {
+        this.msg.error('注册失败！');
       }
-    )
+      this.loading = false;
+    });
     // this.msg.info('抱歉，尚未开放注册哦！');
   }
 

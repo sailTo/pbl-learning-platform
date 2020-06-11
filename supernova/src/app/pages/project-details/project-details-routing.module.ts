@@ -6,6 +6,7 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { MembersComponent } from './components/members/members.component';
 import { DiscussionsComponent } from './components/discussions/discussions.component';
 import { FilesComponent } from './components/files/files.component';
+import { TaskCompletionComponent } from './components/task-completion/task-completion.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'members', component: MembersComponent },
       { path: 'discussions', component: DiscussionsComponent },
       { path: 'files', component: FilesComponent },
+      { path: 'task_completion', component: TaskCompletionComponent },
     ],
   },
 ];

@@ -1,13 +1,15 @@
-<nz-card 
-  [nzCover]="coverTemplate" 
-  [nzActions]=actions
-  nzHoverable
-  >
-  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=project.description (click)="showModal('detail',project.p_id)"></nz-card-meta>
+<nz-card [nzCover]="coverTemplate" [nzActions]=actions nzHoverable [nzLoading]="loading">
+  <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=project.description
+    [nzAvatar]="leader ? avatarTemplate : false"></nz-card-meta>
 </nz-card>
 
+<ng-template #avatarTemplate>
+  <nz-avatar [nzSrc]=leader.image [nzAlt]=leader.u_name [routerLink]="['/home', leader.u_id]">
+  </nz-avatar><br />
+</ng-template>
+
 <ng-template #titleTemplate>
-  <span>{{project.p_name}}</span>
+  <span (click)="showModal('detail',project.p_id)">{{project.p_name}}</span>
 </ng-template>
 
 <ng-template #coverTemplate>
@@ -15,54 +17,47 @@
 </ng-template>
 
 <ng-template #actionJoin>
-  <a nz-icon nzType="plus" nzTooltipTitle="加入项目" nzTooltipPlacement="topCenter" nz-tooltip (click)="onJoin(project.p_id)"></a>
+  <a nz-icon nzType="plus" nzTooltipTitle="加入项目" nzTooltipPlacement="topCenter" nz-tooltip
+    (click)="onJoin(project.p_id)"></a>
 </ng-template>
 
 <!-- 进入详情页 -->
 <ng-template #actionInfo>
-  <a 
-    nz-icon 
-    nzType="unordered-list" 
-    [routerLink]="['/project/tasks']" 
+  <a nz-icon nzType="unordered-list" [routerLink]="['/project/tasks']"
     [queryParams]="{ p_id: project.p_id, p_name: project.p_name, leaderId: leaderId, groupers: stringifyGroupers() }"
-    nzTooltipTitle="甘特图" nzTooltipPlacement="topCenter" nz-tooltip
-  ></a>
+    nzTooltipTitle="任务列表" nzTooltipPlacement="topCenter" nz-tooltip></a>
 </ng-template>
 
 <ng-template #actionEdit>
-  <a nz-icon nzType="edit" nzTooltipTitle="编辑课程" nzTooltipPlacement="topCenter" nz-tooltip (click)="showModal('edit',project.p_id)"></a>
+  <a nz-icon nzType="edit" nzTooltipTitle="编辑项目" nzTooltipPlacement="topCenter" nz-tooltip
+    (click)="showModal('edit',project.p_id)"></a>
 </ng-template>
 
 <ng-template #actionMember>
-  <a
-    nz-icon 
-    nzType="user" 
-    [routerLink]="['/project/members']" 
+  <a nz-icon nzType="user" [routerLink]="['/project/members']"
     [queryParams]="{ p_id: project.p_id, p_name: project.p_name, leaderId: leaderId, groupers: stringifyGroupers() }"
-    nzTooltipTitle="人员信息" nzTooltipPlacement="topCenter" nz-tooltip
-  ></a>
+    nzTooltipTitle="成员列表" nzTooltipPlacement="topCenter" nz-tooltip></a>
 </ng-template>
 
 <ng-template #actionDiscussion>
-  <a 
-    nz-icon 
-    nzType="comment" 
-    [routerLink]="['/project/discussions']" 
-    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
-    nzTooltipTitle="讨论区" nzTooltipPlacement="topCenter" nz-tooltip
-  ></a>
+  <a nz-icon nzType="comment" [routerLink]="['/project/discussions']"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }" nzTooltipTitle="讨论空间"
+    nzTooltipPlacement="topCenter" nz-tooltip></a>
 </ng-template>
 
 <ng-template #actionDelete>
-  <a nz-icon nzType="delete" nzTooltipTitle="删除课程" nzTooltipPlacement="topCenter" nz-tooltip (click)="deleteProject(project.p_id)"></a>
+  <a nz-icon nzType="delete" nzTooltipTitle="删除项目" nzTooltipPlacement="topCenter" nz-tooltip
+    (click)="deleteProject(project.p_id)"></a>
 </ng-template>
 
 <ng-template #actionFileMgmt>
-  <a 
-    nz-icon 
-    nzType="download" 
-    [routerLink]="['/project/files']" 
-    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }"
-    nzTooltipTitle="文件管理" nzTooltipPlacement="topCenter" nz-tooltip
-  ></a>
+  <a nz-icon nzType="download" [routerLink]="['/project/files']"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }" nzTooltipTitle="文件管理"
+    nzTooltipPlacement="topCenter" nz-tooltip></a>
+</ng-template>
+
+<ng-template #actionTaskCompletion>
+  <a nz-icon nzType="check-square" [routerLink]="['/project/task_completion']"
+    [queryParams]="{ p_id: project.p_id, p_name: project.p_name, groupers: stringifyGroupers() }" nzTooltipTitle="任务管理"
+    nzTooltipPlacement="topCenter" nz-tooltip></a>
 </ng-template>

@@ -2,23 +2,35 @@
     <nz-card-tab>
         <nz-tabset nzLinkRouter [nzLinkExact]=false nzSize="large" [nzTabBarExtraContent]="extraTemplate">
             <nz-tab>
-                <a nz-tab-link [routerLink]="['tasks']" [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">
+                <a nz-tab-link [routerLink]="['tasks']"
+                    [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="unordered-list"></i>任务列表
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['members']" [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">
+                <a nz-tab-link [routerLink]="['members']"
+                    [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="user"></i>成员列表
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['discussions']" [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
+                <a nz-tab-link [routerLink]="['discussions']"
+                    [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="comment"></i>讨论空间
                 </a>
             </nz-tab>
             <nz-tab>
-                <a nz-tab-link [routerLink]="['files']" [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
+                <a nz-tab-link [routerLink]="['files']"
+                    [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }">
                     <i nz-icon nzType="download"></i>文件管理
+                </a>
+            </nz-tab>
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['task_completion']"
+                    [queryParams]="{ p_id: p_id, p_name: p_name, groupers: stringifyGroupers() }"
+                    [hidden]="currentUser.type === 'teacher' || currentUser.u_id === leaderId"
+                    >
+                    <i nz-icon nzType="check-square"></i>任务管理
                 </a>
             </nz-tab>
         </nz-tabset>

@@ -39,6 +39,7 @@ import { DiscussionsComponent } from './components/discussions/discussions.compo
 import { FilesComponent } from './components/files/files.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { ChooseTaskComponent } from './components/choose-task/choose-task.component';
+import { TaskCompletionComponent } from './components/task-completion/task-completion.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ChooseTaskComponent } from './components/choose-task/choose-task.compon
     FilesComponent,
     AddTaskComponent,
     ChooseTaskComponent,
+    TaskCompletionComponent,
   ],
   imports: [
     NzToolTipModule,

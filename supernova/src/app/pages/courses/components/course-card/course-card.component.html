@@ -1,9 +1,7 @@
-<nz-card
-  [nzCover]="coverTemplate"
-  [nzActions]=actions nzHoverable>
-  <!-- <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta> -->
+<nz-card [nzCover]="coverTemplate" [nzActions]=actions nzHoverable>
   <nz-card-meta [nzTitle]="titleTemplate" [nzDescription]=course.description
-                [nzAvatar]="avatarTemplate"></nz-card-meta>
+    [nzAvatar]="avatarTemplate">
+  </nz-card-meta>
 </nz-card>
 
 <ng-template #titleTemplate >
@@ -17,7 +15,7 @@
 
 <ng-template #avatarTemplate>
   <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]">
-  </nz-avatar><br/>
+  </nz-avatar><br />
 </ng-template>
 
 <ng-template #coverTemplate>
@@ -28,23 +26,22 @@
   <a nz-icon nzType="plus" nzTooltipTitle="加入课程" nzTooltipPlacement="topCenter" nz-tooltip (click)="showJoinConfirm()"></a>
 </ng-template>
 
-<!-- 进入项目详情页 -->
 <ng-template #actionInfo>
-  <a nz-icon nzType="info" nzTooltipTitle="详情" nz-tooltip (click)="showModal('detail',course.c_id)"></a>
+  <a nz-icon nzType="info" nzTooltipTitle="课程详情" nz-tooltip (click)="showModal('detail',course.c_id)"></a>
 </ng-template>
 
 <ng-template #actionEdit>
-  <a nz-icon nzType="edit" nzTooltipTitle="编辑" nz-tooltip (click)="showModal('edit',course.c_id)"></a>
+  <a nz-icon nzType="edit" nzTooltipTitle="编辑课程" nz-tooltip (click)="showModal('edit',course.c_id)"></a>
 </ng-template>
 
 <ng-template #actionPublish>
-  <a nz-icon nzType="check" nzTooltipTitle="发布" nz-tooltip (click)="showPublishConfirm('发布')"></a>
+  <a nz-icon nzType="check" nzTooltipTitle="发布课程" nz-tooltip (click)="showPublishConfirm('发布')"></a>
 </ng-template>
 
 <ng-template #actionDelete>
-  <a nz-icon nzType="delete" nzTooltipTitle="删除" nzTooltipPlacement="topCenter" nz-tooltip (click)="showDeleteConfirm()"></a>
+  <a nz-icon nzType="delete" nzTooltipTitle="删除课程" nzTooltipPlacement="topCenter" nz-tooltip (click)="showDeleteConfirm()"></a>
 </ng-template>
 
 <ng-template #actionResume>
-  <a nz-icon nzType="redo" nzTooltipTitle="恢复" nzTooltipPlacement="topCenter" nz-tooltip (click)="showPublishConfirm('恢复')"></a>
+  <a nz-icon nzType="redo" nzTooltipTitle="恢复课程" nzTooltipPlacement="topCenter" nz-tooltip (click)="showPublishConfirm('恢复')"></a>
 </ng-template>

@@ -9,9 +9,7 @@
             <app-project-card [project]=project [taken]="projectTaking === project.p_id"
                               [c_name]="current_c_name" [canTake]="projectTaking === -1"
                               (change)="getProject()"
-            >
-
-            </app-project-card>
+            ></app-project-card>
         </nz-col>
     </nz-row>
     <nz-empty *ngIf="projects.length === 0"></nz-empty>
