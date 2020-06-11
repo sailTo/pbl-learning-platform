@@ -301,6 +301,14 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/searchGrouperAssignment")
+    public Result searchGrouperAssignment(@RequestParam String pbl_token,
+                                          @RequestParam String p_id,
+                                          @RequestParam String grouper_id) {
+        return ResultGenerator.genSuccessResult(assignmentService.searchDoneStatus(Integer.parseInt(p_id),grouper_id)).setMessage("查询成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAssignmentDone")
     public Result searchAssignmentDone(@RequestParam String pbl_token,
                                        @RequestParam String p_id,
