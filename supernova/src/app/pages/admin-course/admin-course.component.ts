@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
@@ -28,6 +29,8 @@ export class AdminCourseComponent implements OnInit {
     private userService: UserService,
     private adminService: AdminService,
     private modalService: NzModalService,
+    private message: NzMessageService
+
   ) { }
 
   type: string = 'all';
@@ -58,7 +61,8 @@ export class AdminCourseComponent implements OnInit {
     });
 
     this.adminService.getAllTeachers().subscribe((response) =>{
-      this.allTeachers = response.data.teachers;
+      console.log(response);
+      this.allTeachers = response.data;
     });
   }
 
@@ -82,6 +86,20 @@ export class AdminCourseComponent implements OnInit {
 
   upload(course:Course){
     console.log(course);
+    this.courseService.changeCourse(course).subscribe((response) =>{
+      console.log(response);
+      this.message.success(`课程修改成功`);
+    });
+
+    this.editId = -1;
+  }
+
+  del(course:Course){
+    course.status = 0;
+    this.courseService.changeCourse(course).subscribe((response) =>{
+      console.log(response);
+      this.message.success(`课程删除成功`);
+    });
 
     this.editId = -1;
   }

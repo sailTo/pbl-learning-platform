@@ -27,7 +27,7 @@ export class AdminService {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
       },
     });
-    return this.http.get<Response<{teachers: User[]}>>(
+    return this.http.get<Response<User[]>>(
       `${environment.apiUrl}/api/searchAllTeachers`,
       { params }
     );

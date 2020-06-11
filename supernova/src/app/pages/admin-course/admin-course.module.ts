@@ -26,6 +26,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CoursesModule } from '../courses/courses.module';
+import {NzRadioModule} from 'ng-zorro-antd/radio';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { CoursesModule } from '../courses/courses.module';
     NzTableModule,
     NzAffixModule,
     NzDropDownModule,
-    NzSelectModule
+    NzSelectModule,
+    NzRadioModule
   ]
 })
 export class AdminCourseModule { }
