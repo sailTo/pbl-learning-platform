@@ -931,7 +931,7 @@ A course project for Advanced Web Technologies at FDU.
 |   字段名   |           说明           |  类型  | 是否必填 |                             备注                             |
 | :--------: | :----------------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token  |            -             | String |    是    |                         用于验证身份                         |
-| assignment | json序列化assignment对象 | String |    是    | assignment对象包含属性：a_id,a_name,a_description,<br/>importance,a_start_date,a_end_date<br>其中a_id为-1 |
+| assignment | json序列化assignment对象 | String |    是    | assignment对象包含属性：a_id,p_id,a_name,a_description,<br/>importance,a_start_date,a_end_date<br>其中a_id为-1 |
 
 返回参数：
 
@@ -952,7 +952,7 @@ A course project for Advanced Web Technologies at FDU.
 |   字段名    |             说明             |  类型  | 是否必填 |                             备注                             |
 | :---------: | :--------------------------: | :----: | :------: | :----------------------------------------------------------: |
 |  pbl_token  |              -               | String |    是    |                         用于验证身份                         |
-| assignments | json序列化assignment对象列表 | String |    是    | assignment对象包含属性：a_id,a_name,a_description,<br/>importance,a_start_date,a_end_date<br>其中a_id为-1 |
+| assignments | json序列化assignment对象列表 | String |    是    | assignment对象包含属性：a_id,p_id,a_name,a_description,<br/>importance,a_start_date,a_end_date<br>其中a_id为-1 |
 
 返回参数：
 
@@ -973,7 +973,7 @@ A course project for Advanced Web Technologies at FDU.
 |   字段名   |           说明           |  类型  | 是否必填 |                             备注                             |
 | :--------: | :----------------------: | :----: | :------: | :----------------------------------------------------------: |
 | pbl_token  |            -             | String |    是    |                         用于验证身份                         |
-| assignment | json序列化assignment对象 | String |    是    | assignment对象包含属性：a_id,a_name,a_description,<br/>importance,a_start_date,a_end_date |
+| assignment | json序列化assignment对象 | String |    是    | assignment对象包含属性：a_id,p_id,a_name,a_description,<br/>importance,a_start_date,a_end_date |
 
 返回参数：
 
@@ -981,6 +981,27 @@ A course project for Advanced Web Technologies at FDU.
 | :-----: | :---------------------------------------------------------- | :----: | :--: |
 |  code   | 200：修改成功<br/>208：登录超时<br/>209：修改失败           |  int   |  -   |
 | message | 200：修改成功<br>208：登录超时，请重新登录<br>209：修改失败 | String |  -   |
+
+
+
+接口URL：/api/doneAssignment
+
+请求方法：PUT
+
+请求参数：
+
+|  字段名   |     说明      |  类型  | 是否必填 |         备注         |
+| :-------: | :-----------: | :----: | :------: | :------------------: |
+| pbl_token |       -       | String |    是    |     用于验证身份     |
+|   p_id    |  Project id   | String |    是    | 指定任务所属的项目id |
+|   a_id    | Assignment id | String |    是    | 指定完成的assignment |
+
+返回参数：
+
+| 字段名  | 说明                                           |  类型  | 备注 |
+| :-----: | :--------------------------------------------- | :----: | :--: |
+|  code   | 200：标记完成成功<br/>208：登录超时            |  int   |  -   |
+| message | 200：标记完成成功<br>208：登录超时，请重新登录 | String |  -   |
 
 
 
@@ -993,7 +1014,7 @@ A course project for Advanced Web Technologies at FDU.
 |   字段名    |             说明             |  类型  | 是否必填 |                             备注                             |
 | :---------: | :--------------------------: | :----: | :------: | :----------------------------------------------------------: |
 |  pbl_token  |              -               | String |    是    |                         用于验证身份                         |
-| assignments | json序列化assignment对象列表 | String |    是    | assignment对象包含属性：a_id,a_name,a_description,<br/>importance,a_start_date,a_end_date |
+| assignments | json序列化assignment对象列表 | String |    是    | assignment对象包含属性：a_id,p_id,a_name,a_description,<br/>importance,a_start_date,a_end_date |
 
 返回参数：
 

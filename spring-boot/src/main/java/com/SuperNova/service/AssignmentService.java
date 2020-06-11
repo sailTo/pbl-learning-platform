@@ -139,4 +139,12 @@ public interface AssignmentService extends Service<Assignment> {
      * @return
      */
      int countAssignmentDoneByUidAndPid(int p_id, String u_id);
+
+    /**
+     * 标记完成任务
+     * @param a_id
+     * @param p_id
+     * @param u_id
+     */
+     void doneAssignment(int a_id,int p_id,String u_id);
 }

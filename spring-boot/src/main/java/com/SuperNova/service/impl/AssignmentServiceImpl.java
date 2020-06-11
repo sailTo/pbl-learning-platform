@@ -200,4 +200,14 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         int ret = studentAssignmentMapper.selectCount(assignment);
         return ret;
     }
+
+    @Override
+    public void doneAssignment(int a_id, int p_id,String u_id) {
+        StudentAssignment tmp = new StudentAssignment();
+        tmp.setP_id(p_id);
+        tmp.setA_id(a_id);
+        tmp.setU_id(u_id);
+        tmp.setStatus(true);
+        studentAssignmentMapper.updateByPrimaryKey(tmp);
+    }
 }

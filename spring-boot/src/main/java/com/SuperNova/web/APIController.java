@@ -345,6 +345,16 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PutMapping("/doneAssignment")
+    public Result doneAssignment(@RequestParam String pbl_token,
+                                 @RequestParam String a_id,
+                                 @RequestParam String p_id) {
+        String u_id = userService.getUIdByToken(pbl_token);
+        assignmentService.doneAssignment(Integer.parseInt(a_id),Integer.parseInt(p_id),u_id);
+        return ResultGenerator.genSuccessResult().setMessage("标记完成成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @PutMapping("/changeAssignments")
     public Result changeAssignments(@RequestParam String pbl_token,
                                    @RequestParam String assignments) {
