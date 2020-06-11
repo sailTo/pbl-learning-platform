@@ -191,4 +191,13 @@ public class ServiceTest extends Tester {
 //        projectService.updateTeacherGrade("S001",1,50);
 //        Assert.assertEquals(2,ret.size());
     }
+
+    @Test
+    public void test15(){
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("teachers",userService.getAllTeachers());
+        System.out.println(assignmentService.searchDoneStatus(19,"S001"));
+//        projectService.updateTeacherGrade("S001",1,50);
+//        Assert.assertEquals(2,ret.size());
+    }
 }

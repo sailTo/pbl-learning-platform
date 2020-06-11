@@ -899,6 +899,28 @@ A course project for Advanced Web Technologies at FDU.
 
 
 
+接口URL：/api/searchGrouperAssignment
+
+请求方法：GET
+
+请求参数：
+
+|   字段名   |        说明        |  类型  | 是否必填 |     备注     |
+| :--------: | :----------------: | :----: | :------: | :----------: |
+| pbl_token  |         -          | String |    是    | 用于验证身份 |
+|    p_id    |       项目id       | String |    是    |      -       |
+| grouper_id | 需要查询的组员的id | String |    是    |      -       |
+
+返回参数：
+
+|    字段名     | 说明                                       |  类型  |                             备注                             |
+| :-----------: | :----------------------------------------- | :----: | :----------------------------------------------------------: |
+|     code      | 200：查询成功<br/>208：登录超时            |  int   |                              -                               |
+|    message    | 200：查询成功<br>208：登录超时请重新登录   | String |                              -                               |
+| studentStatus | 200：boolean数组(按照a_id排序)<br>其它：无 | String | 学生在该项目下所有assignment的完成状态：<br>完成-true;未完成-false |
+
+
+
 接口URL：/api/searchAssignmentDone
 
 请求方法：GET
