@@ -17,6 +17,7 @@ import { User } from 'src/app/models/user';
 import { ProjectService } from '../../../../services/project.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { CreateProjectComponent } from '../create-project/create-project.component';
+import {ShowProjectComponent} from "../show-project/show-project.component";
 
 
 @Component({
@@ -126,6 +127,9 @@ export class ProjectCardComponent implements OnInit {
     };
 
     this.actions = PANEL_TYPE_USER[this.currentUser.type];
+
+    //此处push仅用于测试
+    // this.actions.push(this.edit);
   }
 
   getGroupers(): void {
@@ -170,5 +174,17 @@ export class ProjectCardComponent implements OnInit {
         this.message.error(`删除项目失败，请稍后重试！`);
       }
     });
+  }
+
+  showDetails(p_id: number){
+      this.modalService.create({
+        nzTitle: '项目详情',
+        nzContent: ShowProjectComponent,
+        nzWidth: '70%',
+        nzComponentParams: {
+          p_id,
+          course_name: this.c_name,
+        },
+      });
   }
 }

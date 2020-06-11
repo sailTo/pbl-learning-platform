@@ -28,6 +28,7 @@ import { CreateCourseComponent } from './components/create-course/create-course.
 import { ShowCourseComponent } from './components/show-course/show-course.component';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     ShowCourseComponent,
   ],
   imports: [
+    NzSelectModule,
     NzToolTipModule,
     NzDescriptionsModule,
     CommonModule,

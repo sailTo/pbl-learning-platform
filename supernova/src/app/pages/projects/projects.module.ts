@@ -16,6 +16,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 import {
   NzBadgeModule,
@@ -42,6 +43,7 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
     ShowProjectComponent,
   ],
   imports: [
+    NzTableModule,
     NzDescriptionsModule,
     NzToolTipModule,
     NzSwitchModule,

@@ -1,33 +1,36 @@
-<nz-radio-group [(ngModel)]="size">
-  <label nz-radio nzValue="default">default</label>
-  <label nz-radio nzValue="middle">middle</label>
-  <label nz-radio nzValue="small">small</label>
-</nz-radio-group>
-<br />
-<br />
-<nz-descriptions nzTitle="Custom Size" nzBordered [nzSize]="size">
-  <nz-descriptions-item nzTitle="Product">
-    Cloud Database
+<nz-descriptions nzTitle="项目详情" nzBordered>
+  <nz-descriptions-item nzTitle="项目名称">{{project == null?'empty':project.p_name}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="课程名称">{{course_name}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="评分状态">
+    <nz-badge nzStatus="{{type}}" nzText="{{status}}"></nz-badge>
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Billing">Prepaid</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="time">18:00:00</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Amount">$80.00</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Official">$60.00</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Config Info">
-    Data disk type: MongoDB
-    <br />
-    Database version: 3.4
-    <br />
-    Package: dds.mongo.mid
-    <br />
-    Storage space: 10 GB
-    <br />
-    Replication_factor:3
-    <br />
-    Region: East China 1
-    <br />
+  <nz-descriptions-item nzTitle="教师评分比例">
+    {{project == null?'0':project.teacher_grade_ratio}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="自评得分比例">
+    {{project == null?'0':project.self_grade_ratio}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="同学互评得分比例">
+    {{project == null?'0':project.mutual_grade_ratio}}
   </nz-descriptions-item>
 </nz-descriptions>
-
-
+<nz-descriptions nzBordered nzLayout="vertical">
+  <nz-descriptions-item nzTitle="评分细则列表"  nzSpan="3">
+    <nz-table [nzData]="Items">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>细则描述</th>
+        <th>最高得分</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of Items, let  i = index">
+        <td>{{ i }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.max_grade }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-descriptions-item>
+</nz-descriptions>

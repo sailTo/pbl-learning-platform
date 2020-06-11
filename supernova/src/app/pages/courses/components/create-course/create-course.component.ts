@@ -14,6 +14,7 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Observable, Observer } from 'rxjs';
 import { CourseService } from '../../../../services/course.service';
+import {AdminService} from "../../../../services/admin.service";
 
 @Component({
   selector: 'app-create-course',
@@ -26,6 +27,8 @@ export class CreateCourseComponent {
   validateForm: FormGroup;
   fileList: UploadFile[] = [];
   course: Course;
+  allTeachers:User[];
+
   @Input() course_id: number;
   @Input() setType: string;
   // @Output() change = new EventEmitter();
@@ -35,7 +38,8 @@ export class CreateCourseComponent {
     private modal: NzModalRef,
     private userService: UserService,
     private msg: NzMessageService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private adminService:AdminService
   ) {
     this.validateForm = this.fb.group({
       c_name: ['', [Validators.required]],
@@ -47,6 +51,9 @@ export class CreateCourseComponent {
   }
 
   ngOnInit(): void {
+    this.adminService.getAllTeachers().subscribe((data)=>{
+      this.allTeachers = data.data;
+    });
     if (this.setType == 'edit') {
       this.courseService.getCourse(this.course_id).subscribe((data) => {
         console.log(data.data.course);
@@ -139,4 +146,16 @@ export class CreateCourseComponent {
     }
     return { };
   };
+
+  // optionList = [
+  //   { label: 'Lucy', value: 'lucy', age: 20 },
+  //   { label: 'Jack', value: 'jack', age: 22 }
+  // ];
+  // selectedValue = { label: 'Jack', value: 'jack', age: 22 };
+  // // tslint:disable-next-line:no-any
+  // compareFn = (o1: any, o2: any) => (o1 && o2 ? o1.value === o2.value : o1 === o2);
+  //
+  // log(value: { label: string; value: string; age: number }): void {
+  //   console.log(value);
+  // }
 }

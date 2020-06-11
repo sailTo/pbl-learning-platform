@@ -17,6 +17,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
 import {CreateCourseComponent} from '../create-course/create-course.component';
+import {ShowCourseComponent} from "../show-course/show-course.component";
 
 @Component({
   selector: 'app-course-card',
@@ -106,6 +107,9 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
     };
 
     this.actions = PANEL_TYPE_USER[this.type][this.currentUser.type];
+
+    //仅用于测试编辑课程
+    // this.actions.push(this.edit);
   }
 
   showJoinConfirm(): void {
@@ -208,6 +212,17 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
         // p_id: p_id,
         course_id: c_id,
         // course_name: this.c_name,
+      }
+    });
+  }
+
+  showDetail(): void {
+    this.modalService.create({
+      nzWidth:'60%',
+      nzTitle: '课程详情',
+      nzContent: ShowCourseComponent,
+      nzComponentParams:{
+        course: this.course,
       }
     });
   }

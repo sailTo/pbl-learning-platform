@@ -26,6 +26,9 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程教师</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzValidateStatus]="'success'">
+      <!--<nz-select formControlName="t_id" nzAllowClear nzPlaceHolder="Choose">-->
+        <!--<nz-option *ngFor="let option of allTeachers" [nzValue]="option" [nzLabel]="option.u_name"></nz-option>-->
+      <!--</nz-select>-->
       <input nz-input [value]="currentUser.u_name" disabled/>
       <input type="hidden" nz-input formControlName="t_id" />
     </nz-form-control>
