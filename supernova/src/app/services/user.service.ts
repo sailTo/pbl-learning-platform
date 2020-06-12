@@ -12,23 +12,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  // private currentUserSubject: BehaviorSubject<User>;
-  // public currentUser: Observable<User>;
-
-  constructor(private http: HttpClient, private router: Router) {
-    // this.currentUserSubject = new BehaviorSubject<User>(
-    //   JSON.parse(localStorage.getItem('User'))
-    // );
-    // this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  // public get currentUserValue(): User {
-  //   return this.currentUserSubject.value;
-  // }
-
-  // public setCurrentUserValue(user: User) {
-  //   this.currentUserSubject.next(user);
-  // }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   getUser(): User {
     if (localStorage.getItem('User')) {
@@ -56,10 +43,10 @@ export class UserService {
     this.router.navigate(['/passport/login']);
   }
 
-  checkValidId(thisu_id: string) {
+  checkValidId(u_id: string) {
     const params = new HttpParams({
       fromObject: {
-        u_id: thisu_id,
+        u_id,
       },
     });
     return this.http.get<Response<{}>>(
@@ -109,7 +96,7 @@ export class UserService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.getUser().token),
-        u_id: u_id,
+        u_id,
       },
     });
     return this.http.get<Response<{ user: User }>>(
