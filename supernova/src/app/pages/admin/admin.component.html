@@ -1,55 +1,77 @@
+<nz-card>
 
-  <app-add-user></app-add-user>
+<nz-card-tab>
+  <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
+      <nz-tab nzTitle="用户管理"></nz-tab>
+  </nz-tabset>
+</nz-card-tab>
 
-<nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" >
+<ng-template #extraTemplate>
+<app-add-user ></app-add-user>
+</ng-template>
+ 
+
+<nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" [nzScroll]="{ y: '480px' }">
   <thead>
     <tr>
       <th *ngFor="let column of listofColumns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn"
-        [nzSortDirections]="column.sortDirections">
+        [nzSortDirections]="column.sortDirections" [nzRight]="column.name=='操作'">
         {{column.name}}
         <div *ngIf="column.name=='姓名'">
           <nz-filter-trigger [(nzVisible)]="searchVisible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </div>
-
-
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr  *ngFor="let data of adminTable.data" (click)=" startEdit(data.u_id)">
-    <!-- <span [hidden]="editId === data.u_id" (click)= "startEdit(data.u_id)">  -->
-    <ng-container *ngIf="editId !== data.u_id||data.status==false" >
-     
+    <tr *ngFor="let data of adminTable.data" (click)=" startEdit(data.u_id)" class="editable-row">
+      <!-- <span [hidden]="editId === data.u_id" (click)= "startEdit(data.u_id)">  -->
+      <ng-container *ngIf="editId !== data.u_id||data.status==false">
+
         <td>
           <a [routerLink]="['/home',data.u_id]">
             {{ data.u_id }}
           </a>
         </td>
-        <td>{{ data.u_name }}</td>
-        <td>{{ data.type }}</td>
+        <td>
+          <div class="editable-cell">
+            {{ data.u_name }}
+          </div>
+        </td>
+        <td>
+          <div class="editable-cell">
+            {{ data.type }}
+          </div>
+        </td>
 
-        <td>{{ data.gender }}</td>
-        <td> {{data.description}}</td>
-        <td>******</td>
-        <!-- <td>
-          <button nz-button nzSize="primary" (click)="changePassword(data.u_id)">
-            修改密码
-          </button>
-        </td> -->
+        <td>
+          <div class="editable-cell">
+            {{ data.gender }}
+          </div>
+        </td>
+        <td>
+          <div class="editable-cell">
+            {{data.description}}
+          </div>
+        </td>
+        <td>
+          <div class="editable-cell">
+            ******
+          </div>
+        </td>
 
-     
-    </ng-container>
+      </ng-container>
 
-    <!-- </span> -->
-    <ng-container *ngIf="editId === data.u_id&&data.status==true">
-      
-      <td>
-        <a [routerLink]="['/home',data.u_id]">
-          {{ data.u_id }}
-        </a>
-      </td>
+      <!-- </span> -->
+      <ng-container *ngIf="editId === data.u_id&&data.status==true">
+
+        <td>
+          <a [routerLink]="['/home',data.u_id]">
+            {{ data.u_id }}
+          </a>
+        </td>
         <td>
           <input nz-input [(ngModel)]="data.u_name">
         </td>
@@ -69,28 +91,33 @@
         <td>
           <input nz-input [(ngModel)]="data.password">
         </td>
-        <td>
-          <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" (click) ="stopEdit()">
-            提交
-          </button>
-          </td>
-        <td>
-          <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要删除吗?" (nzOnConfirm)="deleteUser()" nzPopconfirmPlacement="bottom">
-            <span >
-              <i nz-icon nzType="close" nzTheme="outline"></i>
-            删除
+        <td nzRight>
+          <button nz-button nzSize="small" class="login-form-button login-form-margin" [nzType]="'link'"
+            (click)="stopEdit()">
+            <span>
+              <!-- <i nz-icon nzType="check" nzTheme="outline"></i> -->
+              提交
             </span>
-            
           </button>
-          </td>
+          <nz-divider nzType="vertical"></nz-divider>
+          <button nz-button nzSize="small" nzType="link" nz-popconfirm nzTitle="确定要删除吗?" (nzOnConfirm)="deleteUser()"
+            nzPopconfirmPlacement="bottom">
+            <span>
+              <!-- <i nz-icon nzType="close" nzTheme="outline"></i> -->
+              删除
+            </span>
 
-      
-    </ng-container>
-  </tr>
+          </button>
+        </td>
+
+
+      </ng-container>
+    </tr>
 
   </tbody>
 </nz-table>
 
+</nz-card>
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">

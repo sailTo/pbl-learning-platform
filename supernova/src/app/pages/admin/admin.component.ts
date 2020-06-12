@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
   storePassords:string[] = [];
   listofColumns: columnItem[] = [
     {
-      name: "工号",
+      name: "项目id",
       sortOrder: null,
       sortFn:  (a:User, b:User) => {return a.u_id.localeCompare(b.u_id);}
     },
@@ -40,11 +40,8 @@ export class AdminComponent implements OnInit {
    
     },
     {
-      name: ""//提交按钮
+      name: "操作"//提交按钮
     },
-    {
-      name: ""//删除按钮
-    }
 
   ];
   listOfData: User[] = [];
@@ -66,7 +63,9 @@ export class AdminComponent implements OnInit {
             this.storePassords[i] = this.listOfData[i].password;
             this.listOfData[i].password = null;
           }
+          this.listOfData = this.listOfData.filter((item: User) => item.status==true);
           this.listOfDisplayData = [...this.listOfData];
+          
         }else{
           this.msgService.error("获取用户失败！");
         }

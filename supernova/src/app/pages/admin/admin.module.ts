@@ -15,8 +15,11 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
 import { AddUserComponent } from './add-user/add-user.component';
-import {NzMessageModule} from 'ng-zorro-antd/message'
-import {NzPopconfirmModule} from 'ng-zorro-antd'
+import {NzMessageModule} from 'ng-zorro-antd/message';
+import {NzPopconfirmModule} from 'ng-zorro-antd';
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import {NzCardModule} from 'ng-zorro-antd/card';
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
 @NgModule({
   declarations: [AdminComponent, AddUserComponent],
   imports: [
@@ -35,7 +38,10 @@ import {NzPopconfirmModule} from 'ng-zorro-antd'
     NzSpinModule,
     ReactiveFormsModule,
     NzMessageModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NzDividerModule,
+    NzCardModule,
+    NzTabsModule
   ]
 })
 export class AdminModule { }

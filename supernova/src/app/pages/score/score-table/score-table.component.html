@@ -63,13 +63,6 @@
               提交
             </button>
           </td>
-          <!-- <td>
-            <div  [hidden]="canEdit&&editId === data.id" (click)= "startEdit(data.id)">
-              {{ data.teacherScore }}
-            </div>
-            <input [hidden]="!canEdit||editId !== data.id" type="text" nz-input [(ngModel)]="data.teacherScore" (blur)="stopEdit()" />
-          </td>
-          <td>{{ data.taskScore + data.remarkScore + data.selfScore + data.mutualScore + data.teacherScore*1 }}</td> -->
         </tr>
       </tbody>
     </nz-table>
@@ -87,7 +80,7 @@
     </nz-dropdown-menu>
 
     
-      <button nz-button nzType="primary" [disabled]="!canEdit" (click)="confirm()">提交项目评分</button>
+      <button class="confirmButton" nz-button nzType="primary" [disabled]="!canEdit" (click)="confirm()">提交项目评分</button>
     
    
   

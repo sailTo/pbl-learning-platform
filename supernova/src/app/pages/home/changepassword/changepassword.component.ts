@@ -34,7 +34,7 @@ export class ChangepasswordComponent {
         if(Md5.hashStr(this.oldPassword)==String(JSON.parse(localStorage.getItem("User")).password)){
           var get_user = JSON.parse(localStorage.getItem("User"));
           get_user.password =Md5.hashStr(this.newPassword);
-          this.homeService.changeInformation(get_user,get_user.image).subscribe(
+          this.homeService.changeInformation(get_user).subscribe(
             (data) =>{
               if(data.code==200){
                 //修改成功 修改前端token值

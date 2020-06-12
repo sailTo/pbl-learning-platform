@@ -1,1 +1,180 @@
-<p>admin-project works!</p>
+<nz-card>
+
+  <nz-card-tab>
+    <nz-tabset nzSize="large" >
+      <nz-tab nzTitle="项目管理"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+
+  <nz-spin [nzSpinning]="loading">
+    <nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" [nzScroll]="{ y: '480px' }">
+      <thead>
+        <tr>
+          <th *ngFor="let column of listofColumns" [nzSortOrder]="column.sortOrder" [nzSortFn]="column.sortFn"
+            [nzSortDirections]="column.sortDirections">
+            {{column.name}}
+            <div *ngIf="column.name=='项目名称'">
+              <nz-filter-trigger [(nzVisible)]="searchVisible" [nzActive]="searchValue.length > 0"
+                [nzDropdownMenu]="menu">
+                <i nz-icon nzType="search"></i>
+              </nz-filter-trigger>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let f_data of adminTable.data">
+          <tr (click)=" startEdit(f_data.p_id)" class="editable-row">
+            <ng-container *ngIf="editId !== f_data.p_id">
+
+              <td [nzShowExpand]="f_data.gradeItems" [(nzExpand)]="f_data.expand">
+                  {{ f_data.p_id }}
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{ f_data.c_name }}
+                </div>
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{ f_data.p_name }}
+                </div>
+              </td>
+
+              <td>
+                <div class="editable-cell">
+                  {{ f_data.description }}
+                </div>
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{f_data.grading_status}}
+                </div>
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{f_data.self_grade_ratio}}
+                </div>
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{f_data.mutual_grade_ratio}}
+                </div>
+              </td>
+              <td>
+                <div class="editable-cell">
+                  {{f_data.teacher_grade_ratio}}
+                </div>
+              </td>
+
+            </ng-container>
+
+            <ng-container *ngIf="editId === f_data.p_id">
+              <td [nzShowExpand]="f_data.gradeItems" [(nzExpand)]="f_data.expand">
+                {{ f_data.p_id }}
+              </td>
+              <td>
+                {{ f_data.c_name }}
+              </td>
+              <td>
+                <input nz-input [(ngModel)]="f_data.p_name" nzSmall="small">
+              </td>
+              <td>
+                <!-- <input [(ngModel)]="f_data.description"> -->
+                <input nz-input [(ngModel)]="f_data.description" nzSize="small">
+              </td>
+              <td>
+                <label nz-checkbox [(ngModel)]="f_data.grading_status"></label>
+              </td>
+              <td>
+                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.self_grade_ratio" nzSize="small">
+                  </nz-input-number>
+              </td>
+              <td>
+                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.mutual_grade_ratio" nzSize="small"></nz-input-number>
+              </td>
+              <td>
+                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.teacher_grade_ratio" nzSize="small"></nz-input-number>
+              </td>
+              <td>
+                <button nz-button nzSize="small" class="login-form-button login-form-margin" nzType="link"
+                  (click)="stopEdit()">
+                  <span>
+                    提交
+                  </span>
+                </button>
+                <nz-divider nzType="vertical"></nz-divider>
+                <button nz-button nzSize="small" nzType="link" nz-popconfirm nzTitle="确定要删除吗?"
+                  (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
+                  <span>
+                    删除
+                  </span>
+
+                </button>
+              </td>
+
+
+            </ng-container>
+          </tr>
+          <tr [nzExpand]="f_data.expand">
+            <nz-table #innerTable [nzData]="f_data.gradeItems" nzSize="middle" [nzShowPagination]="false">
+              <thead>
+                <tr>
+                  <th *ngFor="let childColum of listofChileColums">
+                    {{childColum}}
+                  </th>
+                </tr>
+              </thead>
+      <tbody>
+        <tr *ngFor="let data of innerTable.data">
+          <ng-container *ngIf="editId !== f_data.p_id">
+            <td>
+              {{data.description}}
+            </td>
+            <td>
+              {{data.max_grade}}
+            </td>
+          </ng-container>
+
+          <ng-container *ngIf="editId === f_data.p_id">
+            <td>
+              <input nz-input [(ngModel)]="data.description" >
+            </td>
+            <td>
+              <nz-input-number
+                [(ngModel)]="data.max_grade" 
+                nzMin = "0" 
+                [(nzMax)]="f_data.teacher_grade_ratio"
+                (ngModelChange)="updateTeacherScore(f_data.p_id)">
+                </nz-input-number>
+            </td>
+          </ng-container>
+
+        </tr>
+      </tbody>
+    </nz-table>
+    </tr>
+        </ng-container>
+
+
+    </tbody>
+  </nz-table>
+  </nz-spin>
+</nz-card>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="查找姓名" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+        查找
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">重置</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+
+<ng-template #extraTemplate>
+  <button nz-button nzType="primary" (click)="showModal()">新建项目</button>
+</ng-template>

@@ -32,12 +32,11 @@ export class HomeService {
       { params }
     );
   }
-  changeInformation(user: User, changeImage: string) {
+  changeInformation(user: User) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
         content: JSON.stringify(user),
-        image: changeImage,
       },
     });
     // const params = {

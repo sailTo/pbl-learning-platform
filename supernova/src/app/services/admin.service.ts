@@ -4,6 +4,9 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Response } from '../models/generic-response';
 import { FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import {Project} from '../models/project';
+import {Course} from '../models/course';
+import { GradeItem } from '../models/GradeItem';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +23,6 @@ export class AdminService {
       { params }
     );
   }
-
   getAllTeachers(){
     const params = new HttpParams({
       fromObject: {
@@ -32,7 +34,6 @@ export class AdminService {
       { params }
     );
   }
-
   updateInformation(user: User) {
     const params = new HttpParams({
       fromObject: {
@@ -42,7 +43,6 @@ export class AdminService {
     });
     return this.http.put<Response<{}>>(`${environment.apiUrl}/api/changeInformation`, params);
   }
-
   addNewUser(user: User) {
     let headers = {
       headers: new HttpHeaders({
@@ -57,6 +57,42 @@ export class AdminService {
       `${environment.apiUrl}/api/addUser`,
       this.transformRequest(params),
       headers
+    );
+  }
+
+  getAllProject(){
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+      },
+    });
+    return this.http.get<Response<{projectList : Project[]}>>(
+      `${environment.apiUrl}/api/getAllProjects`,
+      { params }
+    );
+  }
+
+  getAllCourses(){
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+      },
+    });
+    return this.http.get<Response<{courseList : Course[]}>>(
+      `${environment.apiUrl}/api/getAllCourses`,
+      { params }
+    );
+  }
+
+  getAllGradeItems(){
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+      },
+    });
+    return this.http.get<Response<{itemList : {[p_id:number]:GradeItem[]}}>>(
+      `${environment.apiUrl}/api/getAllGradeItems`,
+      { params }
     );
   }
 

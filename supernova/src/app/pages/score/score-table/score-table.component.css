@@ -16,4 +16,8 @@
       .search-button {
         margin-right: 8px;
       }
+      .confirmButton{
+        float:right;
+        margin-top: 16px;
+      }
     

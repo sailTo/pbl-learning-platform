@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, OnChanges } from '@angular/core';
+import { Component, OnInit,Input, SimpleChanges, OnChanges } from '@angular/core';
 // import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import {columnItem} from '../../../models/colunmItem';
 import { Project } from 'src/app/models/project';
@@ -15,7 +15,7 @@ import {ItemData,DynamicScore} from  '../../../models/ItemData';
   templateUrl: './score-table.component.html',
   styleUrls: ['./score-table.component.css']
 })
-export class ScoreTableComponent implements OnInit,OnChanges {
+export class ScoreTableComponent implements OnInit,OnChanges{
   @Input() selectProject:Project;
   searchValue = '';
   visible = false;
@@ -36,8 +36,8 @@ export class ScoreTableComponent implements OnInit,OnChanges {
     ){
       this.userType = this.userService.getUser().type;
   }
-  ngOnChanges():void{
-      
+  ngOnChanges(changes: SimpleChanges){
+    this.ngOnInit();
   }
   ngOnInit(): void {
    this.listofColumns = [
@@ -209,18 +209,6 @@ export class ScoreTableComponent implements OnInit,OnChanges {
       }
     )
   }
-  // getStudentAssignmentNum(){
-  //   this.scoreService.getStudentAssignmentNum(String(this.selectProject.p_id)).subscribe(
-  //     (studentAssignmentData)=>{
-  //         if(studentAssignmentData.code==200){
-  //          this.listOfData[0].discussNum = studentAssignmentData.data.assignmentNum;  
-  //          this.listOfDisplayData = [...this.listOfData]; 
-  //         }else{
-  //           this.msgService.error("获取学生任务完成数失败！");
-  //         }
-  //     }
-  //   )
-  // }
 
 
   getTeacherData(){
@@ -246,10 +234,8 @@ export class ScoreTableComponent implements OnInit,OnChanges {
       (assignmentData)=>{
         if(assignmentData.code ==200){
               this.maxAssignmentDone = assignmentData.data.totalAssignmentNum;
-              // alert(assignmentData.data.doneInformations);
               assignmentData.data.doneInformations.forEach(
                 (doneInformation,index)=>{
-                  // alert(doneInformation.doneNum);
                   this.listOfData[index].assignmentDoneNum = doneInformation.doneNum;
                 }
                 )

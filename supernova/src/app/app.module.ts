@@ -13,7 +13,7 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NzMessageModule } from 'ng-zorro-antd';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
-
+import {MyInterceptor} from './interceptors/myIntercepter'
 import { GenericInterceptor } from './interceptors/generic.interceptor';
 
 registerLocaleData(zh);
@@ -33,6 +33,7 @@ registerLocaleData(zh);
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
     // { provide: HTTP_INTERCEPTORS, useClass: GenericInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi:true }
   ],
   bootstrap: [AppComponent]
 })

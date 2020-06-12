@@ -62,7 +62,7 @@ export class DescriptionBorderComponent implements OnInit {
 
   saveEdit() {
     //向数据库发送数据
-    this.homeServicce.changeInformation(this.datas, this.datas.image).subscribe(
+    this.homeServicce.changeInformation(this.datas).subscribe(
       (data) => {
         if (data.code == 200) {
           this.msg.success("保存成功!");
@@ -148,7 +148,7 @@ export class DescriptionBorderComponent implements OnInit {
 
   resetAvatar() {
     //将头像恢复为默认的头像
-    this.datas.image = this.defaultImg;
+    // this.datas.image = this.defaultImg;
     this.homeServicce.uploadImg(null, this.datas.u_id).subscribe(
       (data: any) => {
         if (data.body.code == 200) {

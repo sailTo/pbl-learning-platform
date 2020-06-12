@@ -10,8 +10,10 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class ScoreComponent implements OnInit {
  
-  selectedCourse = null;
-  selectedProject = null;
+  selectedCourse_id = null;
+  selectedProject_id = null;
+  selectedProject:Project = null;
+  selectedCourse:Course = null;
   courseData : Course[];
   projectData: { [courseId: string]: Project[] } = {};
   scoreDatas = null;
@@ -21,10 +23,8 @@ export class ScoreComponent implements OnInit {
     private msgService : NzMessageService,
   ) { }
   courseChange(value: string): void {
-    if(this.projectData[value].length>0){
-      this.selectedProject = this.projectData[value][0];
-    }
-    
+   this.selectedCourse = this.courseData.find((x)=>x.c_id ==this.selectedCourse_id);
+   
   }
   
 
@@ -42,11 +42,6 @@ export class ScoreComponent implements OnInit {
                 if(data.code==200){
                   // alert(this.courseData[i].c_id);
                   this.projectData[String(acourse.c_id)] =  data.data.projects; 
-                  // if(this.courseData.length>0){
-                  //   this.selectedCourse = this.courseData[0].c_id;
-                  //   this.courseChange(this.selectedCourse);
-                  //   // alert(JSON.stringify(this.selectedProject));
-                  // }
                  
                 }else{
                   this.msgService.error("获得课程对应项目失败！");
@@ -69,8 +64,9 @@ export class ScoreComponent implements OnInit {
 
       
   }
-  projectChange(){
-
+  projectChange(value: { label: string; value: number }){
+    this.selectedProject  = this.projectData[this.selectedCourse_id].find((x)=>x.p_id==this.selectedProject_id);
+    
     //获得选择的课程id ，并向数据库请求获得选课的学生以及对应的评分
     // if(this.selectedProject!=null){
     //    this.scoreService.getProjectScoreById(this.selectedProject)
