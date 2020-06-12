@@ -120,8 +120,8 @@ export class ScoreService {
     return this.http.get<
       Response<{
         allItems: {
-          s_id: string;
-          s_name: string;
+          u_id: string;
+          u_name: string;
           itemsList: { item_id: string; item_name: string; grade: number }[];
         }[];
       }>

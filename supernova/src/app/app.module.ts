@@ -32,7 +32,6 @@ registerLocaleData(zh);
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
-    // { provide: HTTP_INTERCEPTORS, useClass: GenericInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi:true }
   ],
   bootstrap: [AppComponent]

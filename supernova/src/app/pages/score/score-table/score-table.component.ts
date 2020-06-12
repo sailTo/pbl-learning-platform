@@ -15,7 +15,7 @@ import {ItemData,DynamicScore} from  '../../../models/ItemData';
   templateUrl: './score-table.component.html',
   styleUrls: ['./score-table.component.css']
 })
-export class ScoreTableComponent implements OnInit,OnChanges{
+export class ScoreTableComponent implements OnChanges{
   @Input() selectProject:Project;
   searchValue = '';
   visible = false;
@@ -37,9 +37,9 @@ export class ScoreTableComponent implements OnInit,OnChanges{
       this.userType = this.userService.getUser().type;
   }
   ngOnChanges(changes: SimpleChanges){
-    this.ngOnInit();
+    this.Init();
   }
-  ngOnInit(): void {
+  Init(): void {
    this.listofColumns = [
       {
         name: "学号",
@@ -76,7 +76,8 @@ export class ScoreTableComponent implements OnInit,OnChanges{
       (data)=>{
         if(data.code==200){
           //获得动态的表头项
-            this.gradeItems =  data.data.grades;
+            
+            this.gradeItems =  data.data.grades.sort((a,b)=>a.item_id-b.item_id);
             this.gradeItems.forEach((gradeItem) =>{
               var acolumn:columnItem = {
                 name : gradeItem.description
@@ -96,8 +97,10 @@ export class ScoreTableComponent implements OnInit,OnChanges{
             });
           //获得学生的得分和表现情况
           this.loading = true;
-         
+          this.listOfData = [];
+          this.listOfDisplayData = [];
           if(this.userService.getUser().type=="student"){
+           
             this.getStudentData();
           }else{
             this.getTeacherData();
@@ -126,7 +129,7 @@ export class ScoreTableComponent implements OnInit,OnChanges{
               {  
                 s_id : this.userService.getUser().u_id,
                 s_name:this.userService.getUser().u_name,
-                selfScore : studentselfScoreData.data.grade
+                selfScore : +studentselfScoreData.data.grade
               }
                );
               this.getStudentMutualScore();
@@ -165,16 +168,20 @@ export class ScoreTableComponent implements OnInit,OnChanges{
       (studentTeacherScoreData)=>{
           if(studentTeacherScoreData.code==200){
             var temp = [];
+            studentTeacherScoreData.data.grades = studentTeacherScoreData.data.grades.sort((a,b)=>+a.item_id- +b.item_id);
+            var teacherAllScore = 0;
             studentTeacherScoreData.data.grades.forEach(
               (teacherItem) =>{
                 var item:DynamicScore = {
                   item_id: teacherItem.item_id,
                   item_name: "",
-                  grade: teacherItem.grade
+                  grade: +teacherItem.grade
                 }
                 temp.push(item);
+                teacherAllScore+=teacherItem.grade;
               }
             )
+            this.listOfData[0].teacherAllScore = teacherAllScore;
             this.listOfData[0].dynamicScore = temp;
            this.listOfDisplayData = [...this.listOfData]; 
            this.loading = false;
@@ -217,6 +224,7 @@ export class ScoreTableComponent implements OnInit,OnChanges{
       (discussionData)=>{
         if(discussionData.code==200){
                 this.maxDiscussNum = discussionData.data.maxDiscussNum;
+                discussionData.data.discussInformations = discussionData.data.discussInformations.sort((a,b)=>a.s_id.localeCompare(b.s_id));
                 this.listOfData = discussionData.data.discussInformations;
                 this.getAssignmentDone();
                 this.getSelfAndMutualScore();
@@ -234,11 +242,21 @@ export class ScoreTableComponent implements OnInit,OnChanges{
       (assignmentData)=>{
         if(assignmentData.code ==200){
               this.maxAssignmentDone = assignmentData.data.totalAssignmentNum;
-              assignmentData.data.doneInformations.forEach(
-                (doneInformation,index)=>{
-                  this.listOfData[index].assignmentDoneNum = doneInformation.doneNum;
+              // assignmentData.data.doneInformations = assignmentData.data.doneInformations.sort((a,b)=>a.s_id.localeCompare(b.s_id));
+              this.listOfData.forEach(
+                (data) =>{
+                  data.assignmentDoneNum = 0;
+                }
+              )
+              if(assignmentData.data.doneInformations.length>0){
+                assignmentData.data.doneInformations.forEach(
+                (doneInformation)=>{
+                  this.listOfData.find((x)=>x.s_id==doneInformation.s_id).assignmentDoneNum = doneInformation.doneNum;
+                  // this.listOfData[index].assignmentDoneNum = doneInformation.doneNum==undefined?0:doneInformation.doneNum;
                 }
                 )
+              }
+              
               this.listOfDisplayData = [...this.listOfData]; 
         }else{
           this.msgService.error("获取任务数信息失败！");
@@ -250,6 +268,7 @@ export class ScoreTableComponent implements OnInit,OnChanges{
     this.scoreService. getSelfAndMutualScore(String(this.selectProject.p_id)).subscribe(
       (SelfAndMutualScoreData)=>{
         if(SelfAndMutualScoreData.code ==200){
+          SelfAndMutualScoreData.data.selfAndMutualInformations = SelfAndMutualScoreData.data.selfAndMutualInformations.sort((a,b)=>a.s_id.localeCompare(b.s_id));
           SelfAndMutualScoreData.data.selfAndMutualInformations.forEach(
                 (discussInformation,index)=>{
                   this.listOfData[index].selfScore = discussInformation.selfScore;
@@ -267,9 +286,11 @@ export class ScoreTableComponent implements OnInit,OnChanges{
     this.scoreService. getGradeItemScore(String(this.selectProject.p_id)).subscribe(
       (DynamicScoreData)=>{
         if(DynamicScoreData.code ==200){
+          DynamicScoreData.data.allItems= DynamicScoreData.data.allItems.sort((a,b)=>a.u_id.localeCompare(b.u_id));
           DynamicScoreData.data.allItems.forEach(
                 (dynamicInformation,index)=>{
                   this.listOfData[index].dynamicScore = dynamicInformation.itemsList;
+                  this.listOfData[index].dynamicScore = this.listOfData[index].dynamicScore.sort((a,b)=>+a.item_id- +b.item_id);
                   var teacherAllScore = 0;
                   this.listOfData[index].dynamicScore.forEach(
                     (item) =>{
