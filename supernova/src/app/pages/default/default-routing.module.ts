@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DefaultComponent } from './default.component';
+import { AdminGuard } from 'src/app/auth/admin.guard';
 
 const routes: Routes = [
   {
@@ -37,12 +38,16 @@ const routes: Routes = [
       },
       {
         path: 'admin',
+        canActivate: [ AdminGuard ],
+        canActivateChild: [ AdminGuard ],
         loadChildren: () =>
           import('../admin/admin.module').then((m) => m.AdminModule),
       },
 
       {
         path: 'admin_course',
+        canActivate: [ AdminGuard ],
+        canActivateChild: [ AdminGuard ],
         loadChildren: () =>
           import('../admin-course/admin-course.module').then(
             (m) => m.AdminCourseModule
@@ -50,6 +55,8 @@ const routes: Routes = [
       },
       {
         path: 'admin_project',
+        canActivate: [ AdminGuard ],
+        canActivateChild: [ AdminGuard ],
         loadChildren: () =>
           import('../admin-project/admin-project.module').then(
             (m) => m.AdminProjectModule
