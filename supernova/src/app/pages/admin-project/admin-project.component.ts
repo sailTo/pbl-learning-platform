@@ -134,8 +134,7 @@ export class AdminProjectComponent implements OnInit {
         nzContent: CreateProjectComponent,
         nzComponentParams: {
           type: 'create',
-          courses:this.courses,
-          // p_id: p_id,
+          courses:this.courses
         },
       })
       .afterClose.subscribe((flag: number) => {
@@ -143,6 +142,7 @@ export class AdminProjectComponent implements OnInit {
           return;
         }
        //应该向项目列表中添加该项目
+       this.getAllProjects();
       });
   }
 

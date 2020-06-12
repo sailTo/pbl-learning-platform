@@ -317,7 +317,7 @@ export class CreateProjectComponent {
   createProject(): void {
     let project = {
       p_id: null,
-      c_id: this.course_id,
+      c_id: this.course_id==undefined? this.validateForm.controls.c_id.value:this.course_id,
       p_name: this.validateForm.controls.p_name.value,
       description: this.validateForm.controls.description.value,
       grading_status: false,
