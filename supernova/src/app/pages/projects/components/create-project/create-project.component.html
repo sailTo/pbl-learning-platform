@@ -17,11 +17,23 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="c_id">课程名称</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback [nzValidateStatus]="'success'">
-      <input nz-input [value]="course_name" disabled/>
+      <ng-container *ngIf="course_id">
+         <input nz-input [value]="course_name" disabled/>
       <input type="hidden" nz-input formControlName="c_id" [value]="course_id" />
+      </ng-container>
+
+      <ng-container *ngIf="!course_id">
+        <nz-select  nzPlaceHolder="请选择课程" formControlName="c_id">
+        <nz-option *ngFor="let course of courses"  [nzValue]="course.c_id" [nzLabel]="course.c_name"></nz-option>
+      </nz-select>
+      </ng-container>
+      
     </nz-form-control>
   </nz-form-item>
 
+  <!-- test -->
+
+  
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="teacher_point">教师评分</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback [nzErrorTip]="teacherGrading">

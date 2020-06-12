@@ -38,7 +38,7 @@ export class AdminProjectComponent implements OnInit {
         sortFn: (a:ProjectData, b:ProjectData) => {return a.p_id-b.p_id;}
       },
       {
-        name: "所属课程"
+        name: "所属课程",
       },
       {
         name: "项目名称"
@@ -60,6 +60,9 @@ export class AdminProjectComponent implements OnInit {
       },
       {
         name: "操作"
+      },
+      {
+        name: ""
       }
     ]
     this.getAllProjects();
@@ -131,6 +134,7 @@ export class AdminProjectComponent implements OnInit {
         nzContent: CreateProjectComponent,
         nzComponentParams: {
           type: 'create',
+          courses:this.courses,
           // p_id: p_id,
         },
       })
@@ -160,7 +164,7 @@ export class AdminProjectComponent implements OnInit {
 
   getAllProjects(){
     this.loading = true;
-    this.adminService.getAllProject().subscribe(
+    this.adminService.getAllProjects().subscribe(
       (projectsData) =>{
         if(projectsData.code==200){
             this.listOfData = projectsData.data.projectList;

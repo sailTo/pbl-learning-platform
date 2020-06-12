@@ -1,7 +1,7 @@
 <nz-card>
 
   <nz-card-tab>
-    <nz-tabset nzSize="large" >
+    <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
       <nz-tab nzTitle="项目管理"></nz-tab>
     </nz-tabset>
   </nz-card-tab>
@@ -77,7 +77,7 @@
                 {{ f_data.c_name }}
               </td>
               <td>
-                <input nz-input [(ngModel)]="f_data.p_name" nzSmall="small">
+                <input nz-input [(ngModel)]="f_data.p_name" nzSize="small">
               </td>
               <td>
                 <!-- <input [(ngModel)]="f_data.description"> -->
@@ -96,21 +96,23 @@
               <td>
                 <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.teacher_grade_ratio" nzSize="small"></nz-input-number>
               </td>
-              <td>
+              <td >
                 <button nz-button nzSize="small" class="login-form-button login-form-margin" nzType="link"
                   (click)="stopEdit()">
                   <span>
                     提交
                   </span>
                 </button>
-                <nz-divider nzType="vertical"></nz-divider>
+                <!-- <nz-divider nzType="vertical"></nz-divider> -->
+              </td>
+              <td>
                 <button nz-button nzSize="small" nzType="link" nz-popconfirm nzTitle="确定要删除吗?"
-                  (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
-                  <span>
-                    删除
-                  </span>
+                (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
+                <span>
+                  删除
+                </span>
 
-                </button>
+              </button>
               </td>
 
 
@@ -138,7 +140,7 @@
 
           <ng-container *ngIf="editId === f_data.p_id">
             <td>
-              <input nz-input [(ngModel)]="data.description" >
+              <input nz-input [(ngModel)]="data.description" style="width: 300px;" >
             </td>
             <td>
               <nz-input-number

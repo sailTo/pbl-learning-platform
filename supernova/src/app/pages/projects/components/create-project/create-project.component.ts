@@ -15,6 +15,7 @@ import { Observable, Observer } from 'rxjs';
 import { Project } from '../../../../models/project';
 import { ProjectService } from '../../../../services/project.service';
 import { GradeItem } from '../../../../models/GradeItem';
+import {Course} from '../../../../models/course';
 
 @Component({
   selector: 'app-create-project',
@@ -37,10 +38,11 @@ export class CreateProjectComponent {
   // check_teacher:boolean = false;
   check_student: boolean = false;
 
-  @Input() course_id: number;
-  @Input() course_name: string;
+  @Input() course_id?: number;
+  @Input() course_name?: string;
   @Input() type: string;
   @Input() p_id: number;
+  @Input() courses?:Course[];
   @Output() change = new EventEmitter();
 
   constructor(
@@ -53,7 +55,7 @@ export class CreateProjectComponent {
     this.validateForm = this.fb.group({
       p_name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      c_id: [this.course_id, []],
+      c_id: [this.course_id==undefined?null:this.course_id, []],
       teacher_point: [0, [Validators.required, this.confirmValidator]],
       student_point_self: [0, this.judgeIfUse],
       student_point_mutual: [0, this.judgeIfUse],

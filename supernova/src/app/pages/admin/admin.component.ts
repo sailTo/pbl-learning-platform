@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
   storePassords:string[] = [];
   listofColumns: columnItem[] = [
     {
-      name: "项目id",
+      name: "工号",
       sortOrder: null,
       sortFn:  (a:User, b:User) => {return a.u_id.localeCompare(b.u_id);}
     },

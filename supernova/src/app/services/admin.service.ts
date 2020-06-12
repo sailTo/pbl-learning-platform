@@ -60,7 +60,7 @@ export class AdminService {
     );
   }
 
-  getAllProject(){
+  getAllProjects(){
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
