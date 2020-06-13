@@ -137,7 +137,7 @@ export class TasksComponent implements OnInit {
   // get days offset
   offset = (days: number) =>
     new Date().setDate(new Date().getDate() + days).valueOf() -
-    new Date().valueOf()
+    new Date().valueOf();
 
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
@@ -398,20 +398,20 @@ export class TasksComponent implements OnInit {
 
   showCompleteModal() {
     this.modalService
-    .create({
-      nzTitle: '标志完成任务',
-      nzContent: ChooseTaskComponent,
-      nzComponentParams: {
-        rows: this.rows,
-      },
-    })
-    .afterClose.subscribe((rowId) => {
-      if (rowId === undefined) {
-        return;
-      }
-      this.completeLoading = true;
-      this.completeTask(rowId.toString());
-    });
+      .create({
+        nzTitle: '标志完成任务',
+        nzContent: ChooseTaskComponent,
+        nzComponentParams: {
+          rows: this.rows,
+        },
+      })
+      .afterClose.subscribe((rowId) => {
+        if (rowId === undefined) {
+          return;
+        }
+        this.completeLoading = true;
+        this.completeTask(rowId.toString());
+      });
   }
 
   completeTask(rowId: string) {
@@ -421,15 +421,20 @@ export class TasksComponent implements OnInit {
     const itemId = rows[rowId].itemId;
     const task = items[itemId].task;
 
-    this.taskService.completeTask(task.a_id, this.p_id).subscribe((response) => {
-      if (response.code === 200 && !task.finished) {
-        // request succeeded, change color
-        this.urgeOrCompleteItemId = itemId;
-        this.gstcState.update(`config.chart.items.${itemId}.style.background`, this.colorMapping.完成);
-      }
-      this.handleResponse(response);
-      this.completeLoading = false;
-    });
+    this.taskService
+      .completeTask(task.a_id, this.p_id)
+      .subscribe((response) => {
+        if (response.code === 200 && !task.finished) {
+          // request succeeded, change color
+          this.urgeOrCompleteItemId = itemId;
+          this.gstcState.update(
+            `config.chart.items.${itemId}.style.background`,
+            this.colorMapping.完成
+          );
+        }
+        this.handleResponse(response);
+        this.completeLoading = false;
+      });
   }
 
   showUrgeModal() {
@@ -461,7 +466,10 @@ export class TasksComponent implements OnInit {
       if (response.code === 200 && !task.finished) {
         // request succeeded, if task not finished, change color
         this.urgeOrCompleteItemId = itemId;
-        this.gstcState.update(`config.chart.items.${itemId}.style.background`, this.colorMapping.急迫);
+        this.gstcState.update(
+          `config.chart.items.${itemId}.style.background`,
+          this.colorMapping.急迫
+        );
       }
       this.handleResponse(response);
       this.urgeLoading = false;
@@ -469,6 +477,13 @@ export class TasksComponent implements OnInit {
   }
 
   showAddModal() {
+    if (this.modified) {
+      this.modalService.error({
+        nzTitle: '暂时无法新建任务',
+        nzContent: '请先提交或者放弃删改',
+      });
+      return;
+    }
     this.modalService
       .create({
         nzTitle: '新增任务',
@@ -493,12 +508,17 @@ export class TasksComponent implements OnInit {
     let to = this.gstcState.get('config.chart.time.to');
 
     // obtain maxium id
-    const rowId = String(
+    let rowId = String(
       Number(Object.keys(rows).sort((a, b) => Number(b) - Number(a))[0]) + 1
     );
-    const itemId = String(
+    let itemId = String(
       Number(Object.keys(items).sort((a, b) => Number(b) - Number(a))[0]) + 1
     );
+
+    if (!rowId) {
+      rowId = '1';
+      itemId = '1';
+    }
 
     rows[rowId] = {
       id: rowId,
