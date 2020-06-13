@@ -15,4 +15,5 @@
 <ng-container *ngIf="selectedCourse_id!=null&&selectedProject!=null">
   <app-score-table [selectProject]="selectedProject "></app-score-table>
   </ng-container>
+  <nz-empty *ngIf="selectedCourse_id==null||selectedProject==null"></nz-empty>
 </nz-card>

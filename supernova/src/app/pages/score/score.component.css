@@ -3,3 +3,10 @@ nz-select{
  margin-right: 16px;
 
 }
+nz-card {
+    height: 100%; 
+}
+
+nz-empty {
+    padding-top: 12%;
+}

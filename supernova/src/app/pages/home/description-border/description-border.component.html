@@ -9,7 +9,6 @@
   <br>
   <br>
   <br>
-  <!-- nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" -->
  <div *ngIf="canEdit&&editStatus">
   <nz-upload
   class="avatar-uploader"
@@ -25,14 +24,7 @@
 
 </div>
     <div *ngIf="!canEdit||!editStatus;else editTemplate">
-      <!-- <div style="text-align: center;" #default>
-        <div>
-          <nz-avatar nzIcon="user" [nzSize]="172"></nz-avatar>
-        </div>
-        <br>
-        <br>
-        <br>  
-    </div> -->
+
       <span style="float: right;" *ngIf="canEdit">
         <button nz-button  nzType="default" (click)="startEdit()">
           编辑
@@ -71,27 +63,22 @@
           <input type="text" nz-input [(ngModel)]="datas.description" />
         </nz-descriptions-item>
       </nz-descriptions>
-      
-      <div nz-row [nzGutter]="16">
-      <span nz-col [nzSpan]="8" >
-        <button nz-button  nzType="primary" (click)="saveEdit()">
+      <br>
+      <div nz-row nzJustify="space-around">
+      <span nz-col [nzSpan]="4"style="text-align: center;">
+        <button nz-button  nzType="primary" (click)="saveEdit()" class="primaryButton" >
           保存
       </button>
       </span>
-      <span nz-col [nzSpan]="8" >
-        <!-- <button nz-button  nzType="primary" (click)="changePassword()">
-          修改密码
-      </button> -->
+      <span nz-col [nzSpan]="4" style="text-align: center;" >
       <app-changepassword></app-changepassword>
       </span>
-      <span nz-col [nzSpan]="8">
-      <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()">
+      <span nz-col [nzSpan]="4" class="primaryButton" style="text-align: center;">
+      <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()" class="primaryButton">
           撤销
     </button>
       </span>
       </div>
-      <!-- <a (click)="saveEdit()">保存</a>
-        <a nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()">Cancel</a> -->
       </ng-template>
     
    

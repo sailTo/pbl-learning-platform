@@ -24,7 +24,7 @@ export class ScoreComponent implements OnInit {
   ) { }
   courseChange(value: string): void {
    this.selectedCourse = this.courseData.find((x)=>x.c_id ==this.selectedCourse_id);
-   
+   this.selectedProject = null;
   }
   
 

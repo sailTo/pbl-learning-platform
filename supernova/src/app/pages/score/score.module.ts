@@ -18,7 +18,8 @@ import { CascaderComponent } from './cascader/cascader.component';
 import { NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzSpinModule} from  'ng-zorro-antd/spin';
 import {NzCardModule} from 'ng-zorro-antd/card';
-import {NzTabsModule} from 'ng-zorro-antd/tabs'
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
+import {NzEmptyModule} from 'ng-zorro-antd/empty';
 @NgModule({
   declarations: [ScoreComponent, SearchListComponent, ScoreTableComponent,SortTableComponent, UserDefinedTableComponent, CascaderComponent],
   imports: [
@@ -34,7 +35,8 @@ import {NzTabsModule} from 'ng-zorro-antd/tabs'
     NzInputNumberModule,
     NzSpinModule,
     NzCardModule,
-    NzTabsModule
+    NzTabsModule,
+    NzEmptyModule
   ]
 })
 export class ScoreModule { }
