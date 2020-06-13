@@ -127,12 +127,12 @@ export class UserRegisterComponent implements OnDestroy {
         observer.next(null);
       }
       this.userService.checkValidId('S' + control.value).subscribe((data) => {
-        if (data.code == 200) {
-          //可用
+        if (data.code === 200) {
+          // 可用
           observer.next(null);
         } else {
-          if (data.code == 208) {
-            //已有
+          if (data.code === 208) {
+            // 已有
             observer.next({ hasExist: true, error: true });
           } else {
             this.msg.error('网络错误！');
@@ -140,9 +140,8 @@ export class UserRegisterComponent implements OnDestroy {
         }
         observer.complete();
       });
-    });
+    })
   submit() {
-    this.loading = true;
     this.error = '';
     Object.keys(this.form.controls).forEach((key) => {
       this.form.controls[key].markAsDirty();
@@ -152,12 +151,13 @@ export class UserRegisterComponent implements OnDestroy {
       return;
     }
 
+    this.loading = true;
     const data = this.form.value;
     this.userService.register(this.form).subscribe((data2) => {
       // alert(data2.code==200);
-      if (data2.code == 200) {
+      if (data2.code === 200) {
         // alert(data2.user);
-        var ret_user;
+        let ret_user;
 
         ret_user = data2.data.user;
         ret_user.token = data2.message;

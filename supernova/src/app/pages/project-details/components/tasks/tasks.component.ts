@@ -137,7 +137,7 @@ export class TasksComponent implements OnInit {
   // get days offset
   offset = (days: number) =>
     new Date().setDate(new Date().getDate() + days).valueOf() -
-    new Date().valueOf();
+    new Date().valueOf()
 
   getTasks() {
     this.taskService.getTasks(this.p_id).subscribe((response) => {
