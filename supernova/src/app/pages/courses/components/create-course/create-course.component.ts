@@ -31,7 +31,7 @@ export class CreateCourseComponent {
 
   @Input() course_id: number;
   @Input() setType: string;
-  // @Output() change = new EventEmitter();
+  @Output() change = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
@@ -45,18 +45,19 @@ export class CreateCourseComponent {
       c_name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       point: ['', [Validators.required]],
-      t_id: [this.currentUser.u_id, [this.uploadValidator]],
+      t_id: ['', [this.uploadValidator]],
       // image: ['', [this.uploadValidator]],
     });
   }
 
   ngOnInit(): void {
     this.adminService.getAllTeachers().subscribe((data)=>{
+      // console.log(data);
       this.allTeachers = data.data;
     });
     if (this.setType == 'edit') {
       this.courseService.getCourse(this.course_id).subscribe((data) => {
-        console.log(data.data.course);
+        // console.log(data.data.course);
         this.course = data.data.course;
         this.userService
           .getUserById(String(this.course.t_id))
@@ -70,7 +71,8 @@ export class CreateCourseComponent {
           this.course.description
         );
         this.validateForm.controls.point.setValue(this.course.point);
-
+        this.validateForm.controls.t_id.setValidators([]);
+        this.validateForm.controls.t_id.setValue(this.currentUser.u_id);
         for (const key in this.validateForm.controls)
           this.validateForm.controls[key].updateValueAndValidity();
       });
@@ -87,32 +89,67 @@ export class CreateCourseComponent {
       this.validateForm.controls[key].updateValueAndValidity();
     }
 
-    this.course = {
-      c_id: null,
-      c_name: this.validateForm.controls.c_name.value,
-      description: this.validateForm.controls.description.value,
-      t_id: this.validateForm.controls.t_id.value,
-      point: this.validateForm.controls.point.value,
-      status: 0,
-      image_URL: null,
-    };
-    // console.log(this.course);
-    console.log(this.fileList[0]);
-    this.courseService.createCourse(this.course,this.fileList[0]).subscribe((data: any) => {
-      console.log(data.body);
-      if (data.body.code == 200) {
-
-        // var temp = this.datas;
-        // temp.token = JSON.parse(localStorage.getItem("User")).token;
-        // localStorage.setItem("User", JSON.stringify(temp));
-        this.msg.success("新建课程成功！");
-        this.modal.destroy(1);
-        // this.change.emit();
-      } else {
-        this.msg.error("新建课程失败!");
+    if (this.setType == 'edit') {
+      this.course = {
+        c_id: this.course.c_id,
+        c_name: this.validateForm.controls.c_name.value,
+        description: this.validateForm.controls.description.value,
+        t_id: this.validateForm.controls.t_id.value,
+        point: this.validateForm.controls.point.value,
+        status: 1,
+        image_URL: this.course.image_URL,
+      };
+      if (this.fileList.length < 1) {
+        this.courseService.changeCourse(this.course).subscribe((data: any) => {
+          // console.log(data.body);
+          if (data.code == 200) {
+            this.msg.success("编辑课程成功！");
+            this.change.emit();
+            this.modal.destroy(1);
+          } else {
+            this.msg.error("编辑课程失败!");
+          }
+        });
+      }else {
+        this.courseService.changeCourseWithImg(this.course,this.fileList[0]).subscribe((data: any) => {
+          // console.log(data.body);
+          if (data.body.code == 200) {
+            this.msg.success("编辑课程成功！");
+            this.change.emit();
+            this.modal.destroy(1);
+          } else {
+            this.msg.error("编辑课程失败!");
+          }
+        });
       }
-      // this.loading = false;
-    });
+    }else {
+      this.course = {
+        c_id: null,
+        c_name: this.validateForm.controls.c_name.value,
+        description: this.validateForm.controls.description.value,
+        t_id: this.validateForm.controls.t_id.value,
+        point: this.validateForm.controls.point.value,
+        status: 1,
+        image_URL: null,
+      };
+      // console.log(this.course);
+      // console.log(this.fileList[0]);
+      this.courseService.createCourse(this.course,this.fileList[0]).subscribe((data: any) => {
+        console.log(data.body);
+        if (data.body.code == 200) {
+
+          // var temp = this.datas;
+          // temp.token = JSON.parse(localStorage.getItem("User")).token;
+          // localStorage.setItem("User", JSON.stringify(temp));
+          this.msg.success("新建课程成功！");
+          this.modal.destroy(1);
+          // this.change.emit();
+        } else {
+          this.msg.error("新建课程失败!");
+        }
+        // this.loading = false;
+      });
+    }
   }
 
   resetForm(e: MouseEvent): void {
@@ -141,21 +178,10 @@ export class CreateCourseComponent {
   };
 
   uploadValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (this.fileList.length < 1) {
+    if (this.fileList.length < 1 || !control.value) {
       return { error: true };
     }
     return { };
   };
 
-  // optionList = [
-  //   { label: 'Lucy', value: 'lucy', age: 20 },
-  //   { label: 'Jack', value: 'jack', age: 22 }
-  // ];
-  // selectedValue = { label: 'Jack', value: 'jack', age: 22 };
-  // // tslint:disable-next-line:no-any
-  // compareFn = (o1: any, o2: any) => (o1 && o2 ? o1.value === o2.value : o1 === o2);
-  //
-  // log(value: { label: string; value: string; age: number }): void {
-  //   console.log(value);
-  // }
 }

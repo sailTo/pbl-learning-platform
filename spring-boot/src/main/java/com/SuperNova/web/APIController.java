@@ -175,6 +175,26 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping("/changeCourseWithImg")
+    public Result changeCourseWithImg(@RequestParam String pbl_token,
+                            @RequestParam String course,
+                            @RequestParam MultipartFile image) {
+        Course courseObj = JSON.parseObject(course,Course.class);
+        //先添加一个默认的img URL，再利用生成的course id更新img URL
+        courseObj.setImage_URL(ProjectConstant.DEAFULT_IMAGE);
+        int c_id = courseObj.getC_id();
+        String imgURL = fileService.getImageURL(image,""+c_id);
+        FileUtil.storageImage(image,imgURL, ProjectConstant.IMG_BASE+c_id+"/");
+        courseObj.setImage_URL(ProjectConstant.WEB_IMG_BASE+c_id+"/"+imgURL);
+        courseService.updateCourse(courseObj);
+
+        JSONObject data = new JSONObject();
+        data.put("c_id",c_id);
+        data.put("image_URL",courseObj.getImage_URL());
+        return ResultGenerator.genSuccessResult(data).setMessage("课程更新成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/joinCourse")
     public Result joinCourse(@RequestParam String pbl_token,
                              @RequestParam String s_id,

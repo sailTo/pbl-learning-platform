@@ -136,6 +136,34 @@ export class CourseService {
     );
   }
 
+  changeCourseWithImg(course: Course, image: any) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
+        course: JSON.stringify(course),
+      },
+    });
+    const formData = new FormData();
+    formData.append('image', image);
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST,GET,PUT',
+      'Access-Control-Max-Age': '1728000',
+      'Access-Control-Allow-Headers':
+        'Content-Type,Access-Token,Authorization,ybg',
+    });
+    const req = new HttpRequest(
+      'POST',
+      `${environment.apiUrl}/api/changeCourseWithImg`,
+      formData,
+      {
+        headers: headers,
+        params: params,
+      }
+    );
+    return this.http.request(req).pipe(filter((e) => e instanceof HttpResponse));
+  }
+
   deleteCourse(course: Course) {
     course.status = 0;
     return this.changeCourse(course);

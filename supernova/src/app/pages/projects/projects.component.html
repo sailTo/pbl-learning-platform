@@ -5,9 +5,10 @@
         </nz-tabset>
     </nz-card-tab>
     <nz-row [nzGutter]="[24, 24]">
-        <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let project of projects">
+        <nz-col [nzSpan]="24 / numOfCardsARow" *ngFor="let project of projects let i = index">
             <app-project-card [project]=project [taken]="projectTaking === project.p_id"
                               [c_name]="current_c_name" [canTake]="projectTaking === -1"
+                              [index]="i"
                               (change)="getProject()"
             ></app-project-card>
         </nz-col>

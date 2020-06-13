@@ -25,19 +25,19 @@
 
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程教师</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzValidateStatus]="'success'">
-      <!--<nz-select formControlName="t_id" nzAllowClear nzPlaceHolder="Choose">-->
-        <!--<nz-option *ngFor="let option of allTeachers" [nzValue]="option" [nzLabel]="option.u_name"></nz-option>-->
-      <!--</nz-select>-->
-      <input nz-input [value]="currentUser.u_name" disabled/>
-      <input type="hidden" nz-input formControlName="t_id" />
+    <nz-form-control [nzSpan]="12">
+      <ng-container>
+        <nz-select  nzPlaceHolder="请选择课程教师" formControlName="t_id">
+          <nz-option *ngFor="let teacher of allTeachers"  [nzValue]="teacher.u_id" [nzLabel]="teacher.u_name"></nz-option>
+        </nz-select>
+      </ng-container>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>课程学分数</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="pointErrorTpl">
-      <nz-input-number formControlName="point" placeholder="请输入课程学分数" 
+      <nz-input-number formControlName="point" placeholder="请输入课程学分数"
         [nzMin]="0" [nzPrecision]="0" nzPrecisionMode="toFixed"
         ></nz-input-number>
       <ng-template #pointErrorTpl let-control>
@@ -52,8 +52,8 @@
     <nz-form-label [nzSpan]="7" nzRequired>课程封面</nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="imgErrorTpl">
       <input nz-input [hidden]="true" type="file"/>
-      <nz-upload 
-        [(nzFileList)]="fileList" 
+      <nz-upload
+        [(nzFileList)]="fileList"
         [nzBeforeUpload]="beforeUpload"
         [nzAccept]="'image/png, image/jpeg'"
         >

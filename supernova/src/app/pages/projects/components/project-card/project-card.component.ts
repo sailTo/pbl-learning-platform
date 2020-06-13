@@ -30,7 +30,7 @@ export class ProjectCardComponent implements OnInit {
   @Input() taken: boolean;
   @Input() canTake: boolean;
   @Input() c_name: string;
-
+  @Input() index: number;
   @Output() change = new EventEmitter();
 
   @ViewChild('actionJoin') join: TemplateRef<void>;
@@ -45,10 +45,18 @@ export class ProjectCardComponent implements OnInit {
   groupers: User[];
   leaderId: string;
   leader: User;
-
   loading = true;
-
   currentUser: User = this.userService.getUser();
+
+  colorMapping = {
+    0: '#52c41a', // red
+    1: '#13c2c2', // orange
+    2: '#fa8c16', // yellow
+    3: '#fadb14', // cyan
+    4: '#f5222d', // green
+    5: '#722ed1', // purple
+    6: '#d9d9d9', // grey
+  };
 
   // card下的控制按键列表
   actions: TemplateRef<void>[] = [];

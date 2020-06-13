@@ -213,6 +213,12 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
         course_id: c_id,
         // course_name: this.c_name,
       }
+    })
+      .afterClose.subscribe((flag: number) => {
+      if (flag === undefined) {
+        return;
+      }
+      this.change.emit();
     });
   }
 
