@@ -515,7 +515,7 @@ export class TasksComponent implements OnInit {
       Number(Object.keys(items).sort((a, b) => Number(b) - Number(a))[0]) + 1
     );
 
-    if (!rowId) {
+    if (rowId === 'NaN') {
       rowId = '1';
       itemId = '1';
     }
@@ -627,6 +627,9 @@ export class TasksComponent implements OnInit {
     // roll back rows and items
     this.gstcState.update('config.list.rows', this.lastRows);
     this.gstcState.update('config.chart.items', this.lastItems);
+
+    this.rows = this.gstcState.get('config.list.rows');
+    this.items = this.gstcState.get('config.chart.items');
 
     this.lastRows = JSON.parse(JSON.stringify(this.lastRows));
     this.lastItems = JSON.parse(JSON.stringify(this.lastItems));
