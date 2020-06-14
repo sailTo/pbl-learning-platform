@@ -45,8 +45,8 @@ export class CreateCourseComponent {
       c_name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       point: ['', [Validators.required]],
-      t_id: ['', [this.uploadValidator]],
-      // image: ['', [this.uploadValidator]],
+      t_id: ['', [Validators.required]],
+      image: ['', [this.uploadValidator]],
     });
   }
 
@@ -71,11 +71,16 @@ export class CreateCourseComponent {
           this.course.description
         );
         this.validateForm.controls.point.setValue(this.course.point);
-        this.validateForm.controls.t_id.setValidators([]);
+        this.validateForm.controls.image.setValidators([]);
         this.validateForm.controls.t_id.setValue(this.currentUser.u_id);
         for (const key in this.validateForm.controls)
           this.validateForm.controls[key].updateValueAndValidity();
       });
+    }else {
+      if(this.currentUser.type == 'teacher') {
+        this.validateForm.controls.t_id.setValue(this.currentUser.u_id);
+        this.validateForm.controls.t_id.updateValueAndValidity()
+      }
     }
   }
 
@@ -155,12 +160,26 @@ export class CreateCourseComponent {
   resetForm(e: MouseEvent): void {
     e.preventDefault();
     this.validateForm.reset();
+    if (this.currentUser.type == 'teacher') {
+      this.validateForm.controls.t_id.setValue(this.currentUser.u_id);
+      this.validateForm.controls.t_id.updateValueAndValidity()
+    }
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsPristine();
       this.validateForm.controls[key].updateValueAndValidity();
     }
     this.fileList = [];
+    // console.log(this.validateForm.controls);
   }
+  Remove = (file: UploadFile): boolean => {
+    this.fileList = [];
+    // this.validateForm.controls.t_id.markAsDirty();
+    this.validateForm.controls.image.setValue(null);
+    this.validateForm.controls.image.updateValueAndValidity();
+    // this.validateForm.controls.image.setValue(file.filename);
+    // this.validateForm.controls.image.updateValueAndValidity();
+    return true;
+  };
 
   beforeUpload = (file: UploadFile): boolean => {
     const isLt2M = file.size! / 1024 / 1024 < 2;
@@ -171,15 +190,17 @@ export class CreateCourseComponent {
 
     this.fileList = [file];
     // this.validateForm.controls.t_id.markAsDirty();
-    this.validateForm.controls.t_id.updateValueAndValidity();
+    this.validateForm.controls.image.setValue(1);
+    this.validateForm.controls.image.updateValueAndValidity();
     // this.validateForm.controls.image.setValue(file.filename);
     // this.validateForm.controls.image.updateValueAndValidity();
     return false;
   };
 
   uploadValidator = (control: FormControl): { [s: string]: boolean } => {
+
     if (this.fileList.length < 1 || !control.value) {
-      return { error: true };
+      return { error: true, required: true  };
     }
     return { };
   };
