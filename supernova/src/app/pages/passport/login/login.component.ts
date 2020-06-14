@@ -72,11 +72,12 @@ export class UserLoginComponent implements OnDestroy {
           this.router.navigateByUrl(
             this.route.snapshot.queryParams['returnUrl'] || '/home'
           );
-        } else if (response.code === 208) {
-          this.msg.error(response.message);
-        } else if (response.code === 209) {
-          this.msg.error(response.message);
         }
+        // else if (response.code === 208) {
+        //   this.msg.error(response.message);
+        // } else if (response.code === 209) {
+        //   this.msg.error(response.message);
+        // }
         this.loading = false;
       });
   }

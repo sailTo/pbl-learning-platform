@@ -84,6 +84,10 @@ export class ProjectCardComponent implements OnInit {
       this.message.error('您已经加入过别的项目了');
       return;
     }
+    if (this.project.grading_status) {
+      this.message.error('该项目已结束，不可加入');
+      return;
+    }
     this.canTake = false;
     this.projectService.joinProject(p_id).subscribe((response) => {
       if (response.code === 200) {

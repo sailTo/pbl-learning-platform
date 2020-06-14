@@ -48,11 +48,11 @@ export class MyInterceptor implements HttpInterceptor {
         case 200:
           return of(event);
         case 208:
-          this.msgService.info(body.message);
+          this.msgService.error(body.message);
           this.userService.logout();
           return of(event);
         default:
-          this.msgService.info(body.message);
+          this.msgService.error(body.message);
           return of(event);
       }
     }

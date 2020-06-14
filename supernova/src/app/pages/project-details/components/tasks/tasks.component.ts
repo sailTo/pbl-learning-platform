@@ -546,6 +546,12 @@ export class TasksComponent implements OnInit {
     this.gstcState.update('config.list.rows', rows);
     this.gstcState.update('config.chart.items', items);
 
+    this.rows = this.gstcState.get('config.list.rows');
+    this.items = this.gstcState.get('config.chart.items');
+
+    this.lastRows = JSON.parse(JSON.stringify(this.rows));
+    this.lastItems = JSON.parse(JSON.stringify(this.items));
+
     this.isEmpty = false;
 
     // get dynamic from, to
@@ -664,6 +670,9 @@ export class TasksComponent implements OnInit {
           this.modifiedAssignmentList = [];
           this.opList = [];
           this.modified = false;
+
+          this.rows = this.gstcState.get('config.list.rows');
+          this.items = this.gstcState.get('config.chart.items');
 
           this.lastRows = JSON.parse(JSON.stringify(this.rows));
           this.lastItems = JSON.parse(JSON.stringify(this.items));

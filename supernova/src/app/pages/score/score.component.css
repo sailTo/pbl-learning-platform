@@ -1,12 +1,12 @@
-nz-select{
- margin-bottom: 16px;
- margin-right: 16px;
-
+nz-select {
+  margin-bottom: 16px;
+  margin-right: 16px;
+  width: 150px;
 }
 nz-card {
-    height: 100%; 
+  height: 100%;
 }
 
 nz-empty {
-    padding-top: 12%;
+  padding-top: 12%;
 }
