@@ -19,13 +19,13 @@
                           select u_id
                           from discussion
                                    natural join user
-                          where p_id = #{p_id}
+                          where p_id = #{p_id} and type != 'teacher'
                           union all
                           select u_id
                           from reply
                                    natural join user
                                    natural join (select d_id,p_id from discussion) as dis2pj
-                          where p_id = #{p_id}
+                          where p_id = #{p_id} and type != 'teacher'
                       ) as tmp
                  group by tmp.u_id
              ) as all_dis_count
@@ -35,11 +35,11 @@
     from (
            select u_id,u_name
            from discussion natural join user
-           where p_id = #{p_id}
+           where p_id = #{p_id} and type != 'teacher'
            union all
            select u_id,u_name
            from reply natural join user natural join (select d_id,p_id from discussion) as dis2pj
-           where p_id = #{p_id}
+           where p_id = #{p_id} and type != 'teacher'
       )as tmp
     group by tmp.u_id
   </select>
