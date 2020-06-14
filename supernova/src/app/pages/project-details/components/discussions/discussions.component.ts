@@ -71,6 +71,7 @@ export class DiscussionsComponent implements OnInit {
       this.discussions = data.data.discussions;
       // console.log(this.discussions);
       this.discussions.forEach((discussion, index) => {
+        
         // map u_id in file to u_name
         // discussion['u_name'] = this.groupers.find(
         //   (grouper) => grouper.u_id == discussion.u_id
