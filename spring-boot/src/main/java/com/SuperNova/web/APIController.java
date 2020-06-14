@@ -839,7 +839,7 @@ public class APIController {
         }
         List<StudentProject> studentProjectsObj = JSON.parseArray(student_project_list,StudentProject.class);
         for (StudentProject s : studentProjectsObj){
-            projectService.updateTeacherGrade(s.getU_id(),s.getP_id(),s.getTeacher_grade());
+            projectService.updateTeacherGrade(s);
         }
         projectService.updateProjectGradeStatus(studentProjectsObj.get(0).getP_id());
         return ResultGenerator.genSuccessResult().setMessage("修改教师评分成功");

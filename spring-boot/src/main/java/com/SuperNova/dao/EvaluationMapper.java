@@ -13,7 +13,7 @@ public interface EvaluationMapper extends Mapper<Evaluation> {
      * @param s_id
      * @return
      */
-    double searchEvaluateByOther(@Param("p_id")int p_id, @Param("s_id")String s_id);
+    Double searchEvaluateByOther(@Param("p_id")int p_id, @Param("s_id")String s_id);
 
 //    /**
 //     * 获取已经对s_id的学生评分的学生人数

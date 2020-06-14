@@ -39,6 +39,8 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     private FileMapper fileMapper;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private EvaluationMapper evaluationMapper;
 
     @Override
     public ArrayList<Map<String, Object>> getSelfAndMutualGradeByPid(int p_id) {
@@ -49,10 +51,16 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
         for (StudentProject s : studentProjects) {
             Map<String, Object> tmp = new HashMap<>();
             User user = userMapper.selectByPrimaryKey(s.getU_id());
+            Double mutual_Grade = evaluationMapper.searchEvaluateByOther(p_id,user.getU_id());
+            if (mutual_Grade == null)
+                mutual_Grade = 0.0;
+            Double selfGrade = evaluationMapper.getMyEvaluate(p_id,user.getU_id(),user.getU_id());
+            if (selfGrade == null)
+                selfGrade = 0.0;
             tmp.put("s_id",s.getU_id());
             tmp.put("s_name",user.getU_name());
-            tmp.put("selfScore",s.getSelf_grade());
-            tmp.put("mutualScore",s.getMutual_grade());
+            tmp.put("selfScore",selfGrade);
+            tmp.put("mutualScore",mutual_Grade);
             ret.add(tmp);
         }
         return ret;
@@ -230,12 +238,12 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     }
 
     @Override
-    public void updateTeacherGrade(String u_id, int p_id, double teacher_grade) {
-        StudentProject studentProject = new StudentProject();
-        studentProject.setP_id(p_id);
-        studentProject.setU_id(u_id);
-        studentProject = studentProjectMapper.selectOne(studentProject);
-        studentProject.setTeacher_grade(teacher_grade);
+    public void updateTeacherGrade(StudentProject studentProject) {
+//        StudentProject studentProject = new StudentProject();
+//        studentProject.setP_id(p_id);
+//        studentProject.setU_id(u_id);
+//        studentProject = studentProjectMapper.selectOne(studentProject);
+//        studentProject.setTeacher_grade(teacher_grade);
         studentProjectMapper.updateByPrimaryKeySelective(studentProject);
     }
 }

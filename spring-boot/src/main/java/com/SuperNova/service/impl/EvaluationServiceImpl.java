@@ -58,7 +58,7 @@ public class EvaluationServiceImpl extends AbstractService<Evaluation> implement
         tmp.setActive_s_id(s_id);
         tmp.setPassive_s_id(s_id);
         tmp = evaluationMapper.selectByPrimaryKey(tmp);
-        if(tmp==null){
+        if(tmp == null){
             return "-1";
         }
         return ""+tmp.getGrade();

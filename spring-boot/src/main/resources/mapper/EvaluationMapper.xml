@@ -10,13 +10,13 @@
     <id column="passive_s_id" jdbcType="CHAR" property="passiveSId" />
     <result column="grade" jdbcType="DOUBLE" property="grade" />
   </resultMap>
-  <select id="searchEvaluateByOther" resultType="double">
+  <select id="searchEvaluateByOther" resultType="Double">
     select avg(grade) from evaluation
-    where p_id = #{p_id} and passive_s_id = #{s_id}
+    where p_id = #{p_id} and passive_s_id = #{s_id} and active_s_id != #{s_id}
   </select>
 
   <select id="getMyEvaluate" resultType="Double">
     select grade from evaluation
-    where p_id = #{p_id} and passive_s_id = #{u_id} and active_s_id != #{s_id}
+    where p_id = #{p_id} and passive_s_id = #{u_id} and active_s_id = #{s_id}
   </select>
 </mapper>

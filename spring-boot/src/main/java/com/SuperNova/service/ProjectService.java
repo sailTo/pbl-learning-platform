@@ -2,6 +2,7 @@ package com.SuperNova.service;
 import com.SuperNova.model.GradeSystem;
 import com.SuperNova.model.Project;
 import com.SuperNova.core.Service;
+import com.SuperNova.model.StudentProject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -107,9 +108,7 @@ public interface ProjectService extends Service<Project> {
 
     /**
      * 更新student_project中的教师评分
-     * @param u_id
-     * @param p_id
-     * @param teacher_grade
+     * @param studentProject
      */
-    void updateTeacherGrade(String u_id, int p_id, double teacher_grade);
+    void updateTeacherGrade(StudentProject studentProject);
 }
