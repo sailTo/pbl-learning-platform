@@ -1,0 +1,8 @@
+.select {
+    text-align: right;
+    margin-bottom: 16px;
+}
+
+nz-select {
+    width: 150px;
+}

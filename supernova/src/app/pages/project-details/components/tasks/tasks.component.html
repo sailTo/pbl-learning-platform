@@ -2,7 +2,9 @@
     <ng-container *ngFor="let color of colorMapping | keyvalue">
         <nz-badge [nzColor]="color.value" [nzText]="color.key.toString()"></nz-badge>
     </ng-container>
-    <button nz-button nzType="primary" (click)="showCompleteModal()" [nzLoading]="completeLoading">完成任务</button>
+    <ng-container *ngIf="currentUser.type === 'student'">
+        <button nz-button nzType="primary" (click)="showCompleteModal()" [nzLoading]="completeLoading">完成任务</button>
+    </ng-container>
     <ng-container *ngIf="modifiable">
         <button nz-button nzType="primary" (click)="showUrgeModal()" [nzLoading]="urgeLoading">催促任务</button>
         <button nz-button nzType="primary" (click)="showAddModal()" [nzLoading]="addLoading">新增任务</button>

@@ -28,6 +28,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { AngularGanttScheduleTimelineCalendarModule } from 'angular-gantt-schedule-timeline-calendar';
 
@@ -83,6 +84,7 @@ import { TaskCompletionComponent } from './components/task-completion/task-compl
     NzSpinModule,
     NzDatePickerModule,
     NzBadgeModule,
+    NzSelectModule,
     AngularGanttScheduleTimelineCalendarModule,
   ],
 })

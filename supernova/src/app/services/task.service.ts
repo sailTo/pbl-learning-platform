@@ -129,4 +129,19 @@ export class TaskService {
       params
     );
   }
+
+  getGrouperDoneStatus(projectId: number, grouperId: string) {
+    const params = new HttpParams({
+      fromObject: {
+        pbl_token: this.userService.getUser().token,
+        p_id: String(projectId),
+        grouper_id: grouperId,
+      },
+    });
+    return this.http.get<
+      Response<
+        boolean[] // 当前学生每个assignment的完成情况，教师返回空数组
+      >
+    >(`${environment.apiUrl}/api/searchGrouperAssignment`, { params });
+  }
 }

@@ -1,1 +1,33 @@
-<p>task-completion works!</p>
+<div class="select">
+    请选择成员：
+    <nz-select [(ngModel)]="selectedValue" [compareWith]="compareFn" [nzLoading]="selectLoading"
+        (ngModelChange)="onChange($event)" nzShowSearch nzAllowClear>
+        <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
+    </nz-select>
+</div>
+
+<nz-table #basicTable [nzData]="tasks">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>任务名称</th>
+            <th>任务描述</th>
+            <th>所有学生完成情况（已完成 / 总人数）</th>
+            <th>当前学生完成情况</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of basicTable.data let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.a_name }}</td>
+            <td>{{ data.a_description }}</td>
+            <td>{{ data.doneNum }} / {{ totalNum }}</td>
+            <td>
+                <nz-badge [hidden]="!selectedValue" [nzStatus]="data.finished ? 'success' : 'error'"
+                    [nzText]="data.finished ? '已完成' : '未完成'"
+                ></nz-badge>
+                <nz-badge [hidden]="selectedValue" nzStatus="default" nzText="未选择成员"></nz-badge>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
