@@ -168,12 +168,12 @@ public class ServiceTest extends Tester {
         ArrayList<Map<String,Object>> ret = projectService.getSelfAndMutualGradeByPid(1);
         Assert.assertEquals(2,ret.size());
     }
-    @Test
-    @Rollback(false)
-    public void test12(){
-        projectService.updateTeacherGrade("S001",1,50);
-//        Assert.assertEquals(2,ret.size());
-    }
+//    @Test
+//    @Rollback(false)
+//    public void test12(){
+//        projectService.updateTeacherGrade("S001",1,50);
+////        Assert.assertEquals(2,ret.size());
+//    }
 
     @Test
     @Rollback(false)

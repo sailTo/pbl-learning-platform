@@ -80,7 +80,6 @@ export class AdminComponent implements OnInit {
   }
 
   startEdit(id:string){
-    // alert(1);
     this.editId = id;
   }
 
@@ -92,7 +91,6 @@ export class AdminComponent implements OnInit {
     //向数据库更新信息
     
     if(editUser.password==null){
-      alert(1);
       editUser.password = this.storePassords[index];
     }else{
       editUser.password = Md5.hashStr(editUser.password);

@@ -130,7 +130,7 @@ export class ScoreTableComponent implements OnChanges{
               {  
                 s_id : this.userService.getUser().u_id,
                 s_name:this.userService.getUser().u_name,
-                selfScore : +studentselfScoreData.data.grade
+                selfScore : (+studentselfScoreData.data.grade/100)*this.selectProject.self_grade_ratio
               }
                );
               this.getStudentMutualScore();
@@ -153,7 +153,7 @@ export class ScoreTableComponent implements OnChanges{
     this.scoreService.getStudentMutualScore(String(this.selectProject.p_id)).subscribe(
       (studentMutualScoreData)=>{
           if(studentMutualScoreData.code==200){
-           this.listOfData[0].mutualScore = studentMutualScoreData.data.grade;  
+           this.listOfData[0].mutualScore = (studentMutualScoreData.data.grade/100)*this.selectProject.mutual_grade_ratio;  
            this.listOfDisplayData = [...this.listOfData]; 
           }else{
             if(studentMutualScoreData.code==209){
@@ -283,8 +283,8 @@ export class ScoreTableComponent implements OnChanges{
           SelfAndMutualScoreData.data.selfAndMutualInformations.forEach(
                 (discussInformation,index)=>{
                  
-                  this.listOfData[index].selfScore = discussInformation.selfScore;
-                  this.listOfData[index].mutualScore = discussInformation.mutualScore;
+                  this.listOfData[index].selfScore = (discussInformation.selfScore/100)*this.selectProject.self_grade_ratio;
+                  this.listOfData[index].mutualScore = (discussInformation.mutualScore/100)*this.selectProject.mutual_grade_ratio;
                 }
                 );
                 this.listOfDisplayData = [...this.listOfData]; 
@@ -385,8 +385,8 @@ export class ScoreTableComponent implements OnChanges{
           u_id:data.s_id,
           p_id: this.selectProject.p_id,
           is_group_leader : null,
-          self_grade : null,
-          mutual_grade:null,
+          self_grade : data.selfScore,
+          mutual_grade:data.mutualScore,
           teacher_grade : data.teacherAllScore  
         }
         teacherScores.push(temp);

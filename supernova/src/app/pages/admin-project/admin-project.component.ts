@@ -20,6 +20,7 @@ export class AdminProjectComponent implements OnInit {
   searchVisible = false;
   editId:number | null = null;
   listofColumns :columnItem[];
+  canSubmit = true;
   listofChileColums = [
      "评分项","评分占比"
   ];
@@ -77,6 +78,10 @@ export class AdminProjectComponent implements OnInit {
   }
 
   stopEdit(): void {
+    if(!this.canSubmit){
+      this.msgService.error("评分不符合规则！");
+      return;
+    }
     var editProject = this.listOfData.find((x)=>x.p_id==this.editId);
     var aproject:Project = {
       p_id: editProject.p_id,
@@ -115,7 +120,6 @@ export class AdminProjectComponent implements OnInit {
   }
 
   deleteProject(){
-    alert(1);
       this.projectService.deleteProject(this.editId).subscribe(
         (data)=>{
           if(data.code==200){
@@ -157,8 +161,9 @@ export class AdminProjectComponent implements OnInit {
           teacherAllScore+= +item.max_grade
         }
       )
-      if(aproject.teacher_grade_ratio<teacherAllScore){
+      if(teacherAllScore>(100-aproject.mutual_grade_ratio-aproject.self_grade_ratio)){
         this.msgService.error("一项评分不能超出教师评分最高上限值！");
+        this.canSubmit = false;
         return;
       }else{
           aproject.teacher_grade_ratio = teacherAllScore;
