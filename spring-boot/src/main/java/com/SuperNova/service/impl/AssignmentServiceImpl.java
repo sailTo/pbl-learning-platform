@@ -208,6 +208,7 @@ public class AssignmentServiceImpl extends AbstractService<Assignment> implement
         tmp.setA_id(a_id);
         tmp.setU_id(u_id);
         tmp.setStatus(true);
+        tmp.setUrge(false);
         studentAssignmentMapper.updateByPrimaryKey(tmp);
     }
 }
