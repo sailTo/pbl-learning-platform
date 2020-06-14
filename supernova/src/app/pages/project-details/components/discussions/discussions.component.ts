@@ -72,12 +72,25 @@ export class DiscussionsComponent implements OnInit {
       // console.log(this.discussions);
       this.discussions.forEach((discussion, index) => {
         // map u_id in file to u_name
-        discussion['u_name'] = this.groupers.find(
+        // discussion['u_name'] = this.groupers.find(
+        //   (grouper) => grouper.u_id == discussion.u_id
+        // )['u_name'];
+        // discussion['image'] = this.groupers.find(
+        //   (grouper) => grouper.u_id == discussion.u_id
+        // )['image'];
+
+        const grouper = this.groupers.find(
           (grouper) => grouper.u_id == discussion.u_id
-        )['u_name'];
-        discussion['image'] = this.groupers.find(
-          (grouper) => grouper.u_id == discussion.u_id
-        )['image'];
+        );
+        if (grouper == undefined){
+          discussion['u_name'] = '教师';
+          discussion['image'] = 'http://123.56.219.88/SuperNova/UploadImage/default.jpg'
+        }else {
+          discussion['u_name'] = grouper['u_name'];
+          discussion['image'] = grouper['image'];
+        }
+
+
         // add key to each file
         discussion['d_index'] = index;
         discussion['show'] = true;
@@ -86,14 +99,25 @@ export class DiscussionsComponent implements OnInit {
         discussion['time_for_show'] = formatDistance(discussion['time'], new Date());
         this.discussionService.getReplyByDid(discussion.d_id).subscribe((data) => {
           data.data.replies.forEach((reply) => {
-            reply['u_name'] = this.groupers.find(
+            // reply['u_name'] = this.groupers.find(
+            //   (grouper) => grouper.u_id == reply['u_id']
+            // )['u_name'];
+            // reply['image'] = this.groupers.find(
+            //   (grouper) => grouper.u_id == reply['u_id']
+            // )['image'];
+            const grouper = this.groupers.find(
               (grouper) => grouper.u_id == reply['u_id']
-            )['u_name'];
+            );
+            if (grouper == undefined){
+              reply['u_name'] = '教师';
+              reply['image'] = 'http://123.56.219.88/SuperNova/UploadImage/default.jpg'
+            }else {
+              reply['u_name'] = grouper['u_name'];
+              reply['image'] = grouper['image'];
+            }
+
             reply['type'] = 'reply';
             reply['show'] = true;
-            reply['image'] = this.groupers.find(
-              (grouper) => grouper.u_id == reply['u_id']
-            )['image'];
             reply['time_for_show'] = formatDistance(reply['time'], new Date());
             reply['d_index'] = index;
           });
