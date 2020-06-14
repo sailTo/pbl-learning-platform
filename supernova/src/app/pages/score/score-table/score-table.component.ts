@@ -108,6 +108,7 @@ export class ScoreTableComponent implements OnChanges{
           
         }else{
           this.msgService.error("无法获得教师的评分细则！");
+          this.loading = false;
         }
       }
     );
@@ -138,8 +139,10 @@ export class ScoreTableComponent implements OnChanges{
           }else{
             if(studentselfScoreData.code==209){
               this.msgService.info("自评分暂未评分！");
+              this.loading = false;
             }else{
               this.msgService.error("获取学生自评分失败！");
+              this.loading = false;
             }
            
           }
@@ -155,8 +158,10 @@ export class ScoreTableComponent implements OnChanges{
           }else{
             if(studentMutualScoreData.code==209){
               this.msgService.info("互评分暂未评分！");
+              this.loading = false;
             }else{
               this.msgService.error("获取学生互评分失败！");
+              this.loading = false;
             }
             
           }
@@ -188,8 +193,10 @@ export class ScoreTableComponent implements OnChanges{
           }else{
             if(studentTeacherScoreData.code==209){
               this.msgService.info("互评分暂未评分！");
+              this.loading = false;
             }else{
               this.msgService.error("获取学生教师评分失败！");
+              this.loading = false;
             }
             
           }
@@ -208,8 +215,10 @@ export class ScoreTableComponent implements OnChanges{
           }else{
             if(studentDiscussionData.code==209){
               this.msgService.info("互评分暂未评分！");
+              this.loading = false;
             }else{
               this.msgService.error("获取学生讨论数和任务完成数失败！");
+              this.loading = false;
             }
             
           }
@@ -233,6 +242,7 @@ export class ScoreTableComponent implements OnChanges{
                 
         }else{
           this.msgService.error("获取讨论数信息失败！");
+          this.loading = false;
         }
       }
     )
@@ -260,6 +270,7 @@ export class ScoreTableComponent implements OnChanges{
               this.listOfDisplayData = [...this.listOfData]; 
         }else{
           this.msgService.error("获取任务数信息失败！");
+          this.loading = false;
         }
       }
     );
@@ -271,6 +282,7 @@ export class ScoreTableComponent implements OnChanges{
           SelfAndMutualScoreData.data.selfAndMutualInformations = SelfAndMutualScoreData.data.selfAndMutualInformations.sort((a,b)=>a.s_id.localeCompare(b.s_id));
           SelfAndMutualScoreData.data.selfAndMutualInformations.forEach(
                 (discussInformation,index)=>{
+                 
                   this.listOfData[index].selfScore = discussInformation.selfScore;
                   this.listOfData[index].mutualScore = discussInformation.mutualScore;
                 }
@@ -278,6 +290,7 @@ export class ScoreTableComponent implements OnChanges{
                 this.listOfDisplayData = [...this.listOfData]; 
         }else{
           this.msgService.error("获取个人自评互评信息失败！");
+          this.loading = false;
         }
       }
     );
@@ -314,6 +327,7 @@ export class ScoreTableComponent implements OnChanges{
                 this.loading = false; 
         }else{
           this.msgService.error("获取教师评分信息失败！");
+          this.loading = false;
         }
       }
     );
@@ -364,7 +378,7 @@ export class ScoreTableComponent implements OnChanges{
     var teacherScores = [];
     this.listOfData.forEach(
       (data) =>{
-        if(!data.haveScored){
+        if(!data.haveScored||data.selfScore==0||data.mutualScore==0){
           canSubmit = false;
         }
         var temp = {
@@ -393,7 +407,7 @@ export class ScoreTableComponent implements OnChanges{
           }
         )
     }else{
-      this.msgService.info("还没有对所有人评分！无法最终提交！");
+      this.msgService.info("没有完成所有评分！无法最终提交！");
     }
 
     

@@ -94,12 +94,14 @@ export class AdminProjectComponent implements OnInit {
       (data)=>{
         if(data.code==200){
           this.msgService.success("修改成功!");
+          this.editId = null;
         }else{
           this.msgService.error("修改失败!");
+          this.editId = null;
         }
       }
     )
-    this.editId = null;
+    
   }
 
   reset(): void {
@@ -113,6 +115,7 @@ export class AdminProjectComponent implements OnInit {
   }
 
   deleteProject(){
+    alert(1);
       this.projectService.deleteProject(this.editId).subscribe(
         (data)=>{
           if(data.code==200){

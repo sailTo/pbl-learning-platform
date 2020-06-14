@@ -19,6 +19,7 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
+import {NzPopconfirmModule} from 'ng-zorro-antd';
 
 @NgModule({
   declarations: [AdminProjectComponent],
@@ -41,7 +42,8 @@ import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
     NzDropDownModule,
     NzCheckboxModule,
     NzInputModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzPopconfirmModule
 
   ]
 })

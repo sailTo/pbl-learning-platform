@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'; 
 import {AdminService} from '../../../services/admin.service';
 import {User} from '../../../models/user';
 import {environment} from '../../../../environments/environment'
+import { NzMessageService } from 'ng-zorro-antd';
+import { Md5 } from 'ts-md5';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -14,9 +16,11 @@ export class AddUserComponent implements OnInit {
   validateForm:FormGroup;
   error = "";
   idError  = "";
+  @Output() change = new EventEmitter();
   constructor(
     private fb: FormBuilder,
-    private adminService : AdminService
+    private adminService : AdminService,
+    private msgService : NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +39,7 @@ export class AddUserComponent implements OnInit {
       gender: [null, [Validators.required]],
       // type:[null,[Validators.required]],
       password: [null, [
-        Validators.minLength(8),
+        Validators.minLength(6),
         Validators.maxLength(16),
         Validators.pattern('[0-9a-zA-Z]+'),
         Validators.required
@@ -80,15 +84,16 @@ export class AddUserComponent implements OnInit {
         type : this.validateForm.controls.type.value,
         description :"",
         image:environment.defaultImgPath,
-        password : this.validateForm.controls.password.value,
+        password : (String)(Md5.hashStr(this.validateForm.controls.password.value)),
         status: true 
     }
     this.adminService.addNewUser(newUser).subscribe(
       (data) =>{
         if(data.code==200){
-          alert("添加成功！");
+          this.msgService.success("添加成功！");
+          this.change.emit();
         }else{
-          alert("添加失败！");
+          this.msgService.error("添加失败！");
         }
         this.loading =false;
         this.isVisible = false;

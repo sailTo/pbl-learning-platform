@@ -60,10 +60,14 @@ export class AdminComponent implements OnInit {
           this.listOfData = data.data.users;
           for(var i=0;i<this.listOfData.length;i++){
             this.listOfData[i].image = data.data.images[i];
-            this.storePassords[i] = this.listOfData[i].password;
+            if(this.listOfData[i].status==true){
+              this.storePassords[i] = this.listOfData[i].password;
+            }
+            
             this.listOfData[i].password = null;
           }
           this.listOfData = this.listOfData.filter((item: User) => item.status==true);
+
           this.listOfDisplayData = [...this.listOfData];
           
         }else{
@@ -86,8 +90,9 @@ export class AdminComponent implements OnInit {
     var editUser = this.listOfDisplayData.find((x)=>x.u_id===this.editId);
     var index =  this.listOfDisplayData.findIndex((x)=>x.u_id===this.editId);
     //向数据库更新信息
-    // alert(this.storePassords);
+    
     if(editUser.password==null){
+      alert(1);
       editUser.password = this.storePassords[index];
     }else{
       editUser.password = Md5.hashStr(editUser.password);
@@ -152,6 +157,10 @@ export class AdminComponent implements OnInit {
       }
     )
 
+  }
+
+  addUser(){
+    this.ngOnInit();
   }
 
 

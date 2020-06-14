@@ -3,6 +3,7 @@ import {ScoreService} from '../../services/score.service';
 import {Project} from '../../models/project';
 import {Course} from '../../models/course'
 import { NzMessageService } from 'ng-zorro-antd';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-score',
   templateUrl: './score.component.html',
@@ -21,6 +22,7 @@ export class ScoreComponent implements OnInit {
   constructor(
     private scoreService : ScoreService,
     private msgService : NzMessageService,
+    private userService: UserService,
   ) { }
   courseChange(value: string): void {
    this.selectedCourse = this.courseData.find((x)=>x.c_id ==this.selectedCourse_id);
@@ -40,7 +42,9 @@ export class ScoreComponent implements OnInit {
             this.scoreService.getProjectsByCourseId(acourse.c_id).subscribe(
               (data)=>{
                 if(data.code==200){
-                  // alert(this.courseData[i].c_id);
+                  // if(this.userService.getUser().type=="student"){
+                  //   data.data.projects.filter
+                  // }
                   this.projectData[String(acourse.c_id)] =  data.data.projects; 
                  
                 }else{
