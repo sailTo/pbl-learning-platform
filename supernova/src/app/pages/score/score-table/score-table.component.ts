@@ -130,7 +130,7 @@ export class ScoreTableComponent implements OnChanges{
               {  
                 s_id : this.userService.getUser().u_id,
                 s_name:this.userService.getUser().u_name,
-                selfScore : (+studentselfScoreData.data.grade/100)*this.selectProject.self_grade_ratio
+                selfScore : (Number)(((+studentselfScoreData.data.grade/100)*this.selectProject.self_grade_ratio).toFixed(1))
               }
                );
               this.getStudentMutualScore();
@@ -153,7 +153,7 @@ export class ScoreTableComponent implements OnChanges{
     this.scoreService.getStudentMutualScore(String(this.selectProject.p_id)).subscribe(
       (studentMutualScoreData)=>{
           if(studentMutualScoreData.code==200){
-           this.listOfData[0].mutualScore = (studentMutualScoreData.data.grade/100)*this.selectProject.mutual_grade_ratio;  
+           this.listOfData[0].mutualScore = Number(((studentMutualScoreData.data.grade/100)*this.selectProject.mutual_grade_ratio).toFixed(1));  
            this.listOfDisplayData = [...this.listOfData]; 
           }else{
             if(studentMutualScoreData.code==209){
@@ -283,8 +283,8 @@ export class ScoreTableComponent implements OnChanges{
           SelfAndMutualScoreData.data.selfAndMutualInformations.forEach(
                 (discussInformation,index)=>{
                  
-                  this.listOfData[index].selfScore = (discussInformation.selfScore/100)*this.selectProject.self_grade_ratio;
-                  this.listOfData[index].mutualScore = (discussInformation.mutualScore/100)*this.selectProject.mutual_grade_ratio;
+                  this.listOfData[index].selfScore = Number(((discussInformation.selfScore/100)*this.selectProject.self_grade_ratio).toFixed(1));
+                  this.listOfData[index].mutualScore = Number(((discussInformation.mutualScore/100)*this.selectProject.mutual_grade_ratio).toFixed(1));
                 }
                 );
                 this.listOfDisplayData = [...this.listOfData]; 
