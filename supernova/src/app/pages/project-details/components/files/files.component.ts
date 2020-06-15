@@ -112,7 +112,6 @@ export class FilesComponent implements OnInit {
   }
 
   deleteFile(file: File): void {
-    // TODO: delete logic
     // this.files = this.files.filter((file) => file.f_id !== file.f_id);
     this.fileService.deleteFile(file.p_id, file.f_id).subscribe((response) => {
       if (response.code === 200) {
@@ -132,7 +131,7 @@ export class FilesComponent implements OnInit {
   beforeUpload = (file: UploadFile): boolean => {
     console.log('beforeUpload');
     console.log(file);
-    //如果文件大小大于10M则不允许上传
+    // 如果文件大小大于10M则不允许上传
     if (file.size > 10000000) {
       this.message.create('error', file.name + '上传失败,文件大小超过10M');
     } else {
