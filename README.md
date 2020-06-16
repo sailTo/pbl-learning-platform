@@ -116,7 +116,40 @@ TODO：请大嘎找一些自己实现项目中的难点或者重要的点在这�
 
 而后执行`ng build --prod`指令对项目进行部署环境的编译，该指令会用到项目中的`environments/environment.prod.ts`文件，而后在前端项目根目录下生成一个`dist/`目录，其中包含项目编译完成后的结果。
 
-TODO：未完成
+之后，在前端项目根目录下编写Dockerfile，内容如下：
+
+```dockerfile
+FROM nginx:stable-alpine
+
+# copy from dist to nginx root dir
+COPY dist/supernova /usr/share/nginx/html
+
+# copy reversed proxy
+COPY default.conf /etc/nginx/conf.d/
+
+# expose port 80
+EXPOSE 80
+
+# run nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+该文件主要完成了导入Nginx镜像、将编译好的项目文件拷贝入镜像、将重新配置过的Nginx URL转发规则拷贝入镜像、暴露80端口、运行Nginx几个步骤。
+
+其中default.conf是从镜像中复制出的文件，在其中`location /`中添加了一行`try_files $uri $uri/ /index.html =404;`，使得对Angular这样的单页面应用项目的URL访问可以重定向到`index.html`上，完成正常的路由跳转。
+
+最后使用命令：
+
+```shell
+sudo docker build -t supernova-angular-proxy . 
+
+sudo docker run --name supernova-angular-proxy -p 8080:80 supernova-angular-proxy
+```
+
+
+完成对镜像的构建和启动。启动后的项目监听在8080端口。
+
+在之前，我们还尝试过使用npm + nginx的方式进行Docker部署，即将build的过程放在匿名容器内部进行，将编译好的内容拷贝到Nginx容器中实现部署。后来发现，这种方式效率比较低，因此不再采用，而是将项目的构建过程放到外部来做。
 
 #### 1.3.2 后端项目
 
@@ -155,17 +188,16 @@ TODO：请李翀写一下~
 主要工作包括：
 
 1. 后端项目结构整体设计；
-
-   	2. 项目前后端接口设计；
-   	3. 后端接口实现；
-   	4. 身份验证实现；
-   	5. 后端项目部署；
-   	6. 图片与文件服务器部署
+2. 项目前后端接口设计；
+3. 后端接口实现；
+4. 身份验证实现；
+5. 后端项目部署；
+6. 图片与文件服务器部署
 
 负责开发的界面有：
 
-1. 文件上传、下载与删除界面(功能)
-2. 课程管理界面(布局+功能)
+1. 文件管理子页（功能）
+2. 课程管理界面（布局 + 功能）
 
 ### 王麒迪
 
@@ -195,7 +227,7 @@ TODO：每个人负责的工作请如上格式列举一下~
 
 ### 4.3 项目前后端接口文档
 
-详见`docs`文件夹下的“按页面分类的接口设计（请求URL、输入、输出）”，源文件为API Design.md，其中包括项目前后端分页面归类的的接口设计。该文档内容主要由李翀完成，在后续开发过程中，其余三位同学对该文档均有所删改，少部分新增接口可能没有写入改文件中。从该文件可以看出项目整体API设计风格，以及大部分API设计实现，可供参考。
+详见`docs`文件夹下的“按页面分类的接口设计（请求URL、输入、输出）”，源文件为API Design.md，其中包括项目前后端分页面归类的的接口设计。该文档内容主要由李翀完成，在后续开发过程中，其余三位同学对该文档均有所删改，少部分新增接口可能没有写入该文件中。从该文件可以看出项目整体API设计风格，以及大部分API设计实现，可供参考。
 
 ### 4.4 项目合作开发共享文档
 
