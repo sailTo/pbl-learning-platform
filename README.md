@@ -24,7 +24,29 @@ A course project for Advanced Web Technologies at FDU, Spring 2020.
 
 #### 1.1.1 前端项目
 
-TODO：黄元敏会写的
+本项目前端使用了[Angular](https://angular.io/start) 9.1框架，集成使用了[NG ZORRO](https://ng.ant.design/docs/introduce/en) 9.1前端组件库进行组件化开发，甘特图组件使用了GitHub上的项目[Gantt Gantt Gantt Schedule Timeline Calendar](https://github.com/neuronetio/gantt-schedule-timeline-calendar)。
+
+下图所展示的是前端项目src/下的文件结构，主要包括：
+
+1. `assets`：项目静态文件夹，如项目logo；
+
+2. `app`：项目主要代码文件夹，其中包括：
+
+   a. `auth`：用于存放项目路由守卫；
+
+   b. `interceptors`：用于存放项目拦截器；
+
+   c. `models`：用于存放前后端交互的传输对象结构；
+
+   d. `pages`：用于存放按页面分类的源代码，内部包括组件代码和页面代码，每个页面为一个Route Module；
+
+   e. `services`：用于存放按传输对象分类的服务类，封装了向后端请求数据的方法；
+
+3. `environments`：项目环境变量文件夹，如正向代理的URL配置；
+
+![前端项目结构示意图](README.assets/image-20200616094835751.png)
+
+<center>图1 前端项目结构示意图</center>
 
 #### 1.1.2 后端项目
 
