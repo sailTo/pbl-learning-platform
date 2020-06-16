@@ -26,7 +26,7 @@ A course project for Advanced Web Technologies at FDU, Spring 2020.
 
 本项目前端使用了[Angular](https://angular.io/start) 9.1框架，集成使用了[NG ZORRO](https://ng.ant.design/docs/introduce/en) 9.1前端组件库进行组件化开发，甘特图组件使用了GitHub上的项目[Gantt Gantt Gantt Schedule Timeline Calendar](https://github.com/neuronetio/gantt-schedule-timeline-calendar)。
 
-下图所展示的是前端项目src/下的文件结构，主要包括：
+下图所展示的是前端项目`src/`下的文件结构，主要包括：
 
 1. `assets`：项目静态文件夹，如项目logo；
 
@@ -38,7 +38,9 @@ A course project for Advanced Web Technologies at FDU, Spring 2020.
 
    c. `models`：用于存放前后端交互的传输对象结构；
 
-   d. `pages`：用于存放按页面分类的源代码，内部包括组件代码和页面代码，每个页面为一个Route Module；
+   d. `pages`：用于存放按页面分类的源代码；
+
+   ​	单个页面为一个文件夹，构成一个Route Module，内部包括组件代码（内部`components/`下）和页面代码；
 
    e. `services`：用于存放按传输对象分类的服务类，封装了向后端请求数据的方法；
 
@@ -62,9 +64,29 @@ TODO：请大嘎找一些自己实现项目中的难点或者重要的点在这�
 
 ### 1.3 服务器部署配置的详细介绍
 
+本项目我们使用了张思源提供的阿里云服务器，配置如下：
+
+> 系统版本：CentOS Linux 7.8.2003 (Core)
+>
+> CPU：单核
+>
+> 内存：2G
+>
+> 存储：40G
+
+由于项目源代码使用GitHub进行管理，因此可以便捷地在服务器上clone一份项目仓库，并不断地根据项目最新情况进行代码的更新和构建，避免了在本地和云端之间反复缓慢的文件传输过程。
+
+前后端的项目部署我们均采用了Docker的方式，具体部署步骤将在接下来的两部分中详细阐述。
+
 #### 1.3.1 前端项目
 
-TODO：黄元敏会写的
+如前所述，首先在服务器上clone了项目代码仓库，在每次部署前均需要进行`git pull`操作以实现代码同步。
+
+在首次克隆代码仓库之后，需要执行`npm install`指令安装编译需要的依赖（在项目依赖发生变化之后也需要执行这一步）。
+
+而后执行`ng build --prod`指令对项目进行部署环境的编译，该指令会用到项目中的`environments/environment.prod.ts`文件，而后在前端项目根目录下生成一个`dist/`目录，其中包含项目编译完成后的结果。
+
+TODO：未完成
 
 #### 1.3.2 后端项目
 
