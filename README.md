@@ -10,7 +10,7 @@ A course project for Advanced Web Technologies at FDU, Spring 2020.
 
 17302010002 黄元敏 组长
 
-李翀
+17302010025 李翀
 
 王麒迪
 
@@ -52,7 +52,37 @@ A course project for Advanced Web Technologies at FDU, Spring 2020.
 
 #### 1.1.2 后端项目
 
-TODO：请李翀或者思源写一下~
+本项目后端使用了助教提供的Spring boot与MyBatis快速搭建[框架](https://github.com/lihengming/spring-boot-api-project-seed)，使用的[Spring boot](https://www.jianshu.com/p/1a9fd8936bd8) 版本为1.5.13，[MyBatis](https://mybatis.org/mybatis-3/zh/index.html)的版本为1.3.1。在开发身份认证功能的过程中使用到了Spring boot AOP插件，并在Maven配置文件中引入了该插件。
+
+下图所展示的是前端项目`src/main`下的文件结构，主要包括：
+
+1. `java/com.SuperNova`
+
+   a. `configurer`：项目部分参数
+
+   b. `core`：项目所需工具类与部分高级抽象接口
+
+   c. `dao`：MyBatis接口
+
+   d. `model`：POJO模型类代码
+
+   e. `service`：service接口与实现类
+
+   f.  `web`：接口控制器与截面类
+
+2. `docker`
+
+   dockerfile
+
+3. `resources`
+
+   a. `mapper`：MyBatis所需映射xml文件
+
+   b. `Setting`：项目相关配置信息
+
+<img src="README.assets/Restful Web Server.png" style="zoom: 50%;" />
+
+<center>图2 后端项目结构示意图</center>
 
 ### 1.2 关键功能实现细节
 
@@ -122,7 +152,20 @@ TODO：请李翀写一下~
 
 ### 李翀
 
-TODO：每个人负责的工作请如上格式列举一下~
+主要工作包括：
+
+1. 后端项目结构整体设计；
+
+   	2. 项目前后端接口设计；
+   	3. 后端接口实现；
+   	4. 身份验证实现；
+   	5. 后端项目部署；
+   	6. 图片与文件服务器部署
+
+负责开发的界面有：
+
+1. 文件上传、下载与删除界面(功能)
+2. 课程管理界面(布局+功能)
 
 ### 王麒迪
 
