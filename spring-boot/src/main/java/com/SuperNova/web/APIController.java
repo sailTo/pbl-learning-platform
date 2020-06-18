@@ -711,6 +711,13 @@ public class APIController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/evaluateDone")
+    public Result evaluateDone(@RequestParam String pbl_token,
+                               @RequestParam String p_id) {
+        return ResultGenerator.genSuccessResult(projectService.evaluationDone(Integer.parseInt(p_id))).setMessage("评价成功");
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/searchAllUsers")
     public Result searchAllUsers(@RequestParam String pbl_token) {
         String a_id = userService.getUIdByToken(pbl_token);
