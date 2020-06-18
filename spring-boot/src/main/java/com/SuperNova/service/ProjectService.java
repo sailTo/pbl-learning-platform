@@ -111,4 +111,12 @@ public interface ProjectService extends Service<Project> {
      * @param studentProject
      */
     void updateTeacherGrade(StudentProject studentProject);
+
+    /**
+     * 获得项目是否评分完毕
+     * !现在仅考虑了全存在的情况!
+     * @param p_id
+     * @return
+     */
+    boolean evaluationDone(int p_id);
 }

@@ -15,6 +15,27 @@ public interface EvaluationMapper extends Mapper<Evaluation> {
      */
     Double searchEvaluateByOther(@Param("p_id")int p_id, @Param("s_id")String s_id);
 
+
+    /**
+     * 获得没有自评的学生人数
+     * @param p_id
+     * @return
+     */
+    Integer searchNotSelfEvaluateNum(@Param("p_id") int p_id);
+
+    /**
+     * 获得暂未互评/自评的人数
+     * @param p_id
+     * @return
+     */
+    Integer searchNotEvaluateNum(@Param("p_id") int p_id);
+
+    /**
+     * 获得老师暂未评分的人数
+     * @param p_id
+     * @return
+     */
+    Integer searchTeacherNotEvaluateNum(@Param("p_id") int p_id);
 //    /**
 //     * 获取已经对s_id的学生评分的学生人数
 //     * @param p_id

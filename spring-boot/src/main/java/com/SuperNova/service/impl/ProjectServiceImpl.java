@@ -246,4 +246,43 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 //        studentProject.setTeacher_grade(teacher_grade);
         studentProjectMapper.updateByPrimaryKeySelective(studentProject);
     }
+
+    @Override
+    public boolean evaluationDone(int p_id) {
+        Project tmp = new Project();
+        tmp.setP_id(p_id);
+        tmp = projectMapper.selectByPrimaryKey(tmp);
+        if(tmp.getTeacher_grade_ratio()>0){
+            //如果老师还有学生没评完分，则返回false
+            if(evaluationMapper.searchTeacherNotEvaluateNum(p_id)>0){
+                return false;
+            }
+        }
+
+        if(tmp.getSelf_grade_ratio()>0){
+            //如果还有学生没自评完，则返回false
+            if(evaluationMapper.searchNotSelfEvaluateNum(p_id)>0){
+                return false;
+            }
+
+            if(tmp.getSelf_grade_ratio()>0){
+                //如果还有学生没互评/自评完分数，则返回false
+                if(evaluationMapper.searchNotEvaluateNum(p_id)>0){
+                    return false;
+                }
+            }
+        }else{
+            if(tmp.getSelf_grade_ratio()>0){
+                int left = evaluationMapper.searchNotEvaluateNum(p_id)-evaluationMapper.searchNotSelfEvaluateNum(p_id);
+
+                //如果还有学生没互评完分数，则返回false
+                if(left>0){
+                    return false;
+                }
+            }
+        }
+
+        //全部评完则返回true
+        return true;
+    }
 }

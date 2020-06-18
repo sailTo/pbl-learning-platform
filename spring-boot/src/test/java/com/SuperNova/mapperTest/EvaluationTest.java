@@ -16,6 +16,8 @@ public class EvaluationTest extends Tester {
     public void test1(){
 //        double result = evaluationMapper.searchEvaluateByOther(1,"s002");
 //        Assert.assertEquals(25,result,0.0001);
+//        int num = evaluationMapper.searchNotEvaluateNum(22);
+//        System.out.println(num);
     }
 }
 

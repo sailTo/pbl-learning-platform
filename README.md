@@ -153,7 +153,71 @@ sudo docker run --name supernova-angular-proxy -p 8080:80 supernova-angular-prox
 
 #### 1.3.2 后端项目
 
-TODO：请李翀写一下~
+与前端部署的最初步骤类似，首先在服务器上clone项目代码仓库，在每次部署前均需要进行`git pull`操作以实现代码同步。
+
+为了实现使用docker部署，我们还需要在 `pom.xml`中添加 Docker 镜像名称与Docker 构建插件，并定义dockerfile：
+
+​	( 1 ) 先在pom.xml的properties标签中定义镜像名称
+
+```pom.xml
+<properties>
+	<docker.image.prefix>supernova</docker.image.prefix>
+</properties>
+```
+
+​	( 2 ) plugins 中添加 Docker 构建插件：
+
+```pom.xml
+<plugins>
+	<!-- Docker maven plugin -->
+	<plugin>
+		<groupId>com.spotify</groupId>
+		<artifactId>docker-maven-plugin</artifactId>
+		<version>1.0.0</version>
+			<configuration>
+				<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+				<dockerDirectory>src/main/docker</dockerDirectory>
+				<resources>
+					<resource>
+						<targetPath>/</targetPath>
+						<directory>${project.build.directory}</directory>
+						<include>${project.build.finalName}.jar</include>
+					</resource>
+				</resources>
+			</configuration>
+	</plugin>
+	<!-- Docker maven plugin -->
+</plugins>
+```
+
+这个代码中，我们不仅定义了docker构建所需要的插件，还有docker文件所在的目录
+
+​	( 3 ) 在spring-boot/src/main/docker目录下定义Dockerfile，内容如下：
+
+```dockerfile
+FROM openjdk:8-jdk-alpine
+ADD spring-boot-1.0.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+```
+
+这个 Dockerfile 文件比较简单，首先是构建 Jdk 基础环境，接着添加 Spring Boot Jar 到镜像中，接下来详细解释一下每个命令:
+
+FROM行，表示使用 Jdk8 环境 为基础镜像，如果镜像不是本地的会从 DockerHub 进行下载
+ADD行，表示拷贝文件并且重命名
+ENTRYPOINT行，为了缩短 Tomcat 的启动时间，添加java.security.egd的系统属性指向/dev/urandom作为 ENTRYPOINT
+
+到这里我们后端Spring Boot 项目添加 Docker 依赖工作就算完成了。
+	( 4 ) 最后是部署环节，在命令行中依次输入以下命令：
+
+```shell
+mvn package -Dmaven.test.skip=true docker:build
+
+docker run -v /www/wwwroot/www.zhsyy.top/SuperNova:/www/wwwroot/www.zhsyy.top/SuperNova -p 8081:8081 -t supernova/spring-boot
+```
+
+第一个命令是构建docker镜像，这里设置跳过了测试代码，因为我们所写的测试代码是用于测试后端接口的正确性，这与数据库中的内容有着很大的关系，在数据库更改后，测试代码很有可能就失效了。因此我们使用跳过测试的构建命令。
+
+构建好镜像的下一步就是运行该镜像，因此第二个命令则用于运行构建的docker镜像、将端口号映射到8081上并指定挂载点。启动完成之后我们可以使用`docker ps -a`查看正在运行的镜像，如果可以看到我们构建的容器正在运行，则说明后端的部署工作就完成了！
 
 
 
@@ -183,7 +247,7 @@ TODO：请李翀写一下~
 5. 文件管理子页（布局）；
 6. 任务管理子页（布局 + 功能）。
 
-### 李翀
+### 17302010025 李翀，主要负责项目后端，GitHub账号：FDChongli
 
 主要工作包括：
 
