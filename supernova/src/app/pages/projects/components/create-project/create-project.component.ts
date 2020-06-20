@@ -196,6 +196,9 @@ export class CreateProjectComponent {
       if (!flag && sum != control.value) {
         return { error: true, notEqual: true };
       }
+    }else {
+      if (control.value != 0)
+        return { error: true, notEqual: true };
     }
     // console.log("sum : " +sum);
 
