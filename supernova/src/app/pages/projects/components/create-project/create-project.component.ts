@@ -55,7 +55,7 @@ export class CreateProjectComponent {
     this.validateForm = this.fb.group({
       p_name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      c_id: [this.course_id==undefined?null:this.course_id, []],
+      c_id: [this.course_id==undefined?null:this.course_id, [Validators.required]],
       teacher_point: [0, [Validators.required, this.confirmValidator]],
       student_point_self: [0, this.judgeIfUse],
       student_point_mutual: [0, this.judgeIfUse],
@@ -65,6 +65,9 @@ export class CreateProjectComponent {
   }
 
   ngOnInit(): void {
+    // if(this.course_id){
+    //   this.validateForm.controls.c_id.updateValueAndValidity();
+    // }
     // console.log(this.course_id);
     // console.log(this.p_id);
     if (this.type != 'create') {
@@ -75,6 +78,7 @@ export class CreateProjectComponent {
           this.project.description
         );
         this.validateForm.controls.c_id.setValue(this.course_id);
+        // this.validateForm.setControl("c_id",null);
         this.validateForm.controls.teacher_point.setValue(
           this.project.teacher_grade_ratio
         );
@@ -115,14 +119,21 @@ export class CreateProjectComponent {
         for (const key in this.validateForm.controls)
           this.validateForm.controls[key].updateValueAndValidity();
       });
+    }else if (this.course_id){
+      this.validateForm.controls.c_id.setValue(this.course_id);
+      this.validateForm.controls.c_id.updateValueAndValidity();
+      this.addField();
     }
     else
       this.addField();
+    // if(this.course_id){
+    //   this.validateForm.controls.c_id.updateValueAndValidity();
+    // }
   }
 
   judgeIfUse = (control: FormControl): { [s: string]: boolean } => {
     if (this.check_student) {
-      if (!control.value) {
+      if (!control.value && control.value != 0) {
         return { error: true, required: true };
       }
     }

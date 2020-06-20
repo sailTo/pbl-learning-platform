@@ -16,7 +16,7 @@
 
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="c_id">课程名称</nz-form-label>
-    <nz-form-control [nzSpan]="18" nzHasFeedback [nzValidateStatus]="'success'">
+    <nz-form-control [nzSpan]="18" nzHasFeedback>
       <ng-container *ngIf="course_id">
          <input nz-input [value]="course_name" disabled/>
       <input type="hidden" nz-input formControlName="c_id" [value]="course_id" />
