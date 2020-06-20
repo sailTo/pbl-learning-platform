@@ -26,8 +26,8 @@
         <ng-container *ngFor="let f_data of adminTable.data">
           <tr (click)=" startEdit(f_data.p_id)" class="editable-row">
             <ng-container *ngIf="editId !== f_data.p_id">
-
-              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand">
+              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand"></td>
+              <td>
                 {{ f_data.p_id }}
               </td>
               <td>
@@ -70,7 +70,8 @@
             </ng-container>
 
             <ng-container *ngIf="editId === f_data.p_id">
-              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand">
+              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand"></td>
+              <td>
                 {{ f_data.p_id }}
               </td>
               <td>
@@ -113,8 +114,6 @@
                   删除
                 </button>
               </td>
-
-
             </ng-container>
           </tr>
           <tr [nzExpand]="f_data.expand">
@@ -142,7 +141,7 @@
               <input nz-input [(ngModel)]="data.description" style="width: 300px;">
             </td>
             <td>
-              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" nzMax = "100"
+              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" nzMax="100"
                 (ngModelChange)="updateTeacherScore(f_data.p_id)">
               </nz-input-number>
             </td>

@@ -32,6 +32,9 @@ export class AdminProjectComponent implements OnInit {
   ngOnInit(): void {
     this.listofColumns = [
       {
+        name: ''
+      },
+      {
         name: '项目ID',
         sortOrder: null,
         sortFn: (a: ProjectData, b: ProjectData) => {
