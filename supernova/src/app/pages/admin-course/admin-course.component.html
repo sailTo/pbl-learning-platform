@@ -15,7 +15,7 @@
         <th>描述</th>
         <th>状态</th>
         <th>操作</th>
-        <th *ngIf="editId!==-1"> </th>
+        <!-- <th *ngIf="editId!==-1"> </th> -->
       </tr>
     </thead>
 
@@ -30,12 +30,15 @@
           <td>{{ data.point }}</td>
           <td>{{ data.description }}</td>
           <td *ngIf="data.status==0">
+            <nz-badge nzStatus="error"></nz-badge>
             已删除
           </td>
           <td *ngIf="data.status==1">
+            <nz-badge nzStatus="default"></nz-badge>
             未发布
           </td>
           <td *ngIf="data.status==2">
+            <nz-badge nzStatus="success"></nz-badge>
             已发布
           </td>
 
@@ -66,18 +69,15 @@
           </td>
           <td>
             <nz-radio-group [(ngModel)]="data.status" nzName="radiogroup">
-              <label nz-radio nzValue="1">未发布</label>
-              <label nz-radio nzValue="2">已发布</label>
+              <label nz-radio nzValue="1"><nz-badge nzStatus="default"></nz-badge>未发布</label>
+              <label nz-radio nzValue="2"><nz-badge nzStatus="success"></nz-badge>已发布</label>
             </nz-radio-group>
           </td>
 
           <td>
-            <button nz-button nzType="link" *ngIf="data.status!=0" (click)="upload(data)"><i nz-icon nzType="edit"
+            <button nz-button nzType="link" *ngIf="data.status!=0" (click)="upload(data)"><i nz-icon nzType="check"
                 nzTheme="outline"></i>提交</button>
             <nz-divider nzType="vertical"></nz-divider>
-
-            <!-- </td>
-          <td> -->
             <button nz-button nzType="link" *ngIf="data.status!=0" (click)="del(data)" nzDanger><i nz-icon
                 nzType="close" nzTheme="outline"></i>删除</button>
           </td>
