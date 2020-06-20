@@ -27,7 +27,7 @@
           <tr (click)=" startEdit(f_data.p_id)" class="editable-row">
             <ng-container *ngIf="editId !== f_data.p_id">
 
-              <td [nzShowExpand]="f_data.gradeItems" [(nzExpand)]="f_data.expand">
+              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand">
                 {{ f_data.p_id }}
               </td>
               <td>
@@ -70,7 +70,7 @@
             </ng-container>
 
             <ng-container *ngIf="editId === f_data.p_id">
-              <td [nzShowExpand]="f_data.gradeItems" [(nzExpand)]="f_data.expand">
+              <td [nzShowExpand]="f_data.gradeItems.length!=0" [(nzExpand)]="f_data.expand">
                 {{ f_data.p_id }}
               </td>
               <td>
@@ -142,7 +142,7 @@
               <input nz-input [(ngModel)]="data.description" style="width: 300px;">
             </td>
             <td>
-              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" [(nzMax)]="f_data.teacher_grade_ratio"
+              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" nzMax = "100"
                 (ngModelChange)="updateTeacherScore(f_data.p_id)">
               </nz-input-number>
             </td>
