@@ -265,14 +265,14 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
                 return false;
             }
 
-            if(tmp.getSelf_grade_ratio()>0){
+            if(tmp.getMutual_grade_ratio()>0){
                 //如果还有学生没互评/自评完分数，则返回false
                 if(evaluationMapper.searchNotEvaluateNum(p_id)>0){
                     return false;
                 }
             }
         }else{
-            if(tmp.getSelf_grade_ratio()>0){
+            if(tmp.getMutual_grade_ratio()>0){
                 int left = evaluationMapper.searchNotEvaluateNum(p_id)-evaluationMapper.searchNotSelfEvaluateNum(p_id);
 
                 //如果还有学生没互评完分数，则返回false
