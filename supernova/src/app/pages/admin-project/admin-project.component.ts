@@ -124,14 +124,14 @@ export class AdminProjectComponent implements OnInit {
     this.projectService.deleteProject(this.editId).subscribe((data) => {
       if (data.code == 200) {
         this.msgService.success('删除成功!');
+        this.listOfData = this.listOfData.filter(
+          (data) => data.p_id !== this.editId
+        );
+        this.listOfDisplayData = [...this.listOfData];
       } else {
         this.msgService.error('删除失败!');
       }
     });
-    this.listOfData = this.listOfData.filter(
-      (data) => data.p_id !== this.editId
-    );
-    this.listOfDisplayData = [...this.listOfData];
   }
 
   showModal(): void {

@@ -1,21 +1,21 @@
-<nz-descriptions nzTitle="Course Info" nzBordered>
-  <nz-descriptions-item nzTitle="Course Name">{{course.c_name}}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Course Point">{{course.point}}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Course Status">
+<nz-descriptions nzTitle="课程信息" nzBordered>
+  <nz-descriptions-item nzTitle="课程名称">{{course.c_name}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="学分">{{course.point}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="课程状态">
     <nz-badge nzStatus="{{type}}" nzText="{{status}}">
   </nz-badge></nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Teacher Name">
+  <nz-descriptions-item nzTitle="教师名称">
     <span [routerLink]="['/home',course.teacher.u_id]" (click)="destroyModal()">
       <nz-avatar [nzShape]="'square'" nzSrc="{{course.teacher.image}}"></nz-avatar> {{course.teacher.u_name}}
     </span>
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Teacher Description" [nzSpan]="2">
+  <nz-descriptions-item nzTitle="教师简介" [nzSpan]="2">
     {{course.teacher.description}}
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Course Description" [nzSpan]="2">
+  <nz-descriptions-item nzTitle="课程简介" [nzSpan]="2">
     {{course.description}}
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Course Image">
+  <nz-descriptions-item nzTitle="课程封面">
     <nz-avatar [nzShape]="'square'" [nzSize]="100"
                nzSrc="{{course.image_URL}}"></nz-avatar>
   </nz-descriptions-item>
