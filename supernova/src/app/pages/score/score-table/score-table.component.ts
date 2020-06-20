@@ -220,7 +220,12 @@ export class ScoreTableComponent implements OnChanges {
       .getStudentSelfScore(String(this.selectProject.p_id))
       .subscribe((studentselfScoreData) => {
         if (studentselfScoreData.code == 200) {
-          this.listOfData[0].selfScore = studentselfScoreData.data.grade;
+          this.listOfData[0].selfScore = Number(
+            (
+              (+studentselfScoreData.data.grade / 100) *
+              this.selectProject.self_grade_ratio
+            ).toFixed(1)
+          );
 
           this.listOfDisplayData = [...this.listOfData];
         } else {
