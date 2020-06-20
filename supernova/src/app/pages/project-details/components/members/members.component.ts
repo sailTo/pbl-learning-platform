@@ -27,6 +27,8 @@ export class MembersComponent implements OnInit {
   all_submit_button_style: string;
   all_submit_button_disable: boolean;
   all_submit_button_rating: number[];
+  open_self_rating:boolean;
+  open_mutual_rating:boolean;
 
   // u_id:string;
   user: User;
@@ -88,7 +90,9 @@ export class MembersComponent implements OnInit {
     // console.log(
     this.projectService.getProject(this.p_id).subscribe((data) => {
       // console.log(data.data.project);
-      this.ifOpenRating = data.data.project.self_grade_ratio != 0;
+      this.open_self_rating = data.data.project.self_grade_ratio != 0;
+      this.open_mutual_rating = data.data.project.mutual_grade_ratio != 0;
+      this.ifOpenRating = (this.open_self_rating || this.open_mutual_rating);
       // this.ifOpenRating = false;
       if (this.ifOpenRating) this.getMyRating();
       // if (this.user.type == 'admin')
@@ -113,8 +117,25 @@ export class MembersComponent implements OnInit {
             this.ifEdit.push(false);
             this.ifUpdate.push(false);
           } else {
-            this.ifEdit.push(grouper['rating'] == null);
-            this.ifUpdate.push(grouper['rating'] == null);
+            if (grouper['u_id'] == this.user.u_id){
+              if (this.open_self_rating) {
+                this.ifEdit.push(grouper['rating'] == null);
+                this.ifUpdate.push(grouper['rating'] == null);
+              }else {
+                this.ifEdit.push(false);
+                this.ifUpdate.push(false);
+              }
+            }else {
+              if (this.open_mutual_rating) {
+                if (grouper['u_id'] != this.user.u_id){
+                  this.ifEdit.push(grouper['rating'] == null);
+                  this.ifUpdate.push(grouper['rating'] == null);
+                }
+              }else {
+                this.ifEdit.push(false);
+                this.ifUpdate.push(false);
+              }
+            }
           }
         });
         // console.log(this.groupers);
@@ -150,14 +171,16 @@ export class MembersComponent implements OnInit {
       let score = this.groupers.find(
         (group) => group.u_id == this.ratings[index].u_id
       )['rating'];
-      // console.log(this.p_id,u_id,score);
-      this.scoreService
-        .toRating(this.p_id, u_id, score)
-        .subscribe
-        // (data) =>{
-        //   console.log(data);
-        // }
-        ();
+      if ((this.open_self_rating && u_id == this.user.u_id) || (this.open_mutual_rating && u_id != this.user.u_id)){
+        // console.log(this.p_id,u_id,score);
+        this.scoreService
+          .toRating(this.p_id, u_id, score)
+          .subscribe
+          // (data) =>{
+          //   console.log(data);
+          // }
+          ();
+      }
     });
     this.startShowMessages();
     this.all_submit_button_rating = [];
