@@ -82,6 +82,10 @@ export class AdminProjectComponent implements OnInit {
       return;
     }
     var editProject = this.listOfData.find((x) => x.p_id == this.editId);
+    if(editProject.mutual_grade_ratio+editProject.teacher_grade_ratio+editProject.self_grade_ratio!=100){
+      this.msgService.error('评分不符合规则！');
+      return;
+    }
     editProject.expand = false;
     var aproject: Project = {
       p_id: editProject.p_id,
