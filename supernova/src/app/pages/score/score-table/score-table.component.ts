@@ -150,23 +150,82 @@ export class ScoreTableComponent implements OnChanges {
       return;
     }
     this.scoreService
-      .getStudentSelfScore(String(this.selectProject.p_id))
-      .subscribe((studentselfScoreData) => {
-        if (studentselfScoreData.code == 200) {
+      .getStudentDiscussionAndAssignmentNum(String(this.selectProject.p_id))
+      .subscribe((studentDiscussionData) => {
+        if (studentDiscussionData.code == 200) {
           this.listOfData = [];
           this.listOfData.push({
             s_id: this.userService.getUser().u_id,
             s_name: this.userService.getUser().u_name,
-            selfScore: Number(
-              (
-                (+studentselfScoreData.data.grade / 100) *
-                this.selectProject.self_grade_ratio
-              ).toFixed(1)
-            ),
+            discussNum:  studentDiscussionData.data.discussionCount,
+            assignmentDoneNum: studentDiscussionData.data.assignmentDoneCount,
+            selfScore :0,
+            mutualScore:0,
+            teacherAllScore:0
           });
-          this.getStudentMutualScore();
-          this.getStudentTeacherScore();
-          this.getStudentDiscussionAndAssignmentNum();
+          if (this.selectProject.self_grade_ratio !== 0) {
+            this.getStudentSelfScore();
+          }
+          if (this.selectProject.mutual_grade_ratio !== 0) {
+            this.getStudentMutualScore();
+          }
+          if (this.selectProject.teacher_grade_ratio !== 0) {
+             this.getStudentTeacherScore();
+          }
+          
+        } else {    
+            this.msgService.error('获取学生讨论数和任务完成数失败！');
+            this.loading = false;
+        }
+      });
+  }
+
+
+  // getStudentData() {
+  //   if (!this.selectProject.grading_status) {
+  //     this.msgService.info('该项目暂未评分！');
+  //     this.loading = false;
+  //     return;
+  //   }
+  //   this.scoreService
+  //     .getStudentSelfScore(String(this.selectProject.p_id))
+  //     .subscribe((studentselfScoreData) => {
+  //       if (studentselfScoreData.code == 200) {
+  //         this.listOfData = [];
+  //         this.listOfData.push({
+  //           s_id: this.userService.getUser().u_id,
+  //           s_name: this.userService.getUser().u_name,
+  //           selfScore: Number(
+  //             (
+  //               (+studentselfScoreData.data.grade / 100) *
+  //               this.selectProject.self_grade_ratio
+  //             ).toFixed(1)
+  //           ),
+  //         });
+  //         this.getStudentMutualScore();
+  //         this.getStudentTeacherScore();
+  //         this.getStudentDiscussionAndAssignmentNum();
+  //       } else {
+  //         if (studentselfScoreData.code == 209) {
+  //           this.msgService.info('自评分暂未评分！');
+  //           this.loading = false;
+  //         } else {
+  //           this.msgService.error('获取学生自评分失败！');
+  //           this.loading = false;
+  //         }
+  //       }
+  //     });
+  // }
+
+  getStudentSelfScore() {
+    this.scoreService
+      .getStudentSelfScore(String(this.selectProject.p_id))
+      .subscribe((studentselfScoreData) => {
+        if (studentselfScoreData.code == 200) {
+          this.listOfData[0].selfScore =
+          studentselfScoreData.data.grade;
+
+          this.listOfDisplayData = [...this.listOfData];
         } else {
           if (studentselfScoreData.code == 209) {
             this.msgService.info('自评分暂未评分！');
@@ -236,28 +295,7 @@ export class ScoreTableComponent implements OnChanges {
       });
   }
 
-  getStudentDiscussionAndAssignmentNum() {
-    this.scoreService
-      .getStudentDiscussionAndAssignmentNum(String(this.selectProject.p_id))
-      .subscribe((studentDiscussionData) => {
-        if (studentDiscussionData.code == 200) {
-          this.listOfData[0].discussNum =
-            studentDiscussionData.data.discussionCount;
-          this.listOfData[0].assignmentDoneNum =
-            studentDiscussionData.data.assignmentDoneCount;
-
-          this.listOfDisplayData = [...this.listOfData];
-        } else {
-          if (studentDiscussionData.code == 209) {
-            this.msgService.info('互评分暂未评分！');
-            this.loading = false;
-          } else {
-            this.msgService.error('获取学生讨论数和任务完成数失败！');
-            this.loading = false;
-          }
-        }
-      });
-  }
+  
 
   getTeacherData() {
     this.scoreService
