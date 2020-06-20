@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of headerTable.data" >
+        <tr *ngFor="let data of headerTable.data" class="editable-row" >
           <td>{{ data.s_id }}</td>
           <td>{{ data.s_name }}</td>
           <td>{{ data.assignmentDoneNum}}
@@ -47,7 +47,10 @@
           <ng-container *ngIf="!canEdit||editId !== data.s_id||data.haveScored" >
             <ng-container *ngFor="let dynamicData of data.dynamicScore;let i = index">
               <td (click)="startEdit(data.s_id)">
-               {{dynamicData.grade}} /{{gradeItems[i].max_grade}}
+                <div class="editable-cell">
+                   {{dynamicData.grade}} /{{gradeItems[i].max_grade}}
+                </div>
+              
               </td>
             </ng-container>
           </ng-container>

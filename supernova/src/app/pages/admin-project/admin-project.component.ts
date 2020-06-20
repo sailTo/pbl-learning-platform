@@ -83,6 +83,7 @@ export class AdminProjectComponent implements OnInit {
       return;
     }
     var editProject = this.listOfData.find((x)=>x.p_id==this.editId);
+    editProject.expand = false;
     var aproject:Project = {
       p_id: editProject.p_id,
       c_id: editProject.c_id,
@@ -100,6 +101,7 @@ export class AdminProjectComponent implements OnInit {
         if(data.code==200){
           this.msgService.success("修改成功!");
           this.editId = null;
+
         }else{
           this.msgService.error("修改失败!");
           this.editId = null;
