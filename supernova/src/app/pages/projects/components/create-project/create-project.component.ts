@@ -132,8 +132,8 @@ export class CreateProjectComponent {
   change_student_grade(): void {
     this.check_student = !this.check_student;
     if (!this.check_student) {
-      this.validateForm.controls.student_point_mutual.reset();
-      this.validateForm.controls.student_point_self.reset();
+      this.validateForm.controls.student_point_mutual.setValue(0);
+      this.validateForm.controls.student_point_self.setValue(0);
       this.validateForm.controls.student_point_mutual.updateValueAndValidity();
       this.validateForm.controls.student_point_self.updateValueAndValidity();
     }
@@ -148,6 +148,18 @@ export class CreateProjectComponent {
 
   confirmValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
+      if (control.value == 0){
+        if (this.validateForm != null) {
+          let total =
+            parseInt(this.validateForm.controls.student_point_self.value) +
+            parseInt(this.validateForm.controls.student_point_mutual.value);
+          // console.log(total);
+          if (total != 100) {
+            return { error: true, notOneHundred: true };
+          }
+        }
+        return {};
+      }
       return { error: true, required: true };
     }
 
@@ -210,7 +222,7 @@ export class CreateProjectComponent {
   }
 
   resetForm(e: MouseEvent): void {
-    // console.log(this.items);
+    // console.log(this.validateForm.controls);
     e.preventDefault();
     if (this.listOfControl.length > 1) {
       for (let i = 0; i < this.listOfControl.length; i++) {
@@ -228,6 +240,9 @@ export class CreateProjectComponent {
       this.validateForm.controls[key].markAsPristine();
       this.validateForm.controls[key].updateValueAndValidity();
     }
+    this.validateForm.controls.teacher_point.setValue(0);
+    this.validateForm.controls.student_point_mutual.setValue(0);
+    this.validateForm.controls.student_point_self.setValue(0);
   }
 
   addField(e?: MouseEvent): void {
