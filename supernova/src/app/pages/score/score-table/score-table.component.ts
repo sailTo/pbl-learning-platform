@@ -420,7 +420,7 @@ export class ScoreTableComponent implements OnChanges {
     this.scoreService
       .getEvaluateDone(this.selectProject.p_id)
       .subscribe((response) => {
-        const canSubmit = response;
+        const canSubmit = response.data;
 
         if (!canSubmit) {
           this.msgService.info('没有完成所有评分！无法最终提交！');
