@@ -28,7 +28,7 @@
             <ng-container *ngIf="editId !== f_data.p_id">
 
               <td [nzShowExpand]="f_data.gradeItems" [(nzExpand)]="f_data.expand">
-                  {{ f_data.p_id }}
+                {{ f_data.p_id }}
               </td>
               <td>
                 <div class="editable-cell">
@@ -87,32 +87,31 @@
                 <label nz-checkbox [(ngModel)]="f_data.grading_status"></label>
               </td>
               <td>
-                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.self_grade_ratio" nzSize="small">
-                  </nz-input-number>
+                <nz-input-number nz-input nzMin="0" nzMax="100" [(ngModel)]="f_data.self_grade_ratio" nzSize="small">
+                </nz-input-number>
               </td>
               <td>
-                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.mutual_grade_ratio" nzSize="small"></nz-input-number>
+                <nz-input-number nz-input nzMin="0" nzMax="100" [(ngModel)]="f_data.mutual_grade_ratio" nzSize="small">
+                </nz-input-number>
               </td>
               <td>
-                <nz-input-number nz-input nzMin = "0" nzMax="100" [(ngModel)]="f_data.teacher_grade_ratio" nzSize="small"></nz-input-number>
+                <nz-input-number nz-input nzMin="0" nzMax="100" [(ngModel)]="f_data.teacher_grade_ratio" nzSize="small">
+                </nz-input-number>
               </td>
-              <td >
+              <td>
                 <button nz-button nzSize="small" class="login-form-button login-form-margin" nzType="link"
                   (click)="stopEdit()">
-                  <span>
-                    提交
-                  </span>
+                  <!-- <i nz-icon nzType="check" nzTheme="outline"></i> -->
+                  提交
                 </button>
-                <!-- <nz-divider nzType="vertical"></nz-divider> -->
-              </td>
-              <td>
+                <nz-divider nzType="vertical"></nz-divider>
+                <!-- </td>
+              <td> -->
                 <button nz-button nzSize="small" nzType="link" nz-popconfirm nzTitle="确定要删除吗?"
-                (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
-                <span>
+                  (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
+                  <!-- <i nz-icon nzType="close" nzTheme="outline"></i> -->
                   删除
-                </span>
-
-              </button>
+                </button>
               </td>
 
 
@@ -140,15 +139,12 @@
 
           <ng-container *ngIf="editId === f_data.p_id">
             <td>
-              <input nz-input [(ngModel)]="data.description" style="width: 300px;" >
+              <input nz-input [(ngModel)]="data.description" style="width: 300px;">
             </td>
             <td>
-              <nz-input-number
-                [(ngModel)]="data.max_grade" 
-                nzMin = "0" 
-                [(nzMax)]="f_data.teacher_grade_ratio"
+              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" [(nzMax)]="f_data.teacher_grade_ratio"
                 (ngModelChange)="updateTeacherScore(f_data.p_id)">
-                </nz-input-number>
+              </nz-input-number>
             </td>
           </ng-container>
 
@@ -156,22 +152,24 @@
       </tbody>
     </nz-table>
     </tr>
-        </ng-container>
+    </ng-container>
 
 
     </tbody>
-  </nz-table>
+    </nz-table>
   </nz-spin>
 </nz-card>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
-      <input type="text" nz-input placeholder="查找姓名" [(ngModel)]="searchValue" />
-      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
-        查找
-      </button>
-      <button nz-button nzSize="small" (click)="reset()">重置</button>
+      <input type="text" nz-input placeholder="查找项目" [(ngModel)]="searchValue" />
+      <div class="operations">
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+          查找
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">重置</button>
+      </div>
     </div>
   </div>
 </nz-dropdown-menu>
