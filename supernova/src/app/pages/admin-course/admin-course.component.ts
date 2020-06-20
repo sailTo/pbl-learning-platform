@@ -79,6 +79,14 @@ export class AdminCourseComponent implements OnInit {
     this.modalService.create({
       nzTitle: '新建课程',
       nzContent: CreateCourseComponent,
+      // nzAfterClose: () => {
+      //   this.getCourses();
+      // }
+    }).afterClose.subscribe((flag: number) => {
+      if (flag === undefined) {
+        return;
+      }
+      this.getCourses();
     });
   }
 
@@ -92,6 +100,7 @@ export class AdminCourseComponent implements OnInit {
     this.courseService.changeCourse(course).subscribe((response) => {
       console.log(response);
       this.message.success(`课程修改成功`);
+      this.getCourses();
     });
 
     this.editId = -1;
@@ -102,6 +111,7 @@ export class AdminCourseComponent implements OnInit {
     this.courseService.changeCourse(course).subscribe((response) => {
       console.log(response);
       this.message.success(`课程删除成功`);
+      this.getCourses();
     });
 
     this.editId = -1;
