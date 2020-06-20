@@ -102,15 +102,17 @@ export class AdminComponent implements OnInit {
           this.msgService.success("修改成功！");
           this.storePassords[index] = editUser.password;
           editUser.password = null;
+          this.editId = null;
         }else{
           this.msgService.error("修改失败");
+          this.editId = null;
         }
         
       }
      
     );
     
-    this.editId = null;
+   
     
   }
 
