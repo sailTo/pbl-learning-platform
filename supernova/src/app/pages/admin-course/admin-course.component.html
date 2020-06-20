@@ -56,9 +56,9 @@
             <input nz-input [(ngModel)]="data.c_name">
           </td>
           <td>
-            <nz-select [(ngModel)]="data.teacher" (ngModelChange)="onChange($event)" nzAllowClear
+            <nz-select [(ngModel)]="data.t_id" (ngModelChange)="onChange($event)" nzAllowClear
               nzPlaceHolder="Choose">
-              <nz-option *ngFor="let teacher of allTeachers" [nzValue]="teacher" [nzLabel]="teacher.u_name"></nz-option>
+              <nz-option *ngFor="let teacher of allTeachers" [nzValue]="teacher.u_id" [nzLabel]="teacher.u_name"></nz-option>
             </nz-select>
           </td>
           <td>
@@ -69,8 +69,8 @@
           </td>
           <td>
             <nz-radio-group [(ngModel)]="data.status" nzName="radiogroup">
-              <label nz-radio nzValue="1"><nz-badge nzStatus="default"></nz-badge>未发布</label>
-              <label nz-radio nzValue="2"><nz-badge nzStatus="success"></nz-badge>已发布</label>
+              <label nz-radio [nzValue]="1"><nz-badge nzStatus="default"></nz-badge>未发布</label>
+              <label nz-radio [nzValue]="2"><nz-badge nzStatus="success"></nz-badge>已发布</label>
             </nz-radio-group>
           </td>
 
