@@ -93,13 +93,13 @@ export class ScoreTableComponent implements OnChanges {
       .getColumnItems(String(this.selectProject.p_id))
       .subscribe((data) => {
         if (data.code == 200) {
-          //获得动态的表头项
+          // 获得动态的表头项
 
           this.gradeItems = data.data.grades.sort(
             (a, b) => a.item_id - b.item_id
           );
           this.gradeItems.forEach((gradeItem) => {
-            var acolumn: columnItem = {
+            let acolumn: columnItem = {
               name: gradeItem.description,
             };
             this.listofColumns.push(acolumn);
@@ -157,11 +157,11 @@ export class ScoreTableComponent implements OnChanges {
           this.listOfData.push({
             s_id: this.userService.getUser().u_id,
             s_name: this.userService.getUser().u_name,
-            discussNum:  studentDiscussionData.data.discussionCount,
+            discussNum: studentDiscussionData.data.discussionCount,
             assignmentDoneNum: studentDiscussionData.data.assignmentDoneCount,
-            selfScore :0,
-            mutualScore:0,
-            teacherAllScore:0
+            selfScore: 0,
+            mutualScore: 0,
+            teacherAllScore: 0,
           });
           if (this.selectProject.self_grade_ratio !== 0) {
             this.getStudentSelfScore();
@@ -170,16 +170,14 @@ export class ScoreTableComponent implements OnChanges {
             this.getStudentMutualScore();
           }
           if (this.selectProject.teacher_grade_ratio !== 0) {
-             this.getStudentTeacherScore();
+            this.getStudentTeacherScore();
           }
-          
-        } else {    
-            this.msgService.error('获取学生讨论数和任务完成数失败！');
-            this.loading = false;
+        } else {
+          this.msgService.error('获取学生讨论数和任务完成数失败！');
+          this.loading = false;
         }
       });
   }
-
 
   // getStudentData() {
   //   if (!this.selectProject.grading_status) {
@@ -222,8 +220,7 @@ export class ScoreTableComponent implements OnChanges {
       .getStudentSelfScore(String(this.selectProject.p_id))
       .subscribe((studentselfScoreData) => {
         if (studentselfScoreData.code == 200) {
-          this.listOfData[0].selfScore =
-          studentselfScoreData.data.grade;
+          this.listOfData[0].selfScore = studentselfScoreData.data.grade;
 
           this.listOfDisplayData = [...this.listOfData];
         } else {
@@ -265,13 +262,13 @@ export class ScoreTableComponent implements OnChanges {
       .getStudentTeacherScore(String(this.selectProject.p_id))
       .subscribe((studentTeacherScoreData) => {
         if (studentTeacherScoreData.code == 200) {
-          var temp = [];
+          let temp = [];
           studentTeacherScoreData.data.grades = studentTeacherScoreData.data.grades.sort(
             (a, b) => +a.item_id - +b.item_id
           );
-          var teacherAllScore = 0;
+          let teacherAllScore = 0;
           studentTeacherScoreData.data.grades.forEach((teacherItem) => {
-            var item: DynamicScore = {
+            let item: DynamicScore = {
               item_id: teacherItem.item_id,
               item_name: '',
               grade: +teacherItem.grade,
@@ -294,8 +291,6 @@ export class ScoreTableComponent implements OnChanges {
         }
       });
   }
-
-  
 
   getTeacherData() {
     this.scoreService
@@ -388,7 +383,7 @@ export class ScoreTableComponent implements OnChanges {
               this.listOfData[index].dynamicScore = this.listOfData[
                 index
               ].dynamicScore.sort((a, b) => +a.item_id - +b.item_id);
-              var teacherAllScore = 0;
+              let teacherAllScore = 0;
               this.listOfData[index].dynamicScore.forEach((item) => {
                 if (item.grade == null) {
                   item.grade = 0;
@@ -429,9 +424,8 @@ export class ScoreTableComponent implements OnChanges {
       });
   }
   updateTeacherScore(id: string) {
-    var aitem: ItemData = this.listOfData.find((x) => x.s_id == id);
-    var teacherAllScore = 0;
-    var valid = true;
+    let aitem: ItemData = this.listOfData.find((x) => x.s_id == id);
+    let teacherAllScore = 0;
     aitem.dynamicScore.forEach((item) => {
       teacherAllScore += +item.grade;
     });
@@ -454,7 +448,6 @@ export class ScoreTableComponent implements OnChanges {
     );
   }
   confirm(): void {
-    // let canSubmit = true;
     this.scoreService
       .getEvaluateDone(this.selectProject.p_id)
       .subscribe((response) => {
@@ -467,18 +460,6 @@ export class ScoreTableComponent implements OnChanges {
 
         const teacherScores = [];
         this.listOfData.forEach((data) => {
-          // if (!data.haveScored) {
-          //   canSubmit = false;
-          // }
-          // if (this.selectProject.self_grade_ratio !== 0 && data.selfScore === 0) {
-          //   canSubmit = false;
-          // }
-          // if (
-          //   this.selectProject.mutual_grade_ratio !== 0 &&
-          //   data.mutualScore === 0
-          // ) {
-          //   canSubmit = false;
-          // }
           teacherScores.push({
             u_id: data.s_id,
             p_id: this.selectProject.p_id,

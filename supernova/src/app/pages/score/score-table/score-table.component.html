@@ -32,7 +32,7 @@
         <ng-container *ngIf="canEdit&&editId === data.s_id&&!data.haveScored">
           <ng-container *ngFor="let dynamicData of data.dynamicScore;let i = index">
             <td>
-              <nz-input-number [nzMax]="gradeItems[i].max_grade" nzMin="0" [(ngModel)]="dynamicData.grade"
+              <nz-input-number [nzMax]="gradeItems[i].max_grade" [nzMin]="0" [(ngModel)]="dynamicData.grade"
                 (ngModelChange)="updateTeacherScore(data.s_id)">
               </nz-input-number>
               /{{gradeItems[i].max_grade}}
