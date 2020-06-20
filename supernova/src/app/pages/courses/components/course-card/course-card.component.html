@@ -14,7 +14,8 @@
 </ng-template>
 
 <ng-template #avatarTemplate>
-  <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]">
+  <nz-avatar [nzSrc]=course.teacher.image [nzAlt]=course.teacher.u_name [routerLink]="['/home', course.teacher.u_id]"
+  [nzTooltipTitle]="'教师：' + course.teacher.u_name" nzTooltipPlacement="topCenter" nz-tooltip>
   </nz-avatar><br/>
 </ng-template>
 

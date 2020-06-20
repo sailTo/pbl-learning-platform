@@ -4,7 +4,8 @@
 </nz-card>
 
 <ng-template #avatarTemplate>
-  <nz-avatar [nzSrc]=leader.image [nzAlt]=leader.u_name [routerLink]="['/home', leader.u_id]">
+  <nz-avatar [nzSrc]=leader.image [nzAlt]=leader.u_name [routerLink]="['/home', leader.u_id]"
+  [nzTooltipTitle]="'组长：' + leader.u_name" nzTooltipPlacement="topCenter" nz-tooltip>
   </nz-avatar><br />
 </ng-template>
 
