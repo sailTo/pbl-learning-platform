@@ -128,7 +128,7 @@ export class MembersComponent implements OnInit {
 
   startShowMessages(): void {
     this.message
-      .loading('Action in progress', { nzDuration: 1000 })
+      .loading('正在提交评分', { nzDuration: 1000 })
       .onClose!.pipe(
         concatMap(
           () => this.message.success('评分成功', { nzDuration: 1500 }).onClose!

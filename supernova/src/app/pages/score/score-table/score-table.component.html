@@ -21,7 +21,6 @@
           <ng-container *ngIf="userType!='student'">
             /{{maxAssignmentDone}}
           </ng-container>
-
         </td>
         <td>{{ data.discussNum }}
           <ng-container *ngIf="userType!='student'">
@@ -49,7 +48,7 @@
             </td>
           </ng-container>
         </ng-container>
-        <td>
+        <td *ngIf="selectProject.teacher_grade_ratio !== 0">
           <!-- 教师总分 -->
           {{data.teacherAllScore}}/{{selectProject.teacher_grade_ratio}}
         </td>

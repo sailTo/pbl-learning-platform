@@ -104,9 +104,11 @@ export class ScoreTableComponent implements OnChanges {
             };
             this.listofColumns.push(acolumn);
           });
-          this.listofColumns.push({
-            name: '教师评分总分',
-          });
+          if (this.selectProject.teacher_grade_ratio !== 0) {
+            this.listofColumns.push({
+              name: '教师评分总分',
+            });
+          }
           this.listofColumns.push({
             name: '总分',
             sortOrder: null,
@@ -414,44 +416,52 @@ export class ScoreTableComponent implements OnChanges {
     );
   }
   confirm(): void {
-    var canSubmit = true;
-    var teacherScores = [];
-    this.listOfData.forEach((data) => {
-      if (!data.haveScored) {
-        canSubmit = false;
-      }
-      if (this.selectProject.self_grade_ratio !== 0 && data.selfScore === 0) {
-        canSubmit = false;
-      }
-      if (
-        this.selectProject.mutual_grade_ratio !== 0 &&
-        data.mutualScore === 0
-      ) {
-        canSubmit = false;
-      }
-      var temp = {
-        u_id: data.s_id,
-        p_id: this.selectProject.p_id,
-        is_group_leader: null,
-        self_grade: data.selfScore,
-        mutual_grade: data.mutualScore,
-        teacher_grade: data.teacherAllScore,
-      };
-      teacherScores.push(temp);
-    });
+    // let canSubmit = true;
+    this.scoreService
+      .getEvaluateDone(this.selectProject.p_id)
+      .subscribe((response) => {
+        const canSubmit = response;
 
-    if (canSubmit) {
-      this.scoreService.updateTeacherGrade(teacherScores).subscribe((data) => {
-        if (data.code == 200) {
-          this.msgService.success('项目评分最终提交成功！');
-          this.canEdit = false;
-          this.selectProject.grading_status = true;
-        } else {
-          this.msgService.error('项目评分最终提交失败！');
+        if (!canSubmit) {
+          this.msgService.info('没有完成所有评分！无法最终提交！');
+          return;
         }
+
+        const teacherScores = [];
+        this.listOfData.forEach((data) => {
+          // if (!data.haveScored) {
+          //   canSubmit = false;
+          // }
+          // if (this.selectProject.self_grade_ratio !== 0 && data.selfScore === 0) {
+          //   canSubmit = false;
+          // }
+          // if (
+          //   this.selectProject.mutual_grade_ratio !== 0 &&
+          //   data.mutualScore === 0
+          // ) {
+          //   canSubmit = false;
+          // }
+          teacherScores.push({
+            u_id: data.s_id,
+            p_id: this.selectProject.p_id,
+            is_group_leader: null,
+            self_grade: data.selfScore,
+            mutual_grade: data.mutualScore,
+            teacher_grade: data.teacherAllScore,
+          });
+        });
+
+        this.scoreService
+          .updateTeacherGrade(teacherScores)
+          .subscribe((data) => {
+            if (data.code === 200) {
+              this.msgService.success('项目评分最终提交成功！');
+              this.canEdit = false;
+              this.selectProject.grading_status = true;
+            } else {
+              this.msgService.error('项目评分最终提交失败！');
+            }
+          });
       });
-    } else {
-      this.msgService.info('没有完成所有评分！无法最终提交！');
-    }
   }
 }

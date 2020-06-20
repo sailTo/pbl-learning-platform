@@ -155,56 +155,56 @@ export class ScoreService {
     );
   }
 
-  getStudentSelfScore(p_id:string){
+  getStudentSelfScore(p_id: string) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: p_id,
       },
     });
-    return this.http.get<Response<{ grade: number}>>(
+    return this.http.get<Response<{ grade: number }>>(
       `${environment.apiUrl}/api/searchEvaluateBySelf`,
       { params }
     );
   }
 
-  getStudentMutualScore(p_id:string){
+  getStudentMutualScore(p_id: string) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: p_id,
       },
     });
-    return this.http.get<Response<{ grade: number}>>(
+    return this.http.get<Response<{ grade: number }>>(
       `${environment.apiUrl}/api/searchEvaluateByOther`,
       { params }
     );
   }
 
-  getStudentTeacherScore(p_id:string){
+  getStudentTeacherScore(p_id: string) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: p_id,
       },
     });
-    return this.http.get<Response<{ grades:{item_id:string,grade:number}[] }>>(
-      `${environment.apiUrl}/api/searchEvaluateByTeacher`,
-      { params }
-    );
+    return this.http.get<
+      Response<{ grades: { item_id: string; grade: number }[] }>
+    >(`${environment.apiUrl}/api/searchEvaluateByTeacher`, { params });
   }
 
-  getStudentDiscussionAndAssignmentNum(p_id:string){
+  getStudentDiscussionAndAssignmentNum(p_id: string) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
         p_id: p_id,
       },
     });
-    return this.http.get<Response<{discussionCount:number,assignmentDoneCount:number}>>(
-      `${environment.apiUrl}/api/getStudentDiscussonAndAssignmentCountByPid`,
-      { params }
-    );
+    return this.http.get<
+      Response<{ discussionCount: number; assignmentDoneCount: number }>
+    >(`${environment.apiUrl}/api/getStudentDiscussonAndAssignmentCountByPid`, {
+      params,
+    });
   }
 
   // getStudentAssignmentNum(p_id:string){
@@ -220,22 +220,18 @@ export class ScoreService {
   //   );
   // }
 
-  updateTeacherGrade(teacherScores:any){
+  updateTeacherGrade(teacherScores: any) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        student_project_list:JSON.stringify(teacherScores)
+        student_project_list: JSON.stringify(teacherScores),
       },
     });
-    return this.http.put<Response<{}>>(`${environment.apiUrl}/api/updateTeacherGrade`, params);
+    return this.http.put<Response<{}>>(
+      `${environment.apiUrl}/api/updateTeacherGrade`,
+      params
+    );
   }
-
-
-
-
-
-
-
 
   getRating(projectId: number) {
     const params = new HttpParams({
@@ -272,6 +268,18 @@ export class ScoreService {
       }
     );
   }
+
+  getEvaluateDone(projectId: number) {
+    const params = {
+      pbl_token: String(this.userService.getUser().token),
+      p_id: String(projectId),
+    };
+    return this.http.get<Response<boolean>>(
+      `${environment.apiUrl}/api/evaluateDone`,
+      { params }
+    );
+  }
+
   transformRequest(data) {
     var str = '';
     for (var i in data) {
