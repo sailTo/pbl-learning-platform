@@ -115,6 +115,7 @@ export class DescriptionBorderComponent implements OnInit {
           temp.token = JSON.parse(localStorage.getItem("User")).token;
           localStorage.setItem("User", JSON.stringify(temp));
           this.msg.success("上传头像成功！");
+          this.ngOnInit();
         } else {
           this.msg.error("上传头像失败!");
         }
@@ -158,6 +159,7 @@ export class DescriptionBorderComponent implements OnInit {
           var temp = this.datas;
           temp.token = JSON.parse(localStorage.getItem("User")).token;
           localStorage.setItem("User", JSON.stringify(temp));
+          this.ngOnInit();
         } else {
           //error
           this.msg.error("恢复失败！");
