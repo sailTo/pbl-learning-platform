@@ -34,10 +34,6 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
     @Resource
     private StudentAssignmentMapper studentAssignmentMapper;
     @Resource
-    private StudentGradeMapper studentGradeMapper;
-    @Resource
-    private FileMapper fileMapper;
-    @Resource
     private UserMapper userMapper;
     @Resource
     private EvaluationMapper evaluationMapper;
@@ -239,11 +235,6 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
 
     @Override
     public void updateTeacherGrade(StudentProject studentProject) {
-//        StudentProject studentProject = new StudentProject();
-//        studentProject.setP_id(p_id);
-//        studentProject.setU_id(u_id);
-//        studentProject = studentProjectMapper.selectOne(studentProject);
-//        studentProject.setTeacher_grade(teacher_grade);
         studentProjectMapper.updateByPrimaryKeySelective(studentProject);
     }
 

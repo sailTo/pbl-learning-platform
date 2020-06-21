@@ -6,12 +6,6 @@ import com.SuperNova.model.File;
 import java.util.List;
 
 public interface FileMapper extends Mapper<File> {
-//    /**
-//     * 搜索所有文件
-//     * @param p_id
-//     * @return
-//     */
-//    List<File> searchFiles(int p_id);
 
     /**
      * 搜索文件的最大id，用于存储下一个文件(maxid+1.xxx),如果没有则返回0
@@ -27,10 +21,4 @@ public interface FileMapper extends Mapper<File> {
      */
     void createFile(File file);
 
-//    /**
-//     * 删除文件
-//     * @param p_id
-//     * @param f_id
-//     */
-//    void deleteFile(int p_id,int f_id);
 }

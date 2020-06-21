@@ -23,21 +23,6 @@ public interface StudentAssignmentMapper extends Mapper<StudentAssignment> {
      * @return
      */
     List<Boolean> searchAssignmentUrge(@Param(value = "p_id") int p_id,@Param(value = "s_id")  String s_id);
-//    /**
-//     * 修改学生完成该任务的状态
-//     * @param p_id
-//     * @param s_id
-//     * @return
-//     */
-//    void updateStudentDone(int p_id,String s_id,int a_id,boolean doneOrNot);
-
-//    /**
-//     * 搜索学生完成该任务的状态
-//     * @param p_id
-//     * @param s_id
-//     * @return
-//     */
-//    boolean searchStudentDone(int p_id,String s_id,int a_id);
 
     /**
      * 催促未完成的同学完成任务

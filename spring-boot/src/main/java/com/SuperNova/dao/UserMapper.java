@@ -15,10 +15,4 @@ public interface UserMapper extends Mapper<User> {
      */
     boolean idExist(String u_id);
 
-//    /**
-//     * 获得所有用户信息(管理员)
-//     * User:u_id，type，u_name，gender，description
-//     * @return
-//     */
-//    List<User> getAllUser();
 }
