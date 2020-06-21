@@ -131,7 +131,7 @@ export class UserRegisterComponent implements OnDestroy {
           // 可用
           observer.next(null);
         } else {
-          if (data.code === 208) {
+          if (data.code === 209) {
             // 已有
             observer.next({ hasExist: true, error: true });
           } else {
