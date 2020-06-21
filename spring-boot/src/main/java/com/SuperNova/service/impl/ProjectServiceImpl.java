@@ -223,7 +223,8 @@ public class ProjectServiceImpl extends AbstractService<Project> implements Proj
                 flag.setU_id(leaderId);
                 flag.setA_id(a.getA_id());
                 flag.setP_id(a.getP_id());
-                if (studentAssignmentMapper.selectOne(flag).getUrge())
+                StudentAssignment if_Null_tmp = studentAssignmentMapper.selectOne(flag);
+                if (if_Null_tmp != null && if_Null_tmp.getUrge())
                     t.setUrge(true);
                 else
                     t.setUrge(false);
