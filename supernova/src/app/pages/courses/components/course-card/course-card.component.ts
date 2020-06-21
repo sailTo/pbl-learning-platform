@@ -209,9 +209,7 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
       nzContent: CreateCourseComponent,
       nzComponentParams:{
         setType: type,
-        // p_id: p_id,
         course_id: c_id,
-        // course_name: this.c_name,
       }
     })
       .afterClose.subscribe((flag: number) => {

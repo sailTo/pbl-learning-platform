@@ -48,6 +48,7 @@ export class ProjectCardComponent implements OnInit {
   loading = true;
   currentUser: User = this.userService.getUser();
 
+  //这个颜色list用于不同card颜色的使用（遍历使用）
   colorMapping = {
     0: '#52c41a', // red
     1: '#13c2c2', // orange
@@ -163,8 +164,6 @@ export class ProjectCardComponent implements OnInit {
   }
 
   showModal(type: string, p_id: number): void {
-    // let course_name =
-    // this.isVisible = true;
     this.modalService.create({
       nzTitle: '项目详情',
       nzContent: CreateProjectComponent,
