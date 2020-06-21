@@ -14,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class MyCourseCardComponent implements OnInit {
   currentUser: User = this.userService.getUser();
   courses: Course[];
-  
+
   pageIndex: number = 1;
   pageSize: number = 8;
   total: number;
@@ -26,10 +26,10 @@ export class MyCourseCardComponent implements OnInit {
     private courseService: CourseService,
     private userService: UserService,
     private modalService: NzModalService,
-  ){
+  ) {
 
   }
-  ngOnInit(){
+  ngOnInit() {
     this.getCourses();
   }
   getCourses(): void {

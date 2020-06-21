@@ -5,7 +5,6 @@ import {
   SimpleChanges,
   OnChanges,
 } from '@angular/core';
-// import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { columnItem } from '../../../models/colunmItem';
 import { Project } from 'src/app/models/project';
 import { ScoreService } from '../../../services/score.service';
@@ -86,14 +85,13 @@ export class ScoreTableComponent implements OnChanges {
       });
     }
 
-    // alert(JSON.stringify(this.selectProject));
     this.canEdit =
       this.userType != 'student' && !this.selectProject.grading_status;
     this.scoreService
       .getColumnItems(String(this.selectProject.p_id))
       .subscribe((data) => {
         if (data.code == 200) {
-          // 获得动态的表头项
+          //获得动态的表头项
 
           this.gradeItems = data.data.grades.sort(
             (a, b) => a.item_id - b.item_id
@@ -141,7 +139,6 @@ export class ScoreTableComponent implements OnChanges {
         }
       });
 
-    // this.listOfData = data;
   }
   getStudentData() {
     if (!this.selectProject.grading_status) {
@@ -172,49 +169,13 @@ export class ScoreTableComponent implements OnChanges {
           if (this.selectProject.teacher_grade_ratio !== 0) {
             this.getStudentTeacherScore();
           }
+
         } else {
           this.msgService.error('获取学生讨论数和任务完成数失败！');
           this.loading = false;
         }
       });
   }
-
-  // getStudentData() {
-  //   if (!this.selectProject.grading_status) {
-  //     this.msgService.info('该项目暂未评分！');
-  //     this.loading = false;
-  //     return;
-  //   }
-  //   this.scoreService
-  //     .getStudentSelfScore(String(this.selectProject.p_id))
-  //     .subscribe((studentselfScoreData) => {
-  //       if (studentselfScoreData.code == 200) {
-  //         this.listOfData = [];
-  //         this.listOfData.push({
-  //           s_id: this.userService.getUser().u_id,
-  //           s_name: this.userService.getUser().u_name,
-  //           selfScore: Number(
-  //             (
-  //               (+studentselfScoreData.data.grade / 100) *
-  //               this.selectProject.self_grade_ratio
-  //             ).toFixed(1)
-  //           ),
-  //         });
-  //         this.getStudentMutualScore();
-  //         this.getStudentTeacherScore();
-  //         this.getStudentDiscussionAndAssignmentNum();
-  //       } else {
-  //         if (studentselfScoreData.code == 209) {
-  //           this.msgService.info('自评分暂未评分！');
-  //           this.loading = false;
-  //         } else {
-  //           this.msgService.error('获取学生自评分失败！');
-  //           this.loading = false;
-  //         }
-  //       }
-  //     });
-  // }
-
   getStudentSelfScore() {
     this.scoreService
       .getStudentSelfScore(String(this.selectProject.p_id))
@@ -297,6 +258,8 @@ export class ScoreTableComponent implements OnChanges {
       });
   }
 
+
+
   getTeacherData() {
     this.scoreService
       .getCountDiscussion(String(this.selectProject.p_id))
@@ -322,7 +285,6 @@ export class ScoreTableComponent implements OnChanges {
       .subscribe((assignmentData) => {
         if (assignmentData.code == 200) {
           this.maxAssignmentDone = assignmentData.data.totalAssignmentNum;
-          // assignmentData.data.doneInformations = assignmentData.data.doneInformations.sort((a,b)=>a.s_id.localeCompare(b.s_id));
           this.listOfData.forEach((data) => {
             data.assignmentDoneNum = 0;
           });
@@ -331,7 +293,6 @@ export class ScoreTableComponent implements OnChanges {
               this.listOfData.find(
                 (x) => x.s_id == doneInformation.s_id
               ).assignmentDoneNum = doneInformation.doneNum;
-              // this.listOfData[index].assignmentDoneNum = doneInformation.doneNum==undefined?0:doneInformation.doneNum;
             });
           }
 
@@ -395,7 +356,6 @@ export class ScoreTableComponent implements OnChanges {
                 } else {
                   this.listOfData[index].haveScored = true;
                 }
-                // item.grade = item.grade==null?0:item.grade;
                 teacherAllScore += item.grade;
                 if (!this.listOfData[index].haveScored) {
                   this.listOfData[index].haveScored = false;
@@ -453,6 +413,7 @@ export class ScoreTableComponent implements OnChanges {
     );
   }
   confirm(): void {
+    // let canSubmit = true;
     this.scoreService
       .getEvaluateDone(this.selectProject.p_id)
       .subscribe((response) => {

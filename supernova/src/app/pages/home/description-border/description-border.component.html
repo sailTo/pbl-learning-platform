@@ -1,85 +1,72 @@
-
-
-    
-
- <div style="text-align: center;" #default>
+<div style="text-align: center;" #default>
   <div>
     <nz-avatar [nzSrc]="datas.image" [nzSize]="172"></nz-avatar>
   </div>
   <br>
   <br>
   <br>
- <div *ngIf="canEdit&&editStatus">
-  <nz-upload
-  class="avatar-uploader"
-  [nzShowUploadList]="false"
-  [nzBeforeUpload]="beforeUpload"
-  (nzChange)="handleChange($event)"
->
-<button nz-button><i nz-icon nzType="upload"></i>上传你的头像</button>
-</nz-upload>
-<button nz-button (click)="resetAvatar()">恢复默认头像</button>
-</div>
+  <div *ngIf="canEdit&&editStatus">
+    <nz-upload class="avatar-uploader" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+      (nzChange)="handleChange($event)">
+      <button nz-button><i nz-icon nzType="upload"></i>上传你的头像</button>
+    </nz-upload>
+    <button nz-button (click)="resetAvatar()">恢复默认头像</button>
+  </div>
 
 
 </div>
-    <div *ngIf="!canEdit||!editStatus;else editTemplate">
+<div *ngIf="!canEdit||!editStatus;else editTemplate">
 
-      <span style="float: right;" *ngIf="canEdit">
-        <button nz-button  nzType="default" (click)="startEdit()">
-          编辑
-      </button>
-      </span>
-      <nz-descriptions nzTitle="个人信息" nzBordered>
-        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">{{datas.u_name}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">{{datas.u_id}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="性别" [nzSpan]="2">{{datas.gender}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="个人简介" >
-          {{datas.description}}
-        </nz-descriptions-item>
-      </nz-descriptions>
-    </div>
-      <ng-template #editTemplate>
-        
-      <nz-descriptions nzTitle="个人信息" nzBordered >
-        <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
-          <input type="text" nz-input [(ngModel)]="datas.u_name" />
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">
-          {{datas.u_id}}
-          <!-- <input type="text" nz-input [(ngModel)]="datas.id" /> -->
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="性别" [nzSpan]="2">
-          <!-- <input type="text" nz-input [(ngModel)]="datas.gender" /> -->
-          <nz-radio-group [(ngModel)]="datas.gender" >
-          
-            <label nz-radio nzValue="男">男</label>
-            <label nz-radio nzValue="女">女</label>
-            <label nz-radio nzValue="不愿透露">不愿透露</label>
-        </nz-radio-group>
-          <!-- 改成单选框，选择性别 -->
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="个人简介" >
-          <input type="text" nz-input [(ngModel)]="datas.description" />
-        </nz-descriptions-item>
-      </nz-descriptions>
-      <br>
-      <div nz-row nzJustify="space-around">
-      <span nz-col [nzSpan]="4"style="text-align: center;">
-        <button nz-button  nzType="primary" (click)="saveEdit()" class="primaryButton" >
-          保存
-      </button>
-      </span>
-      <span nz-col [nzSpan]="4" style="text-align: center;" >
-      <app-changepassword></app-changepassword>
-      </span>
-      <span nz-col [nzSpan]="4" class="primaryButton" style="text-align: center;">
-      <button nz-button  nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()" class="primaryButton">
-          撤销
+  <span style="float: right;" *ngIf="canEdit">
+    <button nz-button nzType="default" (click)="startEdit()">
+      编辑
     </button>
-      </span>
-      </div>
-      </ng-template>
-    
-   
-  
+  </span>
+  <nz-descriptions nzTitle="个人信息" nzBordered>
+    <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">{{datas.u_name}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">{{datas.u_id}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="性别" [nzSpan]="2">{{datas.gender}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="个人简介">
+      {{datas.description}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+</div>
+<ng-template #editTemplate>
+
+  <nz-descriptions nzTitle="个人信息" nzBordered>
+    <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
+      <input type="text" nz-input [(ngModel)]="datas.u_name" />
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="学工号" [nzSpan]="2">
+      {{datas.u_id}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="性别" [nzSpan]="2">
+      <nz-radio-group [(ngModel)]="datas.gender">
+
+        <label nz-radio nzValue="男">男</label>
+        <label nz-radio nzValue="女">女</label>
+        <label nz-radio nzValue="不愿透露">不愿透露</label>
+      </nz-radio-group>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="个人简介">
+      <input type="text" nz-input [(ngModel)]="datas.description" />
+    </nz-descriptions-item>
+  </nz-descriptions>
+  <br>
+  <div nz-row nzJustify="space-around">
+    <span nz-col [nzSpan]="4" style="text-align: center;">
+      <button nz-button nzType="primary" (click)="saveEdit()" class="primaryButton">
+        保存
+      </button>
+    </span>
+    <span nz-col [nzSpan]="4" style="text-align: center;">
+      <app-changepassword></app-changepassword>
+    </span>
+    <span nz-col [nzSpan]="4" class="primaryButton" style="text-align: center;">
+      <button nz-button nzType="primary" nz-popconfirm nzTitle="确定要撤销吗?" (nzOnConfirm)="cancelEdit()"
+        class="primaryButton">
+        撤销
+      </button>
+    </span>
+  </div>
+</ng-template>

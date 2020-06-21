@@ -6,7 +6,6 @@ import { User } from '../models/user';
 import { Response } from '../models/generic-response';
 import { Md5 } from 'ts-md5/dist/md5';
 import { environment } from 'src/environments/environment';
-// import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

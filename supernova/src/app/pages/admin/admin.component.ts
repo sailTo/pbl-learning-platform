@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
     private adminService: AdminService,
     private homeService: HomeService,
     private msgService: NzMessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.adminService
@@ -83,8 +83,6 @@ export class AdminComponent implements OnInit {
   }
 
   stopEdit(): void {
-    // var hasEditId = this.editId;
-
     var editUser = this.listOfDisplayData.find((x) => x.u_id === this.editId);
     var index = this.listOfDisplayData.findIndex((x) => x.u_id === this.editId);
     //向数据库更新信息

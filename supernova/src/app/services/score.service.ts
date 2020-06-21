@@ -15,19 +15,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ScoreService {
-  constructor(private http: HttpClient, private userService: UserService) {}
-  getProjectScoreById(project_id: string): any {
-    //to do
-    // const params = new HttpParams({fromObject:{
-    //   pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
-    //   p_id : project_id,
-    // }});
-    //  this.http.get<any>(`${environment.apiUrl}/api/countAssignmentDone`,{params}).subscribe(
-    //    (data) =>{
-    //      this.ret_data =  data;
-    //    }
-    //  );
-  }
+  constructor(private http: HttpClient, private userService: UserService) { }
   getAllMyCourses() {
     const params = new HttpParams({
       fromObject: {
@@ -116,7 +104,6 @@ export class ScoreService {
         p_id: p_id,
       },
     });
-    // return this.http.get<Response<{selfAndMutualInformations:{s_id:string,s_name:string,selfScore:number,mutualScore:number}[]}>>(`${environment.apiUrl}/api/SelfAndMutualevaluateScore`,{params});
     return this.http.get<
       Response<{
         allItems: {
@@ -207,18 +194,6 @@ export class ScoreService {
     });
   }
 
-  // getStudentAssignmentNum(p_id:string){
-  //   const params = new HttpParams({
-  //     fromObject: {
-  //       pbl_token: String(this.userService.getUser().token),
-  //       p_id: p_id,
-  //     },
-  //   });
-  //   return this.http.get<Response<{assignmentNum:number}>>(
-  //     `'${environment.apiUrl}'`,
-  //     { params }
-  //   );
-  // }
 
   updateTeacherGrade(teacherScores: any) {
     const params = new HttpParams({

@@ -16,7 +16,7 @@ export class ChangepasswordComponent {
   constructor(
     private messageservice: NzMessageService,
     private homeService: HomeService
-  ) {}
+  ) { }
 
   showModal(): void {
     this.isVisible = true;
@@ -52,7 +52,6 @@ export class ChangepasswordComponent {
         this.error = '您输入的密码不正确！';
       }
 
-      // this.changepasswordService.changePassword(this.oldPassword,this.newPassword);
     }
 
     this.isConfirmLoading = false;

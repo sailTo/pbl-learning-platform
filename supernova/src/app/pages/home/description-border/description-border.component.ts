@@ -54,9 +54,6 @@ export class DescriptionBorderComponent implements OnInit {
 
   cancelEdit() {
     this.datas = JSON.parse(JSON.stringify(this.copydata));
-    // Object.assign( this.copydata,this.datas);
-
-    // this.datas = this.copydata;
     this.editStatus = false;
   }
 
@@ -100,12 +97,10 @@ export class DescriptionBorderComponent implements OnInit {
   };
 
   handleChange(file: UploadFile): void {
-    // alert(1);
     if (!this.imgValid) {
       return;
     }
     this.loading = true;
-    // Get this url from response in real world.
     this.homeServicce.uploadImg(file, this.datas.u_id).subscribe(
       (data: any) => {
         if (data.body.code == 200) {
@@ -124,7 +119,6 @@ export class DescriptionBorderComponent implements OnInit {
     );
   }
   getUser(u_id: string) {
-    // alert(u_id);
     this.homeServicce.getUser(u_id).subscribe(
       (data) => {
         if (data.code == 200) {
@@ -149,7 +143,6 @@ export class DescriptionBorderComponent implements OnInit {
 
   resetAvatar() {
     //将头像恢复为默认的头像
-    // this.datas.image = this.defaultImg;
     this.homeServicce.uploadImg(null, this.datas.u_id).subscribe(
       (data: any) => {
         if (data.body.code == 200) {
@@ -167,8 +160,4 @@ export class DescriptionBorderComponent implements OnInit {
       }
     );
   }
-
-  // changePassword(){
-  //   //添加弹窗，弹窗中是表单
-  // }
 }

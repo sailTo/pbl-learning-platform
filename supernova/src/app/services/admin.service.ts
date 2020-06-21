@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Response } from '../models/generic-response';
-import { FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import {Project} from '../models/project';
-import {Course} from '../models/course';
+import { Project } from '../models/project';
+import { Course } from '../models/course';
 import { GradeItem } from '../models/GradeItem';
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getUserInformation() {
     const params = new HttpParams({
       fromObject: {
@@ -23,7 +22,7 @@ export class AdminService {
       { params }
     );
   }
-  getAllTeachers(){
+  getAllTeachers() {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
@@ -60,37 +59,37 @@ export class AdminService {
     );
   }
 
-  getAllProjects(){
+  getAllProjects() {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
       },
     });
-    return this.http.get<Response<{projectList : Project[]}>>(
+    return this.http.get<Response<{ projectList: Project[] }>>(
       `${environment.apiUrl}/api/getAllProjects`,
       { params }
     );
   }
 
-  getAllCourses(){
+  getAllCourses() {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
       },
     });
-    return this.http.get<Response<{courseList : Course[]}>>(
+    return this.http.get<Response<{ courseList: Course[] }>>(
       `${environment.apiUrl}/api/getAllCourses`,
       { params }
     );
   }
 
-  getAllGradeItems(){
+  getAllGradeItems() {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
       },
     });
-    return this.http.get<Response<{itemList : {[p_id:number]:GradeItem[]}}>>(
+    return this.http.get<Response<{ itemList: { [p_id: number]: GradeItem[] } }>>(
       `${environment.apiUrl}/api/getAllGradeItems`,
       { params }
     );

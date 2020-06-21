@@ -28,4 +28,4 @@ import { CoursesModule } from '../courses/courses.module';
     CoursesModule,
   ],
 })
-export class HomeModule {}
+export class HomeModule { }

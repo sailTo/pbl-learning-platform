@@ -27,7 +27,7 @@ export class AdminProjectComponent implements OnInit {
     private msgService: NzMessageService,
     private projectService: ProjectService,
     private modalService: NzModalService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.listofColumns = [
@@ -65,9 +65,6 @@ export class AdminProjectComponent implements OnInit {
       {
         name: '操作',
       },
-      // {
-      //   name: '',
-      // },
     ];
     this.getAllProjects();
   }
@@ -85,7 +82,7 @@ export class AdminProjectComponent implements OnInit {
       return;
     }
     var editProject = this.listOfData.find((x) => x.p_id == this.editId);
-    if(editProject.mutual_grade_ratio+editProject.teacher_grade_ratio+editProject.self_grade_ratio!=100){
+    if (editProject.mutual_grade_ratio + editProject.teacher_grade_ratio + editProject.self_grade_ratio != 100) {
       this.msgService.error('评分不符合规则！');
       return;
     }
@@ -142,7 +139,6 @@ export class AdminProjectComponent implements OnInit {
   }
 
   showModal(): void {
-    // this.isVisible = true;
     this.modalService
       .create({
         nzTitle: '新建项目',
@@ -209,7 +205,6 @@ export class AdminProjectComponent implements OnInit {
   getAllGradeItems() {
     this.adminService.getAllGradeItems().subscribe((ItemData) => {
       if (ItemData.code == 200) {
-        //to do
         this.listOfData.forEach((data) => {
           data.gradeItems = ItemData.data.itemList[data.p_id];
           data.expand = false;

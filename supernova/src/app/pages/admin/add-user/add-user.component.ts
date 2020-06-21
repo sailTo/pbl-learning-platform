@@ -1,8 +1,8 @@
-import { Component, OnInit, Output,EventEmitter, } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms'; 
-import {AdminService} from '../../../services/admin.service';
-import {User} from '../../../models/user';
-import {environment} from '../../../../environments/environment'
+import { Component, OnInit, Output, EventEmitter, } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AdminService } from '../../../services/admin.service';
+import { User } from '../../../models/user';
+import { environment } from '../../../../environments/environment'
 import { NzMessageService } from 'ng-zorro-antd';
 import { Md5 } from 'ts-md5';
 @Component({
@@ -13,31 +13,29 @@ import { Md5 } from 'ts-md5';
 export class AddUserComponent implements OnInit {
   isVisible = false;
   loading = false;
-  validateForm:FormGroup;
+  validateForm: FormGroup;
   error = "";
-  idError  = "";
+  idError = "";
   @Output() change = new EventEmitter();
   constructor(
     private fb: FormBuilder,
-    private adminService : AdminService,
-    private msgService : NzMessageService
+    private adminService: AdminService,
+    private msgService: NzMessageService
   ) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       id: [null, [
-      Validators.pattern('[0-9]+') ,
-      Validators.maxLength(10),
-      Validators.minLength(3),
-      // this.isIdValidValidator(),
-      Validators.required]],
-      
+        Validators.pattern('[0-9]+'),
+        Validators.maxLength(10),
+        Validators.minLength(3),
+        Validators.required]],
+
       name: [null, [
         Validators.maxLength(6),
         Validators.pattern('[^0-9]+'),
         Validators.required]],
       gender: [null, [Validators.required]],
-      // type:[null,[Validators.required]],
       password: [null, [
         Validators.minLength(6),
         Validators.maxLength(16),
@@ -55,9 +53,9 @@ export class AddUserComponent implements OnInit {
   showModal(): void {
     this.isVisible = true;
   }
-  handleOk(){
-    this.loading =true;
-    if(this.validateForm.invalid){
+  handleOk() {
+    this.loading = true;
+    if (this.validateForm.invalid) {
       return;
     }
     for (const i in this.validateForm.controls) {
@@ -65,7 +63,7 @@ export class AddUserComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
     var comb_u_id;
-    switch(this.validateForm.controls.type.value){
+    switch (this.validateForm.controls.type.value) {
       case 'student':
         comb_u_id = "S" + this.validateForm.controls.id.value;
         break;
@@ -76,26 +74,26 @@ export class AddUserComponent implements OnInit {
         comb_u_id = "A" + this.validateForm.controls.id.value;
         break;
     }
-     
-    var newUser:User = {
-        u_id: comb_u_id,
-        u_name: this.validateForm.controls.name.value,
-        gender :this.validateForm.controls.gender.value,
-        type : this.validateForm.controls.type.value,
-        description :"",
-        image:environment.defaultImgPath,
-        password : (String)(Md5.hashStr(this.validateForm.controls.password.value)),
-        status: true 
+
+    var newUser: User = {
+      u_id: comb_u_id,
+      u_name: this.validateForm.controls.name.value,
+      gender: this.validateForm.controls.gender.value,
+      type: this.validateForm.controls.type.value,
+      description: "",
+      image: environment.defaultImgPath,
+      password: (String)(Md5.hashStr(this.validateForm.controls.password.value)),
+      status: true
     }
     this.adminService.addNewUser(newUser).subscribe(
-      (data) =>{
-        if(data.code==200){
+      (data) => {
+        if (data.code == 200) {
           this.msgService.success("添加成功！");
           this.change.emit();
-        }else{
+        } else {
           this.msgService.error("添加失败！");
         }
-        this.loading =false;
+        this.loading = false;
         this.isVisible = false;
       }
     )

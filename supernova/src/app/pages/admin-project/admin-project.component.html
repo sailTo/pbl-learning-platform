@@ -81,7 +81,6 @@
                 <input nz-input [(ngModel)]="f_data.p_name" nzSize="small">
               </td>
               <td>
-                <!-- <input [(ngModel)]="f_data.description"> -->
                 <input nz-input [(ngModel)]="f_data.description" nzSize="small">
               </td>
               <td>
@@ -102,15 +101,11 @@
               <td>
                 <button nz-button nzSize="small" class="login-form-button login-form-margin" nzType="link"
                   (click)="stopEdit()">
-                  <!-- <i nz-icon nzType="check" nzTheme="outline"></i> -->
                   提交
                 </button>
                 <nz-divider nzType="vertical"></nz-divider>
-                <!-- </td>
-              <td> -->
                 <button nz-button nzSize="small" nzType="link" nz-popconfirm nzTitle="确定要删除吗?"
                   (nzOnConfirm)="deleteProject()" nzPopconfirmPlacement="bottom">
-                  <!-- <i nz-icon nzType="close" nzTheme="outline"></i> -->
                   删除
                 </button>
               </td>

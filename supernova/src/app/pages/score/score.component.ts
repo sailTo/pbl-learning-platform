@@ -43,7 +43,6 @@ export class ScoreComponent implements OnInit {
       if (data.code == 200) {
         this.courseData = data.data.courses;
 
-        // alert(JSON.stringify(this.courseData));
         this.courseData.forEach((acourse) => {
           this.projectService
             .findProjectsByCourseId(acourse.c_id)
@@ -73,10 +72,5 @@ export class ScoreComponent implements OnInit {
     this.selectedProject = this.projectData[this.selectedCourse_id].find(
       (x) => x.p_id == this.selectedProject_id
     );
-
-    //获得选择的课程id ，并向数据库请求获得选课的学生以及对应的评分
-    // if(this.selectedProject!=null){
-    //    this.scoreService.getProjectScoreById(this.selectedProject)
-    // }
   }
 }

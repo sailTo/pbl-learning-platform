@@ -7,7 +7,6 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Response } from '../models/generic-response';
 import { filter } from 'rxjs/operators';
@@ -17,10 +16,8 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeService {
   current_user: Observable<User>;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getUser(u_id2: string) {
-    //  const user_id =  JSON.parse(localStorage.getItem("User")).u_id;
-    //  alert(user_id);
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
@@ -39,11 +36,6 @@ export class HomeService {
         content: JSON.stringify(user),
       },
     });
-    // const params = {
-    //   "pbl_token": String(JSON.parse(localStorage.getItem("User")).token),
-    //   "messages": JSON.stringify(user),
-    //   "image" : changeImage
-    // }
 
     return this.http.put<any>(`${environment.apiUrl}/api/changeMyInformation`, params);
   }
@@ -63,7 +55,6 @@ export class HomeService {
       'Access-Control-Allow-Headers':
         'Content-Type,Access-Token,Authorization,ybg',
     });
-    // return this.http.put<Response<{img:string}>>(`${environment.apiUrl}/api/changeMyImage`,params,headers);
     const req = new HttpRequest(
       'PUT',
       `${environment.apiUrl}/api/changeMyImage`,
