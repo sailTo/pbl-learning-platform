@@ -6,12 +6,10 @@ import {
   HttpResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { User } from 'src/app/models/user';
 
 import { File } from '../models/file';
 import { Response } from '../models/generic-response';
 import { UserService } from './user.service';
-import { UploadFile } from 'ng-zorro-antd/upload';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 

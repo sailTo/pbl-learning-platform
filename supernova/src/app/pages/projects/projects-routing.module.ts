@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', component: ProjectsComponent },
   {
     path: ':c_id',
-    component: ProjectsComponent
+    component: ProjectsComponent,
   },
 ];
 

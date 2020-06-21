@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+import { UserService } from './user.service';
+
+import { GradeItem } from '../models/GradeItem';
 import { Project } from '../models/project';
 import { Response } from '../models/generic-response';
-import { Discussion } from '../models/discussion';
+
 import { environment } from '../../environments/environment';
-import { Reply } from '../models/reply';
-import { UserService } from './user.service';
-import { GradeItem } from '../models/GradeItem';
-import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root',
@@ -29,17 +28,11 @@ export class ProjectService {
     );
   }
 
-  findProjectsByCourseId(
-    courseId: number
-    // pageIndex: number, pageSize: number
-  ) {
+  findProjectsByCourseId(courseId: number) {
     const params = new HttpParams({
       fromObject: {
-        // pbl_token: String(JSON.parse(localStorage.getItem("User")).token),
         pbl_token: this.userService.getUser().token,
         c_id: String(courseId),
-        // pageIndex: String(pageIndex),
-        // pageSize: String(pageSize)
       },
     });
     return this.http.get<
@@ -78,11 +71,6 @@ export class ProjectService {
   }
 
   addProject(project: Project, items: GradeItem[]) {
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
     const params = {
       pbl_token: String(this.userService.getUser().token),
       project: JSON.stringify(project),
@@ -99,15 +87,10 @@ export class ProjectService {
     );
   }
 
-  joinProject(p_id: number){
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
+  joinProject(p_id: number) {
     const params = {
       pbl_token: String(this.userService.getUser().token),
-      p_id: p_id
+      p_id: p_id,
     };
     return this.http.post<Response<any>>(
       `${environment.apiUrl}/api/joinProject`,
@@ -121,11 +104,6 @@ export class ProjectService {
   }
 
   changeProject(project: Project, items: GradeItem[]) {
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
     const params = {
       pbl_token: String(this.userService.getUser().token),
       project: JSON.stringify(project),

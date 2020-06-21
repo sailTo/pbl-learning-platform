@@ -23,15 +23,15 @@ export class CoursesComponent implements OnInit {
     teacher: '我教的课',
   };
 
-  type: string = 'my';
+  type = 'my';
   myCourseTabTitle: string = this.myTabTitle[this.currentUser.type];
-  otherCourseTabTitle: string = '其它课程';
+  otherCourseTabTitle = '其它课程';
 
-  pageIndex: number = 1;
-  pageSize: number = 8;
+  pageIndex = 1;
+  pageSize = 8;
   total: number;
 
-  numOfCardsARow: number = 4;
+  numOfCardsARow = 4;
 
   constructor(
     private courseService: CourseService,

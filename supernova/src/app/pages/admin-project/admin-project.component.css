@@ -1,22 +1,24 @@
 .editable-row:hover .editable-cell {
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    padding: 4px 11px;
-  }
-.search-box button {
-    margin-top: 8px;
-    margin-left: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
 }
 
-  .editable-cell {
-    position: relative;
-    padding: 5px 12px;
-    cursor: pointer;
-  }
+.search-box button {
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.editable-cell {
+  position: relative;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
 .search-box {
-    padding: 8px;
+  padding: 8px;
 }
 
 .search-box .operations {
-    text-align: right;
+  text-align: right;
 }

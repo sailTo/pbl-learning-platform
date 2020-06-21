@@ -152,17 +152,12 @@ export class UserRegisterComponent implements OnDestroy {
     }
 
     this.loading = true;
-    const data = this.form.value;
     this.userService.register(this.form).subscribe((data2) => {
-      // alert(data2.code==200);
       if (data2.code === 200) {
-        // alert(data2.user);
         let ret_user;
-
         ret_user = data2.data.user;
         ret_user.token = data2.message;
         ret_user.image = data2.data.image;
-        // TODO: 替换掉local storage实现
         localStorage.setItem('User', JSON.stringify(ret_user));
         this.router.navigate(['/home']);
       } else {
@@ -170,7 +165,6 @@ export class UserRegisterComponent implements OnDestroy {
       }
       this.loading = false;
     });
-    // this.msg.info('抱歉，尚未开放注册哦！');
   }
 
   ngOnDestroy(): void {

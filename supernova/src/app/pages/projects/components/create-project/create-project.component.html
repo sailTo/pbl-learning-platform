@@ -3,7 +3,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="p_name">项目名称</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback nzErrorTip="请输入项目名称">
-      <input nz-input formControlName="p_name" placeholder="请输入项目名称"/>
+      <input nz-input formControlName="p_name" placeholder="请输入项目名称" />
     </nz-form-control>
   </nz-form-item>
 
@@ -18,25 +18,24 @@
     <nz-form-label [nzSpan]="6" nzRequired nzFor="c_id">课程名称</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback>
       <ng-container *ngIf="course_id">
-         <input nz-input [value]="course_name" disabled/>
-      <input type="hidden" nz-input formControlName="c_id" [value]="course_id" />
+        <input nz-input [value]="course_name" disabled />
+        <input type="hidden" nz-input formControlName="c_id" [value]="course_id" />
       </ng-container>
 
       <ng-container *ngIf="!course_id">
-        <nz-select  nzPlaceHolder="请选择课程" formControlName="c_id">
-        <nz-option *ngFor="let course of courses" [nzValue]="course.c_id" [nzLabel]="course.c_name"></nz-option>
-      </nz-select>
+        <nz-select nzPlaceHolder="请选择课程" formControlName="c_id">
+          <nz-option *ngFor="let course of courses" [nzValue]="course.c_id" [nzLabel]="course.c_name"></nz-option>
+        </nz-select>
       </ng-container>
-      
+
     </nz-form-control>
   </nz-form-item>
-  
+
   <nz-form-item>
     <nz-form-label [nzSpan]="6" nzRequired nzFor="teacher_point">教师评分</nz-form-label>
     <nz-form-control [nzSpan]="18" nzHasFeedback [nzErrorTip]="teacherGrading">
-      <nz-input-number formControlName="teacher_point" nzPlaceHolder="请输入教师评分"
-                       [nzMin]="0" [nzMax]="100" [nzStep]="1" nzPrecisionMode="toFixed"
-      ></nz-input-number>
+      <nz-input-number formControlName="teacher_point" nzPlaceHolder="请输入教师评分" [nzMin]="0" [nzMax]="100" [nzStep]="1"
+        nzPrecisionMode="toFixed"></nz-input-number>
       <ng-template #teacherGrading let-control>
         <ng-container *ngIf="control.hasError('required')">
           请输入教师评分
@@ -51,60 +50,47 @@
     </nz-form-control>
   </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label nzRequired [nzSpan]="6">自评互评</nz-form-label>
-        <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplSelf" [nzSpan]="8">
-          <nz-input-number formControlName="student_point_self" nzPlaceHolder="自评占比"
-                           [nzMin]="0" [nzMax]="100" [nzStep]="1"  (ngModelChange)="updateConfirmValidator()"
-          ></nz-input-number>
-          <ng-template #pointErrorTplSelf let-control>
-          <ng-container *ngIf="control.hasError('required')">
-            请输入自评得分
-          </ng-container>
-        </ng-template>
-        </nz-form-control>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSpan]="6">自评互评</nz-form-label>
+    <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplSelf" [nzSpan]="8">
+      <nz-input-number formControlName="student_point_self" nzPlaceHolder="自评占比" [nzMin]="0" [nzMax]="100" [nzStep]="1"
+        (ngModelChange)="updateConfirmValidator()"></nz-input-number>
+      <ng-template #pointErrorTplSelf let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入自评得分
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
 
-        <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplMut" [nzSpan]="10">
-          <nz-input-number formControlName="student_point_mutual" nzPlaceHolder="互评占比"
-                           [nzMin]="0" [nzMax]="100" [nzStep]="1" (ngModelChange)="updateConfirmValidator()"
-          ></nz-input-number>
-          <ng-template #pointErrorTplMut let-control>
-          <ng-container *ngIf="control.hasError('required')">
-            请输入互评得分
-          </ng-container>
-        </ng-template>
-        </nz-form-control>
-        <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" (click)="change_student_grade()" ></nz-switch>
-      </nz-form-item>
+    <nz-form-control [hidden]="!check_student" nzHasFeedback [nzErrorTip]="pointErrorTplMut" [nzSpan]="10">
+      <nz-input-number formControlName="student_point_mutual" nzPlaceHolder="互评占比" [nzMin]="0" [nzMax]="100"
+        [nzStep]="1" (ngModelChange)="updateConfirmValidator()"></nz-input-number>
+      <ng-template #pointErrorTplMut let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入互评得分
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" (click)="change_student_grade()"></nz-switch>
+  </nz-form-item>
 
 
   <nz-form-item *ngFor="let control of listOfControl; let i = index">
     <nz-form-label [nzOffset]="2" *ngIf="i == 0">细化评分项 </nz-form-label>
 
-    <nz-form-control
-      [nzXs]="24"
-      [nzSm]="20"
-      [nzOffset]="i == 0 ? 0 : 6"
-      [nzSpan]="24"
-      nzErrorTip="请输入描述或者删除"
-    >
-      <input
-        class="passenger-input"
-        nz-input
-        placeholder="请输入细化评分项描述"
-        [attr.id]="control.id"
-        [formControlName]="control.controlInstance"
-      />
+    <nz-form-control [nzXs]="24" [nzSm]="20" [nzOffset]="i == 0 ? 0 : 6" [nzSpan]="24" nzErrorTip="请输入描述或者删除">
+      <input class="passenger-input" nz-input placeholder="请输入细化评分项描述" [attr.id]="control.id"
+        [formControlName]="control.controlInstance" />
     </nz-form-control>
 
     <nz-form-control>
-      <nz-input-number class="value-input"
-        [formControlName]="control.controlInstance+'_id'" [hidden]="true"></nz-input-number>
+      <nz-input-number class="value-input" [formControlName]="control.controlInstance+'_id'" [hidden]="true">
+      </nz-input-number>
     </nz-form-control>
 
     <nz-form-control [nzSpan]="8" nzErrorTip="该项不能为空">
       <nz-input-number [nzMin]="0" [nzMax]="100" [nzStep]="1" [attr.id]="control.id"
-                       [formControlName]="control.controlInstance+'_value'" (ngModelChange)="updateConfirmValidator()">
+        [formControlName]="control.controlInstance+'_value'" (ngModelChange)="updateConfirmValidator()">
       </nz-input-number>
     </nz-form-control>
     <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
@@ -123,7 +109,8 @@
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button (click)="destroyModal()">取消</button>
       <button nz-button (click)="resetForm($event)">重置</button>
-      <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="submitForm(validateForm.value)">提交</button>
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid"
+        (click)="submitForm(validateForm.value)">提交</button>
     </nz-form-control>
   </nz-form-item>
 </form>

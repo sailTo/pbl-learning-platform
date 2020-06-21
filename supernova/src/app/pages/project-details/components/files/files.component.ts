@@ -46,7 +46,7 @@ export class FilesComponent implements OnInit {
     private route: ActivatedRoute,
     private message: NzMessageService,
     private fileService: FileService,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {

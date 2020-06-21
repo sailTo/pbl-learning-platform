@@ -16,8 +16,8 @@ import { CourseService } from 'src/app/services/course.service';
 
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
-import {CreateCourseComponent} from '../create-course/create-course.component';
-import {ShowCourseComponent} from "../show-course/show-course.component";
+import { CreateCourseComponent } from '../create-course/create-course.component';
+import { ShowCourseComponent } from '../show-course/show-course.component';
 
 @Component({
   selector: 'app-course-card',
@@ -38,11 +38,11 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
   @ViewChild('actionDelete') delete: TemplateRef<void>;
   @ViewChild('actionResume') resume: TemplateRef<void>;
 
-    BADGE_STATUS = {
-        1: 'default',
-        2: 'success',
-        0: 'error',
-    };
+  BADGE_STATUS = {
+    1: 'default',
+    2: 'success',
+    0: 'error',
+  };
 
   // 课程card下的控制按键列表
   actions: TemplateRef<void>[] = [];
@@ -107,9 +107,6 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
     };
 
     this.actions = PANEL_TYPE_USER[this.type][this.currentUser.type];
-
-    //仅用于测试编辑课程
-    // this.actions.push(this.edit);
   }
 
   showJoinConfirm(): void {
@@ -202,32 +199,33 @@ export class CourseCardComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  showModal(type:string, c_id:number): void {
+  showModal(type: string, c_id: number): void {
     // this.isVisible = true;
-    this.modalService.create({
-      nzTitle: '课程详情',
-      nzContent: CreateCourseComponent,
-      nzComponentParams:{
-        setType: type,
-        course_id: c_id,
-      }
-    })
+    this.modalService
+      .create({
+        nzTitle: '课程详情',
+        nzContent: CreateCourseComponent,
+        nzComponentParams: {
+          setType: type,
+          course_id: c_id,
+        },
+      })
       .afterClose.subscribe((flag: number) => {
-      if (flag === undefined) {
-        return;
-      }
-      this.change.emit();
-    });
+        if (flag === undefined) {
+          return;
+        }
+        this.change.emit();
+      });
   }
 
   showDetail(): void {
     this.modalService.create({
-      nzWidth:'60%',
+      nzWidth: '60%',
       nzTitle: '课程详情',
       nzContent: ShowCourseComponent,
-      nzComponentParams:{
+      nzComponentParams: {
         course: this.course,
-      }
+      },
     });
   }
 }

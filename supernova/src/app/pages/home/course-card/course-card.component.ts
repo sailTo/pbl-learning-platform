@@ -7,48 +7,43 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-mycourse-card',
   templateUrl: './course-card.component.html',
-  styleUrls: ['./course-card.component.css']
+  styleUrls: ['./course-card.component.css'],
 })
-
-
 export class MyCourseCardComponent implements OnInit {
   currentUser: User = this.userService.getUser();
   courses: Course[];
 
-  pageIndex: number = 1;
-  pageSize: number = 8;
+  pageIndex = 1;
+  pageSize = 8;
   total: number;
 
-  numOfCardsARow: number = 4;
-
+  numOfCardsARow = 4;
 
   constructor(
     private courseService: CourseService,
     private userService: UserService,
-    private modalService: NzModalService,
-  ) {
-
-  }
+    private modalService: NzModalService
+  ) {}
   ngOnInit() {
     this.getCourses();
   }
   getCourses(): void {
-    this.courseService.getCourses('my', this.currentUser.u_id, this.pageIndex, this.pageSize).subscribe((response) => {
-      this.courses = response.data.courses.list;
-      const teachers = response.data.teachers.list;
-      this.total = response.data.total;
+    this.courseService
+      .getCourses('my', this.currentUser.u_id, this.pageIndex, this.pageSize)
+      .subscribe((response) => {
+        this.courses = response.data.courses.list;
+        const teachers = response.data.teachers.list;
+        this.total = response.data.total;
 
-      // assign teacher to course
-      this.courses.forEach((course, index) => {
-        course.teacher = teachers[index];
-      })
-    });
+        // assign teacher to course
+        this.courses.forEach((course, index) => {
+          course.teacher = teachers[index];
+        });
+      });
   }
-
 
   onPageIndexChange(pageIndex: number) {
     this.pageIndex = pageIndex;
     this.getCourses();
   }
-
 }

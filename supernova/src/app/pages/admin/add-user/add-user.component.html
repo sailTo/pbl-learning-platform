@@ -11,7 +11,6 @@
   <ng-template #modalContent>
     <nz-spin [nzSpinning]="loading">
       <form nz-form [formGroup]="validateForm">
-
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">学工号</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="学工号输入有误！学工号只能为数字！">
@@ -69,8 +68,6 @@
       </form>
       <div *ngIf="error" class="">{{error}}</div>
     </nz-spin>
-
-
   </ng-template>
 
   <ng-template #modalFooter>

@@ -1,14 +1,6 @@
 <nz-card [nzLoading]="loading">
     <nz-card-tab>
         <nz-tabset nzLinkRouter [nzLinkExact]="false" nzSize="large" [nzTabBarExtraContent]="extraTemplate">
-            <!-- <nz-tab nzForceRender *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
-                <ng-template #titleTemplate>
-                    <a nz-tab-link [routerLink]="tab.routerLink"
-                        [queryParams]="tab.queryParams">
-                        <i nz-icon [nzType]="tab.iconType"></i>{{tab.tabName}}
-                    </a>
-                </ng-template>
-            </nz-tab> -->
             <nz-tab>
                 <a nz-tab-link [routerLink]="['tasks']"
                     [queryParams]="{ p_id: p_id, p_name: p_name, leaderId: leaderId, groupers: stringifyGroupers() }">

@@ -57,53 +57,6 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  // getTabs(): void {
-  //   this.tabs = [
-  //     {
-  //       tabName: '任务列表',
-  //       routerLink: ['tasks'],
-  //       queryParams: {
-  //         p_id: this.p_id,
-  //         p_name: this.p_name,
-  //         leaderId: this.leaderId,
-  //         groupers: this.stringifyGroupers(),
-  //       },
-  //       iconType: 'unordered-list',
-  //     },
-  //     {
-  //       tabName: '成员列表',
-  //       routerLink: ['members'],
-  //       queryParams: {
-  //         p_id: this.p_id,
-  //         p_name: this.p_name,
-  //         leaderId: this.leaderId,
-  //         groupers: this.stringifyGroupers(),
-  //       },
-  //       iconType: 'user',
-  //     },
-  //     {
-  //       tabName: '讨论空间',
-  //       routerLink: ['discussions'],
-  //       queryParams: {
-  //         p_id: this.p_id,
-  //         p_name: this.p_name,
-  //         groupers: this.stringifyGroupers(),
-  //       },
-  //       iconType: 'comment',
-  //     },
-  //     {
-  //       tabName: '文件管理',
-  //       routerLink: ['files'],
-  //       queryParams: {
-  //         p_id: this.p_id,
-  //         p_name: this.p_name,
-  //         groupers: this.stringifyGroupers(),
-  //       },
-  //       iconType: 'download',
-  //     },
-  //   ];
-  // }
-
   stringifyGroupers(): string {
     return JSON.stringify(this.groupers);
   }

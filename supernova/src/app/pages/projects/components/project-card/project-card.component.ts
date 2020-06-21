@@ -17,8 +17,7 @@ import { User } from 'src/app/models/user';
 import { ProjectService } from '../../../../services/project.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { CreateProjectComponent } from '../create-project/create-project.component';
-import {ShowProjectComponent} from "../show-project/show-project.component";
-
+import { ShowProjectComponent } from '../show-project/show-project.component';
 
 @Component({
   selector: 'app-project-card',
@@ -48,7 +47,7 @@ export class ProjectCardComponent implements OnInit {
   loading = true;
   currentUser: User = this.userService.getUser();
 
-  //这个颜色list用于不同card颜色的使用（遍历使用）
+  // 这个颜色list用于不同card颜色的使用（遍历使用）
   colorMapping = {
     0: '#52c41a', // red
     1: '#13c2c2', // orange
@@ -141,7 +140,7 @@ export class ProjectCardComponent implements OnInit {
 
     this.actions = PANEL_TYPE_USER[this.currentUser.type];
 
-    //此处push仅用于测试
+    // 此处push仅用于测试
     // this.actions.push(this.edit);
   }
 
@@ -151,7 +150,9 @@ export class ProjectCardComponent implements OnInit {
       .subscribe((response) => {
         this.groupers = response.data.groupers;
         this.leaderId = response.data.leader;
-        this.leader = this.groupers.find(grouper => grouper.u_id === this.leaderId);
+        this.leader = this.groupers.find(
+          (grouper) => grouper.u_id === this.leaderId
+        );
 
         this.initControlPanel();
 
@@ -187,15 +188,15 @@ export class ProjectCardComponent implements OnInit {
     });
   }
 
-  showDetails(p_id: number){
-      this.modalService.create({
-        nzTitle: '项目详情',
-        nzContent: ShowProjectComponent,
-        nzWidth: '70%',
-        nzComponentParams: {
-          p_id,
-          course_name: this.c_name,
-        },
-      });
+  showDetails(p_id: number) {
+    this.modalService.create({
+      nzTitle: '项目详情',
+      nzContent: ShowProjectComponent,
+      nzWidth: '70%',
+      nzComponentParams: {
+        p_id,
+        course_name: this.c_name,
+      },
+    });
   }
 }

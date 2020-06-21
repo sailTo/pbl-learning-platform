@@ -2,8 +2,8 @@
     <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>任务ID</nz-form-label>
         <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="rowIdErrorTpl">
-            <nz-input-number formControlName="rowId" [nzMin]="1" [nzMax]="rowNum"
-                [nzPrecision]="0" nzPrecisionMode="toFixed"></nz-input-number>
+            <nz-input-number formControlName="rowId" [nzMin]="1" [nzMax]="rowNum" [nzPrecision]="0"
+                nzPrecisionMode="toFixed"></nz-input-number>
             <ng-template #rowIdErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                     请输入任务ID！

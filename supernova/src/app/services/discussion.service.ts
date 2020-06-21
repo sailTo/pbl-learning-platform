@@ -5,7 +5,6 @@ import { Discussion } from '../models/discussion';
 import { Response } from '../models/generic-response';
 import { UserService } from './user.service';
 import { environment } from '../../environments/environment';
-import { Rating } from '../models/rating';
 
 @Injectable({
   providedIn: 'root',
@@ -33,9 +32,12 @@ export class DiscussionService {
         pbl_token: String(this.userService.getUser().token),
       },
     });
-    return this.http.get<Response<{ replies: Reply[] }>>(`${environment.apiUrl}/api/searchReply`, {
-      params,
-    });
+    return this.http.get<Response<{ replies: Reply[] }>>(
+      `${environment.apiUrl}/api/searchReply`,
+      {
+        params,
+      }
+    );
   }
 
   deleteDiscussion(d_id: number, p_id: number) {
@@ -50,9 +52,11 @@ export class DiscussionService {
       }),
       params,
     };
-    this.http.delete(`${environment.apiUrl}/api/deleteDiscussion`, options).subscribe((s) => {
-      console.log(s);
-    });
+    this.http
+      .delete(`${environment.apiUrl}/api/deleteDiscussion`, options)
+      .subscribe((s) => {
+        console.log(s);
+      });
   }
 
   deleteReply(r_id: number) {
@@ -66,20 +70,17 @@ export class DiscussionService {
       }),
       params,
     };
-    this.http.delete(`${environment.apiUrl}/api/deleteReply`, options).subscribe((s) => {
-      console.log(s);
-    });
+    this.http
+      .delete(`${environment.apiUrl}/api/deleteReply`, options)
+      .subscribe((s) => {
+        console.log(s);
+      });
   }
 
   createDiscussion(discussion: String) {
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
     const params = {
       pbl_token: String(this.userService.getUser().token),
-      discussion: discussion,
+      discussion,
     };
     return this.http.post<Response<{ d_id: number }>>(
       `${environment.apiUrl}/api/createDiscussion`,
@@ -93,14 +94,9 @@ export class DiscussionService {
   }
 
   createReply(reply: String) {
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
     const params = {
       pbl_token: String(this.userService.getUser().token),
-      reply: reply,
+      reply,
     };
     return this.http.post<Response<{ r_id: number }>>(
       `${environment.apiUrl}/api/createReply`,
@@ -113,8 +109,8 @@ export class DiscussionService {
     );
   }
   transformRequest(data) {
-    var str = '';
-    for (var i in data) {
+    let str = '';
+    for (let i in data) {
       str += i + '=' + data[i] + '&';
     }
     str.substring(0, str.length - 1);

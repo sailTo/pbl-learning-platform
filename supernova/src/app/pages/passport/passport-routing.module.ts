@@ -13,12 +13,12 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: UserLoginComponent },
       { path: 'register', component: UserRegisterComponent },
-    ]
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PassportRoutingModule { }
+export class PassportRoutingModule {}

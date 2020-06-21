@@ -28,7 +28,8 @@
           </ng-container>
         </td>
         <td *ngIf="selectProject.self_grade_ratio !== 0">{{ data.selfScore }}/{{selectProject.self_grade_ratio}}</td>
-        <td *ngIf="selectProject.mutual_grade_ratio !== 0">{{ data.mutualScore }}/{{selectProject.mutual_grade_ratio}}</td>
+        <td *ngIf="selectProject.mutual_grade_ratio !== 0">{{ data.mutualScore }}/{{selectProject.mutual_grade_ratio}}
+        </td>
         <ng-container *ngIf="canEdit&&editId === data.s_id&&!data.haveScored">
           <ng-container *ngFor="let dynamicData of data.dynamicScore;let i = index">
             <td>

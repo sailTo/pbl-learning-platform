@@ -5,7 +5,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzSelectModule } from "ng-zorro-antd/select";
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -41,7 +41,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     NzPopconfirmModule,
     NzDividerModule,
     NzCardModule,
-    NzTabsModule
-  ]
+    NzTabsModule,
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

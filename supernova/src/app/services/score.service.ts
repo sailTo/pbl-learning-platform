@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ScoreService {
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService) {}
   getAllMyCourses() {
     const params = new HttpParams({
       fromObject: {
@@ -46,7 +46,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<Response<{ grades: GradeItem[] }>>(
@@ -58,7 +58,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -72,7 +72,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -83,7 +83,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -101,7 +101,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -116,11 +116,11 @@ export class ScoreService {
   }
 
   postGradeItemScore(p_id: string, itemData: ItemData) {
-    var insertData = [];
+    const insertData = [];
     itemData.dynamicScore.forEach((dynamicScore) => {
-      var temp = {
+      const temp = {
         item_id: dynamicScore.item_id,
-        p_id: p_id,
+        p_id,
         u_id: itemData.s_id,
         grade: dynamicScore.grade,
       };
@@ -146,7 +146,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<Response<{ grade: number }>>(
@@ -159,7 +159,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<Response<{ grade: number }>>(
@@ -172,7 +172,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -184,7 +184,7 @@ export class ScoreService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
-        p_id: p_id,
+        p_id,
       },
     });
     return this.http.get<
@@ -193,7 +193,6 @@ export class ScoreService {
       params,
     });
   }
-
 
   updateTeacherGrade(teacherScores: any) {
     const params = new HttpParams({
@@ -222,16 +221,11 @@ export class ScoreService {
   }
 
   toRating(projectId: number, u_Id: string, grade: number) {
-    let headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-      }),
-    };
     const params = {
       pbl_token: String(this.userService.getUser().token),
       p_id: String(projectId),
       u_id: u_Id,
-      grade: grade,
+      grade,
     };
     return this.http.post<any>(
       `${environment.apiUrl}/api/evaluateOther`,
@@ -256,8 +250,8 @@ export class ScoreService {
   }
 
   transformRequest(data) {
-    var str = '';
-    for (var i in data) {
+    let str = '';
+    for (const i in data) {
       str += i + '=' + data[i] + '&';
     }
     str.substring(0, str.length - 1);

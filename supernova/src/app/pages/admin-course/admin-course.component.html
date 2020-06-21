@@ -17,7 +17,6 @@
         <th>操作</th>
       </tr>
     </thead>
-
     <tbody>
       <tr *ngFor="let data of courseTable.data let i = index">
         <ng-container *ngIf="editId !== i||data.status==0">
@@ -40,7 +39,6 @@
             <nz-badge nzStatus="success"></nz-badge>
             已发布
           </td>
-
           <td>
             <button nz-button nzType="link" *ngIf="data.status==0" disabled="true"><i nz-icon nzType="edit"
                 nzTheme="outline"></i>编辑</button>
@@ -48,7 +46,6 @@
                 nzTheme="outline"></i>编辑</button>
           </td>
         </ng-container>
-
         <ng-container *ngIf="editId === i&&data.status!=0">
           <td>{{ i+1 }}</td>
           <td>
@@ -72,7 +69,6 @@
               <label nz-radio [nzValue]="2"><nz-badge nzStatus="success"></nz-badge>已发布</label>
             </nz-radio-group>
           </td>
-
           <td>
             <button nz-button nzType="link" *ngIf="data.status!=0" (click)="upload(data)"><i nz-icon nzType="check"
                 nzTheme="outline"></i>提交</button>
@@ -82,13 +78,9 @@
           </td>
         </ng-container>
       </tr>
-
     </tbody>
   </nz-table>
-
 </nz-card>
-
-
 
 <ng-template #extraTemplate>
   <button nz-button nzType="primary" (click)="showModal()">

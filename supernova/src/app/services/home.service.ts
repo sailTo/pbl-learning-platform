@@ -43,7 +43,7 @@ export class HomeService {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
-        u_id: u_id,
+        u_id,
       },
     });
     const formData = new FormData();
@@ -60,8 +60,8 @@ export class HomeService {
       `${environment.apiUrl}/api/changeMyImage`,
       formData,
       {
-        headers: headers,
-        params: params,
+        headers,
+        params,
       }
     );
     return this.http

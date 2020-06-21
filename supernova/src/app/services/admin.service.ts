@@ -10,7 +10,7 @@ import { GradeItem } from '../models/GradeItem';
   providedIn: 'root',
 })
 export class AdminService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getUserInformation() {
     const params = new HttpParams({
       fromObject: {
@@ -40,10 +40,13 @@ export class AdminService {
         user: JSON.stringify(user),
       },
     });
-    return this.http.put<Response<{}>>(`${environment.apiUrl}/api/changeInformation`, params);
+    return this.http.put<Response<{}>>(
+      `${environment.apiUrl}/api/changeInformation`,
+      params
+    );
   }
   addNewUser(user: User) {
-    let headers = {
+    const headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       }),
@@ -89,16 +92,15 @@ export class AdminService {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
       },
     });
-    return this.http.get<Response<{ itemList: { [p_id: number]: GradeItem[] } }>>(
-      `${environment.apiUrl}/api/getAllGradeItems`,
-      { params }
-    );
+    return this.http.get<
+      Response<{ itemList: { [p_id: number]: GradeItem[] } }>
+    >(`${environment.apiUrl}/api/getAllGradeItems`, { params });
   }
 
   transformRequest(data) {
-    var str = '';
+    let str = '';
 
-    for (var i in data) {
+    for (let i in data) {
       str += i + '=' + data[i] + '&';
     }
 

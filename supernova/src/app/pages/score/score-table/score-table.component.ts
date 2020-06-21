@@ -91,13 +91,13 @@ export class ScoreTableComponent implements OnChanges {
       .getColumnItems(String(this.selectProject.p_id))
       .subscribe((data) => {
         if (data.code == 200) {
-          //获得动态的表头项
+          // 获得动态的表头项
 
           this.gradeItems = data.data.grades.sort(
             (a, b) => a.item_id - b.item_id
           );
           this.gradeItems.forEach((gradeItem) => {
-            let acolumn: columnItem = {
+            const acolumn: columnItem = {
               name: gradeItem.description,
             };
             this.listofColumns.push(acolumn);
@@ -138,7 +138,6 @@ export class ScoreTableComponent implements OnChanges {
           this.loading = false;
         }
       });
-
   }
   getStudentData() {
     if (!this.selectProject.grading_status) {
@@ -169,7 +168,6 @@ export class ScoreTableComponent implements OnChanges {
           if (this.selectProject.teacher_grade_ratio !== 0) {
             this.getStudentTeacherScore();
           }
-
         } else {
           this.msgService.error('获取学生讨论数和任务完成数失败！');
           this.loading = false;
@@ -228,13 +226,13 @@ export class ScoreTableComponent implements OnChanges {
       .getStudentTeacherScore(String(this.selectProject.p_id))
       .subscribe((studentTeacherScoreData) => {
         if (studentTeacherScoreData.code == 200) {
-          let temp = [];
+          const temp = [];
           studentTeacherScoreData.data.grades = studentTeacherScoreData.data.grades.sort(
             (a, b) => +a.item_id - +b.item_id
           );
           let teacherAllScore = 0;
           studentTeacherScoreData.data.grades.forEach((teacherItem) => {
-            let item: DynamicScore = {
+            const item: DynamicScore = {
               item_id: teacherItem.item_id,
               item_name: '',
               grade: +teacherItem.grade,
@@ -257,8 +255,6 @@ export class ScoreTableComponent implements OnChanges {
         }
       });
   }
-
-
 
   getTeacherData() {
     this.scoreService
@@ -389,7 +385,7 @@ export class ScoreTableComponent implements OnChanges {
       });
   }
   updateTeacherScore(id: string) {
-    let aitem: ItemData = this.listOfData.find((x) => x.s_id == id);
+    const aitem: ItemData = this.listOfData.find((x) => x.s_id == id);
     let teacherAllScore = 0;
     aitem.dynamicScore.forEach((item) => {
       teacherAllScore += +item.grade;

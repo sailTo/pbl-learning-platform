@@ -31,8 +31,8 @@ export class MembersComponent implements OnInit {
   all_submit_button_rating: number[];
 
   //新增两个变量，用于判断自评或者互评为0的情况，在前端会有不一样的显示
-  open_self_rating:boolean;
-  open_mutual_rating:boolean;
+  open_self_rating: boolean;
+  open_mutual_rating: boolean;
 
   //储存当前user，用于自评互评时判断
   user: User;
@@ -93,7 +93,7 @@ export class MembersComponent implements OnInit {
     this.projectService.getProject(this.p_id).subscribe((data) => {
       this.open_self_rating = data.data.project.self_grade_ratio != 0;
       this.open_mutual_rating = data.data.project.mutual_grade_ratio != 0;
-      this.ifOpenRating = (this.open_self_rating || this.open_mutual_rating);
+      this.ifOpenRating = this.open_self_rating || this.open_mutual_rating;
       if (this.ifOpenRating) this.getMyRating();
     });
   }
@@ -114,21 +114,21 @@ export class MembersComponent implements OnInit {
             this.ifEdit.push(false);
             this.ifUpdate.push(false);
           } else {
-            if (grouper['u_id'] == this.user.u_id){
+            if (grouper['u_id'] == this.user.u_id) {
               if (this.open_self_rating) {
                 this.ifEdit.push(grouper['rating'] == null);
                 this.ifUpdate.push(grouper['rating'] == null);
-              }else {
+              } else {
                 this.ifEdit.push(false);
                 this.ifUpdate.push(false);
               }
-            }else {
+            } else {
               if (this.open_mutual_rating) {
-                if (grouper['u_id'] != this.user.u_id){
+                if (grouper['u_id'] != this.user.u_id) {
                   this.ifEdit.push(grouper['rating'] == null);
                   this.ifUpdate.push(grouper['rating'] == null);
                 }
-              }else {
+              } else {
                 this.ifEdit.push(false);
                 this.ifUpdate.push(false);
               }
@@ -147,8 +147,7 @@ export class MembersComponent implements OnInit {
           () => this.message.success('评分成功', { nzDuration: 1500 }).onClose!
         )
       )
-      .subscribe(() => {
-      });
+      .subscribe(() => {});
   }
   //改按钮会固定在title上，点击时会使用foreach对每一项条目进行提交，实现一键提交操作
   setOffsetBottom(): void {
@@ -162,10 +161,11 @@ export class MembersComponent implements OnInit {
       let score = this.groupers.find(
         (group) => group.u_id == this.ratings[index].u_id
       )['rating'];
-      if ((this.open_self_rating && u_id == this.user.u_id) || (this.open_mutual_rating && u_id != this.user.u_id)){
-        this.scoreService
-          .toRating(this.p_id, u_id, score)
-          .subscribe();
+      if (
+        (this.open_self_rating && u_id == this.user.u_id) ||
+        (this.open_mutual_rating && u_id != this.user.u_id)
+      ) {
+        this.scoreService.toRating(this.p_id, u_id, score).subscribe();
       }
     });
     this.startShowMessages();

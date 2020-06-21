@@ -15,21 +15,21 @@
   </nz-descriptions-item>
 </nz-descriptions>
 <nz-descriptions nzBordered nzLayout="vertical">
-  <nz-descriptions-item nzTitle="评分细则列表"  nzSpan="3">
+  <nz-descriptions-item nzTitle="评分细则列表" nzSpan="3">
     <nz-table [nzData]="Items">
       <thead>
-      <tr>
-        <th>序号</th>
-        <th>细则描述</th>
-        <th>最高得分</th>
-      </tr>
+        <tr>
+          <th>序号</th>
+          <th>细则描述</th>
+          <th>最高得分</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let data of Items, let  i = index">
-        <td>{{ i }}</td>
-        <td>{{ data.description }}</td>
-        <td>{{ data.max_grade }}</td>
-      </tr>
+        <tr *ngFor="let data of Items, let  i = index">
+          <td>{{ i }}</td>
+          <td>{{ data.description }}</td>
+          <td>{{ data.max_grade }}</td>
+        </tr>
       </tbody>
     </nz-table>
   </nz-descriptions-item>

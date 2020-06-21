@@ -51,9 +51,7 @@ export class ChangepasswordComponent {
         // 原有密码错误
         this.error = '您输入的密码不正确！';
       }
-
     }
-
     this.isConfirmLoading = false;
     this.isVisible = false;
   }

@@ -26,13 +26,13 @@ export class AdminCourseComponent implements OnInit {
     private message: NzMessageService
   ) {}
 
-  type: string = 'all';
-  pageIndex: number = 1;
-  pageSize: number = 8;
+  type = 'all';
+  pageIndex = 1;
+  pageSize = 8;
   total: number;
-  coursesTabTitle: string = '所有课程';
-  numOfCardsARow: number = 4;
-  editId: number = -1;
+  coursesTabTitle = '所有课程';
+  numOfCardsARow = 4;
+  editId = -1;
 
   ngOnInit(): void {
     this.getCourses();
@@ -69,7 +69,7 @@ export class AdminCourseComponent implements OnInit {
     this.getCourses();
   }
 
-  //项目管理员新建课程弹窗
+  // 项目管理员新建课程弹窗
   showModal(): void {
     this.modalService.create({
       nzTitle: '新建课程',
@@ -82,13 +82,13 @@ export class AdminCourseComponent implements OnInit {
     });
   }
 
-  //编辑按键
+  // 编辑按键
   edit(index: number) {
     this.editId = index;
     console.log('编辑：' + index);
   }
 
-  //修改上传
+  // 修改上传
   upload(course: Course) {
     console.log(course);
     this.courseService.changeCourse(course).subscribe((response) => {
@@ -100,7 +100,7 @@ export class AdminCourseComponent implements OnInit {
     this.editId = -1;
   }
 
-  //删除课程
+  // 删除课程
   del(course: Course) {
     course.status = 0;
     this.courseService.changeCourse(course).subscribe((response) => {
@@ -112,7 +112,7 @@ export class AdminCourseComponent implements OnInit {
     this.editId = -1;
   }
 
-  //选择对应的老师
+  // 选择对应的老师
   onChange(value: any): void {
     if (value === null) {
       return;

@@ -59,7 +59,7 @@ export class AdminComponent implements OnInit {
       .subscribe((data) => {
         if (data.code == 200) {
           this.listOfData = data.data.users;
-          for (var i = 0; i < this.listOfData.length; i++) {
+          for (let i = 0; i < this.listOfData.length; i++) {
             this.listOfData[i].image = data.data.images[i];
             if (this.listOfData[i].status == true) {
               this.storePassords[i] = this.listOfData[i].password;
@@ -83,9 +83,9 @@ export class AdminComponent implements OnInit {
   }
 
   stopEdit(): void {
-    var editUser = this.listOfDisplayData.find((x) => x.u_id === this.editId);
-    var index = this.listOfDisplayData.findIndex((x) => x.u_id === this.editId);
-    //向数据库更新信息
+    let editUser = this.listOfDisplayData.find((x) => x.u_id === this.editId);
+    let index = this.listOfDisplayData.findIndex((x) => x.u_id === this.editId);
+    // 向数据库更新信息
 
     if (editUser.password == null) {
       editUser.password = this.storePassords[index];
@@ -118,13 +118,13 @@ export class AdminComponent implements OnInit {
     );
   }
   deleteUser() {
-    var editUser = this.listOfDisplayData.find((x) => x.u_id === this.editId);
-    var index = this.listOfDisplayData.findIndex((x) => x.u_id === this.editId);
+    let editUser = this.listOfDisplayData.find((x) => x.u_id === this.editId);
+    let index = this.listOfDisplayData.findIndex((x) => x.u_id === this.editId);
 
     editUser.status = false;
     this.homeService.getUser(environment.deleteU_id).subscribe((data) => {
       if (data.code == 200) {
-        var delete_user = data.data.content;
+        let delete_user = data.data.content;
         editUser.u_name = delete_user.u_name;
         editUser.type = delete_user.type;
         editUser.description = delete_user.description;

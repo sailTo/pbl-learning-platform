@@ -18,8 +18,8 @@ export class ProjectsComponent implements OnInit {
   selectedValue: { label: string; value: number };
   projectTaking: number;
   projects: Project[];
-  numOfCardsARow: number = 4;
-  selectLoading: boolean = false;
+  numOfCardsARow = 4;
+  selectLoading = false;
   current_c_id: number;
   current_c_name: string;
   current_user: User;
@@ -30,7 +30,7 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     private modalService: NzModalService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getOptionList();
@@ -68,7 +68,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   compareFn = (o1: any, o2: any) =>
-    o1 && o2 ? o1.value === o2.value : o1 === o2;
+    o1 && o2 ? o1.value === o2.value : o1 === o2
 
   onChange(value: { label: string; value: number }): void {
     this.projects = [];
@@ -97,7 +97,7 @@ export class ProjectsComponent implements OnInit {
       });
   }
 
-  //此处以新建的方式调用model进行操作
+  // 此处以新建的方式调用model进行操作
   showModal(p_id: number): void {
     this.modalService
       .create({

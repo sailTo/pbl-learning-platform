@@ -12,11 +12,9 @@
     </nz-upload>
     <button nz-button (click)="resetAvatar()">恢复默认头像</button>
   </div>
-
-
 </div>
-<div *ngIf="!canEdit||!editStatus;else editTemplate">
 
+<div *ngIf="!canEdit||!editStatus;else editTemplate">
   <span style="float: right;" *ngIf="canEdit">
     <button nz-button nzType="default" (click)="startEdit()">
       编辑
@@ -31,8 +29,8 @@
     </nz-descriptions-item>
   </nz-descriptions>
 </div>
-<ng-template #editTemplate>
 
+<ng-template #editTemplate>
   <nz-descriptions nzTitle="个人信息" nzBordered>
     <nz-descriptions-item nzTitle="姓名" [nzSpan]="2">
       <input type="text" nz-input [(ngModel)]="datas.u_name" />

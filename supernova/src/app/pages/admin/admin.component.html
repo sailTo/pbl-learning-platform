@@ -1,5 +1,4 @@
 <nz-card>
-
   <nz-card-tab>
     <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
       <nz-tab nzTitle="用户管理"></nz-tab>
@@ -9,7 +8,6 @@
   <ng-template #extraTemplate>
     <app-add-user (change)="addUser()"></app-add-user>
   </ng-template>
-
 
   <nz-table #adminTable [nzData]="listOfDisplayData" [nzPageSize]="20" [nzScroll]="{ y: '480px' }">
     <thead>
@@ -29,7 +27,6 @@
     <tbody>
       <tr *ngFor="let data of adminTable.data" (click)=" startEdit(data.u_id)" class="editable-row">
         <ng-container *ngIf="editId !== data.u_id||data.status==false">
-
           <td>
             <a [routerLink]="['/home',data.u_id]">
               {{ data.u_id }}
@@ -45,7 +42,6 @@
               {{ data.type }}
             </div>
           </td>
-
           <td>
             <div class="editable-cell">
               {{ data.gender }}
@@ -61,11 +57,8 @@
               ******
             </div>
           </td>
-
         </ng-container>
-
         <ng-container *ngIf="editId === data.u_id&&data.status==true">
-
           <td>
             <a [routerLink]="['/home',data.u_id]">
               {{ data.u_id }}
@@ -106,14 +99,10 @@
 
             </button>
           </td>
-
-
         </ng-container>
       </tr>
-
     </tbody>
   </nz-table>
-
 </nz-card>
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">

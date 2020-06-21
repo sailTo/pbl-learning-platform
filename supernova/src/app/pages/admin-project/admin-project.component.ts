@@ -15,6 +15,12 @@ import { CreateProjectComponent } from '../projects/components/create-project/cr
   styleUrls: ['./admin-project.component.css'],
 })
 export class AdminProjectComponent implements OnInit {
+  constructor(
+    private adminService: AdminService,
+    private msgService: NzMessageService,
+    private projectService: ProjectService,
+    private modalService: NzModalService
+  ) { }
   loading = false;
   searchValue = '';
   searchVisible = false;
@@ -22,12 +28,9 @@ export class AdminProjectComponent implements OnInit {
   listofColumns: columnItem[];
   canSubmit = true;
   listofChileColums = ['评分项', '评分占比'];
-  constructor(
-    private adminService: AdminService,
-    private msgService: NzMessageService,
-    private projectService: ProjectService,
-    private modalService: NzModalService
-  ) { }
+  listOfData: ProjectData[];
+  listOfDisplayData: any;
+  courses: Course[];
 
   ngOnInit(): void {
     this.listofColumns = [
@@ -68,9 +71,6 @@ export class AdminProjectComponent implements OnInit {
     ];
     this.getAllProjects();
   }
-  listOfData: ProjectData[];
-  listOfDisplayData: any;
-  courses: Course[];
 
   startEdit(id: number) {
     this.editId = id;
@@ -81,13 +81,13 @@ export class AdminProjectComponent implements OnInit {
       this.msgService.error('评分不符合规则！');
       return;
     }
-    var editProject = this.listOfData.find((x) => x.p_id == this.editId);
+    const editProject = this.listOfData.find((x) => x.p_id == this.editId);
     if (editProject.mutual_grade_ratio + editProject.teacher_grade_ratio + editProject.self_grade_ratio != 100) {
       this.msgService.error('评分不符合规则！');
       return;
     }
     editProject.expand = false;
-    var aproject: Project = {
+    const aproject: Project = {
       p_id: editProject.p_id,
       c_id: editProject.c_id,
       p_name: editProject.p_name,
@@ -98,7 +98,7 @@ export class AdminProjectComponent implements OnInit {
       mutual_grade_ratio: editProject.mutual_grade_ratio,
     };
 
-    var gradeItems: GradeItem[] = editProject.gradeItems;
+    const gradeItems: GradeItem[] = editProject.gradeItems;
     this.projectService
       .changeProject(aproject, gradeItems)
       .subscribe((data) => {
@@ -152,14 +152,14 @@ export class AdminProjectComponent implements OnInit {
         if (flag === undefined) {
           return;
         }
-        //应该向项目列表中添加该项目
+        // 应该向项目列表中添加该项目
         this.getAllProjects();
       });
   }
 
   updateTeacherScore(p_id: number) {
-    var aproject = this.listOfData.find((x) => x.p_id == p_id);
-    var teacherAllScore = 0;
+    const aproject = this.listOfData.find((x) => x.p_id == p_id);
+    let teacherAllScore = 0;
     aproject.gradeItems.forEach((item) => {
       teacherAllScore += +item.max_grade;
     });

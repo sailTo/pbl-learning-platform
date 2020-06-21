@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams,
+  HttpHeaders,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Response } from '../models/generic-response';
 import { Course } from '../models/course';
 import { User } from '../models/user';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
-import {filter} from "rxjs/operators";
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -20,17 +26,17 @@ export class CourseService {
 
   constructor(private http: HttpClient, private userService: UserService) {}
 
-  getCourse(
-    c_id: number,
-  ) {
+  getCourse(c_id: number) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(this.userService.getUser().token),
         c_id: String(c_id),
       },
     });
-    return this.http.get<
-      Response<{ course: Course }>>(`${environment.apiUrl}/api/searchCourseByCid`, { params });
+    return this.http.get<Response<{ course: Course }>>(
+      `${environment.apiUrl}/api/searchCourseByCid`,
+      { params }
+    );
   }
 
   getCourses(
@@ -92,7 +98,7 @@ export class CourseService {
     );
   }
 
-  createCourse(course: Course,image: any) {
+  createCourse(course: Course, image: any) {
     const params = new HttpParams({
       fromObject: {
         pbl_token: String(JSON.parse(localStorage.getItem('User')).token),
@@ -113,11 +119,13 @@ export class CourseService {
       `${environment.apiUrl}/api/addCourse`,
       formData,
       {
-        headers: headers,
-        params: params,
+        headers,
+        params,
       }
     );
-    return this.http.request(req).pipe(filter((e) => e instanceof HttpResponse));
+    return this.http
+      .request(req)
+      .pipe(filter((e) => e instanceof HttpResponse));
   }
 
   changeCourse(course: Course) {
@@ -154,11 +162,13 @@ export class CourseService {
       `${environment.apiUrl}/api/changeCourseWithImg`,
       formData,
       {
-        headers: headers,
-        params: params,
+        headers,
+        params,
       }
     );
-    return this.http.request(req).pipe(filter((e) => e instanceof HttpResponse));
+    return this.http
+      .request(req)
+      .pipe(filter((e) => e instanceof HttpResponse));
   }
 
   deleteCourse(course: Course) {
@@ -174,6 +184,4 @@ export class CourseService {
   resumeCourse(course: Course) {
     return this.publishCourse(course);
   }
-
-
 }

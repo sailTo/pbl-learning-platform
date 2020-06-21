@@ -1,5 +1,4 @@
 <nz-card>
-
   <nz-card-tab>
     <nz-tabset nzSize="large" [nzTabBarExtraContent]="extraTemplate">
       <nz-tab nzTitle="项目管理"></nz-tab>
@@ -66,7 +65,6 @@
                   {{f_data.teacher_grade_ratio}}
                 </div>
               </td>
-
             </ng-container>
 
             <ng-container *ngIf="editId === f_data.p_id">
@@ -120,36 +118,33 @@
                   </th>
                 </tr>
               </thead>
-      <tbody>
-        <tr *ngFor="let data of innerTable.data">
-          <ng-container *ngIf="editId !== f_data.p_id">
-            <td>
-              {{data.description}}
-            </td>
-            <td>
-              {{data.max_grade}}
-            </td>
-          </ng-container>
+              <tbody>
+                <tr *ngFor="let data of innerTable.data">
+                  <ng-container *ngIf="editId !== f_data.p_id">
+                    <td>
+                      {{data.description}}
+                    </td>
+                    <td>
+                      {{data.max_grade}}
+                    </td>
+                  </ng-container>
 
-          <ng-container *ngIf="editId === f_data.p_id">
-            <td>
-              <input nz-input [(ngModel)]="data.description" style="width: 300px;">
-            </td>
-            <td>
-              <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" nzMax="100"
-                (ngModelChange)="updateTeacherScore(f_data.p_id)">
-              </nz-input-number>
-            </td>
-          </ng-container>
-
-        </tr>
+                  <ng-container *ngIf="editId === f_data.p_id">
+                    <td>
+                      <input nz-input [(ngModel)]="data.description" style="width: 300px;">
+                    </td>
+                    <td>
+                      <nz-input-number [(ngModel)]="data.max_grade" nzMin="0" nzMax="100"
+                        (ngModelChange)="updateTeacherScore(f_data.p_id)">
+                      </nz-input-number>
+                    </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </nz-table>
+          </tr>
+        </ng-container>
       </tbody>
-    </nz-table>
-    </tr>
-    </ng-container>
-
-
-    </tbody>
     </nz-table>
   </nz-spin>
 </nz-card>
