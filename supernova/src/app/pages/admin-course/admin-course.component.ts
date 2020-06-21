@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
 import { NzModalService } from 'ng-zorro-antd';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-
 import { Course } from 'src/app/models/course';
 import { User } from 'src/app/models/user';
 import { AdminService } from '../../services/admin.service';
-
 import { CreateCourseComponent } from '../courses/components/create-course/create-course.component';
-import { isThisQuarter } from 'date-fns';
 
 @Component({
   selector: 'app-admin-course',
@@ -40,7 +36,6 @@ export class AdminCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCourses();
-
     console.log(this.allTeachers);
   }
 
@@ -74,14 +69,11 @@ export class AdminCourseComponent implements OnInit {
     this.getCourses();
   }
 
+  //项目管理员新建课程弹窗
   showModal(): void {
-    // this.isVisible = true;
     this.modalService.create({
       nzTitle: '新建课程',
       nzContent: CreateCourseComponent,
-      // nzAfterClose: () => {
-      //   this.getCourses();
-      // }
     }).afterClose.subscribe((flag: number) => {
       if (flag === undefined) {
         return;
@@ -90,11 +82,13 @@ export class AdminCourseComponent implements OnInit {
     });
   }
 
+  //编辑按键
   edit(index: number) {
     this.editId = index;
     console.log('编辑：' + index);
   }
 
+  //修改上传
   upload(course: Course) {
     console.log(course);
     this.courseService.changeCourse(course).subscribe((response) => {
@@ -106,6 +100,7 @@ export class AdminCourseComponent implements OnInit {
     this.editId = -1;
   }
 
+  //删除课程
   del(course: Course) {
     course.status = 0;
     this.courseService.changeCourse(course).subscribe((response) => {
@@ -117,17 +112,13 @@ export class AdminCourseComponent implements OnInit {
     this.editId = -1;
   }
 
+  //选择对应的老师
   onChange(value: any): void {
     if (value === null) {
       return;
     }
     console.log(value);
-    // this.courses[this.editId].t_id = value.u_id;
-    // this.courses[this.editId].teacher = value;
-
     this.courses[this.editId].t_id = value;
     this.courses[this.editId].teacher = this.allTeachers.find((teacher) => teacher.u_id === value);
-
-    // this.courses[this.editId].teacher.u_name = value.label;
   }
 }

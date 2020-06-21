@@ -7,7 +7,6 @@ import { UserService } from 'src/app/services/user.service';
 
 import { File } from 'src/app/models/file';
 import { User } from 'src/app/models/user';
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { UploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
@@ -48,8 +47,6 @@ export class FilesComponent implements OnInit {
     private message: NzMessageService,
     private fileService: FileService,
     private userService: UserService,
-    private http: HttpClient,
-    private msg: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -137,7 +134,6 @@ export class FilesComponent implements OnInit {
     } else {
       this.fileList = this.fileList.concat(file);
     }
-    // this.buttonVis = false;
     return false;
   };
 

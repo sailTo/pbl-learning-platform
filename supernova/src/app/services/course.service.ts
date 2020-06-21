@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-
 import { Response } from '../models/generic-response';
 import { Course } from '../models/course';
 import { User } from '../models/user';
 import { UserService } from './user.service';
 import { environment } from 'src/environments/environment';
-import {stringify} from "querystring";
 import {filter} from "rxjs/operators";
 
 @Injectable({
@@ -110,7 +108,6 @@ export class CourseService {
       'Access-Control-Allow-Headers':
         'Content-Type,Access-Token,Authorization,ybg',
     });
-    // return this.http.put<Response<{img:string}>>(`${environment.apiUrl}/api/changeMyImage`,params,headers);
     const req = new HttpRequest(
       'POST',
       `${environment.apiUrl}/api/addCourse`,
