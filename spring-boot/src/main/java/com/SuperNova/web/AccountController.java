@@ -2,6 +2,7 @@ package com.SuperNova.web;
 
 import com.SuperNova.core.ProjectConstant;
 import com.SuperNova.core.Result;
+import com.SuperNova.core.ResultCode;
 import com.SuperNova.core.ResultGenerator;
 import com.SuperNova.model.User;
 import com.SuperNova.service.UserService;
@@ -58,7 +59,7 @@ public class AccountController {
 
         //检查是否正确
         if(u_id==null||userService.idExist(u_id)){
-            return ResultGenerator.genFailResult("学号已存在");
+            return ResultGenerator.genFailResult("学号已存在").setCode(ResultCode.DENY);
         }
 
         return ResultGenerator.genSuccessResult("学号可用");
