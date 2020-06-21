@@ -31,6 +31,7 @@ export class CreateCourseComponent {
 
   @Input() course_id: number;
   @Input() setType: string;
+  //用于更新课程以后回显重刷新操作
   @Output() change = new EventEmitter();
 
   constructor(
@@ -50,14 +51,13 @@ export class CreateCourseComponent {
     });
   }
 
+  //和新建项目类似，需要先判断调用模块时的方式
   ngOnInit(): void {
     this.adminService.getAllTeachers().subscribe((data)=>{
-      // console.log(data);
       this.allTeachers = data.data;
     });
     if (this.setType == 'edit') {
       this.courseService.getCourse(this.course_id).subscribe((data) => {
-        // console.log(data.data.course);
         this.course = data.data.course;
         this.userService
           .getUserById(String(this.course.t_id))
@@ -77,6 +77,7 @@ export class CreateCourseComponent {
           this.validateForm.controls[key].updateValueAndValidity();
       });
     }else {
+      //如果是老师，限定不能修改任课教师
       if(this.currentUser.type == 'teacher') {
         this.validateForm.controls.t_id.setValue(this.currentUser.u_id);
         this.validateForm.controls.t_id.updateValueAndValidity()
@@ -94,6 +95,7 @@ export class CreateCourseComponent {
       this.validateForm.controls[key].updateValueAndValidity();
     }
 
+    //提交时，根据传入的调用方式使用不同的后端api进行操作
     if (this.setType == 'edit') {
       this.course = {
         c_id: this.course.c_id,
@@ -106,7 +108,6 @@ export class CreateCourseComponent {
       };
       if (this.fileList.length < 1) {
         this.courseService.changeCourse(this.course).subscribe((data: any) => {
-          // console.log(data.body);
           if (data.code == 200) {
             this.msg.success("编辑课程成功！");
             this.change.emit();
@@ -116,8 +117,8 @@ export class CreateCourseComponent {
           }
         });
       }else {
+        //修改课程封面时涉及到上传文件，所以需要单独使用api进行操作
         this.courseService.changeCourseWithImg(this.course,this.fileList[0]).subscribe((data: any) => {
-          // console.log(data.body);
           if (data.body.code == 200) {
             this.msg.success("编辑课程成功！");
             this.change.emit();
@@ -137,22 +138,15 @@ export class CreateCourseComponent {
         status: 1,
         image_URL: null,
       };
-      // console.log(this.course);
-      // console.log(this.fileList[0]);
+
       this.courseService.createCourse(this.course,this.fileList[0]).subscribe((data: any) => {
         console.log(data.body);
         if (data.body.code == 200) {
-
-          // var temp = this.datas;
-          // temp.token = JSON.parse(localStorage.getItem("User")).token;
-          // localStorage.setItem("User", JSON.stringify(temp));
           this.msg.success("新建课程成功！");
           this.modal.destroy(1);
-          // this.change.emit();
         } else {
           this.msg.error("新建课程失败!");
         }
-        // this.loading = false;
       });
     }
   }
@@ -169,18 +163,17 @@ export class CreateCourseComponent {
       this.validateForm.controls[key].updateValueAndValidity();
     }
     this.fileList = [];
-    // console.log(this.validateForm.controls);
   }
+
+  //移除上传的图片时需要情况image并且重新检查，防止无图片提交
   Remove = (file: UploadFile): boolean => {
     this.fileList = [];
-    // this.validateForm.controls.t_id.markAsDirty();
     this.validateForm.controls.image.setValue(null);
     this.validateForm.controls.image.updateValueAndValidity();
-    // this.validateForm.controls.image.setValue(file.filename);
-    // this.validateForm.controls.image.updateValueAndValidity();
     return true;
   };
 
+  //限定文件上传大小
   beforeUpload = (file: UploadFile): boolean => {
     const isLt2M = file.size! / 1024 / 1024 < 2;
     if (!isLt2M) {
@@ -189,11 +182,8 @@ export class CreateCourseComponent {
     }
 
     this.fileList = [file];
-    // this.validateForm.controls.t_id.markAsDirty();
     this.validateForm.controls.image.setValue(1);
     this.validateForm.controls.image.updateValueAndValidity();
-    // this.validateForm.controls.image.setValue(file.filename);
-    // this.validateForm.controls.image.updateValueAndValidity();
     return false;
   };
 

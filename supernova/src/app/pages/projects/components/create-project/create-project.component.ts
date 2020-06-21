@@ -25,17 +25,18 @@ import {Course} from '../../../../models/course';
 })
 export class CreateProjectComponent {
   project: Project;
+  //在编辑状态时使用items进行初始化
   items: GradeItem[];
   currentUser: User = this.userService.getUser();
-  // currentCourse: Course = this.
   validateForm: FormGroup;
+
+  //该变量用于控制动态item
   listOfControl: Array<{
     id: number;
     controlInstance: string;
     controlInstance_value: string;
     controlInstanceId: string;
   }> = [];
-  // check_teacher:boolean = false;
   check_student: boolean = false;
 
   @Input() course_id?: number;
@@ -64,12 +65,8 @@ export class CreateProjectComponent {
     this.validateForm.controls.student_point_self.updateValueAndValidity();
   }
 
+  //初始化时需要判断调用该模块的方式判断使用什么方式进行初始化操作
   ngOnInit(): void {
-    // if(this.course_id){
-    //   this.validateForm.controls.c_id.updateValueAndValidity();
-    // }
-    // console.log(this.course_id);
-    // console.log(this.p_id);
     if (this.type != 'create') {
       this.projectService.getProject(this.p_id).subscribe((data) => {
         this.project = data.data.project;
@@ -78,7 +75,6 @@ export class CreateProjectComponent {
           this.project.description
         );
         this.validateForm.controls.c_id.setValue(this.course_id);
-        // this.validateForm.setControl("c_id",null);
         this.validateForm.controls.teacher_point.setValue(
           this.project.teacher_grade_ratio
         );
@@ -93,6 +89,7 @@ export class CreateProjectComponent {
         for (const key in this.validateForm.controls)
           this.validateForm.controls[key].updateValueAndValidity();
       });
+
       this.projectService.findGradeItemsByPid(this.p_id).subscribe((data) => {
         this.items = data.data.grades;
         this.items.forEach((item, index) => {
@@ -120,15 +117,13 @@ export class CreateProjectComponent {
           this.validateForm.controls[key].updateValueAndValidity();
       });
     }else if (this.course_id){
+      //传入course_id说明是编辑状态，需要设置c_id并提前进行检查
       this.validateForm.controls.c_id.setValue(this.course_id);
       this.validateForm.controls.c_id.updateValueAndValidity();
       this.addField();
     }
     else
       this.addField();
-    // if(this.course_id){
-    //   this.validateForm.controls.c_id.updateValueAndValidity();
-    // }
   }
 
   judgeIfUse = (control: FormControl): { [s: string]: boolean } => {
@@ -140,6 +135,7 @@ export class CreateProjectComponent {
     return {};
   };
 
+  //用于控制自评互评开关，关闭时要及时清理自评互评分输入口
   change_student_grade(): void {
     this.check_student = !this.check_student;
     if (!this.check_student) {
@@ -157,6 +153,7 @@ export class CreateProjectComponent {
     );
   }
 
+  //此处增加了教师评分为0或者自评/互评分其中一个为0的情况，在member界面会有体现
   confirmValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
       if (control.value == 0){
@@ -164,7 +161,6 @@ export class CreateProjectComponent {
           let total =
             parseInt(this.validateForm.controls.student_point_self.value) +
             parseInt(this.validateForm.controls.student_point_mutual.value);
-          // console.log(total);
           if (total != 100) {
             return { error: true, notOneHundred: true };
           }
@@ -178,7 +174,6 @@ export class CreateProjectComponent {
       let sum = 0;
       let flag = false;
       this.listOfControl.forEach((item) => {
-        // console.log(this.validateForm.controls[item.controlInstance_value].value);
         if (
           this.validateForm.controls[item.controlInstance_value].value == null
         ) {
@@ -190,9 +185,6 @@ export class CreateProjectComponent {
             this.validateForm.controls[item.controlInstance_value].value
           );
       });
-      // if (flag)
-      //   return { };
-      // else
       if (!flag && sum != control.value) {
         return { error: true, notEqual: true };
       }
@@ -200,24 +192,13 @@ export class CreateProjectComponent {
       if (control.value != 0)
         return { error: true, notEqual: true };
     }
-    // console.log("sum : " +sum);
-
-    // if (this.check_student) {
-    //   if ( this.validateForm.controls.teacher_point.value && this.validateForm.controls.student_point_self.value
-    //     && this.validateForm.controls.student_point_mutual.value){
     let total =
       parseInt(this.validateForm.controls.teacher_point.value) +
       parseInt(this.validateForm.controls.student_point_self.value) +
       parseInt(this.validateForm.controls.student_point_mutual.value);
-    // console.log(total);
     if (total != 100) {
       return { error: true, notOneHundred: true };
     }
-    // }
-    // }else {
-    //   if ( !this.validateForm.controls.teacher_point.value && parseInt(this.validateForm.controls.teacher_point.value) == 100)
-    //     return{ error: true, notOneHundred: true }
-    // }
     return {};
   };
 
@@ -225,18 +206,17 @@ export class CreateProjectComponent {
     this.modal.destroy();
   }
 
+  //同一个提交按钮，根据不同的调用方式调用不同的提交方式
   submitForm(value: Project): void {
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    // console.log(value);
     if (this.type == 'create') this.createProject();
     else if (this.type == 'edit') this.editProject();
   }
 
   resetForm(e: MouseEvent): void {
-    // console.log(this.validateForm.controls);
     e.preventDefault();
     if (this.listOfControl.length > 1) {
       for (let i = 0; i < this.listOfControl.length; i++) {
@@ -259,6 +239,7 @@ export class CreateProjectComponent {
     this.validateForm.controls.student_point_self.setValue(0);
   }
 
+  //增加item评分项时需要控制对应的controller
   addField(e?: MouseEvent): void {
     if (e) {
       e.preventDefault();
@@ -273,7 +254,6 @@ export class CreateProjectComponent {
       controlInstanceId: `item${id}_id`,
       controlInstance_value: `item${id}_value`,
     };
-    // console.log(this.listOfControl[this.listOfControl.length - 1]);
     this.validateForm.addControl(
       control.controlInstance,
       new FormControl(null, Validators.required)
@@ -299,15 +279,12 @@ export class CreateProjectComponent {
     e: MouseEvent
   ): void {
     e.preventDefault();
-    // if (this.listOfControl.length > 1) {
     const index = this.listOfControl.indexOf(i);
     this.listOfControl.splice(index, 1);
-    // this.
-    // console.log(this.listOfControl);
+
     this.validateForm.removeControl(i.controlInstance);
     this.validateForm.removeControl(i.controlInstance_value);
     this.validateForm.removeControl(i.controlInstanceId);
-    // }
   }
 
   editProject(): void {
@@ -331,6 +308,7 @@ export class CreateProjectComponent {
       };
       items.push(tmp);
     });
+    //根据响应码判断回显状态
     this.projectService.changeProject(project, items).subscribe((response) => {
       if (response.code === 200) {
         this.msg.success(`编辑项目成功！`);
@@ -339,11 +317,11 @@ export class CreateProjectComponent {
       } else {
         this.msg.error(`编辑项目失败，请稍后重试！`);
       }
-      // this.change.emit();
     });
   }
 
   createProject(): void {
+    //使用已有的数据构造project和items传入后端进行操作
     let project = {
       p_id: null,
       c_id: this.course_id==undefined? this.validateForm.controls.c_id.value:this.course_id,
@@ -372,7 +350,6 @@ export class CreateProjectComponent {
       } else {
         this.msg.error(`新增项目失败，请稍后重试！`);
       }
-      // this.change.emit();
     });
   }
 }

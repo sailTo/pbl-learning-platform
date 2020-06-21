@@ -18,9 +18,8 @@ export class DiscussionsComponent implements OnInit {
   p_id: number;
   groupers: User[];
   user:User;
-  // likes:number[];
-  // dislikes:number[];
-  // time:string;
+
+  //获取当前由几个讨论，讨论中包含回复
   discussions: Discussion[];
   newDiscussion:string;
   discussion_submitting:boolean=false;
@@ -42,22 +41,6 @@ export class DiscussionsComponent implements OnInit {
         this.p_id = params.p_id;
         this.groupers = JSON.parse(params.groupers);
         this.getDiscussions();
-        // this.likes = Array.apply(0,{length:this.num});
-        // this.dislikes = Array.apply(0,{length:this.num});
-        // this.isVisible = Array.apply(false,{length:this.num});
-
-        // this.likes = (() => {
-        //   let likes = [];
-        //   for (let i = 0; i < this.num; i++)
-        //     likes.push(0);
-        //   return likes;
-        // })();
-        // this.dislikes = (() => {
-        //   let dislikes = [];
-        //   for (let i = 0; i < this.num; i++)
-        //     dislikes.push(0);
-        //   return dislikes;
-        // })();
       }
     );
 
@@ -67,19 +50,8 @@ export class DiscussionsComponent implements OnInit {
   //方法复杂，但无bug
   getDiscussions(): void {
     this.discussionService.getAllDiscussion(this.p_id).subscribe((data) => {
-      // let num = 0;
       this.discussions = data.data.discussions;
-      // console.log(this.discussions);
       this.discussions.forEach((discussion, index) => {
-        
-        // map u_id in file to u_name
-        // discussion['u_name'] = this.groupers.find(
-        //   (grouper) => grouper.u_id == discussion.u_id
-        // )['u_name'];
-        // discussion['image'] = this.groupers.find(
-        //   (grouper) => grouper.u_id == discussion.u_id
-        // )['image'];
-
         const grouper = this.groupers.find(
           (grouper) => grouper.u_id == discussion.u_id
         );
@@ -91,7 +63,6 @@ export class DiscussionsComponent implements OnInit {
           discussion['image'] = grouper['image'];
         }
 
-
         // add key to each file
         discussion['d_index'] = index;
         discussion['show'] = true;
@@ -100,12 +71,6 @@ export class DiscussionsComponent implements OnInit {
         discussion['time_for_show'] = formatDistance(discussion['time'], new Date());
         this.discussionService.getReplyByDid(discussion.d_id).subscribe((data) => {
           data.data.replies.forEach((reply) => {
-            // reply['u_name'] = this.groupers.find(
-            //   (grouper) => grouper.u_id == reply['u_id']
-            // )['u_name'];
-            // reply['image'] = this.groupers.find(
-            //   (grouper) => grouper.u_id == reply['u_id']
-            // )['image'];
             const grouper = this.groupers.find(
               (grouper) => grouper.u_id == reply['u_id']
             );
@@ -127,16 +92,6 @@ export class DiscussionsComponent implements OnInit {
       });
     });
   }
-
-  // like(): void {
-  //   this.likes = 1;
-  //   this.dislikes = 0;
-  // }
-  //
-  // dislike(): void {
-  //   this.likes = 0;
-  //   this.dislikes = 1;
-  // }
 
   data: any[] = [];
   submitting = false;
@@ -163,6 +118,8 @@ export class DiscussionsComponent implements OnInit {
     this.isVisible = false;
     console.log(this.discussions[0]['replies']);
   }
+
+  //新建回复时，首先使用本地缓存进行立刻回显，再在后端异步调用update，加快反应速度
   handleOk(): void {
     this.inputValue = '回复 '+this.reply_to_u_name+': ' + this.inputValue ;
     this.isConfirmLoading = true;
@@ -181,6 +138,7 @@ export class DiscussionsComponent implements OnInit {
 
     this.discussions[this.reply_discussion_index]["replies"].splice(0, 0, new_reply);
 
+    //通过输入的内容生成reply进行传输操作
     let reply = {
       r_id: null,
       d_id: this.reply_d_id,
@@ -195,6 +153,7 @@ export class DiscussionsComponent implements OnInit {
       }
     );
 
+    //设置延迟时间
     setTimeout(() => {
       this.isVisible = false;
       this.isConfirmLoading = false;
@@ -203,10 +162,7 @@ export class DiscussionsComponent implements OnInit {
     this.inputValue = '';
   }
 
-  // cancel(index): void {
-  //   this.nzMessageService.info('delete cancel!');
-  // }
-
+  //新建讨论（话题）
   confirm(index, object, type): void {
     if (type == 'discussion') {
       this.discussions[index]['show'] = false;
@@ -248,11 +204,12 @@ export class DiscussionsComponent implements OnInit {
       time : new Date(),
       replies : []
     };
+
+    //在原有的讨论属性中加入一个新的讨论属性
     this.discussions = [
       ...this.discussions,
       new_discussion
     ];
-    // this.discussions.push(new_discussion);
 
     let discussion = {
       d_id : null,
@@ -263,8 +220,6 @@ export class DiscussionsComponent implements OnInit {
     };
     this.discussionService.createDiscussion(JSON.stringify(discussion)).subscribe(
       (data) =>{
-        // console.log(data);
-        // this.getDiscussions();
         this.discussions[length]["d_id"] = data.data.d_id;
       }
     );
@@ -274,20 +229,6 @@ export class DiscussionsComponent implements OnInit {
       this.message.success('添加话题成功', {
         nzDuration: 1500
       });
-      // this.data = [
-      //   ...this.data,
-      //   {
-      //     ...this.user,
-      //     content,
-      //     datetime: new Date(),
-      //     displayTime: formatDistance(new Date(), new Date())
-      //   }
-      // ].map(e => {
-      //   return {
-      //     ...e,
-      //     displayTime: formatDistance(new Date(), e.datetime)
-      //   };
-      // });
     }, 500);
   }
 }

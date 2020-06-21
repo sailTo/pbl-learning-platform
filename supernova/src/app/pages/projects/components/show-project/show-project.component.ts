@@ -38,7 +38,6 @@ export class ShowProjectComponent implements OnInit {
     this.projectService.findGradeItemsByPid(this.p_id).subscribe((data)=>{
       this.Items = data.data.grades;
     });
-    // console.log(this.course);
   }
 
   destroyModal(): void {

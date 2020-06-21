@@ -27,7 +27,6 @@ export class ShowCourseComponent implements OnInit {
       this.type = 'error';
       this.status = '已删除';
     }
-    // console.log(this.course);
   }
 
   destroyModal(): void {

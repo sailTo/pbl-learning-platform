@@ -4,11 +4,9 @@ import { NzModalService } from 'ng-zorro-antd';
 import { CourseService } from '../../services/course.service';
 import { ProjectService } from '../../services/project.service';
 import { Project } from 'src/app/models/project';
-import { CreateCourseComponent } from '../courses/components/create-course/create-course.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { Task } from '../../models/task';
 
 @Component({
   selector: 'app-projects',
@@ -69,9 +67,8 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:no-any
   compareFn = (o1: any, o2: any) =>
-    o1 && o2 ? o1.value === o2.value : o1 === o2
+    o1 && o2 ? o1.value === o2.value : o1 === o2;
 
   onChange(value: { label: string; value: number }): void {
     this.projects = [];
@@ -100,15 +97,14 @@ export class ProjectsComponent implements OnInit {
       });
   }
 
+  //此处以新建的方式调用model进行操作
   showModal(p_id: number): void {
-    // this.isVisible = true;
     this.modalService
       .create({
         nzTitle: '新建项目',
         nzContent: CreateProjectComponent,
         nzComponentParams: {
           type: 'create',
-          // p_id: p_id,
           course_id: this.current_c_id,
           course_name: this.current_c_name,
         },
