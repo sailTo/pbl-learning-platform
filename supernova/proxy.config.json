@@ -1,8 +1,8 @@
 {
     "/api": {
-        "target": "http://123.56.219.88:8081"
+        "target": "http://ec2-54-213-230-33.us-west-2.compute.amazonaws.com:8081"
     },
     "/account": {
-        "target": "http://123.56.219.88:8081"
+        "target": "http://ec2-54-213-230-33.us-west-2.compute.amazonaws.com:8081"
     }
 }

@@ -57,7 +57,7 @@ export class DiscussionsComponent implements OnInit {
         if (grouper == undefined) {
           discussion['u_name'] = '教师';
           discussion['image'] =
-            'http://123.56.219.88/SuperNova/UploadImage/default.jpg';
+            'http://ec2-34-219-154-236.us-west-2.compute.amazonaws.com/SuperNova/UploadImage/default.jpg';
         } else {
           discussion['u_name'] = grouper['u_name'];
           discussion['image'] = grouper['image'];
@@ -82,7 +82,7 @@ export class DiscussionsComponent implements OnInit {
               if (grouper == undefined) {
                 reply['u_name'] = '教师';
                 reply['image'] =
-                  'http://123.56.219.88/SuperNova/UploadImage/default.jpg';
+                  'http://ec2-34-219-154-236.us-west-2.compute.amazonaws.com/SuperNova/UploadImage/default.jpg';
               } else {
                 reply['u_name'] = grouper['u_name'];
                 reply['image'] = grouper['image'];
@@ -156,7 +156,7 @@ export class DiscussionsComponent implements OnInit {
       d_id: this.reply_d_id,
       u_id: this.user.u_id,
       content: this.inputValue,
-      time: null,
+      time: new Date(),
     };
     this.discussionService
       .createReply(JSON.stringify(reply))
@@ -212,7 +212,7 @@ export class DiscussionsComponent implements OnInit {
       type: 'discussion',
       time_for_show: formatDistance(new Date(), new Date()),
       content: content,
-      time: new Date(),
+      time: new Date(), //change time
       replies: [],
     };
 
