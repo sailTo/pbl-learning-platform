@@ -57,7 +57,7 @@ export class DiscussionsComponent implements OnInit {
         if (grouper == undefined) {
           discussion['u_name'] = '教师';
           discussion['image'] =
-            'http://ec2-34-219-154-236.us-west-2.compute.amazonaws.com/SuperNova/UploadImage/default.jpg';
+            'http://localhost/SuperNova/UploadImage/default.jpg';
         } else {
           discussion['u_name'] = grouper['u_name'];
           discussion['image'] = grouper['image'];
@@ -82,7 +82,7 @@ export class DiscussionsComponent implements OnInit {
               if (grouper == undefined) {
                 reply['u_name'] = '教师';
                 reply['image'] =
-                  'http://ec2-34-219-154-236.us-west-2.compute.amazonaws.com/SuperNova/UploadImage/default.jpg';
+                  'http://localhost/SuperNova/UploadImage/default.jpg';
               } else {
                 reply['u_name'] = grouper['u_name'];
                 reply['image'] = grouper['image'];

@@ -11,6 +11,7 @@ const routes: Routes = [
     component: PassportComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'passport/login', component: UserLoginComponent },
       { path: 'login', component: UserLoginComponent },
       { path: 'register', component: UserRegisterComponent },
     ],

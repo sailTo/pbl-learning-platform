@@ -18,7 +18,7 @@ export class AdminService {
       },
     });
     return this.http.get<Response<{ users: User[]; images: string[] }>>(
-      `${environment.apiUrl}/api/searchAllUsers`,
+      `${environment.apiUrl}:8021/userController/searchAllUsers`,
       { params }
     );
   }
@@ -29,7 +29,7 @@ export class AdminService {
       },
     });
     return this.http.get<Response<User[]>>(
-      `${environment.apiUrl}/api/searchAllTeachers`,
+      `${environment.apiUrl}:8021/userController/searchAllTeachers`,
       { params }
     );
   }
@@ -41,7 +41,7 @@ export class AdminService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/changeInformation`,
+      `${environment.apiUrl}:8021/userController/changeInformation`,
       params
     );
   }
@@ -56,7 +56,7 @@ export class AdminService {
       user: JSON.stringify(user),
     };
     return this.http.post<Response<{}>>(
-      `${environment.apiUrl}/api/addUser`,
+      `${environment.apiUrl}:8021/userController/addUser`,
       this.transformRequest(params),
       headers
     );
@@ -69,7 +69,7 @@ export class AdminService {
       },
     });
     return this.http.get<Response<{ projectList: Project[] }>>(
-      `${environment.apiUrl}/api/getAllProjects`,
+      `${environment.apiUrl}:8021/userController/getAllProjects`,
       { params }
     );
   }
@@ -81,7 +81,7 @@ export class AdminService {
       },
     });
     return this.http.get<Response<{ courseList: Course[] }>>(
-      `${environment.apiUrl}/api/getAllCourses`,
+      `${environment.apiUrl}:8021/userController/getAllCourses`,
       { params }
     );
   }
@@ -94,7 +94,7 @@ export class AdminService {
     });
     return this.http.get<
       Response<{ itemList: { [p_id: number]: GradeItem[] } }>
-    >(`${environment.apiUrl}/api/getAllGradeItems`, { params });
+    >(`${environment.apiUrl}:8021/userController/getAllGradeItems`, { params });
   }
 
   transformRequest(data) {

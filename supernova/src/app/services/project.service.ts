@@ -23,7 +23,7 @@ export class ProjectService {
       },
     });
     return this.http.get<Response<{ grades: GradeItem[] }>>(
-      `${environment.apiUrl}/api/getGradeItems`,
+      `${environment.apiUrl}:8022/projectController/getGradeItems`,
       { params }
     );
   }
@@ -37,7 +37,7 @@ export class ProjectService {
     });
     return this.http.get<
       Response<{ projects: Project[]; project_take: number; type: string }>
-    >(`${environment.apiUrl}/api/searchProject`, { params });
+    >(`${environment.apiUrl}:8022/projectController/searchProject`, { params });
   }
 
   getProject(projectId: number) {
@@ -48,7 +48,7 @@ export class ProjectService {
       },
     });
     return this.http.get<Response<{ project: Project }>>(
-      `${environment.apiUrl}/api/getProjectByPid`,
+      `${environment.apiUrl}:8022/projectController/getProjectByPid`,
       { params }
     );
   }
@@ -65,7 +65,7 @@ export class ProjectService {
       params,
     };
     return this.http.delete<Response<any>>(
-      `${environment.apiUrl}/api/deleteProject`,
+      `${environment.apiUrl}:8022/projectController/deleteProject`,
       options
     );
   }
@@ -77,7 +77,7 @@ export class ProjectService {
       grades: JSON.stringify(items),
     };
     return this.http.post<Response<{ p_id: number }>>(
-      `${environment.apiUrl}/api/createProject`,
+      `${environment.apiUrl}:8022/projectController/createProject`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
@@ -93,7 +93,7 @@ export class ProjectService {
       p_id: p_id,
     };
     return this.http.post<Response<any>>(
-      `${environment.apiUrl}/api/joinProject`,
+      `${environment.apiUrl}:8022/projectController/joinProject`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
@@ -110,7 +110,7 @@ export class ProjectService {
       grades: JSON.stringify(items),
     };
     return this.http.post<Response<any>>(
-      `${environment.apiUrl}/api/changeProject`,
+      `${environment.apiUrl}:8022/projectController/changeProject`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({

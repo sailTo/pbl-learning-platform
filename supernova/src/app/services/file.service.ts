@@ -27,7 +27,7 @@ export class FileService {
       },
     });
     return this.http.get<Response<File[]>>(
-      `${environment.apiUrl}/api/searchAllFiles`,
+      `${environment.apiUrl}:8023/fileController/searchAllFiles`,
       { params }
     );
   }
@@ -52,7 +52,7 @@ export class FileService {
 
     const req = new HttpRequest(
       'POST',
-      `${environment.apiUrl}/api/uploadFile`,
+      `${environment.apiUrl}:8023/fileController/uploadFile`,
       formData,
       {
         // const req = new HttpRequest('POST', 'http://127.0.0.1:8081/api/uploadFile', formData, {
@@ -81,7 +81,7 @@ export class FileService {
       },
     });
     return this.http.delete<Response<{}>>(
-      `${environment.apiUrl}/api/deleteFile`,
+      `${environment.apiUrl}:8023/fileController/deleteFile`,
       { params }
     );
   }

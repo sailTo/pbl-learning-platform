@@ -3,9 +3,9 @@
     <nz-tab [nzTitle]="'账号密码登录'">
       <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
       <nz-form-item>
-        <nz-form-control nzErrorTip="请输入用户ID，例如S001">
+        <nz-form-control nzErrorTip="请输入用户ID，学生用户需在注册的序号前加S，例如S001">
           <nz-input-group nzSize="large" nzPrefixIcon="user">
-            <input nz-input formControlName="userName" placeholder="请输入用户ID，例如S001" />
+            <input nz-input formControlName="userName" placeholder="请输入用户ID，学生用户需在注册的序号前加S，例如S001" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>

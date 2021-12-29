@@ -41,7 +41,7 @@ export class TasksComponent implements OnInit {
   percent = 100; // 行头显示比例
   zoom = 20; // 日期缩放级别
 
-  daysOffset = 3; // 前后日期冗余显示天数
+  daysOffset = 2; // 前后日期冗余显示天数 3->2
 
   modifiable: boolean; // 甘特图中内容是否可修改
   modified = false; // 甘特图中内容是否被修改过

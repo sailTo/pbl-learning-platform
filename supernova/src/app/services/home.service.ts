@@ -25,7 +25,7 @@ export class HomeService {
       },
     });
     return this.http.get<Response<{ content: User }>>(
-      `${environment.apiUrl}/api/searchMyInformation`,
+      `${environment.apiUrl}:8021/userController/searchMyInformation`,
       { params }
     );
   }
@@ -37,7 +37,7 @@ export class HomeService {
       },
     });
 
-    return this.http.put<any>(`${environment.apiUrl}/api/changeMyInformation`, params);
+    return this.http.put<any>(`${environment.apiUrl}:8021/userController/changeMyInformation`, params);
   }
   uploadImg(img: any, u_id: string) {
     const params = new HttpParams({
@@ -57,7 +57,7 @@ export class HomeService {
     });
     const req = new HttpRequest(
       'PUT',
-      `${environment.apiUrl}/api/changeMyImage`,
+      `${environment.apiUrl}:8021/userController/changeMyImage`,
       formData,
       {
         headers,

@@ -27,7 +27,7 @@ export class TaskService {
         studentStatus: boolean[]; // 当前学生每个assignment的完成情况，教师返回空数组
         urgeStatus: boolean[]; // 每个assignment是否被催促，教师返回空数组
       }>
-    >(`${environment.apiUrl}/api/searchAssignment`, { params });
+    >(`${environment.apiUrl}:8027/assignmentController/searchAssignment`, { params });
   }
 
   modifyTasks(tasks: Task[]) {
@@ -37,7 +37,7 @@ export class TaskService {
         assignments: JSON.stringify(tasks),
       },
     });
-    return this.http.put<Response<{}>>('/api/changeAssignments', params);
+    return this.http.put<Response<{}>>(':8027/assignmentController/changeAssignments', params);
   }
 
   addTasks(tasks: Task[]) {
@@ -51,7 +51,7 @@ export class TaskService {
       },
     });
     return this.http.post<Response<{ a_idList: number[] }>>(
-      `${environment.apiUrl}/api/createAssignments`,
+      `${environment.apiUrl}:8027/assignmentController/createAssignments`,
       params.toString(),
       { headers }
     );
@@ -68,7 +68,7 @@ export class TaskService {
       },
     });
     return this.http.post<Response<{ a_id: number }>>(
-      `${environment.apiUrl}/api/createAssignment`,
+      `${environment.apiUrl}:8027/assignmentController/createAssignment`,
       params.toString(),
       { headers }
     );
@@ -83,7 +83,7 @@ export class TaskService {
       },
     });
     return this.http.delete<Response<{}>>(
-      `${environment.apiUrl}/api/deleteAssignments`,
+      `${environment.apiUrl}:8027/assignmentController/deleteAssignments`,
       { params }
     );
   }
@@ -97,7 +97,7 @@ export class TaskService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/modifyAssignments`,
+      `${environment.apiUrl}:8027/assignmentController/modifyAssignments`,
       params
     );
   }
@@ -111,7 +111,7 @@ export class TaskService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/urgeAssignment`,
+      `${environment.apiUrl}:8027/assignmentController/urgeAssignment`,
       params
     );
   }
@@ -125,7 +125,7 @@ export class TaskService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/doneAssignment`,
+      `${environment.apiUrl}:8027/assignmentController/doneAssignment`,
       params
     );
   }
@@ -142,6 +142,6 @@ export class TaskService {
       Response<
         boolean[] // 当前学生每个assignment的完成情况，教师返回空数组
       >
-    >(`${environment.apiUrl}/api/searchGrouperAssignment`, { params });
+    >(`${environment.apiUrl}:8027/assignmentController/searchGrouperAssignment`, { params });
   }
 }

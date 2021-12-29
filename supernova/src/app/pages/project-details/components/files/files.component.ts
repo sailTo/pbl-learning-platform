@@ -99,7 +99,7 @@ export class FilesComponent implements OnInit {
   downLoadFile(file: File): void {
     console.log('downfile!');
     const link =
-      'http://ec2-54-213-230-33.us-west-2.compute.amazonaws.com:8081/api/downloadFile?pbl_token=' +
+      'http://110.42.204.136:8023/fileController/downloadFile?pbl_token=' +
       String(this.userService.getUser().token) +
       '&p_id=' +
       file.p_id +

@@ -23,7 +23,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ courses: Course[] }>>(
-      `${environment.apiUrl}/api/searchAllMyCourses`,
+      `${environment.apiUrl}:8026/coursesController/searchAllMyCourses`,
       { params }
     );
   }
@@ -37,7 +37,7 @@ export class ScoreService {
     });
 
     return this.http.get<Response<{ projects: Project[] }>>(
-      `${environment.apiUrl}/api/searchProject`,
+      `${environment.apiUrl}:8022/projectController/searchProject`,
       { params }
     );
   }
@@ -50,7 +50,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ grades: GradeItem[] }>>(
-      `${environment.apiUrl}/api/getGradeItems`,
+      `${environment.apiUrl}:8022/projectController/getGradeItems`,
       { params }
     );
   }
@@ -66,7 +66,7 @@ export class ScoreService {
         totalAssignmentNum: number;
         doneInformations: { s_id: string; s_name: string; doneNum: number }[];
       }>
-    >(`${environment.apiUrl}/api/countAssignmentDone`, { params });
+    >(`${environment.apiUrl}:8027/assignmentController/countAssignmentDone`, { params });
   }
   getCountDiscussion(p_id: string) {
     const params = new HttpParams({
@@ -77,7 +77,7 @@ export class ScoreService {
     });
     return this.http.get<
       Response<{ maxDiscussNum: number; discussInformations: ItemData[] }>
-    >(`${environment.apiUrl}/api/countDiscussion`, { params });
+    >(`${environment.apiUrl}:8025/discussionAndReplyController/countDiscussion`, { params });
   }
   getSelfAndMutualScore(p_id: string) {
     const params = new HttpParams({
@@ -95,7 +95,7 @@ export class ScoreService {
           mutualScore: number;
         }[];
       }>
-    >(`${environment.apiUrl}/api/SelfAndMutualevaluateScore`, { params });
+    >(`${environment.apiUrl}:8024/evaluateController/SelfAndMutualevaluateScore`, { params });
   }
   getGradeItemScore(p_id: string) {
     const params = new HttpParams({
@@ -112,7 +112,7 @@ export class ScoreService {
           itemsList: { item_id: string; item_name: string; grade: number }[];
         }[];
       }>
-    >(`${environment.apiUrl}/api/getItemsByPid`, { params });
+    >(`${environment.apiUrl}:8022/projectController/getItemsByPid`, { params });
   }
 
   postGradeItemScore(p_id: string, itemData: ItemData) {
@@ -132,7 +132,7 @@ export class ScoreService {
       grades: JSON.stringify(insertData),
     };
     return this.http.post<Response<{}>>(
-      `${environment.apiUrl}/api/evaluateByTeacher`,
+      `${environment.apiUrl}:8024/evaluateController/evaluateByTeacher`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
@@ -150,7 +150,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ grade: number }>>(
-      `${environment.apiUrl}/api/searchEvaluateBySelf`,
+      `${environment.apiUrl}:8024/evaluateController/searchEvaluateBySelf`,
       { params }
     );
   }
@@ -163,7 +163,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ grade: number }>>(
-      `${environment.apiUrl}/api/searchEvaluateByOther`,
+      `${environment.apiUrl}:8024/evaluateController/searchEvaluateByOther`,
       { params }
     );
   }
@@ -177,7 +177,7 @@ export class ScoreService {
     });
     return this.http.get<
       Response<{ grades: { item_id: string; grade: number }[] }>
-    >(`${environment.apiUrl}/api/searchEvaluateByTeacher`, { params });
+    >(`${environment.apiUrl}:8024/evaluateController/searchEvaluateByTeacher`, { params });
   }
 
   getStudentDiscussionAndAssignmentNum(p_id: string) {
@@ -189,7 +189,7 @@ export class ScoreService {
     });
     return this.http.get<
       Response<{ discussionCount: number; assignmentDoneCount: number }>
-    >(`${environment.apiUrl}/api/getStudentDiscussonAndAssignmentCountByPid`, {
+    >(`${environment.apiUrl}:8025/discussionAndReplyController/getStudentDiscussonAndAssignmentCountByPid`, {
       params,
     });
   }
@@ -202,7 +202,7 @@ export class ScoreService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/updateTeacherGrade`,
+      `${environment.apiUrl}:8024/evaluateController/updateTeacherGrade`,
       params
     );
   }
@@ -215,7 +215,7 @@ export class ScoreService {
       },
     });
     return this.http.get<Response<{ rateMapping: Rating[] }>>(
-      `${environment.apiUrl}/api/getMyEvaluation`,
+      `${environment.apiUrl}:8024/evaluateController/getMyEvaluation`,
       { params }
     );
   }
@@ -228,7 +228,7 @@ export class ScoreService {
       grade,
     };
     return this.http.post<any>(
-      `${environment.apiUrl}/api/evaluateOther`,
+      `${environment.apiUrl}:8024/evaluateController/evaluateOther`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
@@ -244,7 +244,7 @@ export class ScoreService {
       p_id: String(projectId),
     };
     return this.http.get<Response<boolean>>(
-      `${environment.apiUrl}/api/evaluateDone`,
+      `${environment.apiUrl}:8024/evaluateController/evaluateDone`,
       { params }
     );
   }

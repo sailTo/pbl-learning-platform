@@ -32,7 +32,7 @@ export class UserService {
       },
     });
     return this.http.get<Response<{ leader: string; groupers: User[] }>>(
-      `${environment.apiUrl}/api/searchGroupers`,
+      `${environment.apiUrl}:8022/projectController/searchGroupers`,
       { params }
     );
   }
@@ -49,7 +49,7 @@ export class UserService {
       },
     });
     return this.http.get<Response<{}>>(
-      `${environment.apiUrl}/account/searchId`,
+      `${environment.apiUrl}:8021/accountController/searchId`,
       { params }
     );
   }
@@ -63,12 +63,12 @@ export class UserService {
         u_id: 'S' + validateForm.controls.u_id.value,
         u_name: validateForm.controls.u_name.value,
         gender: validateForm.controls.gender.value,
-        password: String(Md5.hashStr(validateForm.controls.password.value)),
+        password: String(Md5.hashStr(validateForm.controls.password.value)), //At least add username?
         description: '',
       },
     });
     return this.http.post<Response<{ user: User; image: string }>>(
-      `${environment.apiUrl}/account/register`,
+      `${environment.apiUrl}:8021/accountController/register`,
       params.toString(),
       { headers }
     );
@@ -85,7 +85,7 @@ export class UserService {
       },
     });
     return this.http.post<Response<{ image: string; user: User }>>(
-      `${environment.apiUrl}/account/login`,
+      `${environment.apiUrl}:8021/accountController/login`,
       params.toString(),
       { headers }
     );
@@ -99,7 +99,7 @@ export class UserService {
       },
     });
     return this.http.get<Response<{ user: User }>>(
-      `${environment.apiUrl}/api/getUserByUid`,
+      `${environment.apiUrl}:8021/accountController/getUserByUid`,
       { params }
     );
   }

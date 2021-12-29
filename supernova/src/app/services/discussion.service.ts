@@ -20,7 +20,7 @@ export class DiscussionService {
       },
     });
     return this.http.get<Response<{ discussions: Discussion[] }>>(
-      `${environment.apiUrl}/api/searchDiscussions`,
+      `${environment.apiUrl}:8025/discussionAndReplyController/searchDiscussions`,
       { params }
     );
   }
@@ -33,7 +33,7 @@ export class DiscussionService {
       },
     });
     return this.http.get<Response<{ replies: Reply[] }>>(
-      `${environment.apiUrl}/api/searchReply`,
+      `${environment.apiUrl}:8025/discussionAndReplyController/searchReply`,
       {
         params,
       }
@@ -53,7 +53,7 @@ export class DiscussionService {
       params,
     };
     this.http
-      .delete(`${environment.apiUrl}/api/deleteDiscussion`, options)
+      .delete(`${environment.apiUrl}:8025/discussionAndReplyController/deleteDiscussion`, options)
       .subscribe((s) => {
         console.log(s);
       });
@@ -71,7 +71,7 @@ export class DiscussionService {
       params,
     };
     this.http
-      .delete(`${environment.apiUrl}/api/deleteReply`, options)
+      .delete(`${environment.apiUrl}:8025/discussionAndReplyController/deleteReply`, options)
       .subscribe((s) => {
         console.log(s);
       });
@@ -83,7 +83,7 @@ export class DiscussionService {
       discussion,
     };
     return this.http.post<Response<{ d_id: number }>>(
-      `${environment.apiUrl}/api/createDiscussion`,
+      `${environment.apiUrl}:8025/discussionAndReplyController/createDiscussion`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({
@@ -99,7 +99,7 @@ export class DiscussionService {
       reply,
     };
     return this.http.post<Response<{ r_id: number }>>(
-      `${environment.apiUrl}/api/createReply`,
+      `${environment.apiUrl}:8025/discussionAndReplyController/createReply`,
       this.transformRequest(params),
       {
         headers: new HttpHeaders({

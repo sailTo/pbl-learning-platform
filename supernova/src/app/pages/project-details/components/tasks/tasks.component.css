@@ -14,3 +14,12 @@ nz-badge {
 nz-empty {
     padding-top: 12%;
 }
+
+ng-container{
+    width: 1100px;
+}
+gstc {            
+    display: block;
+    left: 0;
+    width: 1100px; 
+}

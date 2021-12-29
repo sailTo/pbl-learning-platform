@@ -18,10 +18,10 @@ import { filter } from 'rxjs/operators';
 })
 export class CourseService {
   requestURL = {
-    my: `${environment.apiUrl}/api/searchMyCourses`,
-    other: `${environment.apiUrl}/api/searchOtherCourses`,
-    all: `${environment.apiUrl}/api/searchAllCourses`,
-    all_my: `${environment.apiUrl}/api/searchAllMyCourses`,
+    my: `${environment.apiUrl}:8026/coursesController/searchMyCourses`,
+    other: `${environment.apiUrl}:8026/coursesController/searchOtherCourses`,
+    all: `${environment.apiUrl}:8026/coursesController/searchAllCourses`,
+    all_my: `${environment.apiUrl}:8026/coursesController/searchAllMyCourses`,
   };
 
   constructor(private http: HttpClient, private userService: UserService) {}
@@ -34,7 +34,7 @@ export class CourseService {
       },
     });
     return this.http.get<Response<{ course: Course }>>(
-      `${environment.apiUrl}/api/searchCourseByCid`,
+      `${environment.apiUrl}:8026/coursesController/searchCourseByCid`,
       { params }
     );
   }
@@ -90,7 +90,7 @@ export class CourseService {
       },
     });
     return this.http.post<Response<{}>>(
-      `${environment.apiUrl}/api/joinCourse`,
+      `${environment.apiUrl}:8026/coursesController/joinCourse`,
       params.toString(),
       {
         headers,
@@ -116,7 +116,7 @@ export class CourseService {
     });
     const req = new HttpRequest(
       'POST',
-      `${environment.apiUrl}/api/addCourse`,
+      `${environment.apiUrl}:8026/coursesController/addCourse`,
       formData,
       {
         headers,
@@ -136,7 +136,7 @@ export class CourseService {
       },
     });
     return this.http.put<Response<{}>>(
-      `${environment.apiUrl}/api/changeCourse`,
+      `${environment.apiUrl}:8026/coursesController/changeCourse`,
       params
     );
   }
@@ -159,7 +159,7 @@ export class CourseService {
     });
     const req = new HttpRequest(
       'POST',
-      `${environment.apiUrl}/api/changeCourseWithImg`,
+      `${environment.apiUrl}:8026/coursesController/changeCourseWithImg`,
       formData,
       {
         headers,
