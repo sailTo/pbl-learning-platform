@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nacos.dao.AssignmentMapper">
+  <resultMap id="BaseResultMap" type="com.nacos.entity.Assignment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="a_id" jdbcType="INTEGER" property="aId" />
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="a_name" jdbcType="CHAR" property="aName" />
+    <result column="importance" jdbcType="INTEGER" property="importance" />
+    <result column="a_start_date" jdbcType="TIMESTAMP" property="aStartDate" />
+    <result column="a_end_date" jdbcType="TIMESTAMP" property="aEndDate" />
+    <result column="a_description" jdbcType="LONGVARCHAR" property="aDescription" />
+  </resultMap>
+
+  <insert id="addAssignment">
+    <selectKey keyProperty="a_id" resultType="java.lang.Integer" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into assignment(p_id, a_name, a_description, importance, a_start_date, a_end_date)
+    VALUE (#{p_id}, #{a_name}, #{a_description}, #{importance}, #{a_start_date}, #{a_end_date})
+  </insert>
+  <select id="countAssignmentDone" parameterType="int" resultType="com.nacos.entity.DoneInformation">
+    select u_id,u_name,count(a_id)
+    from user natural join student_assignment
+    where p_id = #{p_id} and status = true
+    group by u_id
+    order by u_id
+  </select>
+  <select id="searchAllAssignmentsDoneNum" parameterType="int" resultType="int">
+  SELECT IFNULL(subTable.SubNum, 0) FROM (SELECT a_id as keyr FROM student_assignment where p_id=#{p_id} group by a_id)as MainTable natural left outer join (SELECT a_id as keyr ,COUNT(*)as SubNum FROM student_assignment where p_id = #{p_id} AND status = true group by a_id) as subTable order by MainTable.keyr
+  </select>
+
+</mapper>

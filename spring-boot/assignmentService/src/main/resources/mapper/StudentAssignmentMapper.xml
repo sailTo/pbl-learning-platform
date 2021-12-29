@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nacos.dao.StudentAssignmentMapper">
+  <resultMap id="BaseResultMap" type="com.nacos.entity.StudentAssignment">
+    <id column="a_id" jdbcType="INTEGER" property="aId" />
+    <id column="p_id" jdbcType="INTEGER" property="pId" />
+    <id column="u_id" jdbcType="CHAR" property="uId" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="urge" jdbcType="BIT" property="urge" />
+  </resultMap>
+  <select id="searchDoneStatus" resultType="Boolean">
+    select status
+    from student_assignment
+    where p_id = #{p_id} and u_id = #{s_id}
+    order by a_id
+  </select>
+  <select id="searchAssignmentUrge" resultType="Boolean">
+    select urge
+    from student_assignment
+    where p_id = #{p_id} and u_id = #{s_id}
+    order by a_id
+  </select>
+  <update id="urgeAssignment" >
+    update student_assignment set urge = true where p_id = #{p_id} and a_id = #{a_id} and  status=false
+  </update>
+</mapper>

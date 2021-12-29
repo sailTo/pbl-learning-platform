@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nacos.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.nacos.entity.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="u_id" jdbcType="CHAR" property="uId" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="u_name" jdbcType="CHAR" property="uName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="image" jdbcType="CHAR" property="image" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <select id="idExist" parameterType="String" resultType="boolean">
+    select count(u_id) from user where u_id = #{u_id}
+  </select>
+</mapper>

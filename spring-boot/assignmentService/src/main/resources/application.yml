@@ -1,0 +1,30 @@
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.nacos.entity
+server:
+  port: 8018
+  #应用名称(nacos会将该名称当做服务名称
+spring:
+  profiles:
+    active: dev
+  application:
+    name: assignment-service
+  cloud:
+    nacos:
+      server-addr: 172.17.16.12:8848
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: public
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://database-1.cabwu0kttdwl.us-west-2.rds.amazonaws.com:3306/pblDB
+    username: admin
+    password: 20172121
+    driver-class-name: com.mysql.jdbc.Driver
+mapper:
+  mappers: com.nacos.core.Mapper
+  identity: MYSQL
